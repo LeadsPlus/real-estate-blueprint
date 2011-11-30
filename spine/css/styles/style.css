@@ -1,0 +1,162 @@
+/* @group Clearfix */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+/* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix { zoom: 1; }
+/* @end */
+
+header {
+	float: left;
+	clear: both;
+    width: 950px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+a:link {
+	color: inherit;
+}
+.wrapper {
+	float: left;
+	clear: both;
+}
+nav.main-nav {
+	float: left;
+	width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+nav.main-nav ul {
+	padding: 0px;
+}
+nav.main-nav ul li {
+	float: left;
+    padding: 0px 5px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+.utility-nav {
+	float: right;
+	padding-top: 50px;
+}
+#container {
+    width: 950px;
+    margin: 0 auto;
+    padding: 20px;
+}
+#content {
+    width: 720px;
+    float: left;
+	padding-top: 10px;
+    border-right: 1px solid black;
+}
+aside {
+    width: 200px;
+    float: right;
+    padding-left: 10px;
+}
+aside > section {
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+#container > footer {
+    border-top: 1px solid black;
+    margin-top: 10px;
+    padding-top: 10px;
+    clear: both;
+}
+.complex-search {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+#placester_listings_list {
+    clear: both;
+    margin-top: 35px;
+}
+#loader {
+    float:right;
+    margin-right: 10px;
+}
+#sort-by {
+    float: left;
+}
+
+/* Home */
+#slideshow {
+	padding-bottom: 40px;
+}
+.listing, .list, .list-item {
+	float: left;
+	width: 720px;
+}
+.list-item {
+	border-bottom: 1px solid black;
+	padding-bottom: 10px;
+}
+.list-pic {
+	margin-top: 20px;
+	float: left;
+	width: 150px;
+}
+.list-txt, .list-txt ul {
+	float: left;
+	width: 570px;
+}
+.list-txt ul li {
+	width: 250px;
+	padding-left: 5px;
+	float: left;
+	overflow: hidden;
+	height: 30px;
+}
+
+/* Utility Styles */
+.left {
+	float: left;
+}
+.bottomborder {
+	border-bottom: 1px solid black;
+	padding-bottom: 5px;
+}
+
+
+/* Property Detials Styles  */
+.details-wrapper, .details-list-txt, .details-list-txt ul {
+	float: left;
+	clear: both;
+	width: 720px;
+	padding-left: 0px;
+}
+.details-list-txt li {
+	float: left;
+	overflow: hidden;
+	padding-top: 3px;
+	width: 150px;
+	height: 35px;
+}
+.details-wrapper {
+	width: 720px;
+	float: left;
+}
+
+/*  Search Page Styles */
+.complex-search {
+	float: left;
+}
+.pls_search_button {
+	margin-top: 20px;
+	margin-right: 60px;
+	padding: 20px 40px;
+	float: right;
+	clear: both;
+}
+
+.pls_search_form {
+	width: 210px;
+	float: left;
+	padding: 10px;
+}
