@@ -9,4 +9,6 @@
  * @subpackage Template
  */
 
-get_template_part( 'page-template-blog' );
+// PLS_Template::pls_get_template_part();
+
+// get_template_part( 'page-template-blog' );

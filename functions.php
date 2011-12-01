@@ -74,6 +74,9 @@ PLS_Simple_Search::init();
 // custom styles
 include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-styles.php' );
 
+
+include_once( trailingslashit( TEMPLATEPATH ) . 'spine/extensions/template-util.php' );
+
 //custom stylesheets
 add_action( 'template_redirect', 'pls_theme_styles' );
 function pls_theme_styles() {
