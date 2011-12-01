@@ -218,6 +218,16 @@ class Placester_Spine {
         /** Add theme support for sidebars */
         add_theme_support( 'pls-sidebars', array( 'primary', 'subsidiary' ) );
 
+        // Adds default styling out of the box
+        add_theme_support( 'pls-default-style' );
+        add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ) ) );
+        add_theme_support( 'pls-theme-options' );
+        add_theme_support( 'pls-image-util', array('fancybox') );
+        add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
+        add_theme_support( 'pls-maps-util');
+        add_theme_support( 'pls-style-util');
+        add_theme_support( 'pls-debug');
+
     }
 
 	/**
