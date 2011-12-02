@@ -183,6 +183,10 @@ class Placester_Spine {
         define( 'PLS_EXT_DIR', trailingslashit( PLS_DIR ) . 'extensions' );
         define( 'PLS_EXT_URL', trailingslashit( PLS_URL ) . 'extensions' );
 
+        /** Template directory path and url */
+        define( 'PLS_TPL_DIR', trailingslashit( PLS_DIR ) . 'templates' );
+        define( 'PLS_TPL_URL', trailingslashit( PLS_URL ) . 'templates' );
+
         /** Styles directory path and url */
         define( 'PLS_IMG_DIR', trailingslashit( PLS_DIR ) . 'i' );
         define( 'PLS_IMG_URL', trailingslashit( PLS_URL ) . 'i' );
