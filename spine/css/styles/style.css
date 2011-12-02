@@ -12,6 +12,9 @@ header {
     padding-bottom: 5px;
     border-bottom: 1px solid black;
 }
+article header {
+	width: 720px
+}
 a {
 	text-decoration: none;
 	color: inherit;
