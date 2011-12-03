@@ -4,6 +4,7 @@ PLS_Route::init();
 
 class PLS_Route {
 
+	static $show_debug = true;
 	static $request;
 
 	/**
@@ -40,7 +41,10 @@ class PLS_Route {
 		add_action( 'single_template', array( __CLASS__, 'handle_single'  ), 10, 1);	
 		add_action( 'page_template', array( __CLASS__, 'handle_page'  ), 10, 1);	
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ), 10, 1);	
-		// add_action( 'comments_popup', array( __CLASS__, 'handle_comments'  ), 10, 1);	
+		
+
+		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ), 10, 1);	
+		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ), 10, 1);	
 	}
 
 	function routing_logic ($template)
@@ -69,9 +73,12 @@ class PLS_Route {
 			$new_template = self::handle_dynamic();
 		}		
 
-	
-		pls_dump(self::$debug_messages);
-
+		
+		// optionally show debug messages. 	
+		if (self::$show_debug) {
+				pls_dump(self::$debug_messages);
+		}	
+		
 		return $new_template;
 	}
 
@@ -172,6 +179,21 @@ class PLS_Route {
 		// the routing table.
 		//
 		return self::router('footer.php', true);
+	}
+
+	// 
+	//	Hooked functions, likely not a good idea to mess
+	//	around down here. 
+	//
+
+	// hooked to handle comments templates
+	function handle_comments($template) {
+		return self::router('comments.php');
+	}
+
+	// hooked to handle comments templates
+	function handle_popup_comments($template) {
+		return self::router('popup_comments.php');	
 	}
 
 	// hooked to 404
