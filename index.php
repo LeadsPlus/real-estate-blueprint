@@ -9,5 +9,4 @@
  * @subpackage Template
  */
 
-echo "Index hit!";
-PLS_Route::get_template_part( 'page-template-blog' );
+PLS_Route::handle_home();

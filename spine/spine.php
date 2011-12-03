@@ -216,9 +216,6 @@ class Placester_Spine {
         /** Add theme support for theme wrappers */
         add_theme_support( 'pls-routing-util' );
 
-        /** Add theme support for theme wrappers */
-        // add_theme_support( 'pls-theme-wrappers' );
-
         /** Add theme support for menus */
         add_theme_support( 'pls-menus', array( 'primary', 'subsidiary' ) );
 

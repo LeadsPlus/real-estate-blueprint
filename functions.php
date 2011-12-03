@@ -11,20 +11,17 @@ new Placester_Spine();
  * which is on the 'after_setup_theme' hook with a priority of 12.
  * 
  */
-add_action( 'after_setup_theme', 'pls_setup', 10 );
-function pls_setup() {
+// add_action( 'after_setup_theme', 'pls_setup', 10 );
+// function pls_setup() {
 
-    add_theme_support( 'pls-default-style' );
-    add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ) ) );
-    add_theme_support( 'pls-theme-options' );
-    add_theme_support( 'pls-image-util', array('fancybox') );
-    add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
-    add_theme_support( 'pls-maps-util');
-    add_theme_support( 'pls-style-util');
-    add_theme_support( 'pls-debug');
-    
+    // add like this:
+    // add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
+    // add_theme_support( 'pls-maps-util');
+
+    // remove like this:
     // remove_theme_support( 'pls-sidebars' );
-}
+    // remove_theme_support( 'pls-slideshow' );
+// }
 
 /**
  * 	Filter the default prefix used in 'pls_do_atomic' and 'pls_apply_atomic'.
@@ -34,10 +31,10 @@ function pls_setup() {
  *	spine will mean that you need to hook against spine_close_header, or spine_open_header
  */
 
-add_filter( 'pls_prefix', 'spine_prefix' );
-function spine_prefix() {
-    return 'spine';
-}
+// add_filter( 'pls_prefix', 'spine_prefix' );
+// function spine_prefix() {
+//     return 'spine';
+// }
 
 // custom header
 @include_once( trailingslashit( TEMPLATEPATH ) . 'include/header.php' );
@@ -74,15 +71,3 @@ function spine_prefix() {
 // custom styles
 @include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-styles.php' );
 
-
-//custom stylesheets
-add_action( 'template_redirect', 'pls_theme_styles' );
-function pls_theme_styles() {
-    wp_enqueue_style( 'main', get_stylesheet_directory_uri() . '/css/style.css' );
-}
-
-// custom scripts
-add_action( 'template_redirect', 'pls_theme_scripts' );
-function pls_theme_scripts() {
-    wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/js/scripts.js', array( 'chosen', 'jquery' ), false, true );
-}
