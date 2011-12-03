@@ -83,7 +83,7 @@ class PLS_Route {
 	function router ($template_names, $load = false, $require_once = true) 
 	{
 
-		self::add_msg('Hit Router! Searching for: ');
+		self::add_msg('[[Hit Router!]] Searching for: ');
 		self::add_msg($template_names);
 
 		$located = self::locate_blueprint_template($template_names);
@@ -91,7 +91,7 @@ class PLS_Route {
 		self::add_msg('Template Located: ' . $located);
 
 		if ( $load && '' != $located  ) {
-			self::add_msg('Load Requested: ' . $located);
+			self::add_msg('[[Load Requested:]] ' . $located);
 			load_template( $located, $require_once);
 		}
 			
@@ -270,20 +270,23 @@ class PLS_Route {
 			
 		self::add_msg('Wrapper used..');
 
+		$base = '';
+		$templates = array();
+
+		// we need to construct a list of wrapper files
+		// we're looking for. The basic construction is:
+		// Looks for wrapper-[base].php and then 
+		// for spine/wrappers/wrapper-[base].php
+		// 
+		// This is done for situations when we can have multiple
+		// templates used for the same file. Like pages, archives,
+		// etc..
+		foreach ( (array) self::$request as $variation) {
+			$base = substr( basename( $variation), 0, -4 );	
+			$templates[] = sprintf( 'wrapper-%s.php', $variation );
+		}
 		
-		self::$base = substr( basename( self::$request), 0, -4 );
-
-		if ( 'index' == self::$base )
-			self::$base = false;
-
-		$templates = array( 'wrapper.php' );
-
-        /**
-         *  Looks for wrapper-[base].php and then for spine/wrappers/wrapper-[base].php
-         */
-		if ( self::$base )
-			array_unshift( $templates, sprintf( 'wrapper-%s.php', self::$base ), sprintf( '/spine/wrappers/wrapper-%s.php', self::$base ) );
-
+		$templates[] ='wrapper.php';
 		
 		// if wrapper is being used, it will load attempt
 		// to load the various wrapper iterations.
