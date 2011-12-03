@@ -40,6 +40,7 @@ class PLS_Route {
 		add_action( 'single_template', array( __CLASS__, 'handle_single'  ), 10, 1);	
 		add_action( 'page_template', array( __CLASS__, 'handle_page'  ), 10, 1);	
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ), 10, 1);	
+		// add_action( 'comments_popup', array( __CLASS__, 'handle_comments'  ), 10, 1);	
 	}
 
 	function routing_logic ($template)
@@ -223,6 +224,11 @@ class PLS_Route {
 
 	// hooked to handle page templates
 	function handle_page($template) {
+		
+		// this is a direct copy and paste from WP.
+		// becuase wordpress isn't verbose about what it
+		// discovers it does this reuqest. We'll need
+		// to duplicate it. 
 		$id = get_queried_object_id();
 		$template = get_post_meta($id, '_wp_page_template', true);
 		$pagename = get_query_var('pagename');
@@ -245,14 +251,16 @@ class PLS_Route {
 			$templates[] = "page-$id.php";
 		$templates[] = 'page.php';
 
+		// The possible templates are stored in the 
+		// request var so router can use them later
+		// when the filter is called to decide
+		// which pages to look for. 
 		self::$request = $templates;
-		// return self::router($templates, 'page');
 	}
 
 	// hooked to handle page templates
 	function handle_category($template) {
 		self::$request = 'category.php';
-		// return self::router($template, 'category')	;
 	}
 
 
@@ -262,9 +270,9 @@ class PLS_Route {
 	 * This allows theme developers to avoid code repetition by adding the common 
 	 * surrounding code from templates to a wrapper.php file.
 	 *
-	 * @static
-	 * @link http://scribu.net/wordpress/theme-wrappers.html
-	 * @since 0.0.1
+	 * Based on the ideas of http://scribu.net/wordpress/theme-wrappers.html
+	 * Modified for Blueprints needs.
+	 *
 	 */
 	static function wrapper() {
 			
@@ -297,6 +305,9 @@ class PLS_Route {
 	}
 
 
+	// adds routing messages for easy debugging.
+	// TODO: Move this to a global class so devs
+	// turn it on easily and see what's going on. 
 	static function add_msg ($new_message)
 	{
 		self::$debug_messages[] = $new_message;
