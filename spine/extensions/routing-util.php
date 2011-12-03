@@ -20,18 +20,13 @@ class PLS_Route {
 	{
 		
 		// hooks into template_routing for auto wrapping header
-		// and footer. Not used now. Will revisit when we add
-		// support for automated routing.
-		//
-		//add_action( 'template_redirect', array( __CLASS__, 'wrap' ));
+		// and footer.
 		 add_filter( 'template_include', array( __CLASS__, 'routing_logic' ) );
 
 		
-		// for catching specific templates
-		// 
+		// hook into each classification, so we can store the request locally. 
 		add_action( '404_template', array( __CLASS__, 'handle_404'  ));
 		add_action( 'search_template', array( __CLASS__, 'handle_search'  ));
-		// Taxonomy: No need to touch taxonomy pages.
 		add_action( 'home_template', array( __CLASS__, 'handle_home'  ));	
 		add_action( 'front_page_template', array( __CLASS__, 'handle_front_page'  ));	
 		add_action( 'paged_template', array( __CLASS__, 'handle_paged'  ));	
@@ -39,12 +34,10 @@ class PLS_Route {
 		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ));	
 		add_action( 'taxonomy_template', array( __CLASS__, 'handle_taxonomy'  ));	
 		add_action( 'date_template', array( __CLASS__, 'handle_date'  ));	
-		// Comments: Can't override wordpress's need for a comments file
+		add_action( 'tag_template', array( __CLASS__, 'handle_tag'  ));	
 		add_action( 'single_template', array( __CLASS__, 'handle_single'  ));	
 		add_action( 'page_template', array( __CLASS__, 'handle_page'  ));	
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ));	
-		
-
 		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ));	
 		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ));	
 	}
