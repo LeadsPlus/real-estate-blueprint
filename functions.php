@@ -32,9 +32,10 @@ new Placester_Spine();
  */
 
 // add_filter( 'pls_prefix', 'spine_prefix' );
-// function spine_prefix() {
-//     return 'spine';
+    // function spine_prefix() {
+    //     return 'spine';
 // }
+
 
 // custom header
 @include_once( trailingslashit( TEMPLATEPATH ) . 'include/header.php' );
