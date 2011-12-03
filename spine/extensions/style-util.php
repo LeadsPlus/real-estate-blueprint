@@ -1,21 +1,25 @@
 <?php 
 
-
 PLS_Style::init();
 
 class PLS_Style {
 	
-	/**
+	static $custom_styles = array();
+
+    /**
      *  grabs the option list and makes it available
      */
     static function init()
     {
-		
-		include_once( trailingslashit( TEMPLATEPATH ) . 'options.php' );
+
+        include_once( trailingslashit( TEMPLATEPATH ) . 'options.php' );
+        add_filter('spine_custom_styles', array(__CLASS__, 'create_css') );		
+
     }
 
-    public static function create_css ($options)
+    public static function create_css ()
     {
+        $options = optionsframework_options();
 
         if ( isset($options) && is_array($options)) {
 
