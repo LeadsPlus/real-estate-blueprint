@@ -9,4 +9,4 @@
  * @subpackage Template
  */
 
-PLS_Route::handle_home();
+PLS_Route::handle_dynamic();

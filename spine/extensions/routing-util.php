@@ -4,7 +4,7 @@ PLS_Route::init();
 
 class PLS_Route {
 
-	static $show_debug = true;
+	static $show_debug = false;
 	static $request;
 
 	/**
@@ -29,22 +29,24 @@ class PLS_Route {
 		
 		// for catching specific templates
 		// 
-		add_action( '404_template', array( __CLASS__, 'handle_404'  ), 10, 1);
-		add_action( 'search_template', array( __CLASS__, 'handle_search'  ), 10, 1);
+		add_action( '404_template', array( __CLASS__, 'handle_404'  ));
+		add_action( 'search_template', array( __CLASS__, 'handle_search'  ));
 		// Taxonomy: No need to touch taxonomy pages.
-		add_action( 'home_template', array( __CLASS__, 'handle_home'  ), 10, 1);	
-		// Front Page: No need to touch "Front Page", we'll assume home.
-		// Attachments: Need to figure out what to do with attachments
-		add_action( 'attachment_template', array( __CLASS__, 'handle_attachment'  ), 10, 1);	
-		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ), 10, 1);	
+		add_action( 'home_template', array( __CLASS__, 'handle_home'  ));	
+		add_action( 'front_page_template', array( __CLASS__, 'handle_front_page'  ));	
+		add_action( 'paged_template', array( __CLASS__, 'handle_paged'  ));	
+		add_action( 'attachment_template', array( __CLASS__, 'handle_attachment'  ));	
+		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ));	
+		add_action( 'taxonomy_template', array( __CLASS__, 'handle_taxonomy'  ));	
+		add_action( 'date_template', array( __CLASS__, 'handle_date'  ));	
 		// Comments: Can't override wordpress's need for a comments file
-		add_action( 'single_template', array( __CLASS__, 'handle_single'  ), 10, 1);	
-		add_action( 'page_template', array( __CLASS__, 'handle_page'  ), 10, 1);	
-		add_action( 'category_template', array( __CLASS__, 'handle_category'  ), 10, 1);	
+		add_action( 'single_template', array( __CLASS__, 'handle_single'  ));	
+		add_action( 'page_template', array( __CLASS__, 'handle_page'  ));	
+		add_action( 'category_template', array( __CLASS__, 'handle_category'  ));	
 		
 
-		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ), 10, 1);	
-		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ), 10, 1);	
+		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ));	
+		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ));	
 	}
 
 	function routing_logic ($template)
@@ -187,17 +189,17 @@ class PLS_Route {
 	//
 
 	// hooked to handle comments templates
-	function handle_comments($template) {
+	function handle_comments() {
 		return self::router('comments.php');
 	}
 
 	// hooked to handle comments templates
-	function handle_popup_comments($template) {
+	function handle_popup_comments() {
 		return self::router('popup_comments.php');	
 	}
 
 	// hooked to 404
-	function handle_404($template) {
+	function handle_404() {
 		
 		// sets the request for the standard 404
 		// template
@@ -205,7 +207,7 @@ class PLS_Route {
 	}
 
 	// hooked to search
-	function handle_search($template) {
+	function handle_search() {
 		
 		// sets the request for the standard search
 		// template
@@ -213,34 +215,115 @@ class PLS_Route {
 	}
 
 	// hooked to home + index
-	function handle_home($template) {
+	function handle_home() {
 
 		//check for index.php, same hook as home.
-		if ( strrpos($template, 'index.php')) {
-			self::$request = 'index.php';
-		} else {
-			self::$request = 'home.php';
-		}			
+		self::$request = array( 'home.php', 'index.php' );		
+	}
+
+	// hooked to front-page.php
+	function handle_front_page () {
+		self::$request = 'front-page.php';
+	}
+
+	function handle_paged() {
+		self::$request = 'paged.php';
+	}
+
+	function handle_date() {
+		self::$request = 'date.php';
+	}
+
+	// needs additional logic to handle different types of 
+	// post type archives. 
+	function handle_archive($template) {
+
+		$post_type = get_query_var( 'post_type' );
+
+		$templates = array();
+
+		if ( $post_type ) {
+			$templates[] = "archive-{$post_type}.php";
+		}
+			
+		$templates[] = 'archive.php';
+
+		self::$request = $templates;
+	}
+
+
+	// for author pages
+	function handle_author() {
+		$author = get_queried_object();
+
+		$templates = array();
+
+		$templates[] = "author-{$author->user_nicename}.php";
+		$templates[] = "author-{$author->ID}.php";
+		$templates[] = 'author.php';
+
+		self::$request = $templates;
+	}
+
+
+	// hooked to handle page templates
+	function handle_category($template) {
+		$category = get_queried_object();
+
+		$templates = array();
+
+		$templates[] = "category-{$category->slug}.php";
+		$templates[] = "category-{$category->term_id}.php";
+		$templates[] = 'category.php';
+
+		self::$request = $templates;
+	}
+
+
+	// for tag tempaltes
+	function handle_tag() {
+
+		$tag = get_queried_object();
+
+		$templates = array();
+
+		$templates[] = "tag-{$tag->slug}.php";
+		$templates[] = "tag-{$tag->term_id}.php";
+		$templates[] = 'tag.php';
+
+		self::$request = $templates;
 	}
 
 	// attachment pages, not sure what to do with this.
 	// needs some additional logic so blueprint can handle
 	// all the different template types
 	function handle_attachment() {
-		self::$request = 'attachment.php';
-	}
+		
+		global $posts;
+		
+		$type = explode('/', $posts[0]->post_mime_type);
+		if ( $template = get_query_template($type[0]) )
+			return $template;
+		elseif ( $template = get_query_template($type[1]) )
+			return $template;
+		elseif ( $template = get_query_template("$type[0]_$type[1]") )
+			return $template;
+		else
 
-	// needs additional logic to handle different types of 
-	// post type archives. 
-	function handle_archive($template) {
-		self::$request = 'archive.php';
-		// return self::router('archive.php');
+		self::$request = $template;
 	}
 
 	// hooked to handle single templates
-	function handle_single($template) {
+	function handle_single() {
+
+		$object = get_queried_object();
+
+		$templates = array();
+
+		$templates[] = "single-{$object->post_type}.php";
+		$templates[] = "single.php";
 		
-		self::$request = 'single.php';
+		self::$request = $templates;
 		// return self::router('single.php');
 	}
 
@@ -280,10 +363,20 @@ class PLS_Route {
 		self::$request = $templates;
 	}
 
-	// hooked to handle page templates
-	function handle_category($template) {
-		self::$request = 'category.php';
+	function handle_taxonomy() {
+		$term = get_queried_object();
+		$taxonomy = $term->taxonomy;
+
+		$templates = array();
+
+		$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
+		$templates[] = "taxonomy-$taxonomy.php";
+		$templates[] = 'taxonomy.php';
+
+		self::$request = $templates;
 	}
+
+
 
 
 	/**
@@ -313,7 +406,7 @@ class PLS_Route {
 		// etc..
 		foreach ( (array) self::$request as $variation) {
 			$base = substr( basename( $variation), 0, -4 );	
-			$templates[] = sprintf( 'wrapper-%s.php', $variation );
+			$templates[] = sprintf( 'wrapper-%s', $variation );
 		}
 		
 		$templates[] ='wrapper.php';
