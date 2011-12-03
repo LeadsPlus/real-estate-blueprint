@@ -40,6 +40,7 @@ class PLS_Wrapping {
 	static $base;
 
 	static function wrap( $template ) {
+		
 		self::$main_template = $template;
 
 		self::$base = substr( basename( self::$main_template ), 0, -4 );
@@ -58,4 +59,4 @@ class PLS_Wrapping {
 		return locate_template( $templates );
 	}
 }
-add_filter( 'template_include', array( 'PLS_Wrapping', 'wrap' ) );
+// add_filter( 'template_include', array( 'PLS_Wrapping', 'wrap' ) );

@@ -8,7 +8,6 @@
  * @subpackage Template
  */
 ?>
-
 <?php get_template_part( 'loop', 'meta' ); // Loads the loop-meta.php template. ?>
 
 <?php get_template_part( 'loop', 'entries' ); ?>

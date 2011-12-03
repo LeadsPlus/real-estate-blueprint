@@ -40,42 +40,40 @@ function spine_prefix() {
 }
 
 // custom header
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/header.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/header.php' );
 
 // include our custom footer widget
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/footer.php' );
-PLS_Footer::init();
+// include_once( trailingslashit( TEMPLATEPATH ) . 'include/footer.php' );
+// PLS_Footer::init();
 
 // custom single property page
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-property-page.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-property-page.php' );
 
 // custom listings list
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-search-list.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-search-list.php' );
 
 // custom slideshow output
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-home-slideshow.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-home-slideshow.php' );
 
 // custom slideshow output
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-property-slideshow.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-property-slideshow.php' );
 
 // custom listings list on the homepage
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-home-list.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-home-list.php' );
 
 // custom listing widget
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-listings-widget.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-listings-widget.php' );
 
 // custom agent widget
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/agent-widget.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/agent-widget.php' );
 
 // include our custom simple search widget
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/simple-search.php' );
-PLS_Simple_Search::init();
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/simple-search.php' );
+// PLS_Simple_Search::init();
 
 // custom styles
-include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-styles.php' );
+@include_once( trailingslashit( TEMPLATEPATH ) . 'include/custom-styles.php' );
 
-
-include_once( trailingslashit( TEMPLATEPATH ) . 'spine/extensions/template-util.php' );
 
 //custom stylesheets
 add_action( 'template_redirect', 'pls_theme_styles' );

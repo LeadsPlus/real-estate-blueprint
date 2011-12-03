@@ -13,9 +13,7 @@
 <section class="left-content">
 
 	<section id="post-0" <?php post_class() ?>>
-
         <h2 class="error-404-title entry-title"><?php _e( 'Not Found', pls_get_textdomain() ); ?></h2>
-
 		<section class="entry-content">
  
             <p>

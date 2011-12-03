@@ -9,6 +9,5 @@
  * @subpackage Template
  */
 
-// PLS_Template::pls_get_template_part();
-
-// get_template_part( 'page-template-blog' );
+echo "Index hit!";
+PLS_Route::get_template_part( 'page-template-blog' );

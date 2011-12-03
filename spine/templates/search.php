@@ -10,10 +10,10 @@
  */
 ?>
 
-<?php get_template_part( 'loop', 'meta' ); // Loads the loop-meta.php template. ?>
+<?php PLS_Route::get_template_part( 'loop', 'meta' ); // Loads the loop-meta.php template. ?>
 
 <?php if ( have_posts() ) : ?>
-
+    
         <?php while ( have_posts() ) : the_post(); ?>
 
             <?php pls_do_atomic( 'before_entry' ); ?>
@@ -50,6 +50,6 @@
 
 <?php else : ?>
     
-    <?php get_template_part( 'loop', 'error' ); ?>
+    <?php PLS_Route::get_template_part( 'loop', 'error' ); ?>
 
 <?php endif; ?>
