@@ -21,7 +21,7 @@
  *
  * @package PlacesterSpine
  * @version 0.0.1 
- * @author Placester, Alex Ciobica
+ * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com TODO: Update
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -214,7 +214,10 @@ class Placester_Spine {
     function default_theme_support() {
 
         /** Add theme support for theme wrappers */
-        add_theme_support( 'pls-theme-wrappers' );
+        add_theme_support( 'pls-routing-util' );
+
+        /** Add theme support for theme wrappers */
+        // add_theme_support( 'pls-theme-wrappers' );
 
         /** Add theme support for menus */
         add_theme_support( 'pls-menus', array( 'primary', 'subsidiary' ) );
@@ -323,6 +326,9 @@ class Placester_Spine {
 	 * @since 0.0.1
 	 */
 	function extensions() {
+
+        /** Load the Routing Util extension if supported. */
+        require_if_theme_supports( 'pls-routing-util', trailingslashit ( PLS_EXT_DIR ) . 'routing-util.php' );
 
         /** Load the Slideshow extension if supported. */
         require_if_theme_supports( 'pls-slideshow', trailingslashit ( PLS_EXT_DIR ) . 'slideshow.php' );
