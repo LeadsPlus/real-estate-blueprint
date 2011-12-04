@@ -25,11 +25,24 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
             wp_enqueue_style( 'pls-plugin-nags', trailingslashit( PLS_CSS_URL ) . 'styles/plugin-nags.css' );
         }
 
-        wp_enqueue_style( 'normalize', trailingslashit( PLS_CSS_URL ) . 'styles/normalize.css' );
+        if ( get_theme_support( 'pls-default-normalize' ) ) {
+            wp_enqueue_style( 'normalize', trailingslashit( PLS_CSS_URL ) . 'styles/normalize.css' );
+        }
 
+        if ( get_theme_support( 'pls-default-960' ) ) {
+            wp_enqueue_style( 'pls-default-960', trailingslashit( PLS_CSS_URL ) . 'styles/960.css' );
+        }
         /** Include default style only if supported. */
-        if ( get_theme_support( 'pls-default-style' ) )
+        if ( get_theme_support( 'pls-default-style' ) ) {
             wp_enqueue_style( 'pls-default-style', trailingslashit( PLS_CSS_URL ) . 'styles/style.css' );
+        }
+            
+        /** Include default layout only if supported. */
+        if ( get_theme_support( 'pls-default-layout' ) ) {
+            wp_enqueue_style( 'pls-default-layout', trailingslashit( PLS_CSS_URL ) . 'styles/layout.css' );
+        }
+            
+
     }
 }
 
