@@ -23,7 +23,7 @@ class PLS_Debug {
     static $debug_messages = array();
     static $message_text = '';
 
-    static $show_debug = false;
+    static $show_debug = true;
 
     
 
@@ -41,7 +41,7 @@ class PLS_Debug {
         if (self::$show_debug) {
             self::assemble_messages();
             ?>
-            <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px">
+            <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px; color: black;">
                 <h4>Blueprint Debug Messages</h4>
                 <?php echo self::$message_text; ?>    
             </div>
