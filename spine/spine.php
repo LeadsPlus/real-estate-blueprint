@@ -223,7 +223,10 @@ class Placester_Spine {
         add_theme_support( 'pls-sidebars', array( 'primary', 'subsidiary' ) );
 
         // Adds default styling out of the box
+        add_theme_support( 'pls-default-normalize' );
+        add_theme_support( 'pls-default-960' );
         add_theme_support( 'pls-default-style' );
+        add_theme_support( 'pls-default-layout' );
         add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ) ) );
         add_theme_support( 'pls-theme-options' );
         add_theme_support( 'pls-image-util', array('fancybox') );
