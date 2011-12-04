@@ -4,11 +4,8 @@ PLS_Style::init();
 
 class PLS_Style {
 	
-	static $custom_styles = array();
 
-    static $style_options = array();
-
-    static $custom_options = array();
+    static $styles = array();
 
     /**
      *  grabs the option list and makes it available
@@ -16,23 +13,27 @@ class PLS_Style {
     static function init()
     {
 
-        include_once( trailingslashit( TEMPLATEPATH ) . 'options.php' );
+        // hooks create_css into head. create_css generates all
+        // the needed css for these options.
         add_filter('wp_head', array(__CLASS__, 'create_css') );		
-
+        
+        // bunddles all the options to the class so they can 
+        // have styles generated for them. 
         self::get_options();
 
     }
 
     static function get_options()
     {
-        $default_options = optionsframework_options();
-        self::$style_options = array_merge($default_options, self::$custom_options);
+        include( trailingslashit( TEMPLATEPATH ) . 'spine/options/init.php' );
+        // $default_options = optionsframework_options();
+        // self::$style_options = array_merge(self::$default_options, self::$custom_options);
     }
 
-    public static function add_option ($options = false)
+    public static function add ($options = false)
     {
         if ($options) {
-            self::$custom_options = array_merge(self::$custom_options, $options);
+            self::$styles[] =$options;
         }
     }
 
@@ -41,7 +42,7 @@ class PLS_Style {
         
         // groups all the styles by selector so they can 
         // be combine in a string, which is echo'd out. 
-        $sorted_selector_array = self::sort_by_selector(self::$style_options);
+        $sorted_selector_array = self::sort_by_selector(self::$styles);
 
         if ( empty($sorted_selector_array) ) {
             return false;
@@ -213,5 +214,11 @@ class PLS_Style {
         return false;
 
     }
+}
+
+// needed for the options framework. 
+// TODO: integrate this into the style class
+function optionsframework_options() {
+    return PLS_Style::$styles;
 }
 
