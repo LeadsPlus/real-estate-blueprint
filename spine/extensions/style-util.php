@@ -25,9 +25,9 @@ class PLS_Style {
 
     static function get_options()
     {
+        
+
         include( trailingslashit( TEMPLATEPATH ) . 'spine/options/init.php' );
-        // $default_options = optionsframework_options();
-        // self::$style_options = array_merge(self::$default_options, self::$custom_options);
     }
 
     public static function add ($options = false)
