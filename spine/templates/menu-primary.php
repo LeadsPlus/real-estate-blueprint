@@ -11,8 +11,7 @@
 if ( has_nav_menu( 'primary' ) ) : ?>
 
     <?php pls_do_atomic( 'before_menu_primary' ); ?>
-
-	<nav class="main-nav">
+	<nav class="main-nav grid_12 alpha">
 
         <?php pls_do_atomic( 'open_menu_primary' ); ?>
 
@@ -21,7 +20,6 @@ if ( has_nav_menu( 'primary' ) ) : ?>
         <?php pls_do_atomic( 'close_menu_primary' ); ?>
 
 	</nav><!-- #menu-primary .menu-container -->
-
     <?php pls_do_atomic( 'after_menu_primary' ); ?>
 
 <?php endif; ?>

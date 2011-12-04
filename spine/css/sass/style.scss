@@ -1,12 +1,45 @@
 /* style.scss */
 
-#navbar {
-  width: 80%;
-  height: 23px;
+@import "mixins";
 
-  ul { list-style-type: none; }
-  li {
-    float: left;
-    a { font-weight: bold; }
-  }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
 }
+header {
+	h1 {
+		font-size: 30px;
+		a {
+			text-decoration: none;
+			&:hover { color: #1982D1; }
+		}
+	}
+	h2 {
+		font-size: 14px;
+		color: #7A7A7A;
+		font-weight: normal;
+	}
+}
+nav {
+	border-top: 1px solid #DBDBDB;
+	border-bottom: 1px solid #DBDBDB;
+	ul {
+		li {
+			a {
+				font-size: 15px;
+				color: #555;
+			}
+			&:hover {
+				background-color: #EEE;
+				@include rounded-corners;
+			}
+		}	
+	}
+}
+
+
+

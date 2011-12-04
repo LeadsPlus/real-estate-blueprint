@@ -28,39 +28,31 @@
     <title><?php pls_document_title(); ?></title>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="all" />
-
-
+    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
     <?php wp_head(); ?>
-    <?php pls_do_atomic( 'custom_styles' ); ?>         
 </head>
 
 <body <?php body_class(); ?>>
-    
+
 	<?php pls_do_atomic( 'open_body' ); ?>
- 
-    <div id="container" class="clearfix">
+    <div id="container" class="container_12 clearfix">
 
-	<?php pls_do_atomic( 'before_header' ); ?>
+    	<?php pls_do_atomic( 'before_header' ); ?>
+        <header id="branding" role="banner">
 
-    <header role="banner">
+            <?php pls_do_atomic( 'open_header' ); ?>
+            <div class="wrapper">
+                <hgroup>
+                    <h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+                    <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
+                </hgroup>
 
-        <?php pls_do_atomic( 'open_header' ); ?>
-
-        <div class="wrapper">
-            <div id="branding">
-				<?php pls_site_title(); ?>
-                <?php pls_site_description(); ?>
+                <?php pls_do_atomic( 'header' ); ?>    
             </div>
 
-            <?php pls_do_atomic( 'header' ); ?>
-
-        </div><!-- .wrapper -->
-
-        <?php pls_do_atomic( 'close_header' ); ?>
-
-    </header>
+            <?php pls_do_atomic( 'close_header' ); ?>
+        </header>
 
     <?php pls_do_atomic( 'after_header' ); ?>
-
     <?php PLS_Route::get_template_part( 'menu', 'primary' ); // Loads the menu-primary.php template. ?>

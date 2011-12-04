@@ -167,28 +167,6 @@ function pls_get_no_plugin_placeholder( $context = '' ) {
     }
 }
 
-/**
- * Dynamic element to wrap the site title in. If it is the front page, wrap it in an <h1> element. One other 
- * pages, wrap it in a <div> element. 
- *
- * @param bool $echo Default true. Wether to return or echo.
- * @returns string The description html.
- * @since 0.0.1
- */
-function pls_site_title( $echo = true ) {
-
-	$tag = ( is_front_page() ) ? 'h1' : 'div';
-
-	if ( $title = get_bloginfo( 'name' ) )
-		$title = '<' . $tag . ' id="site-title"><a href="' . home_url() . '" title="' . esc_attr( $title ) . '" rel="home"><span>' . $title . '</span></a></' . $tag . '>';
-
-    $title = pls_apply_atomic( 'site_title', $title );
-
-    if ( $echo )
-        echo $title;
-    else 
-        return $title;
-}
 
 /**
  * Dynamic element to wrap the site description in. If it is the front page, wrap it in an <h2> element.  
@@ -222,12 +200,22 @@ function pls_site_description( $echo = true ) {
  */
 function pls_document_title( $echo = true ) {
 
-    $doc_title = wp_title('&laquo;', false, 'right') . get_bloginfo( 'name', 'display' ); 
+    /*
+     * Print the <title> tag based on what is being viewed.
+     */
+    global $page, $paged;
 
-    $doc_title = pls_apply_atomic( 'document_title', $doc_title );
+    wp_title( '|', true, 'right' );
 
-    if ( $echo )
-        echo $doc_title;
-    else 
-        return $doc_title;
+    // Add the blog name.
+    bloginfo( 'name' );
+
+    // Add the blog description for the home/front page.
+    $site_description = get_bloginfo( 'description', 'display' );
+    if ( $site_description && ( is_home() || is_front_page() ) )
+        echo " | $site_description";
+
+    // Add a page number if necessary:
+    if ( $paged >= 2 || $page >= 2 )
+        echo ' | ' . sprintf( __( 'Page %s', 'Real Estate Blueprint' ), max( $paged, $page ) );
 }

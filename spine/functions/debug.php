@@ -23,7 +23,7 @@ class PLS_Debug {
     static $debug_messages = array();
     static $message_text = '';
 
-    static $show_debug = true;
+    static $show_debug = false;
 
     
 
