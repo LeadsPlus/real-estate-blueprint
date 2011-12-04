@@ -302,6 +302,7 @@ function of_recognized_font_sizes() {
  */
 function of_recognized_font_faces() {
 	$default = array(
+		'default'     => 'default',
 		'arial'     => 'Arial',
 		'verdana'   => 'Verdana, Geneva',
 		'trebuchet' => 'Trebuchet',
@@ -326,6 +327,7 @@ function of_recognized_font_faces() {
  */
 function of_recognized_font_styles() {
 	$default = array(
+		'default'     => 'default',
 		'normal'      => 'Normal',
 		'italic'      => 'Italic',
 		'bold'        => 'Bold',

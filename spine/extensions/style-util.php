@@ -25,8 +25,6 @@ class PLS_Style {
 
     static function get_options()
     {
-        
-
         include( trailingslashit( TEMPLATEPATH ) . 'spine/options/init.php' );
     }
 
@@ -39,7 +37,7 @@ class PLS_Style {
 
     public static function create_css ()
     {
-        
+        PLS_Debug::add_msg('Styles being created');
         // groups all the styles by selector so they can 
         // be combine in a string, which is echo'd out. 
         $sorted_selector_array = self::sort_by_selector(self::$styles);
@@ -51,8 +49,9 @@ class PLS_Style {
 		$styles = '<style type="text/css">  ';
 
         foreach ( $sorted_selector_array as $selector => $options) {
-            $styles .= $selector . ' {';
 
+            $styles .= $selector . ' {';
+            PLS_Debug::add_msg($selector);
             foreach ($options as $index => $option) {
                 
                 $defaults = array(
@@ -162,7 +161,15 @@ class PLS_Style {
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
     {
-        return $style . ': ' . $value . ($important ? ' !important;' : '');
+        if (empty($value) || $value == 'default') {
+            return '';
+        } else {
+            // log what styles are created.
+            PLS_Debug::add_msg(array($style . ': ' . $value . ($important ? ' !important;' : '')));
+
+            return $style . ': ' . $value . ($important ? ' !important;' : '');            
+        }
+
     }
 
     // Takes an array with options that have various seelctors
