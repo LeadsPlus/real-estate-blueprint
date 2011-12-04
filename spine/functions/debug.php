@@ -10,12 +10,90 @@ function pls_dump() {
     PLS_Debug::dump( $args );
 }
 
+
+
+PLS_Debug::init();
 /**
  * A class that includes theme debugging functions
  *
  * @static
  */
 class PLS_Debug {
+
+    static $debug_messages = array();
+    static $message_text = '';
+
+    static $show_debug = false;
+
+    
+
+    static function init() {
+
+        add_action('wp_footer', array(__CLASS__, 'show_window' ) );
+
+    }
+
+
+
+    static function show_window () {
+        
+        // optionally show debug messages.  
+        if (self::$show_debug) {
+            self::assemble_messages();
+            ?>
+            <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px">
+                <h4>Blueprint Debug Messages</h4>
+                <?php echo self::$message_text; ?>    
+            </div>
+            <?php
+        }   
+
+    }
+    // adds routing messages for easy debugging.
+    // TODO: Move this to a global class so devs
+    // turn it on easily and see what's going on. 
+    static function add_msg ($new_message)
+    {
+        self::$debug_messages[] = $new_message;
+        
+    }
+
+
+    static function assemble_messages ($messages_array = false) {
+
+        self::$message_text = "<ul>";
+        
+        foreach ( (array) self::$debug_messages as $message) {
+            self::$message_text .= self::style_message($message);
+        }
+
+        self::$message_text .= "</ul>";
+    }
+
+    static function style_message ($message, $indent = false) {
+        
+        $styled_message = "<li>";
+        
+        if ($indent) {
+            $styled_message .= "<ul>";
+        }
+
+        if ( is_array($message) ) {
+            foreach ($message as $item) {
+                $styled_message .= self::style_message($item, true);
+            }
+        } else {
+            $styled_message .= $message;
+        }
+        
+        if ($indent) {
+            $styled_message .= "</ul>";
+        }
+        
+        $styled_message .= "</li>";
+
+        return $styled_message;
+    }
 
     /**
      * Dumps a variable for debugging purposes
@@ -45,4 +123,8 @@ class PLS_Debug {
             }
         }
     }
+
+
+
+//end class
 }

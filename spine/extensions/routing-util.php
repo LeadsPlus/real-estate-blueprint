@@ -4,15 +4,12 @@ PLS_Route::init();
 
 class PLS_Route {
 
-	static $show_debug = false;
 	static $request;
 
 	/**
 	 * Stores the base name of the template file; e.g. 'page' for 'page.php' etc.
 	 */
 	static $base;
-
-	static $debug_messages = array();
 
 	// hooks take care of everything, developer has full control over
 	// file system.
@@ -46,9 +43,9 @@ class PLS_Route {
 	{
 		
 		// debug messages;
-		self::add_msg("routing_logic used.....");
-		self::add_msg("We've recorded the request as: " . self::$request);
-		self::add_msg('Wordpress wants:' . $template);
+		PLS_Debug::add_msg("routing_logic used.....");
+		PLS_Debug::add_msg("We've recorded the request as: " . self::$request);
+		PLS_Debug::add_msg('Wordpress wants:' . $template);
 		
 		$new_template = '';
 
@@ -67,12 +64,6 @@ class PLS_Route {
 
 			$new_template = self::handle_dynamic();
 		}		
-
-		
-		// optionally show debug messages. 	
-		if (self::$show_debug) {
-				pls_dump(self::$debug_messages);
-		}	
 		
 		return $new_template;
 	}
@@ -86,15 +77,15 @@ class PLS_Route {
 	function router ($template_names, $load = false, $require_once = true) 
 	{
 
-		self::add_msg('[[Hit Router!]] Searching for: ');
-		self::add_msg($template_names);
+		PLS_Debug::add_msg('[[Hit Router!]] Searching for: ');
+		PLS_Debug::add_msg($template_names);
 
 		$located = self::locate_blueprint_template($template_names);
 
-		self::add_msg('Template Located: ' . $located);
+		PLS_Debug::add_msg('Template Located: ' . $located);
 
 		if ( $load && '' != $located  ) {
-			self::add_msg('[[Load Requested:]] ' . $located);
+			PLS_Debug::add_msg('[[Load Requested:]] ' . $located);
 			load_template( $located, $require_once);
 		}
 			
@@ -128,7 +119,7 @@ class PLS_Route {
 	// by dropping in a properly named file into the theme root. 
 	function get_template_part($slug, $name = null)
 	{
-		self::add_msg('Get Template Requested for: ' . $slug . ' and ' . $name);
+		PLS_Debug::add_msg('Get Template Requested for: ' . $slug . ' and ' . $name);
 		do_action( "get_template_part_{$slug}", $slug, $name );
 
 		$templates = array();
@@ -384,7 +375,7 @@ class PLS_Route {
 	 */
 	static function wrapper() {
 			
-		self::add_msg('Wrapper used..');
+		PLS_Debug::add_msg('Wrapper used..');
 
 		$base = '';
 		$templates = array();
@@ -412,14 +403,6 @@ class PLS_Route {
 		return self::router( $templates, true );
 	}
 
-
-	// adds routing messages for easy debugging.
-	// TODO: Move this to a global class so devs
-	// turn it on easily and see what's going on. 
-	static function add_msg ($new_message)
-	{
-		self::$debug_messages[] = $new_message;
-	}
 
 
 // end class	
