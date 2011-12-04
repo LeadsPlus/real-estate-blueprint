@@ -6,6 +6,10 @@ class PLS_Style {
 	
 	static $custom_styles = array();
 
+    static $style_options = array();
+
+    static $custom_options = array();
+
     /**
      *  grabs the option list and makes it available
      */
@@ -13,71 +17,75 @@ class PLS_Style {
     {
 
         include_once( trailingslashit( TEMPLATEPATH ) . 'options.php' );
-        add_filter('spine_custom_styles', array(__CLASS__, 'create_css') );		
+        add_filter('wp_head', array(__CLASS__, 'create_css') );		
 
+        self::get_options();
+
+    }
+
+    static function get_options()
+    {
+        $default_options = optionsframework_options();
+        self::$style_options = array_merge($default_options, self::$custom_options);
+    }
+
+    public static function add_option ($options = false)
+    {
+        if ($options) {
+            self::$custom_options = array_merge(self::$custom_options, $options);
+        }
     }
 
     public static function create_css ()
     {
-        $options = optionsframework_options();
+        
+        // groups all the styles by selector so they can 
+        // be combine in a string, which is echo'd out. 
+        $sorted_selector_array = self::sort_by_selector(self::$style_options);
 
-        if ( isset($options) && is_array($options)) {
+        if ( empty($sorted_selector_array) ) {
+            return false;
+        } 
 
-            $sorted_selector_array = array();
-            $sorted_selector_array = self::sort_by_selector($options);
+		$styles = '<style type="text/css">  ';
 
-            if ( empty($sorted_selector_array) ) {
-                return false;
-            } 
+        foreach ( $sorted_selector_array as $selector => $options) {
+            $styles .= $selector . ' {';
 
-    		$styles = '<style type="text/css">  ';
+            foreach ($options as $index => $option) {
+                
+                $defaults = array(
+                    "name" => "",
+                    "desc" => "",
+                    "id" => "",
+                    "std" => "",
+                    "selector" => "body",
+                    "style" => "",
+                    "type" => "",
+                    "important" => true,
+                    "default" => ""
+                );
 
-            foreach ($sorted_selector_array as $selector => $options) {
-                $styles .= $selector . ' {';
+                /** Merge the arguments with the defaults. */
+                $option = wp_parse_args( $option, $defaults );
 
-                foreach ($options as $index => $option) {
-                    
-                    $defaults = array(
-                        "name" => "",
-                        "desc" => "",
-                        "id" => "",
-                        "std" => "",
-                        "selector" => "body",
-                        "style" => "",
-                        "type" => "",
-                        "important" => true,
-                        "default" => ""
-                    );
-
-                    /** Merge the arguments with the defaults. */
-                    $option = wp_parse_args( $option, $defaults );
-
-                    // PLS_Debug::dump($option);
-
-                    if (!empty($option['style']) || self::is_special_case($option['type'])) {
-                        //if we have a style, then let's try to generate a stlye.
-                        $styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
-                        continue;
-                    } elseif (!empty($id)) {
-                        //try to use the id as the style... saves time for power devs.
-                        $styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);    
-                        continue;
-                    } else {
-                        continue;
-                    }
+                if (!empty($option['style']) || self::is_special_case($option['type'])) {
+                    //if we have a style, then let's try to generate a stlye.
+                    $styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
+                    continue;
+                } elseif (!empty($id)) {
+                    //try to use the id as the style... saves time for power devs.
+                    $styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);    
+                    continue;
+                } else {
+                    continue;
                 }
-                $styles .= '}';   
             }
-    		$styles .= '  </style>';
+            $styles .= '}';   
+        }
+		$styles .= '  </style>';
 
-
-    		return $styles;
-    		
-    	} else {
-    		// no options for some reason,
-    		// die quitely.
-    		return false;
-    	}
+		echo $styles;
     }
 
 	//for quick styling
