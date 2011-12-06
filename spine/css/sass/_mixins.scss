@@ -7,3 +7,9 @@
   -moz-border-radius: $radius;
   -webkit-border-radius: $radius;
 }
+
+@mixin blue-hover {
+	&:hover { 
+		color: #1982D1;
+	 }
+}

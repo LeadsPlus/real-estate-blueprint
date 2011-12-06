@@ -13,7 +13,7 @@ if ( is_active_sidebar( 'primary' ) ) : ?>
 
     <?php pls_do_atomic( 'before_sidebar_primary' ); ?>
 
-	<aside id="sidebar-primary" class="sidebar">
+	<aside id="sidebar-primary" class="grid_4 omega sidebar">
 
         <?php pls_do_atomic( 'open_sidebar_primary' ); ?>
 

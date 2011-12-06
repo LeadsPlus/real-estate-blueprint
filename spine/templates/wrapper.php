@@ -1,6 +1,6 @@
 <?php PLS_Route::handle_header(); ?>
  
-<div id="content" role="main">
+<div id="main_content"class="grid_8 alpha" role="main">
 
 	<?php  PLS_Route::handle_dynamic(); ?>
 

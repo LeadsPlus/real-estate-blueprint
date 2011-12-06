@@ -36,7 +36,7 @@
 <body <?php body_class(); ?>>
 
 	<?php pls_do_atomic( 'open_body' ); ?>
-    <div id="container" class="container_12 clearfix">
+    <div class="container_12 clearfix">
 
     	<?php pls_do_atomic( 'before_header' ); ?>
         <header id="branding" role="banner">
