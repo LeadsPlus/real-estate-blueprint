@@ -25,7 +25,7 @@ class PLS_Style {
 
     static function get_options()
     {
-        include( trailingslashit( TEMPLATEPATH ) . 'spine/options/init.php' );
+        include( trailingslashit( TEMPLATEPATH ) . 'blueprint/options/init.php' );
     }
 
     public static function add ($options = false)

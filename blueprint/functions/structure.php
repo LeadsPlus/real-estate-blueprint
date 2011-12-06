@@ -51,10 +51,10 @@ class PLS_Wrapping {
 		$templates = array( 'wrapper.php' );
 
         /**
-         *  Looks for wrapper-[base].php and then for spine/wrappers/wrapper-[base].php
+         *  Looks for wrapper-[base].php and then for blueprint/wrappers/wrapper-[base].php
          */
 		if ( self::$base )
-			array_unshift( $templates, sprintf( 'wrapper-%s.php', self::$base ), sprintf( '/spine/wrappers/wrapper-%s.php', self::$base ) );
+			array_unshift( $templates, sprintf( 'wrapper-%s.php', self::$base ), sprintf( '/blueprint/wrappers/wrapper-%s.php', self::$base ) );
 
 		return locate_template( $templates );
 	}

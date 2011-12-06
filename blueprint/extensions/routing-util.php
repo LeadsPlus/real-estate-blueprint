@@ -383,7 +383,7 @@ class PLS_Route {
 		// we need to construct a list of wrapper files
 		// we're looking for. The basic construction is:
 		// Looks for wrapper-[base].php and then 
-		// for spine/wrappers/wrapper-[base].php
+		// for blueprint/wrappers/wrapper-[base].php
 		// 
 		// This is done for situations when we can have multiple
 		// templates used for the same file. Like pages, archives,

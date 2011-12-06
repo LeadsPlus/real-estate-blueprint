@@ -168,8 +168,8 @@ class Placester_Spine {
         define( 'CHILD_URL', get_stylesheet_directory_uri() );
 
         /** Placester Spine directory path and url */
-        define( 'PLS_DIR', trailingslashit( PARENT_DIR ) . 'spine' );
-        define( 'PLS_URL', trailingslashit( PARENT_URL ) . 'spine' );
+        define( 'PLS_DIR', trailingslashit( PARENT_DIR ) . 'blueprint' );
+        define( 'PLS_URL', trailingslashit( PARENT_URL ) . 'blueprint' );
         
         /** Scripts directory path and url */
         define( 'PLS_JS_DIR', trailingslashit( PLS_DIR ) . 'js' );
