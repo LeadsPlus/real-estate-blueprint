@@ -9,7 +9,6 @@ Blueprint is actively maintained by Placester.
 # Installation 
 Drag the blueprint directory into your theme's main directory. Then include the file and initialize Blueprint with:
 
-	-
 	require_once( trailingslashit( TEMPLATEPATH ) . 'blueprint/blueprint.php' );
 	new Placester_Blueprint();
 
