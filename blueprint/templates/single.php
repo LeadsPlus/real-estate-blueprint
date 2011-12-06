@@ -4,7 +4,7 @@
  *
  * This template is used when a single post or page is viewed.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 

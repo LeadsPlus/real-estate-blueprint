@@ -5,7 +5,7 @@
  * or unregister individual sidebars. A theme must register support for 
  * 'pls-sidebars' to use them.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  */
 

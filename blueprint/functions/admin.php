@@ -3,7 +3,7 @@
  * The admin functions file. This file is for setting up any basic features 
  * and holding additional admin helper functions.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  */
 

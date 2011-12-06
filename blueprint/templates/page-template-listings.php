@@ -4,7 +4,7 @@
  *
  * This is the template for "Listings" search results page.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 ?>

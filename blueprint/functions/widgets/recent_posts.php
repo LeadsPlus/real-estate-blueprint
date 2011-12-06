@@ -2,7 +2,7 @@
 /**
  * A more powerfull recent posts widget.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Classes
  */
 

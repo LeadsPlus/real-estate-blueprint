@@ -4,7 +4,7 @@
  *
  * This is the home template.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 ?>

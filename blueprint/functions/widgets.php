@@ -2,7 +2,7 @@
 /**
  * Sets up the core framework's widgets. 
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  */
 

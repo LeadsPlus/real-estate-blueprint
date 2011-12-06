@@ -1,6 +1,6 @@
 <?php
 /**
- * Placester Spine - A Wordpress theme development framework that integrates 
+ * Placester Blueprint - A Wordpress theme development framework that integrates 
  * with the Placester Real Estate Pro plugin
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * Credit:
  * Big thanks to Justin Tadlock for inspiration with his HybridCore Framework.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @version 0.0.1 
  * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com TODO: Update
@@ -38,10 +38,10 @@
  *
  * @since 0.0.1
  */
-class Placester_Spine {
+class Placester_Blueprint {
 
 	/**
-     * Constructor method for the Placester_Spine class. This method adds other methods of 
+     * Constructor method for the Placester_Blueprint class. This method adds other methods of 
      * the class to specific hooks within WordPress. It controls the load order 
      * of the required files for running the framework.
 	 *
@@ -53,10 +53,10 @@ class Placester_Spine {
         global $i_am_a_placester_theme;
         $i_am_a_placester_theme = TRUE;
 
-        global $placester_spine;
+        global $placester_blueprint;
 
         /** Set the plugin error flag. */
-        $placester_spine->has_plugin_error = $this->_has_plugin_error(); 
+        $placester_blueprint->has_plugin_error = $this->_has_plugin_error(); 
 
 		/** Define the famework constants. */
 		add_action( 'after_setup_theme', array( &$this, 'constants' ), 1 );
@@ -156,7 +156,7 @@ class Placester_Spine {
 	 */
 	function constants() {
 
-        /** Placester Spine Version */
+        /** Placester Blueprint Version */
         define( 'PLS_VERSION', '0.0.1' );
 
         /** Parent theme directory path and url */
@@ -167,7 +167,7 @@ class Placester_Spine {
         define( 'CHILD_DIR', get_stylesheet_directory() );
         define( 'CHILD_URL', get_stylesheet_directory_uri() );
 
-        /** Placester Spine directory path and url */
+        /** Placester Blueprint directory path and url */
         define( 'PLS_DIR', trailingslashit( PARENT_DIR ) . 'blueprint' );
         define( 'PLS_URL', trailingslashit( PARENT_URL ) . 'blueprint' );
         

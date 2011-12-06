@@ -4,7 +4,7 @@
  * Theme * developers may use the default menu(s) provided by the framework 
  * within their own themes, decide not to use them, or register additional menus.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  */
 

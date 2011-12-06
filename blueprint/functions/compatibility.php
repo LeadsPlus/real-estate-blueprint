@@ -48,7 +48,7 @@ function pls_get_filter_form_extra( $form_dom_id ) {
  * that need to be available to theme developers are added to the plugin, they 
  * must be added to this class.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  * @since 0.0.1
  */
@@ -81,8 +81,8 @@ class PLS_Plugin_API {
 
             /** Assumes an exception with a private message is a timeout. */
             if ( ! isset( $e->message ) ) {
-                global $placester_spine;
-                $placester_spine->has_plugin_error = 'timeout';
+                global $placester_blueprint;
+                $placester_blueprint->has_plugin_error = 'timeout';
             }
 
             return false;

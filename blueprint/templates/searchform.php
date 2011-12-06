@@ -4,7 +4,7 @@
  *
  * The search form template displays the search form.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 ?>

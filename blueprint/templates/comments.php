@@ -5,7 +5,7 @@
  * Lists comments and calls the comment form. Individual comments have their own templates. The 
  * hierarchy for these templates is $comment_type.php, comment.php.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 

@@ -22,7 +22,7 @@ function pls_get_listings_list_ajax( $args = '' ) {
  * method implements filters that allow the theme developer to modify the 
  * returned data contextually.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @since 0.0.1
  */
 class PLS_Partials {

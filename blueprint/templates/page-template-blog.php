@@ -4,7 +4,7 @@
  *
  * This is the template for the blog page
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 ?>

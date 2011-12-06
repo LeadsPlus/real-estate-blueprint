@@ -4,7 +4,7 @@
  *
  * Loops over a list entries and displays them. It is include on the archive and blog pages.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 ?>

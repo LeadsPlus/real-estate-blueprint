@@ -1,7 +1,7 @@
 <?php
-/* Load the Placester Spine Theme Framework. */
-require_once( trailingslashit( TEMPLATEPATH ) . 'blueprint/spine.php' );
-new Placester_Spine();
+/* Load the Placester Blueprint Theme Framework. */
+require_once( trailingslashit( TEMPLATEPATH ) . 'blueprint/blueprint.php' );
+new Placester_Blueprint();
 
 /**
  * Any modifications to its behavior (add/remove support for features, define 
@@ -28,12 +28,12 @@ new Placester_Spine();
  * 	All add_filters that hook into events set by pls_do_atomic will need to catch
  * 	the prefix_event_name for example:
  *
- *	spine will mean that you need to hook against spine_close_header, or spine_open_header
+ *	blueprint will mean that you need to hook against blueprint_close_header, or blueprint_open_header
  */
 
-// add_filter( 'pls_prefix', 'spine_prefix' );
-    // function spine_prefix() {
-    //     return 'spine';
+// add_filter( 'pls_prefix', 'blueprint_prefix' );
+    // function blueprint_prefix() {
+    //     return 'blueprint';
 // }
 
 

@@ -3,7 +3,7 @@
  * The core functions file. This file should be loaded prior to any other 
  * files because its functions are needed to run the framework.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Functions
  */
 
@@ -12,18 +12,18 @@
  * 
  * Defines the 'pls_textdomain' filter.
  * 
- * @global object $placester_spine The global Placester Spine object.
+ * @global object $placester_blueprint The global Placester Blueprint object.
  * @return string The theme textdomain.
  * @since 0.0.1
  */
 function pls_get_textdomain() {
 
-    global $placester_spine;
+    global $placester_blueprint;
 
-    if ( empty( $placester_spine->textdomain ) )
-        $placester_spine->textdomain = sanitize_key( apply_filters( 'pls_textdomain', get_template() ) );
+    if ( empty( $placester_blueprint->textdomain ) )
+        $placester_blueprint->textdomain = sanitize_key( apply_filters( 'pls_textdomain', get_template() ) );
 
-    return $placester_spine->textdomain;
+    return $placester_blueprint->textdomain;
 }
 
 /**
@@ -34,12 +34,12 @@ function pls_get_textdomain() {
  */
 function pls_get_prefix() {
 
-    global $placester_spine;
+    global $placester_blueprint;
 
-    if ( empty( $placester_spine->prefix ) )
-        $placester_spine->prefix = apply_filters( 'pls_prefix', get_template() );
+    if ( empty( $placester_blueprint->prefix ) )
+        $placester_blueprint->prefix = apply_filters( 'pls_prefix', get_template() );
 
-    return $placester_spine->prefix;
+    return $placester_blueprint->prefix;
 }
 
 /**
@@ -115,20 +115,20 @@ function pls_apply_atomic( $tag = '', $value = '' ) {
 /**
  * Verifies if the there is a problem with retrieving data from the plugin. 
  *
- * Altough this information ca be determined by accessing the $placester_spine 
+ * Altough this information ca be determined by accessing the $placester_blueprint 
  * global directly, this method is prefered due to its upgragrade compatibility.
  * 
- * @global object $placester_spine The global Placester Spine object.
+ * @global object $placester_blueprint The global Placester Blueprint object.
  * @returns mixed Returns false if there is no problem, 'no_api_key',
  * 'no_plugin', or 'timeout' if there is.
  * @since 0.0.1
  */
 function pls_has_plugin_error() {
 
-    global $placester_spine;
+    global $placester_blueprint;
 
-    if ( isset( $placester_spine->has_plugin_error ) ) 
-        return $placester_spine->has_plugin_error;
+    if ( isset( $placester_blueprint->has_plugin_error ) ) 
+        return $placester_blueprint->has_plugin_error;
 
     return false;
 }

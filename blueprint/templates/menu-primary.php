@@ -4,7 +4,7 @@
  *
  * Displays the Primary Menu if it has active menu items.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
 

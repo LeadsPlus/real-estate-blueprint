@@ -3,7 +3,7 @@
  * Footer Template
  *
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Template
  */
  ?>

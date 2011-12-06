@@ -3,7 +3,7 @@
  * The listings widget allows theme developers to output a list of 
  * listings.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Classes
  */
 

@@ -2,7 +2,7 @@
 /**
  * The Agents widget gives users the ability to add agent information.
  *
- * @package PlacesterSpine
+ * @package PlacesterBlueprint
  * @subpackage Classes
  */
 
