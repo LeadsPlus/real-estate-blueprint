@@ -72,12 +72,16 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
 
             /** Register the script and style. */
             wp_register_script( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.jquery.min.js' , array( 'jquery' ), NULL, true );
+            wp_register_script( 'chosen-custom', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen-custom.js' , array( 'jquery' ), NULL, true );
             wp_register_style( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.css' );
 
             /** Enqueue scrip and styles only if supported. */
             if ( is_array( $js[0]['chosen'] ) ) {
-                if ( in_array( 'script', $js[0]['chosen'] ) )
+                if ( in_array( 'script', $js[0]['chosen'] ) ) {
                     wp_enqueue_script( 'chosen' );
+                    wp_enqueue_script( 'chosen-custom' );
+                }
+                    
 
                 /** Enqueue the chosen style */
                 if ( in_array( 'style', $js[0]['chosen'] ) )

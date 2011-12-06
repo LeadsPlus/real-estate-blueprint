@@ -13,7 +13,7 @@
 
     <?php pls_do_atomic( 'before_entry' ); ?>
     
-    <article class="grid_8 alpha" <?php post_class() ?> id="post-<?php the_ID(); ?>">
+    <article class="grid_8 alpha property-details" <?php post_class() ?> id="post-<?php the_ID(); ?>">
         <?php pls_do_atomic( 'open_entry' ); ?>
 
         <?php pls_do_atomic( 'before_entry_content' ); ?>
@@ -27,7 +27,7 @@
 
         <footer></footer>
 
-        <nav class="grid_8 alpha" >
+        <nav class="property-bottom-nav grid_8 alpha" >
             <div><?php previous_post_link( '&laquo; %link' ) ?></div>
             <div><?php next_post_link( '%link &raquo;' ) ?></div>
         </nav>

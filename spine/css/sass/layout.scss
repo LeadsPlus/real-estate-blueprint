@@ -35,6 +35,9 @@ aside {
 #main_content {
 	article {
 		padding: 30px 0px;
+		.property-details {
+			padding: 0px;
+		}
 		header, footer {
 			h3 {
 				margin: 10px 0 10px 0;
@@ -77,5 +80,37 @@ aside {
 				}						
 			}
 		}
+		.property-bottom-nav {
+			padding: 10px 0px;
+		}
 	}
 }
+/* search */
+.complex-search {
+	.pls_search_form {
+		float: left;
+		width: 300px;
+		margin: 10px 10px 0 0;	
+		select {
+			margin-left: 10px;
+			width: 190px;
+		}
+		.chzn-container {
+			float: right;
+		}
+	}
+	.pls_search_button {
+		float: right;
+		padding: 10px 30px;
+		margin: 10px 10px 0 0;
+	}
+}
+.sort_by_wrapper {
+	float: right;
+	margin: 30px 10px 0 0;
+	#sort-by {
+		width: 200px;
+			
+}	
+}
+

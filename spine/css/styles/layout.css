@@ -30,6 +30,8 @@ aside h3 {
 /* Main Content */
 #main_content article {
   padding: 30px 0px; }
+  #main_content article .property-details {
+    padding: 0px; }
   #main_content article header h3, #main_content article footer h3 {
     margin: 10px 0 10px 0; }
   #main_content article header ul, #main_content article footer ul {
@@ -57,3 +59,26 @@ aside h3 {
       overflow: hidden;
       float: left;
       margin-right: 10px; }
+  #main_content article .property-bottom-nav {
+    padding: 10px 0px; }
+
+/* search */
+.complex-search .pls_search_form {
+  float: left;
+  width: 300px;
+  margin: 10px 10px 0 0; }
+  .complex-search .pls_search_form select {
+    margin-left: 10px;
+    width: 190px; }
+  .complex-search .pls_search_form .chzn-container {
+    float: right; }
+.complex-search .pls_search_button {
+  float: right;
+  padding: 10px 30px;
+  margin: 10px 10px 0 0; }
+
+.sort_by_wrapper {
+  float: right;
+  margin: 30px 10px 0 0; }
+  .sort_by_wrapper #sort-by {
+    width: 200px; }
