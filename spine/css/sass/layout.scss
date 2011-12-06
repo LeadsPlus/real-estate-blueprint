@@ -38,13 +38,25 @@ aside {
 		header, footer {
 			h3 {
 				margin: 10px 0 10px 0;
-			}	
+			}
+			ul {
+				padding: 0px;
+				li {
+					float: left;
+					list-style-type: none;
+					padding-right: 5px;
+				}				
+			}
+
 		}
 		.entry-meta {
 			float: right;
 			a {
 				padding: 5px 10px;
 			}
-		}		
+		}
+		.outline {
+			padding: 10px;
+		}
 	}
 }

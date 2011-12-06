@@ -154,28 +154,78 @@ class PLS_Partials {
              * </section>
              * </code>
              */
-            $listing_html = pls_h(
-                'article',
-                pls_h_a( $listing_data->url, $listing_data->location->full_address ) .
-                pls_h( 
-                    'section', 
-                    array( 'class' => 'clearfix' ),
-                    pls_h(
-                        'div',
-                        array( 'class' => 'thumbs' ),
-                        $listing_data->images[0]->html
-                    ) . 
-                    pls_h(
-                        'div',
-                        array( 'class' => 'feat-txt' ),
-                        pls_h( 
-                            'div', 
-                            array( 'class' => 'meta' ),
-                            sprintf( '%1$s bed, %2$s baths for $%3$s. Available %4$s.', $listing_data->bedrooms, $listing_data->bathrooms, $listing_data->price, $listing_data->available_on ) ) .
-                        pls_h_a( $listing_data->url, __( 'Learn More', pls_get_textdomain() ) )
-                    )
-                )
-            );
+             ob_start();
+             ?>
+
+        <article class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
+            <header class="grid_8 alpha">
+                <h3><a href="<?php echo $listing_data->url; ?>" rel="bookmark" title="<?php echo $listing_data->location->full_address ?>"><?php echo $listing_data->location->full_address ?></a></h2>
+                <ul>
+                    <li>Beds: <?php echo $listing_data->bedrooms; ?>, </li>
+                    <li>Baths: <?php echo $listing_data->bathrooms; ?>, </li>
+                    <li>Half Baths: <?php echo $listing_data->half_baths; ?>, </li>
+                    <li>Price: <?php echo $listing_data->price; ?>, </li>
+                    <li>Available On: <?php echo $listing_data->available_on; ?>, </li>
+                </ul>
+            </header>
+            <div class="entry-summary grid_8 alpha">
+                <p>
+                    <?php if (is_array($listing_data->images)): ?>
+                        <div id="listing-thumbnail" class="grid_3 alpha">
+                            <div class="outline">
+                                <?php echo PLS_Image::load($listing_data->images[0]->url, array('resize' => array('w' => 200, 'h' => 200), 'fancybox' => true, 'as_html' => true)); ?>    
+                            </div>
+                        </div>
+                        <div id="listing-description" class="grid_5 omega">
+                            <?php echo substr($listing_data->description, 0, 300); ?>    
+                        </div>
+                    <?php else: ?>
+                        <div id="listing-description" class="grid_8 omega">
+                            <?php echo substr($listing_data->description, 0, 300); ?>    
+                        </div>
+                    <?php endif ?>
+                </p>                
+            </div><!-- .entry-summary -->
+            <div class="entry-meta">
+                <a class="more-link" href="<?php echo $listing_data->url; ?>">View Details</a>
+            </div><!-- .entry-meta -->
+            <footer class="grid_8 alpha">
+                
+                <ul>
+                    <li>This listing has: </li>
+                <?php foreach ($listing_data as $key => $value): ?>
+                    <li><?php echo $key; ?>,</li>
+                <?php endforeach ?>    
+                </ul>
+            </footer>
+        </article>
+
+
+             <?php
+             $listing_html = ob_get_clean();
+
+            // $listing_html = pls_h(
+            //     'article',
+            //     pls_h_a( $listing_data->url, $listing_data->location->full_address ) .
+            //     pls_h( 
+            //         'section', 
+            //         array( 'class' => 'clearfix' ),
+            //         pls_h(
+            //             'div',
+            //             array( 'class' => 'thumbs' ),
+            //             $listing_data->images[0]->html
+            //         ) . 
+            //         pls_h(
+            //             'div',
+            //             array( 'class' => 'feat-txt' ),
+            //             pls_h( 
+            //                 'div', 
+            //                 array( 'class' => 'meta' ),
+            //                 sprintf( '%1$s bed, %2$s baths for $%3$s. Available %4$s.', $listing_data->bedrooms, $listing_data->bathrooms, $listing_data->price, $listing_data->available_on ) ) .
+            //             pls_h_a( $listing_data->url, __( 'Learn More', pls_get_textdomain() ) )
+            //         )
+            //     )
+            // );
 
             /** Filter (pls_listing[_context]) the resulting html for a single listing. */
             $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );

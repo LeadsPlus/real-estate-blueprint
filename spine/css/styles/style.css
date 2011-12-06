@@ -78,3 +78,5 @@ aside {
       color: #2793e5; }
       #main_content article footer a:hover {
         text-decoration: underline; }
+  #main_content article .outline {
+    border: 1px solid #DBDBDB; }

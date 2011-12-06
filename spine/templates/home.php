@@ -14,5 +14,5 @@
 <div id="listing" class="grid_8 alpha">
 	<h2>Featured Listing List</h2>
 	<p> This will list out the details of up to 5 listings marked as "featured" in the listings tab of the Placester Plugin</p>
-    <?php echo pls_get_listings( "limit=5&is_featured=true&context=home&width=144&height=93" ) ?>
+    <?php echo pls_get_listings( "limit=5&is_featured=true&context=home" ) ?>
 </div>
