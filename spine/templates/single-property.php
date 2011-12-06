@@ -13,10 +13,8 @@
 
     <?php pls_do_atomic( 'before_entry' ); ?>
     
-    <article <?php post_class() ?> id="post-<?php the_ID(); ?>">
+    <article class="grid_8 alpha" <?php post_class() ?> id="post-<?php the_ID(); ?>">
         <?php pls_do_atomic( 'open_entry' ); ?>
-
-        <h3><?php get_template_part( 'loop', 'meta' ) ?></h3>
 
         <?php pls_do_atomic( 'before_entry_content' ); ?>
 
@@ -29,7 +27,7 @@
 
         <footer></footer>
 
-        <nav>
+        <nav class="grid_8 alpha" >
             <div><?php previous_post_link( '&laquo; %link' ) ?></div>
             <div><?php next_post_link( '%link &raquo;' ) ?></div>
         </nav>

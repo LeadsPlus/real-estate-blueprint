@@ -44,3 +44,16 @@ aside h3 {
       padding: 5px 10px; }
   #main_content article .outline {
     padding: 10px; }
+  #main_content article .property-image-gallery {
+    padding-left: 0px; }
+    #main_content article .property-image-gallery li {
+      float: left;
+      padding: 5px;
+      margin-right: 10px; }
+  #main_content article .details-list-txt ul {
+    padding-left: 0px; }
+    #main_content article .details-list-txt ul li {
+      width: 290px;
+      overflow: hidden;
+      float: left;
+      margin-right: 10px; }

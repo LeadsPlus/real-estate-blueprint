@@ -80,3 +80,6 @@ aside {
         text-decoration: underline; }
   #main_content article .outline {
     border: 1px solid #DBDBDB; }
+  #main_content article .property-image-gallery li {
+    list-style-type: none;
+    border: 1px solid #DBDBDB; }
