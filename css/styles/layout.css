@@ -26,6 +26,8 @@ nav {
 
 aside h3 {
   padding: 10px 0px; }
+aside .placester_search_widget select {
+  width: 200px; }
 
 /* Main Content */
 #main_content article {
