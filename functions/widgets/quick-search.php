@@ -23,10 +23,20 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         extract($args);
  
         $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
+
+        $search_form_filter = apply_filters('pls_widget_search_filter_string', 'context=listings
+                                                    &ajax=1
+                                                    &context=quick_search_widget
+                                                    &property_type=0
+                                                    &listing_types=0
+                                                    &zoning_types=0
+                                                    &purchase_types=0
+                                                    &states=0
+                                                    &zips=0');
         
-        echo PLS_Partials::get_listings_search_form( 'context=listings&ajax=1&context=listing_search');
+        echo PLS_Partials::get_listings_search_form($search_form_filter);
            
-        echo '<input type="submit" value="Search" /></form>' . $after_widget;    
+        echo $after_widget;    
     }
 
     function update($new_instance, $old_instance){

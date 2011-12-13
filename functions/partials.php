@@ -339,20 +339,20 @@ class PLS_Partials {
             'results_page_id' => get_page_by_title( 'listings' )->ID,
             'context' => '',
             'context_var' => null,
-            'bedrooms' => true,
-            'bathrooms' => true,
-            'price' => true,
-            'half_baths' => true,
-            'property_type' => true,
-            'listing_types'=> true,
-            'zoning_types' => true,
-            'purchase_types' => true,
-            'available_on' => true,
-            'cities' => true,
-            'states' => true,
-            'zips' => true,
-            'min_price' => true,
-            'max_price' => true
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'price' => 1,
+            'half_baths' => 1,
+            'property_type' => 1,
+            'listing_types'=> 1,
+            'zoning_types' => 1,
+            'purchase_types' => 1,
+            'available_on' => 1,
+            'cities' => 1,
+            'states' => 1,
+            'zips' => 1,
+            'min_price' => 1,
+            'max_price' => 1
 
         );
 
@@ -482,7 +482,7 @@ class PLS_Partials {
          */
 
         /** Add the bedrooms select element. */
-        if ($bathrooms) {
+        if ($bathrooms == 1) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'bedrooms' ) + $form_opt_attr['bedrooms'],
@@ -493,7 +493,7 @@ class PLS_Partials {
         
 
         /** Add the bathroms select element. */
-        if ($bathrooms) {
+        if ($bathrooms == 1) {
             $form_html['bathrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'bathrooms' ) + $form_opt_attr['bathrooms'],
@@ -503,7 +503,7 @@ class PLS_Partials {
         }
 
         /** Add the bathroms select element. */
-        if ($half_baths) {
+        if ($half_baths == 1) {
             $form_html['half_baths'] = pls_h( 
                 'select',
                 array( 'name' => 'half_baths' ) + $form_opt_attr['half_baths'],
@@ -514,7 +514,7 @@ class PLS_Partials {
         
 
         /** Add the property type select element. */
-        if ($property_type) {
+        if ($property_type == 1) {
             $form_html['property_type'] = pls_h(
                 'select',
                 array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
@@ -524,7 +524,7 @@ class PLS_Partials {
         }
 
         /** Add the listing type select element. */
-        if ($listing_types) {
+        if ($listing_types == 1) {
             $form_html['listing_types'] = pls_h(
                 'select',
                 array( 'name' => 'listing_types', 'multiple' => true ) + $form_opt_attr['listing_types'],
@@ -533,9 +533,8 @@ class PLS_Partials {
             );
         }
         
-
         /** Add the zoning type select element. */
-        if ($zoning_types) {
+        if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
                 array( 'name' => 'zoning_types', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
@@ -546,7 +545,7 @@ class PLS_Partials {
         
 
         /** Add the purchase type select element. */
-        if ($purchase_types) {
+        if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
                 array( 'name' => 'purchase_types', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
@@ -557,7 +556,7 @@ class PLS_Partials {
         
 
         /** Add the availability select element. */
-        if ($available_on) {
+        if ($available_on == 1) {
             $form_html['available_on'] = pls_h(
                 'select',
                 array( 'name' => 'available_on' ) + $form_opt_attr['available_on'],
@@ -568,7 +567,7 @@ class PLS_Partials {
         
                                     
         /** Add the cities select element. */
-        if ($cities) {
+        if ($cities == 1) {
             $form_html['cities'] = pls_h(
                 'select',
                 array( 'name' => 'location[city]' ) + $form_opt_attr['cities'],
@@ -578,7 +577,7 @@ class PLS_Partials {
         }
         
         /** Add the cities select element. */
-        if ($states) {
+        if ($states == 1) {
                 $form_html['states'] = pls_h(
                 'select',
                 array( 'name' => 'location[state]' ) + $form_opt_attr['states'],
@@ -589,7 +588,7 @@ class PLS_Partials {
         
 
         /** Add the cities select element. */
-        if ($zips) {
+        if ($zips == 1) {
             $form_html['zips'] = pls_h(
                 'select',
                 array( 'name' => 'location[zip]' ) + $form_opt_attr['zips'],
@@ -600,7 +599,7 @@ class PLS_Partials {
         
 
         /** Add the minimum price select element. */
-        if ($min_price) {
+        if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
                 'select',
                 array( 'name' => 'min_price' ) + $form_opt_attr['min_price'],
@@ -611,7 +610,7 @@ class PLS_Partials {
         
 
         /** Add the maximum price select element. */
-        if ($max_price) {
+        if ($max_price == 1) {
             $form_html['max_price'] = pls_h(
                 'select',
                 array( 'name' => 'max_price' ) + $form_opt_attr['max_price'],
