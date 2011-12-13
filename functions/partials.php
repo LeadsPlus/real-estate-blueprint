@@ -339,6 +339,21 @@ class PLS_Partials {
             'results_page_id' => get_page_by_title( 'listings' )->ID,
             'context' => '',
             'context_var' => null,
+            'bedrooms' => true,
+            'bathrooms' => true,
+            'price' => true,
+            'half_baths' => true,
+            'property_type' => true,
+            'listing_types'=> true,
+            'zoning_types' => true,
+            'purchase_types' => true,
+            'available_on' => true,
+            'cities' => true,
+            'states' => true,
+            'zips' => true,
+            'min_price' => true,
+            'max_price' => true
+
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -467,108 +482,144 @@ class PLS_Partials {
          */
 
         /** Add the bedrooms select element. */
-        $form_html['bedrooms'] = pls_h( 
-            'select',
-            array( 'name' => 'bedrooms' ) + $form_opt_attr['bedrooms'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['bedrooms'], "" )
-        );
+        if ($bathrooms) {
+            $form_html['bedrooms'] = pls_h( 
+                'select',
+                array( 'name' => 'bedrooms' ) + $form_opt_attr['bedrooms'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['bedrooms'], "" )
+                );
+        }
+        
 
         /** Add the bathroms select element. */
-        $form_html['bathrooms'] = pls_h( 
-            'select',
-            array( 'name' => 'bathrooms' ) + $form_opt_attr['bathrooms'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['bathrooms'], "" )
-        );
+        if ($bathrooms) {
+            $form_html['bathrooms'] = pls_h( 
+                'select',
+                array( 'name' => 'bathrooms' ) + $form_opt_attr['bathrooms'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['bathrooms'], "" )
+            );            
+        }
 
         /** Add the bathroms select element. */
-        $form_html['half_baths'] = pls_h( 
-            'select',
-            array( 'name' => 'half_baths' ) + $form_opt_attr['half_baths'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['half_baths'], "" )
-        );
+        if ($half_baths) {
+            $form_html['half_baths'] = pls_h( 
+                'select',
+                array( 'name' => 'half_baths' ) + $form_opt_attr['half_baths'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['half_baths'], "" )
+            );
+        }
+        
 
         /** Add the property type select element. */
-        $form_html['property_type'] = pls_h(
-            'select',
-            array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['property_type'], "" )
-        );
+        if ($property_type) {
+            $form_html['property_type'] = pls_h(
+                'select',
+                array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['property_type'], "" )
+            );
+        }
 
         /** Add the listing type select element. */
-        $form_html['listing_types'] = pls_h(
-            'select',
-            array( 'name' => 'listing_types', 'multiple' => true ) + $form_opt_attr['listing_types'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['listing_types'], "" )
-        );
+        if ($listing_types) {
+            $form_html['listing_types'] = pls_h(
+                'select',
+                array( 'name' => 'listing_types', 'multiple' => true ) + $form_opt_attr['listing_types'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['listing_types'], "" )
+            );
+        }
+        
 
         /** Add the zoning type select element. */
-        $form_html['zoning_types'] = pls_h(
-            'select',
-            array( 'name' => 'zoning_types', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['zoning_types'], "" )
-        );
+        if ($zoning_types) {
+            $form_html['zoning_types'] = pls_h(
+                'select',
+                array( 'name' => 'zoning_types', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['zoning_types'], "" )
+            );
+        }
+        
 
         /** Add the purchase type select element. */
-        $form_html['purchase_types'] = pls_h(
-            'select',
-            array( 'name' => 'purchase_types', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['purchase_types'], "" )
-        );
+        if ($purchase_types) {
+            $form_html['purchase_types'] = pls_h(
+                'select',
+                array( 'name' => 'purchase_types', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['purchase_types'], "" )
+            );
+        }
+        
 
         /** Add the availability select element. */
-        $form_html['available_on'] = pls_h(
-            'select',
-            array( 'name' => 'available_on' ) + $form_opt_attr['available_on'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['available_on'], "" )
-        );
+        if ($available_on) {
+            $form_html['available_on'] = pls_h(
+                'select',
+                array( 'name' => 'available_on' ) + $form_opt_attr['available_on'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['available_on'], "" )
+            );
+        }
+        
                                     
         /** Add the cities select element. */
-        $form_html['cities'] = pls_h(
-            'select',
-            array( 'name' => 'location[city]' ) + $form_opt_attr['cities'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['cities'], "", true )
-        );
+        if ($cities) {
+            $form_html['cities'] = pls_h(
+                'select',
+                array( 'name' => 'location[city]' ) + $form_opt_attr['cities'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['cities'], "", true )
+            );
+        }
+        
+        /** Add the cities select element. */
+        if ($states) {
+                $form_html['states'] = pls_h(
+                'select',
+                array( 'name' => 'location[state]' ) + $form_opt_attr['states'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['states'], "", true )
+            );
+        }
+        
 
         /** Add the cities select element. */
-        $form_html['states'] = pls_h(
-            'select',
-            array( 'name' => 'location[state]' ) + $form_opt_attr['states'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['states'], "", true )
-        );
-
-        /** Add the cities select element. */
-        $form_html['zips'] = pls_h(
-            'select',
-            array( 'name' => 'location[zip]' ) + $form_opt_attr['zips'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['zips'], "", true )
-        );
+        if ($zips) {
+            $form_html['zips'] = pls_h(
+                'select',
+                array( 'name' => 'location[zip]' ) + $form_opt_attr['zips'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['zips'], "", true )
+            );
+        }
+        
 
         /** Add the minimum price select element. */
-        $form_html['min_price'] = pls_h(
-            'select',
-            array( 'name' => 'min_price' ) + $form_opt_attr['min_price'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['min_price'] )
-        );
+        if ($min_price) {
+            $form_html['min_price'] = pls_h(
+                'select',
+                array( 'name' => 'min_price' ) + $form_opt_attr['min_price'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['min_price'] )
+            );
+        }
+        
 
         /** Add the maximum price select element. */
-        $form_html['max_price'] = pls_h(
-            'select',
-            array( 'name' => 'max_price' ) + $form_opt_attr['max_price'],
-            /** Get the list of options with the empty valued element selected. */
-            pls_h_options( $form_options['max_price'] )
-        );
+        if ($max_price) {
+            $form_html['max_price'] = pls_h(
+                'select',
+                array( 'name' => 'max_price' ) + $form_opt_attr['max_price'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['max_price'] )
+            );
+        }
+        
 
         $section_title = array(
             'bedrooms' => __( 'Bedrooms', pls_get_textdomain() ),
