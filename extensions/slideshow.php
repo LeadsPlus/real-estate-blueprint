@@ -145,7 +145,7 @@ class PLS_Slideshow {
             }
 
             /** Create the img element. */
-            $slide = pls_h_img( $slide_src, false, $extra_attr );
+            $slide = pls_h_img( PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height) ) ), false, $extra_attr );
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
