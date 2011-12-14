@@ -76,19 +76,19 @@ class PLS_Widget_Agent extends WP_Widget {
 
             /** Add the name. */
             if ( ! empty( $instance['name'] ) && ( ! empty( $agent_obj->first_name ) || ! empty( $agent_obj->last_name ) ) )
-                $agent_html['name'] = pls_h( 'h4', array( 'class' => 'fn' ), trim( $agent_obj->first_name . ' ' . $agent_obj->last_name ) );
-            
-            /** Add the description. */
-            if ( ! empty( $instance['description'] ) && ! empty( $agent_obj->description ) )
-                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent_obj->description );
+                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn' ), trim( $agent_obj->first_name . ' ' . $agent_obj->last_name ) );
 
             /** Add the email address. */
             if ( ! empty( $instance['email'] ) && ! empty( $agent_obj->email ) )
-                $agent_html['email'] = pls_h( 'p', array( 'class' => 'email' ), pls_h_a( "mailto:{$agent_obj->email}", $agent_obj->email ) );
+                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email' ), pls_h_a( "mailto:{$agent_obj->email}", $agent_obj->email ) );
 
             /** Add the phone number. */
             if ( ! empty( $instance['phone'] ) && ! empty( $agent_obj->phone ) )
-                $agent_html['phone'] = pls_h( 'p', array( 'class' => 'tel' ), $agent_obj->phone );
+                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone' ), $agent_obj->phone );
+
+            /** Add the description. */
+            if ( ! empty( $instance['description'] ) && ! empty( $agent_obj->description ) )
+                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent_obj->description );
 
             /** Combine the agent information. */
             $widget_body = pls_get_if_not_empty( $agent_html['photo'] ) . 
@@ -98,17 +98,13 @@ class PLS_Widget_Agent extends WP_Widget {
                 pls_get_if_not_empty( $agent_html['phone'] ); 
 
             /** Wrap the agent information in a section element. */
-            $widget_body = pls_h(
-                'section',
-                array( 'class' => 'widget-inner vcard' ),
-                /** Apply a filter on the combined list of agent information. */
-                apply_filters( 'pls_widget_agent_inner', $widget_body, $agent_html, $agent_obj, $instance, $widget_id )
-            );
+            $widget_body = apply_filters( 'pls_widget_agent_inner', $widget_body, $agent_html, $agent_obj, $instance, $widget_id );
 
             /** Apply a filter on the whole widget */
             echo apply_filters( 'pls_widget_agent', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $agent_html, $agent_obj,  $instance, $widget_id );
 
             /* Close the theme's widget wrapper. */
+            echo '<div class="clearfix"></div>';
             echo $after_widget;
 
         } elseif ( current_user_can( 'administrator' ) ) {
