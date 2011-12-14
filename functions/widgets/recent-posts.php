@@ -106,7 +106,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the post title. */
                 if ( ! empty( $instance['post_title'] ) )
-                    $post_html['post_title'] = pls_h( 'h4', pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ) ) );
+                    $post_html['post_title'] = pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title') );
 
                 /** Add the author. */
                 if ( ! empty( $instance['author'] ) )
@@ -134,11 +134,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 global $post;
                 /** Wrap the post in an article element and filter its contents. */
-                $post_item = pls_h(
-                    'article',
-                    array( 'class' => 'post-recent' ),
-                    apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id )
-                );
+                $post_item = apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id );
                  
                 /** Append the filtered post to the post list. */
                 $widget_body .= apply_filters( 'pls_widget_recent_posts_post_outer', $post_item, $post_html, $instance, $widget_id );
