@@ -34,7 +34,7 @@ class PLS_Quick_Search_Widget extends WP_Widget {
                                                     &zoning_types=0
                                                     &purchase_types=0
                                                     &zips=0');
-        echo '<section id="search">';
+           echo $before_widget;
             echo "<h3>" . $title . "</h3>";
             echo PLS_Partials::get_listings_search_form($search_form_filter_string);
         echo "</section>";   
