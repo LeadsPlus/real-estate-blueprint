@@ -68,6 +68,10 @@ class PLS_Image {
 	{
 		$new_image = false;
 
+		if ($args['fancybox']) {
+			unset($args['fancybox']);
+		}
+
         /** Define the default argument array. */
         $defaults = array(
             'resize' => array(
@@ -77,7 +81,10 @@ class PLS_Image {
             ),
             'as_html' => false,
             'as_url' => true,
-			'fancybox' => false
+			'fancybox' => array(
+				'trigger_class' => 'pls_use_fancy',
+				'additional_classes' => '' 
+			),
         );
 
         /** Merge the arguments with the defaults. */
@@ -116,6 +123,7 @@ class PLS_Image {
 	
 	static private function as_html ($old_image, $new_image = false, $args )
 	{
+
 		if ($args['fancybox']) {
 
 			/** Define the default argument array. */
@@ -131,13 +139,13 @@ class PLS_Image {
 	        );
 
 	        /** Merge the arguments with the defaults. */
-	        $fancy_args = wp_parse_args( $args['fancybox'], $fancy_defaults );
+	        $fancy_args = wp_parse_args( $args, $fancy_defaults );
 
 			ob_start();
 			// our basic fancybox html
 			?>
 				<a class="<?php echo $fancy_args['fancybox']['trigger_class'] . ' ' .  $fancy_args['fancybox']['additional_classes']; ?>" href="<?php echo $old_image; ?>" >
-					<img src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
+					<img style="width: <?php echo $fancy_args['resize']['w']; ?>px; height: <?php echo $fancy_args['resize']['w']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
 				</a>
 			<?php
 			
