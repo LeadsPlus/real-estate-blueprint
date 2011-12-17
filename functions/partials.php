@@ -1015,7 +1015,9 @@ function property_details_filter($content) {
 
         return $html;
         
-    }
+    } 
+
+    return $content;
     
 }
 
