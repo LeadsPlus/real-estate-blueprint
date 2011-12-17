@@ -90,9 +90,8 @@ class PLS_Image {
 
 		// use standard default image
 		if ( $old_image === '' || empty($old_image)) {
-			$new_image = PLS_EXT_DIR . "image-util/default-images/default.gif";
+			$old_image = trailingslashit(PLS_EXT_DIR) . "image-util/default-images/default.gif";
 		}
-
 		
 		if ( $args['resize']['w'] && $args['resize']['h'] ) {
 			$new_image = self::resize($old_image, array('w' => $args['resize']['w'], 'h' => $args['resize']['h'], 'method' => $args['resize']['method']));
