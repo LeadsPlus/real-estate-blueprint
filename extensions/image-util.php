@@ -163,7 +163,7 @@ class PLS_Image {
 
 				ob_start();
 				?>
-				<img src="<?php echo $old_image ?>" <?php echo $fancy_args['resize']['w'] ? ('width=' . $fancy_args['resize']['w']) : '' ?> <?php echo $fancy_args['resize']['h'] ? ('height=' . $fancy_args['resize']['h']) : '' ?> />
+				<img style="width: <?php echo $fancy_args['resize']['w']; ?>px; height: <?php echo $fancy_args['resize']['h']; ?>px; overflow: hidden;" src="<?php echo $old_image ?>" <?php echo $fancy_args['resize']['w'] ? ('width=' . $fancy_args['resize']['w']) : '' ?> <?php echo $fancy_args['resize']['h'] ? ('height=' . $fancy_args['resize']['h']) : '' ?> />
 				<?php
 				return trim(ob_get_clean());
 				
@@ -175,17 +175,18 @@ class PLS_Image {
 
 	static private function resize($imagePath,$opts=null)
 	{
-
+		
 		# start configuration
 		$cacheFolder = trailingslashit ( PLS_EXT_DIR ) . 'image-util/cache/'; # path to your cache folder, must be writeable by web server
 		$remoteFolder = trailingslashit ( PLS_EXT_DIR ) . 'image-util/remote/'; # path to the folder you wish to download remote images into
 		$quality = 90; # image quality to use for ImageMagick (0 - 100)
 
-		$cache_http_minutes = 20; 	# cache downloaded http images 20 minutes
+		$cache_http_minutes = 7200; 	# cache downloaded http images 20 minutes
 
 		// our api auto timstamps urls with a pid request, we just need to dump any get vars off the end
 		// of the request so they don't get saved in the image name (and then url encoded - which was a _nightmare_) 
-		$imagePath = explode('?', $imagePath);
+
+		$imagePath = explode('?', (string) $imagePath);
 		$imagePath = $imagePath[0];
 
 		## you shouldn't need to configure anything else beyond this point
