@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ajaxStop(function() {
 	/* Apply fancybox to multiple items */
 	
 	$("a.pls_use_fancy").fancybox({
