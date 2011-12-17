@@ -312,6 +312,9 @@ class Placester_Blueprint {
         /** Load the compatibility class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'compatibility.php' );
 
+        /** Load the formatting class. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'formatting.php' );
+
         /** Load the partials. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'partials.php' );
 
