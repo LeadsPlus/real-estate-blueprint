@@ -80,7 +80,9 @@ aside .placester_search_widget select {
   margin: 10px 10px 0 0; }
 
 .sort_by_wrapper {
-  float: right;
-  margin: 30px 10px 0 0; }
+  float: right; }
+  .sort_by_wrapper label {
+    float: left;
+    margin: 12px 10px 0 0; }
   .sort_by_wrapper #sort-by {
     width: 200px; }

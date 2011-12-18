@@ -111,11 +111,13 @@ aside {
 	}
 }
 .sort_by_wrapper {
+	label {
+		float: left;
+		margin: 12px 10px 0 0;
+	}
 	float: right;
-	margin: 30px 10px 0 0;
 	#sort-by {
 		width: 200px;
-			
 }	
 }
 
