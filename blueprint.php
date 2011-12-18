@@ -33,7 +33,7 @@
  * @package PlacesterBlueprint
  * @version 0.0.1 
  * @author Placester, Alex Ciobica, Matt Barba
- * @link http://placester.com TODO: Update
+ * @link http://placester.com/themes/blueprint/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
