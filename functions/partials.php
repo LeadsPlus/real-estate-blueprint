@@ -887,6 +887,7 @@ class PLS_Partials {
                 ),
             array('class' => 'sort_by_wrapper')
         );
+        $sort_by_html .= "<div class='clear'></div>";
 
         
         /** The loader div html. */
