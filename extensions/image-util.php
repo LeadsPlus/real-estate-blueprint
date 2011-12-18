@@ -68,7 +68,7 @@ class PLS_Image {
 	{
 		$new_image = false;
 
-		if ($args['fancybox']) {
+		if (isset($args['fancybox']) && $args['fancybox']) {
 			unset($args['fancybox']);
 		}
 
