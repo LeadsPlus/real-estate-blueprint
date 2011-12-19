@@ -993,7 +993,7 @@ function property_details_filter($content) {
 
             <div class="grid_8 alpha">
                 <h3>Property Map</h3>
-                <?php echo PLS_Maps::map($listing_data, array('lat'=>$listing_data['location']['coords']['latitude'], 'lng'=>$listing_data['location']['coords']['longitude'], 'width' => 620, 'height' => 250, 'zoom' => 16)); ?>
+                <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords']['latitude'], 'lng'=>$listing_data['location']['coords']['longitude'], 'width' => 620, 'height' => 250, 'zoom' => 16)); ?>
             </div>
 
             <div class="details-wrapper grid_8 alpha">
@@ -1014,7 +1014,7 @@ function property_details_filter($content) {
         <?php
         $html = ob_get_clean();
 
-        return $html;
+        return apply_filters('property_details_filter', $listing_data, $html);
         
     } 
 
