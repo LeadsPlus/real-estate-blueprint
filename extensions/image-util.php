@@ -79,11 +79,16 @@ class PLS_Image {
 				'h' => false,
 				'method' => 'auto'
             ),
+            'html' => array(
+        		'ref' => '',
+        		'rel' => '',
+        		'a_classes' => '',
+        		'img_classes' => ''
+	       	),
             'as_html' => false,
             'as_url' => true,
 			'fancybox' => array(
-				'trigger_class' => 'pls_use_fancy',
-				'additional_classes' => '' 
+				'trigger_class' => 'pls_use_fancy'
 			),
         );
 
@@ -106,9 +111,9 @@ class PLS_Image {
 		
 		if ( $args['fancybox'] || $args['as_html']) {
 			if ($new_image) {
-				$new_image = self::as_html($old_image, $new_image, array('fancybox' => $args['fancybox']));
+				$new_image = self::as_html($old_image, $new_image, $args);
 			} else {
-				$new_image = self::as_html($old_image, null, array('fancybox' => $args['fancybox'], 'resize' => array('w' => $args['resize']['w'], 'h' => $args['resize']['h'])));
+				$new_image = self::as_html($old_image, null, $args);
 			}
 		}
 
@@ -124,62 +129,28 @@ class PLS_Image {
 	static private function as_html ($old_image, $new_image = false, $args )
 	{
 
-		if ($args['fancybox']) {
+		extract( $args, EXTR_SKIP );
 
-			/** Define the default argument array. */
-	        $fancy_defaults = array(
-	        	'html' => array(
-	        		'ref' => '',
-	        		'rel' => '',
-	        		'classes' => ''
-		       	),
-				'fancybox' => array(
-					'trigger_class' => 'pls_use_fancy',
-				),
-				'resize' => array(
-					'w' => false,
-					'h' => false
-					)
-	        );
-
-	        /** Merge the arguments with the defaults. */
-	        $fancy_args = wp_parse_args( $args, $fancy_defaults );
+		if ($fancybox) {
 
 			ob_start();
 			// our basic fancybox html
 			?>
-				<a ref="" rel="" class="<?php echo $fancy_args['fancybox']['trigger_class'] . ' ' .  $fancy_defaults['html']['classes']; ?>" href="<?php echo $old_image; ?>" >
-					<img style="width: <?php echo $fancy_args['resize']['w']; ?>px; height: <?php echo $fancy_args['resize']['w']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
+				<a ref="" rel="" class="<?php echo $fancybox['trigger_class'] . ' ' .  $html['classes']; ?>" href="<?php echo $old_image; ?>" >
+					<img class="<?php echo $html['img_classes']; ?>" style="width: <?php echo $resize['w']; ?>px; height: <?php echo $resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
 				</a>
 			<?php
 			
 			return trim( ob_get_clean() );
 		} else {
 
-
-			if ($new_image) {
-				return '<img src="' . $new_image . '" />';				
-			} else {
-				
-				$fancy_defaults = array(
-				'fancybox' => array(
-					'trigger_class' => 'pls_use_fancy',
-					'additional_classes' => '' 
-				),
-				'resize' => array(
-					'w' => false,
-					'h' => false
-					)
-	        	);
-				$fancy_args = wp_parse_args( $args, $fancy_defaults );
-
-				ob_start();
-				?>
-				<img style="width: <?php echo $fancy_args['resize']['w']; ?>px; height: <?php echo $fancy_args['resize']['h']; ?>px; overflow: hidden;" src="<?php echo $old_image ?>" <?php echo $fancy_args['resize']['w'] ? ('width=' . $fancy_args['resize']['w']) : '' ?> <?php echo $fancy_args['resize']['h'] ? ('height=' . $fancy_args['resize']['h']) : '' ?> />
-				<?php
-				return trim(ob_get_clean());
-				
-			}
+			ob_start();
+			?>
+			<img class="<?php echo $html['img_classes']; ?>" style="width: <?php echo $resize['w']; ?>px; height: <?php echo $resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
+			<?php
+		
+			return trim(ob_get_clean());
+		
 
 		}
 		
