@@ -128,9 +128,13 @@ class PLS_Image {
 
 			/** Define the default argument array. */
 	        $fancy_defaults = array(
+	        	'html' => array(
+	        		'ref' => '',
+	        		'rel' => '',
+	        		'classes' => ''
+		       	),
 				'fancybox' => array(
 					'trigger_class' => 'pls_use_fancy',
-					'additional_classes' => '' 
 				),
 				'resize' => array(
 					'w' => false,
@@ -144,7 +148,7 @@ class PLS_Image {
 			ob_start();
 			// our basic fancybox html
 			?>
-				<a class="<?php echo $fancy_args['fancybox']['trigger_class'] . ' ' .  $fancy_args['fancybox']['additional_classes']; ?>" href="<?php echo $old_image; ?>" >
+				<a ref="" rel="" class="<?php echo $fancy_args['fancybox']['trigger_class'] . ' ' .  $fancy_defaults['html']['classes']; ?>" href="<?php echo $old_image; ?>" >
 					<img style="width: <?php echo $fancy_args['resize']['w']; ?>px; height: <?php echo $fancy_args['resize']['w']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
 				</a>
 			<?php
