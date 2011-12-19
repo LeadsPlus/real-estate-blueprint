@@ -1,8 +1,8 @@
 <?php 
 
-class PLS_Maps {
+class PLS_Map {
 	
-	static function map($listing, $args)
+	static function dynamic($listing, $args)
 	{
 
 		        /** Define the default argument array. */
@@ -11,7 +11,9 @@ class PLS_Maps {
         	'lng' => '71.03',
         	'zoom' => '8',
         	'width' => 300,
-        	'height' => 300
+        	'height' => 300,
+        	'id' => 'map_canvas',
+        	'class' => 'custom_google_map'
         );
 
         /** Merge the arguments with the defaults. */
@@ -33,7 +35,7 @@ class PLS_Maps {
 		      center: latlng,
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		    };
-		    var pls_google_map = new google.maps.Map(document.getElementById("map_canvas"),
+		    var pls_google_map = new google.maps.Map(document.getElementById("<?php echo $id ?>"),
 		        myOptions);
 			
 			var marker = new google.maps.Marker({
@@ -45,7 +47,7 @@ class PLS_Maps {
 		  
 		</script>
 		
-		<div id="map_canvas" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
+		<div class="<?php echo $class ?>" id="<?php echo $id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 		<?php
 		
 		return ob_get_clean();
