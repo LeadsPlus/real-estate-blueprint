@@ -198,6 +198,10 @@ class Placester_Blueprint {
         define( 'PLS_TPL_DIR', trailingslashit( PLS_DIR ) . 'templates' );
         define( 'PLS_TPL_URL', trailingslashit( PLS_URL ) . 'templates' );
 
+        /** Template directory path and url */
+        define( 'PLS_PAR_DIR', trailingslashit( PLS_DIR ) . 'partials' );
+        define( 'PLS_PAR_URL', trailingslashit( PLS_URL ) . 'partials' );
+
         /** Styles directory path and url */
         define( 'PLS_IMG_DIR', trailingslashit( PLS_DIR ) . 'i' );
         define( 'PLS_IMG_URL', trailingslashit( PLS_URL ) . 'i' );
