@@ -138,6 +138,7 @@ class PLS_Slideshow {
         /** Create the slideshow */
         foreach( $data['images'] as $index => $slide_src ) {
             $extra_attr = array();
+            $extra_attr['title'] = '';
 
             /** Save the caption and the title attribute for the img. */
             if ( isset( $data['captions'][$index] ) ) {
@@ -147,6 +148,8 @@ class PLS_Slideshow {
 
             /** Create the img element. */
             $slide = pls_h_img( PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false ) ), false, $extra_attr );
+            // $slide = PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'as_html' => true, 'html' => array('width' => $width, 'height' => $height, 'title' => $html['captions'], 'alt' => $extra_attr['title'] ) ) );
+            // pls_dump($slide);
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
