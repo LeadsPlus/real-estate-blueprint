@@ -238,13 +238,13 @@
 					case '.jpg':
 					case '.jpeg':
 						if (imagetypes() & IMG_JPG) {
-							imagejpeg($this->imageResized, $savePath, $imageQuality);
+							@imagejpeg($this->imageResized, $savePath, $imageQuality);
 						}
 						break;
 
 					case '.gif':
 						if (imagetypes() & IMG_GIF) {
-							imagegif($this->imageResized, $savePath);
+							@imagegif($this->imageResized, $savePath);
 						}
 						break;
 
@@ -256,7 +256,7 @@
 						$invertScaleQuality = 9 - $scaleQuality;
 
 						if (imagetypes() & IMG_PNG) {
-							 imagepng($this->imageResized, $savePath, $invertScaleQuality);
+							 @imagepng($this->imageResized, $savePath, $invertScaleQuality);
 						}
 						break;
 
