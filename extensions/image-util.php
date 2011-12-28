@@ -169,7 +169,7 @@ class PLS_Image {
 		$remoteFolder = trailingslashit ( PLS_EXT_DIR ) . 'image-util/remote/'; # path to the folder you wish to download remote images into
 		$quality = 90; # image quality to use for ImageMagick (0 - 100)
 
-		$cache_http_minutes = 7200; 	# cache downloaded http images 20 minutes
+		$cache_http_minutes = 10080; 	# cache downloaded http images 1 week
 
 		// our api auto timstamps urls with a pid request, we just need to dump any get vars off the end
 		// of the request so they don't get saved in the image name (and then url encoded - which was a _nightmare_) 
@@ -242,6 +242,15 @@ class PLS_Image {
 			if($newFileTime < $origFileTime):
 				$create = true;
 			endif;
+		endif;
+
+		if (is_writable($newPath) == false):
+
+			// if we can't create something new
+			// don't try.
+			// use the old image.
+			$create = false;
+			$newPath = $imagePath;
 		endif;
 
 		if($create == true):
