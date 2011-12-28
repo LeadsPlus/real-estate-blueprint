@@ -72,6 +72,8 @@ class PLS_Image {
 			unset($args['fancybox']);
 		}
 
+		// pls_dump($args);
+
         /** Define the default argument array. */
         $defaults = array(
             'resize' => array(
@@ -83,7 +85,9 @@ class PLS_Image {
         		'ref' => '',
         		'rel' => '',
         		'a_classes' => '',
-        		'img_classes' => ''
+        		'img_classes' => '',
+        		'alt' => '',
+        		'title' => ''
 	       	),
             'as_html' => false,
             'as_url' => true,
@@ -130,23 +134,24 @@ class PLS_Image {
 	{
 
 		extract( $args, EXTR_SKIP );
-
-		if ($fancybox) {
-
+		// echo 'here in html';
+		// pls_dump($args);
+		// pls_dump($html);
+		if ($fancybox && !$as_html) {
+			// echo 'fancybox';
 			ob_start();
 			// our basic fancybox html
 			?>
-				<a ref="" rel="" class="<?php echo $fancybox['trigger_class'] . ' ' .  $html['classes']; ?>" href="<?php echo $old_image; ?>" >
-					<img class="<?php echo $html['img_classes']; ?>" style="width: <?php echo $resize['w']; ?>px; height: <?php echo $resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
+				<a ref="" rel="" class="<?php echo @$fancybox['trigger_class'] . ' ' .  @$html['classes']; ?>" href="<?php echo @$old_image; ?>" >
+					<img alt="<?php echo @$html['alt']; ?>" title="<?php echo @$html['title'] ? $html['title'] : ''; ?>" class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" />
 				</a>
 			<?php
 			
 			return trim( ob_get_clean() );
 		} else {
-
 			ob_start();
 			?>
-			<img class="<?php echo $html['img_classes']; ?>" style="width: <?php echo $resize['w']; ?>px; height: <?php echo $resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="" />
+			<img width="<?php echo @$resize['w']; ?>px" height="<?php echo @$resize['h']; ?>px" class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="<?php echo @$html['alt']; ?>" title=<?php echo $html['title'] ?> />
 			<?php
 		
 			return trim(ob_get_clean());
@@ -197,8 +202,11 @@ class PLS_Image {
 				endif;
 			endif;
 			if($download_image == true):
-				$img = file_get_contents($imagePath);
-				file_put_contents($local_filepath,$img);
+				if($img = @file_get_contents($imagePath)):
+					if(@!file_put_contents($local_filepath,$img)):
+						return $imagePath;
+					endif;
+				endif;
 			endif;
 			$imagePath = $local_filepath;
 		endif;
