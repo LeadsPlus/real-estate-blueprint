@@ -46,7 +46,7 @@ class PLS_Map {
 
 	private static function assemble_map($args) {
 		
-		extract(self::process_defaults(&$args), EXTR_SKIP);
+		extract(self::process_defaults($args), EXTR_SKIP);
 		
 		ob_start();
 		?>
@@ -83,8 +83,8 @@ class PLS_Map {
 		/** Define the default argument array. */
 		$defaults = array(
         	'lat' => '42.37',
-        	'lng' => '71.03',
-        	'zoom' => '8',
+        	'lng' => '-71.03',
+        	'zoom' => '14',
         	'width' => 300,
         	'height' => 300,
         	'id' => 'map_canvas',
