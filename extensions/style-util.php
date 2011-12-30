@@ -133,7 +133,9 @@ class PLS_Style {
             foreach ($value as $key => $value) {
                 switch ($key) {
                         case 'size':
-                            $css_style .= self::make_style('font-size', $value, $important);
+                            if ($value != "9px") {
+                                $css_style .= self::make_style('font-size', $value, $important);
+                            }
                             break;
 
                         case 'face':
