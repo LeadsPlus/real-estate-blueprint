@@ -122,3 +122,15 @@ $imagepath =  trailingslashit( PLS_EXT_URL ) . 'options-framework/images/';
                 '2c-l-fixed' => $imagepath . '2cl.png',
                 '2c-r-fixed' => $imagepath . '2cr.png')
             ));
+    
+    PLS_Style::add(array(
+        "name" => "Theme Utilities",
+        "type" => "heading"));
+
+
+        PLS_Style::add(array(
+            "name" => "Display Theme Debug Messages",
+            "desc" => "Display the theme debug pannel at the bottom of all non-admin pages. Great for debugging issues with the themes.",
+            "id" => "display-debug-messages",
+            "std" => "0",
+            "type" => "checkbox"));

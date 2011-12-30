@@ -23,8 +23,6 @@ class PLS_Debug {
     static $debug_messages = array();
     static $message_text = '';
 
-    static $show_debug = false;
-
     
 
     static function init() {
@@ -37,8 +35,9 @@ class PLS_Debug {
 
     static function show_window () {
         
+        $show_debug = pls_get_option('display-debug-messages');
         // optionally show debug messages.  
-        if (self::$show_debug) {
+        if ($show_debug == 1) {
             self::assemble_messages();
             ?>
             <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px; color: black;">
