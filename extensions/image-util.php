@@ -74,30 +74,7 @@ class PLS_Image {
 
 		// pls_dump($args);
 
-        /** Define the default argument array. */
-        $defaults = array(
-            'resize' => array(
-            	'w' => false,
-				'h' => false,
-				'method' => 'auto'
-            ),
-            'html' => array(
-        		'ref' => '',
-        		'rel' => '',
-        		'a_classes' => '',
-        		'img_classes' => '',
-        		'alt' => '',
-        		'title' => ''
-	       	),
-            'as_html' => false,
-            'as_url' => true,
-			'fancybox' => array(
-				'trigger_class' => 'pls_use_fancy'
-			),
-        );
-
-        /** Merge the arguments with the defaults. */
-        $args = wp_parse_args( $args, $defaults );
+        $args = self::process_defaults($args);
 
 		// something is wrong with wp_parse_args
 		if ($args['resize'] && !isset($args['resize']['method'])) {
@@ -135,7 +112,6 @@ class PLS_Image {
 
 		extract( $args, EXTR_SKIP );
 		// echo 'here in html';
-		// pls_dump($args);
 		// pls_dump($html);
 		if ($fancybox && !$as_html) {
 			// echo 'fancybox';
@@ -285,6 +261,40 @@ class PLS_Image {
 		return str_replace(strtolower($_SERVER['DOCUMENT_ROOT']),'', strtolower($newPath));
 
 	}
-}
+
+	private static function process_defaults ($args) {
+		
+		/** Define the default argument array. */
+        $defaults = array(
+            'resize' => array(
+            	'w' => false,
+				'h' => false,
+				'method' => 'auto'
+            ),
+            'html' => array(
+        		'ref' => '',
+        		'rel' => '',
+        		'a_classes' => '',
+        		'img_classes' => '',
+        		'alt' => '',
+        		'title' => ''
+	       	),
+            'as_html' => false,
+            'as_url' => true,
+			'fancybox' => array(
+				'trigger_class' => 'pls_use_fancy'
+			),
+        );
+
+        /** Merge the arguments with the defaults. */
+        $args = wp_parse_args( $args, $defaults );
+        $args['resize'] = wp_parse_args( $args['resize'], $defaults['resize']);		
+        $args['html'] = wp_parse_args( $args['html'], $defaults['html']);
+
+        return $args;
+				
+	}
+}// end class 
+
 PLS_Image::init();
 ?>
