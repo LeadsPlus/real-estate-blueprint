@@ -25,4 +25,20 @@ if ( is_active_sidebar( 'primary' ) ) : ?>
 
     <?php pls_do_atomic( 'after_sidebar_primary' ); ?>
 
+<?php else: ?>
+
+    <?php pls_do_atomic( 'before_sidebar_primary' ); ?>
+
+	<aside id="sidebar-primary" class="grid_4 omega sidebar">
+
+        <?php pls_do_atomic( 'open_sidebar_primary' ); ?>
+
+        <?php PLS_Route::handle_default_sidebar(); ?>
+
+        <?php pls_do_atomic( 'close_sidebar_primary' ); ?>
+
+	</aside><!-- #sidebar-primary .aside -->
+
+    <?php pls_do_atomic( 'after_sidebar_primary' ); ?>
+	
 <?php endif; ?>

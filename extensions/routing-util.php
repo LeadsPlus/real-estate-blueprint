@@ -159,6 +159,14 @@ class PLS_Route {
 		return self::router('sidebar.php', true);
 	}
 
+	function handle_default_sidebar() {
+		// Sidebar is loaded directly rather then
+		// being set as a request and then looping
+		// the routing table.
+		//
+		return self::router('default-sidebar.php', true);
+	}
+
 	function handle_footer() {
 		// Footer is loaded directly rather then
 		// being set as a request and then looping

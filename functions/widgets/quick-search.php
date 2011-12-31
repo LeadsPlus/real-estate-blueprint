@@ -19,7 +19,10 @@ class PLS_Quick_Search_Widget extends WP_Widget {
     }
 
     function widget($args, $instance) {
-        extract($args);
+
+        list($args, $instance) = self::process_defaults($args, $instance);
+
+        extract( $args, EXTR_SKIP );
  
         $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
 
@@ -57,4 +60,32 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         echo '<p><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
     }
 
-}
+    function process_defaults ($args, $instance) {
+
+        /** Define the default argument array. */
+        $arg_defaults = array(
+            'title' => 'Have any questions?',
+            'before_title' => '<h3>',
+            'after_title' => '</h3>',
+            'before_widget' => '<section id="pls-quick-search-3" class="widget pls-quick-search widget-pls-quick-search">',
+            'after_widget' => '</section>',
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $args = wp_parse_args( $args, $arg_defaults );
+
+
+        /** Define the default argument array. */
+        $instance_defaults = array(
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $instance = wp_parse_args( $instance, $instance_defaults );
+
+
+        return array($args, $instance);
+    }
+
+} //end of class

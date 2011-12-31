@@ -51,6 +51,8 @@ class PLS_Widget_Listings extends WP_Widget {
 	 */
 	function widget( $args, $instance ) {
 
+        list($args, $instance) = self::process_defaults($args, $instance);
+
         /** Extract the arguments into separate variables. */
 		extract( $args, EXTR_SKIP );
 
@@ -260,4 +262,36 @@ class PLS_Widget_Listings extends WP_Widget {
             ) 
         ); 
 	}
-}
+
+    function process_defaults ($args, $instance) {
+
+        /** Define the default argument array. */
+        $arg_defaults = array(
+            'title' => 'Have any questions?',
+            'before_title' => '<h3>',
+            'after_title' => '</h3>',
+            'before_widget' => '<section id="pls-listings-3" class="widget pls-listings widget-pls-listings">',
+            'after_widget' => '</section>',
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $args = wp_parse_args( $args, $arg_defaults );
+
+
+        /** Define the default argument array. */
+        $instance_defaults = array(
+            'placeholder' => '',
+            'type' => '',
+            'height' => '',
+            'width' => '',
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $instance = wp_parse_args( $instance, $instance_defaults );
+
+
+        return array($args, $instance);
+    }
+} // end of class

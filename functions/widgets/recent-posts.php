@@ -66,6 +66,8 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
         /** Start output buffering. */
         ob_start();
 
+
+        list($args, $instance) = self::process_defaults($args, $instance);
         /** Extract the arguments into separate variables. */
 		extract( $args, EXTR_SKIP );
 
@@ -346,4 +348,39 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             // ) 
         ); 
 	}
-}
+
+    function process_defaults ($args, $instance) {
+
+        /** Define the default argument array. */
+        $arg_defaults = array(
+            'title' => 'Have any questions?',
+            'before_title' => '<h3>',
+            'after_title' => '</h3>',
+            'before_widget' => '<section id="pls-recent-posts-3" class="widget pls-recent-posts widget-pls-recent-posts">',
+            'after_widget' => '</section>',
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $args = wp_parse_args( $args, $arg_defaults );
+
+
+        /** Define the default argument array. */
+        $instance_defaults = array(
+            'photo' => true,
+            'name' => true,
+            'description' => true,
+            'email' => true,
+            'phone' => true,
+            'width' => 100,
+            'height' => 75,
+            'widget_id' => ''
+        );
+
+        /** Merge the arguments with the defaults. */
+        $instance = wp_parse_args( $instance, $instance_defaults );
+
+
+        return array($args, $instance);
+    }
+} // end of class
