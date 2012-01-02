@@ -33,21 +33,28 @@ class PLS_Partials {
         // all the includes
         include_once( trailingslashit(PLS_PAR_DIR) . 'custom-ajax-listings-list.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'custom-property-details.php');
+        include_once( trailingslashit(PLS_PAR_DIR) . 'custom-listings-widget.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-cities.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-listings-ajax.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-listings-search-form.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-listings.php');
 
-        // all the hooks
+        // all the hooks, all partial files can be found in blueprint/partials/{file}.php
         add_filter('the_content', array( __CLASS__ ,'custom_property_details_html_filter'), 11);
         add_filter( 'pls_listings_list_ajax_item_html_listings_search', array( __CLASS__, 'custom_ajax_listings_html_filter'), 10, 3 );
+        add_filter( 'pls_listing_get_listings_widget', 'custom_widget_html_filter', 10, 2);
     }
 
     // wrapper for calling get listings directly. 
     static function get_listings( $args = '' ) {
 
-        
         return PLS_Partial_Get_Listings::init($args);
+    }
+
+    // wrapper for calling get listings directly. 
+    static function get_listings_widget( $args = array() ) {
+
+        return self::get_listings($args);
     }
 
     // wrapper for get cities api request

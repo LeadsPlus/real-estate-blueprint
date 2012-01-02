@@ -88,7 +88,10 @@ class PLS_Widget_Listings extends WP_Widget {
         if ( empty( $instance['placeholder'] ) )
             unset( $listings_args['placeholder_img'] );
 
-        $widget_body = PLS_Partials::get_listings( $listings_args );
+        // set context so filter can customize the layout
+        $listings_args['context'] = 'get_listings_widget';
+
+        $widget_body = PLS_Partials::get_listings_widget( $listings_args );
 
         /** Apply a filter on the whole widget */
         echo apply_filters( 'pls_widget_listings', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $instance, $widget_id, $listings_args );
