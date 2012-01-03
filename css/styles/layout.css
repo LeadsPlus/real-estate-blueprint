@@ -1,88 +1,51 @@
-#branding {
-  margin-top: 50px; }
-  #branding h1 {
-    margin-bottom: 0px;
-    /* improper reset */
-    padding: 0px;
-    /* improper reset */ }
-  #branding h2 {
-    margin-top: 0px;
-    /* improper reset */
-    margin-bottom: 0px;
-    /* improper reset */ }
+/*
+Syntax error: Invalid CSS after "}": expected selector or at-rule, was "`"
+        on line 131 of sass/layout.scss
 
-nav {
-  margin: 30px 0px; }
-  nav ul {
-    padding-left: 10px;
-    float: left; }
-    nav ul li {
-      float: left;
-      width: auto; }
-      nav ul li a {
-        position: relative;
-        display: block;
-        padding: 5px 10px; }
+126: 	}
+127: 	float: right;
+128: 	#sort-by {
+129: 		width: 200px;
+130: }	
+131: }`
 
-aside h3 {
-  padding: 10px 0px; }
-aside .placester_search_widget select {
-  width: 200px; }
-
-/* Main Content */
-#main_content article {
-  padding: 30px 0px; }
-  #main_content article .property-details {
-    padding: 0px; }
-  #main_content article header h3, #main_content article footer h3 {
-    margin: 10px 0 10px 0; }
-  #main_content article header ul, #main_content article footer ul {
-    padding: 0px; }
-    #main_content article header ul li, #main_content article footer ul li {
-      float: left;
-      list-style-type: none;
-      padding-right: 5px; }
-  #main_content article .entry-meta {
-    float: right; }
-    #main_content article .entry-meta a {
-      padding: 5px 10px; }
-  #main_content article .outline {
-    padding: 10px; }
-  #main_content article .property-image-gallery {
-    padding-left: 0px; }
-    #main_content article .property-image-gallery li {
-      float: left;
-      padding: 5px;
-      margin-right: 10px; }
-  #main_content article .details-list-txt ul {
-    padding-left: 0px; }
-    #main_content article .details-list-txt ul li {
-      width: 290px;
-      overflow: hidden;
-      float: left;
-      margin-right: 10px; }
-  #main_content article .property-bottom-nav {
-    padding: 10px 0px; }
-
-/* search */
-.complex-search .pls_search_form {
-  float: left;
-  width: 300px;
-  margin: 10px 10px 0 0; }
-  .complex-search .pls_search_form select {
-    margin-left: 10px;
-    width: 190px; }
-  .complex-search .pls_search_form .chzn-container {
-    float: right; }
-.complex-search .pls_search_button {
-  float: right;
-  padding: 10px 30px;
-  margin: 10px 10px 0 0; }
-
-.sort_by_wrapper {
-  float: right; }
-  .sort_by_wrapper label {
-    float: left;
-    margin: 12px 10px 0 0; }
-  .sort_by_wrapper #sort-by {
-    width: 200px; }
+Backtrace:
+sass/layout.scss:131
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/scss/parser.rb:926:in `expected'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/scss/parser.rb:872:in `expected'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/scss/parser.rb:29:in `parse'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/engine.rb:327:in `_to_tree'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/engine.rb:300:in `_render'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/engine.rb:247:in `render'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:339:in `update_stylesheet'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:202:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:200:in `each'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:200:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:293:in `watch'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/path.rb:73:in `call'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/path.rb:73:in `run_callback'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/path.rb:55:in `callback_action'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/path.rb:35:in `update'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/state/file.rb:19:in `refresh'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/backends/polling.rb:17:in `run'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/backends/polling.rb:17:in `each'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/backends/polling.rb:17:in `run'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/backends/polling.rb:15:in `loop'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/backends/polling.rb:15:in `run'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm/monitor.rb:26:in `run'
+/Library/Ruby/Gems/1.8/gems/fssm-0.2.7/lib/fssm.rb:20:in `monitor'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin/compiler.rb:265:in `watch'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin.rb:107:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/plugin.rb:107:in `method_missing'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/exec.rb:421:in `watch_or_update'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/exec.rb:302:in `process_result'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/exec.rb:41:in `parse'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/../lib/sass/../sass/exec.rb:21:in `parse!'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.11/bin/sass:8
+/usr/bin/sass:19:in `load'
+/usr/bin/sass:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"}\": expected selector or at-rule, was \"`\"\A         on line 131 of sass/layout.scss\A \A 126: 	}\A 127: 	float: right;\A 128: 	#sort-by {\A 129: 		width: 200px;\A 130: }	\A 131: }`"; }

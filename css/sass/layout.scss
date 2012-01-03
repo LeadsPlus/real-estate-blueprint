@@ -90,6 +90,15 @@ aside {
 		}
 	}
 }
+
+/* default get listings list */
+.listing-item {
+    .listing-attributes {
+        margin-left: 10px
+    }
+}
+
+
 /* search */
 .complex-search {
 	.pls_search_form {
@@ -119,5 +128,5 @@ aside {
 	#sort-by {
 		width: 200px;
 }	
-}
+}`
 
