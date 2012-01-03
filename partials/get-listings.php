@@ -117,11 +117,11 @@ class PLS_Partial_Get_Listings {
                 <!-- Display Listings -->
                 <?php if (!empty($listing_data->description)): ?>
                     <ul>
-                        <li>Beds: <?php echo $listing_data->bedrooms; ?>, </li>
-                        <li>Baths: <?php echo $listing_data->bathrooms; ?>, </li>
-                        <li>Half Baths: <?php echo $listing_data->half_baths; ?>, </li>
-                        <li>Price: <?php echo $listing_data->price; ?>, </li>
-                        <li>Available On: <?php echo $listing_data->available_on; ?>, </li>
+                        <li>Beds: <?php echo @$listing_data->bedrooms; ?>, </li>
+                        <li>Baths: <?php echo @$listing_data->bathrooms; ?>, </li>
+                        <li>Half Baths: <?php echo @$listing_data->half_baths; ?>, </li>
+                        <li>Price: <?php echo @$listing_data->price; ?>, </li>
+                        <li>Available On: <?php echo @$listing_data->available_on; ?>, </li>
                     </ul>    
                 <?php endif ?>
             </header>
@@ -144,11 +144,11 @@ class PLS_Partial_Get_Listings {
                     <?php else: ?>
                         <div class="basic-details">
                             <h3>Basic Details</h3>
-                            <p>Beds: <?php echo $listing_data->bedrooms; ?></p>
-                            <p>Baths: <?php echo $listing_data->bathrooms; ?></p>
-                            <p>Half Baths: <?php echo $listing_data->half_baths; ?></p>
-                            <p>Price: <?php echo $listing_data->price; ?></p>
-                            <p>Available On: <?php echo $listing_data->available_on; ?></p>
+                            <p>Beds: <?php echo @$listing_data->bedrooms; ?></p>
+                            <p>Baths: <?php echo @$listing_data->bathrooms; ?></p>
+                            <p>Half Baths: <?php echo @$listing_data->half_baths; ?></p>
+                            <p>Price: <?php echo @$listing_data->price; ?></p>
+                            <p>Available On: <?php echo @$listing_data->available_on; ?></p>
                         </div>
                     <?php endif ?>
                     <div class="actions">
