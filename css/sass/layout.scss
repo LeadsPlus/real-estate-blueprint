@@ -1,3 +1,5 @@
+@import "mixins";
+
 #branding {
 	margin-top: 50px;
 	h1 {
@@ -93,9 +95,44 @@ aside {
 
 /* default get listings list */
 .listing-item {
-    .listing-attributes {
-        margin-left: 10px
+    header {
+        padding: 10px 0px;
     }
+    .listing-thumbnail {
+        float: left;
+        width: 270px;
+   }
+    .basic-details {
+        width: 250px;
+        float: left;
+        padding-left: 15px;
+        h3 {
+            margin-top: 0px;
+            color: #333;
+            font-weight: normal;
+        }
+        p {
+            margin: 3px 0px;
+        }
+    }
+    .actions {
+        width: 330px;
+        padding-right: 5px;
+        float: left;
+        margin-top: 10px;
+        a {
+            float: right;
+            @include rounded-corners;
+            padding: 10px;
+            background-color: #EEE;
+        }
+        a:hover {
+            background-color: #5e5e5e;
+            color: white;
+        }
+
+    }
+
 }
 
 
@@ -128,5 +165,5 @@ aside {
 	#sort-by {
 		width: 200px;
 }	
-}`
+}
 

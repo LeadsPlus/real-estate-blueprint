@@ -126,43 +126,36 @@ class PLS_Partial_Get_Listings {
                 <?php endif ?>
             </header>
             <div class="listing-item-content grid_8 alpha">
-                <p>
+                <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
                     <?php if (is_array($listing_data->images)): ?>
-                        <div id="listing-thumbnail" class="grid_3 alpha">
+                        <div id="listing-thumbnail" class="listing-thumbnail">
                             <div class="outline">
-                                <?php echo PLS_Image::load($listing_data->images[0]->url, array('resize' => array('w' => 200, 'h' => 200), 'fancybox' => true, 'as_html' => true)); ?>    
+                                <?php echo PLS_Image::load($listing_data->images[0]->url, array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
                             </div>
                         </div>
                     <?php endif ?>
-                        
+
                     <!-- if we don't have a description, display property details -->
                     <?php if (!empty($listing_data->description)): ?>
                         <div id="listing-description" class="grid_8 omega">
-                            <?php echo substr($listing_data->description, 0, 300); ?>    
-                        </div>                        
+                            <?php echo substr($listing_data->description, 0, 300); ?>
+                        </div>
                     <?php else: ?>
-                        <ul>
-                            <li>Beds: <?php echo $listing_data->bedrooms; ?>, </li>
-                            <li>Baths: <?php echo $listing_data->bathrooms; ?>, </li>
-                            <li>Half Baths: <?php echo $listing_data->half_baths; ?>, </li>
-                            <li>Price: <?php echo $listing_data->price; ?>, </li>
-                            <li>Available On: <?php echo $listing_data->available_on; ?>, </li>
-                        </ul>    
+                        <div class="basic-details">
+                            <h3>Basic Details</h3>
+                            <p>Beds: <?php echo $listing_data->bedrooms; ?></p>
+                            <p>Baths: <?php echo $listing_data->bathrooms; ?></p>
+                            <p>Half Baths: <?php echo $listing_data->half_baths; ?></p>
+                            <p>Price: <?php echo $listing_data->price; ?></p>
+                            <p>Available On: <?php echo $listing_data->available_on; ?></p>
+                        </div>
                     <?php endif ?>
-                </p>                
+                    <div class="actions">
+                        <a class="more-link" href="<?php echo $listing_data->url; ?>">View Property Details</a>
+                    </div>
+                </div>
             </div><!-- .entry-summary -->
-            <div class="entry-meta">
-                <a class="more-link" href="<?php echo $listing_data->url; ?>">View Details</a>
-            </div><!-- .entry-meta -->
-            <footer class="grid_8 alpha">
-                <ul>
-                    <li>This listing has: </li>
-                <?php foreach ($listing_data as $key => $value): ?>
-                    <li><?php echo $key; ?>,</li>
-                <?php endforeach ?>    
-                </ul>
-            </footer>
         </article>
 
 
