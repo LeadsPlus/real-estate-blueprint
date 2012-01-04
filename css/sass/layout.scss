@@ -152,6 +152,35 @@ aside {
             font-size: 20px;
    	    }
    	}
+
+   	.pls-listing-get_listings_widget {
+   	    .listing-item {
+   	        border-bottom: 1px solid  #DBDBDB;
+   	    }
+   	    h4 {
+            font-size: 16px;
+            margin: 20px 0 0 0;
+   	    }
+   	    .details {
+            font-size: 14px;
+            margin-bottom: 10px;
+   	    }
+   	    .featured-image img {
+            border: 1px solid #DBDBDB;
+            padding: 10px;
+   	    }
+       a.learn-more {
+            margin: 10px 0;
+            float: right;
+            @include rounded-corners;
+            padding: 10px;
+            background-color: #EEE;
+        }
+        a.learn-more:hover {
+            background-color: #5e5e5e;
+            color: white;
+        }
+   	}
 }
 
 /* Main Content */

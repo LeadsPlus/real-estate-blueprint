@@ -96,6 +96,28 @@ aside {
   aside .widget-pls-agent span.phone {
     float: left;
     font-size: 20px; }
+  aside .pls-listing-get_listings_widget .listing-item {
+    border-bottom: 1px solid  #DBDBDB; }
+  aside .pls-listing-get_listings_widget h4 {
+    font-size: 16px;
+    margin: 20px 0 0 0; }
+  aside .pls-listing-get_listings_widget .details {
+    font-size: 14px;
+    margin-bottom: 10px; }
+  aside .pls-listing-get_listings_widget .featured-image img {
+    border: 1px solid #DBDBDB;
+    padding: 10px; }
+  aside .pls-listing-get_listings_widget a.learn-more {
+    margin: 10px 0;
+    float: right;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 10px;
+    background-color: #EEE; }
+  aside .pls-listing-get_listings_widget a.learn-more:hover {
+    background-color: #5e5e5e;
+    color: white; }
 
 /* Main Content */
 #main_content article {
