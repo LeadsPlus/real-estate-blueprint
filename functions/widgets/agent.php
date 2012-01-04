@@ -86,16 +86,21 @@ class PLS_Widget_Agent extends WP_Widget {
 
             /** Add the phone number. */
             if ( ! empty( $instance['phone'] ) && ! empty( $agent_obj->phone ) )
-                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone' ), $agent_obj->phone );
+                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone' ), PLS_Format::phone($agent_obj->phone) );
 
             /** Add the description. */
-            if ( ! empty( $instance['description'] ) && ! empty( $agent_obj->description ) )
+            if ( ! empty( $instance['description'] ) && ! empty( $agent_obj->description ) ) {
                 $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent_obj->description );
+            } else {
+                $agent_html['description'] = '';
+            }
+
+
 
             /** Combine the agent information. */
             $widget_body = pls_get_if_not_empty( $agent_html['photo'] ) . 
                 pls_get_if_not_empty( $agent_html['name'] ) . 
-                pls_get_if_not_empty( $agent_html['description'] ) . 
+                pls_get_if_not_empty( $agent_html['description'] ) .
                 pls_get_if_not_empty( $agent_html['email'] ) . 
                 pls_get_if_not_empty( $agent_html['phone'] ); 
 

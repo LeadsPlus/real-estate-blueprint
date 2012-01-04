@@ -28,8 +28,11 @@ nav {
 	}
 }
 aside {
+    margin-top: -15px;
 	h3 {
-		padding: 10px 0px
+	    font-size: 18px;
+		padding: 0 0 10px 0;
+        color:#666;
 	}
 	.widget-pls-quick-search {
         .chzn-container-single {
@@ -126,6 +129,29 @@ aside {
             margin-top: 10px;
         }
 	}
+
+   	.widget-pls-agent {
+   	    img {
+            border: 1px solid #DBDBDB;
+            padding: 10px;
+            float: left;
+   	    }
+   	    h5, span {
+   	        margin: 0 0 10px 10px;
+   	    }
+   	    h5 {
+   	        float: left;
+            font-size: 20px;
+   	    }
+   	    span.email {
+   	        float: left;
+            font-size: 14px;
+   	    }
+   	    span.phone {
+            float: left;
+            font-size: 20px;
+   	    }
+   	}
 }
 
 /* Main Content */
