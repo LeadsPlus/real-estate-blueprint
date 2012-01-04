@@ -156,15 +156,25 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
 		//
-		return self::router('sidebar.php', true);
+
+        $sidebars = array();
+        foreach (self::$request as $item) {
+            $sidebars[] = 'sidebar-' . $item;
+        }
+        $sidebars[] = 'sidebar.php';
+		return self::router($sidebars, true);
 	}
 
 	function handle_default_sidebar() {
 		// Sidebar is loaded directly rather then
 		// being set as a request and then looping
 		// the routing table.
-		//
-		return self::router('default-sidebar.php', true);
+        $sidebars = array();
+        foreach (self::$request as $item) {
+            $sidebars[] = 'default-sidebar-' . $item;
+        }
+        $sidebars[] = 'default-sidebar.php';
+		return self::router($sidebars, true);
 	}
 
 	function handle_footer() {
@@ -338,7 +348,10 @@ class PLS_Route {
 
 		if ( 'default' == $template )
 			$template = '';
-
+		
+		PLS_Debug::add_msg("Of type Page, searching for:");
+		PLS_Debug::add_msg($template);
+		
 		$templates = array();
 		if ( !empty($template) && !validate_file($template) )
 			$templates[] = $template;

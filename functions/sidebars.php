@@ -24,19 +24,19 @@ add_action( 'widgets_init', 'pls_register_sidebars' );
 function pls_register_sidebars() {
 
 	/** Get theme-supported sidebars. */
-    $sidebars = get_theme_support( 'pls-sidebars' );
+    $sidebar_support = get_theme_support( 'pls-sidebars' );
 
 	/** If there is no array of sidebars IDs, return. */
-    if ( ! is_array( $sidebars[0] ) )
+    if ( ! is_array( $sidebar_support[0] ) )
         return;
 
 	/** Get the theme textdomain. */
 	$textdomain = pls_get_textdomain();
 
 	/** Set up the primary sidebar arguments. */
-	$primary = array(
+	$sidebars[] = array(
 		'id' => 'primary',
-		'name' => __( 'Primary', $textdomain ),
+		'name' => __( 'Main Sidebar', $textdomain ),
 		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
 		'after_widget' => '</section>',
@@ -44,24 +44,35 @@ function pls_register_sidebars() {
 		'after_title' => '</h3>'
 	);
 
+    /** Set up the primary sidebar arguments. */
+    	$sidebars[] = array(
+    		'id' => 'listings-search',
+    		'name' => __( 'Listings Search Sidebar', $textdomain ),
+    		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
+    		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
+    		'after_widget' => '</section>',
+    		'before_title' => '<h3 class="widget-title">',
+    		'after_title' => '</h3>'
+    	);
+
 	/** Set up the subsidiary sidebar arguments. */
-	$subsidiary = array(
-		'id' => 'subsidiary',
-		'name' => __( 'Subsidiary', $textdomain ),
-		'description' => __( 'A widget area loaded in the footer of the site.', $textdomain ),
+	$sidebars[] = array(
+		'id' => 'footer',
+		'name' => __( 'Footer', $textdomain ),
+		'description' => __( 'A widget area for the footer of the site.', $textdomain ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
 		'after_widget' => '</section>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>'
 	);
 
+//    pls_dump($sidebar_support);
 
-	/** Register the primary sidebar. */
-    if ( in_array( 'primary', $sidebars[0] ) )
-		register_sidebar( $primary );
-
-	/** Register the subsidiary sidebar. */
-    if ( in_array( 'subsidiary', $sidebars[0] ) )
-		register_sidebar( $subsidiary );
+    // loop through and create sidebars
+    foreach ($sidebars as $sidebar) {
+        if (in_array($sidebar['id'], $sidebar_support[0])) {
+            register_sidebar( $sidebar );
+        }
+    }
 
 }
