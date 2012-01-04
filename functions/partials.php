@@ -79,8 +79,8 @@ class PLS_Partials {
 
     // wrapper for property details page content
     static function custom_property_details_html_filter ($content) {
-        
-        return PLS_Partials_Property_Details::init($content);
+//        pls_dump($content);
+        echo PLS_Partials_Property_Details::init($content);
     } 
 
     //wrapper for ajax html filter

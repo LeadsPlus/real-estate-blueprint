@@ -109,10 +109,19 @@ aside {
 			border: 1px solid #DBDBDB;
 		}
 		.property-image-gallery {
-			li {
-				list-style-type: none;
-				border: 1px solid #DBDBDB;
-			}
+
+            padding-left: 0px;
+
+		    li {
+		        list-style-type: none;
+		        float: left;
+                img {
+                    border: 1px solid #DBDBDB;
+                    padding: 10px;
+                    margin: 10px 10px 10px 0;
+
+                 }
+		    }
 		}
 	}
 }

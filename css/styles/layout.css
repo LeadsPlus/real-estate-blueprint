@@ -120,38 +120,39 @@ aside {
     color: white; }
 
 /* Main Content */
-#main_content article {
+#main_content div.listing-item {
   padding: 30px 0px; }
-  #main_content article .property-details {
+  #main_content div.listing-item .property-details {
     padding: 0px; }
-  #main_content article header h3, #main_content article footer h3 {
-    margin: 10px 0 10px 0; }
-  #main_content article header ul, #main_content article footer ul {
+  #main_content div.listing-item header h3, #main_content div.listing-item footer h3 {
+    margin: 10px 0 10px 0;
+    font-size: 20px; }
+  #main_content div.listing-item header ul, #main_content div.listing-item footer ul {
     padding: 0px; }
-    #main_content article header ul li, #main_content article footer ul li {
+    #main_content div.listing-item header ul li, #main_content div.listing-item footer ul li {
       float: left;
       list-style-type: none;
       padding-right: 5px; }
-  #main_content article .entry-meta {
+  #main_content div.listing-item .entry-meta {
     float: right; }
-    #main_content article .entry-meta a {
+    #main_content div.listing-item .entry-meta a {
       padding: 5px 10px; }
-  #main_content article .outline {
+  #main_content div.listing-item .outline {
     padding: 10px; }
-  #main_content article .property-image-gallery {
+  #main_content div.listing-item .property-image-gallery {
     padding-left: 0px; }
-    #main_content article .property-image-gallery li {
+    #main_content div.listing-item .property-image-gallery li {
       float: left;
       padding: 5px;
       margin-right: 10px; }
-  #main_content article .details-list-txt ul {
+  #main_content div.listing-item .details-list-txt ul {
     padding-left: 0px; }
-    #main_content article .details-list-txt ul li {
+    #main_content div.listing-item .details-list-txt ul li {
       width: 290px;
       overflow: hidden;
       float: left;
       margin-right: 10px; }
-  #main_content article .property-bottom-nav {
+  #main_content div.listing-item .property-bottom-nav {
     padding: 10px 0px; }
 
 /* default get listings list */
@@ -208,3 +209,40 @@ aside {
     margin: 12px 10px 0 0; }
   .sort_by_wrapper #sort-by {
     width: 200px; }
+
+/* Property Details Page */
+article.property-details {
+  border-bottom: none !important; }
+  article.property-details h2 {
+    margin: 5px 0px;
+    font-size: 25px;
+    border-bottom: none !important; }
+  article.property-details span.listing_type {
+    color: #999; }
+  article.property-details .property-details-slideshow {
+    padding-top: 10px; }
+  article.property-details h3 {
+    margin: 40px 0 0px 0;
+    padding: 0; }
+  article.property-details .map {
+    margin-top: 10px;
+    border: 1px solid #DBDBDB;
+    padding: 10px; }
+
+/* General Blog */
+article nav .prev {
+  float: left; }
+article nav .next {
+  float: right; }
+article nav div {
+  width: 300px;
+  padding: 20px 0; }
+  article nav div a {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #EEE;
+    padding: 10px; }
+  article nav div a:hover {
+    background-color: #5e5e5e;
+    color: white; }

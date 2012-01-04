@@ -80,6 +80,12 @@ aside {
         text-decoration: underline; }
   #main_content article .outline {
     border: 1px solid #DBDBDB; }
-  #main_content article .property-image-gallery li {
-    list-style-type: none;
-    border: 1px solid #DBDBDB; }
+  #main_content article .property-image-gallery {
+    padding-left: 0px; }
+    #main_content article .property-image-gallery li {
+      list-style-type: none;
+      float: left; }
+      #main_content article .property-image-gallery li img {
+        border: 1px solid #DBDBDB;
+        padding: 10px;
+        margin: 10px 10px 10px 0; }

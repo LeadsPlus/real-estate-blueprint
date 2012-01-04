@@ -111,7 +111,7 @@ class PLS_Partial_Get_Listings {
              ob_start();
              ?>
 
-        <article class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
+        <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
                 <h3><a href="<?php echo $listing_data->url; ?>" rel="bookmark" title="<?php echo $listing_data->location->full_address ?>"><?php echo $listing_data->location->full_address ?></a></h2>
                 <!-- Display Listings -->
@@ -156,7 +156,7 @@ class PLS_Partial_Get_Listings {
                     </div>
                 </div>
             </div><!-- .entry-summary -->
-        </article>
+        </div>
 
 
              <?php

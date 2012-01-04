@@ -28,8 +28,8 @@
         <footer></footer>
 
         <nav class="property-bottom-nav grid_8 alpha" >
-            <div><?php previous_post_link( '&laquo; %link' ) ?></div>
-            <div><?php next_post_link( '%link &raquo;' ) ?></div>
+            <div class="prev"><?php previous_post_link( '&laquo; %link' ) ?></div>
+            <div class="next"><?php next_post_link( '%link &raquo;' ) ?></div>
         </nav>
 
         <?php pls_do_atomic( 'close_entry' ); ?>

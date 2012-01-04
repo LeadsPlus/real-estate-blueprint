@@ -12,7 +12,7 @@ class PLS_Partials_Custom_Ajax_Listing_List {
 //        $listing['description'] =trim($listing['description']);
 //        var_dump($listing['description']);
 		?>
-        <article class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
+        <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
                 <h3><a href="<?php echo $listing['url']; ?>" rel="bookmark" title="<?php echo $listing['address'] ?>"><?php echo $listing['address'] . ', ' . $listing['city'] . ' ' . $listing['state'] ?></a></h2>
             </header>
@@ -45,7 +45,7 @@ class PLS_Partials_Custom_Ajax_Listing_List {
                     </div>
                 </div>
             </div>
-        </article>
+        </div>
 
 		<?php
 

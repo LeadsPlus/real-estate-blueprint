@@ -209,4 +209,23 @@ class PLS_Slideshow {
 
         return apply_filters( pls_get_merged_strings( array( 'pls_slideshow', $context ), '_', 'pre', false ), $css . $html . $js, $html, $js, $data, $context, $context_var, $args );
     }
+
+    static function prepare_single_listing ($listing = false) {
+
+        if ($listing && isset($listing['images'])) {
+
+            foreach ($listing['images'] as $image) {
+            $slide_array['images'][] = $image['url'];
+            // $slide_array['links'][] = 'google.com';
+            $slide_array['captions'][] = '';
+            // $slide_array['listing'][] = $data;
+            }
+
+            // Slide array successfully created
+            return $slide_array;
+
+        }
+
+        return false;
+    }
 }
