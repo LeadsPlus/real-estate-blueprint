@@ -8,53 +8,44 @@ class PLS_Partials_Custom_Ajax_Listing_List {
 
 		/** Start output buffering. The buffered html will be returned to the filter. */
 		ob_start();
-		// pls_dump($listing);
+//		 pls_dump($listing);
+//        $listing['description'] =trim($listing['description']);
+//        var_dump($listing['description']);
 		?>
+        <article class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
+            <header class="grid_8 alpha">
+                <h3><a href="<?php echo $listing['url']; ?>" rel="bookmark" title="<?php echo $listing['address'] ?>"><?php echo $listing['address'] . ', ' . $listing['city'] . ' ' . $listing['state'] ?></a></h2>
+            </header>
+            <div class="listing-item-content grid_8 alpha">
+                <div class="grid_8 alpha">
+                    <!-- If we have a picture, show it -->
+                    <?php if (isset($listing['image_url'])): ?>
+                        <div id="listing-thumbnail" class="listing-thumbnail">
+                            <div class="outline">
 
-		  <article class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
-		    <header class="grid_8 alpha">
-		        <h3><a href="<?php echo $listing['url']; ?>" rel="bookmark" title="<?php echo $listing['address'] . ' ' . $listing['city'] . ', ' . $listing['state'] ?>"><?php echo $listing['address'] . ' ' . $listing['city'] . ', ' . $listing['state'] ?></a></h2>
-		        <ul>
-		            <li>Beds: <?php echo $listing['bedrooms']; ?>, </li>
-		            <li>Baths: <?php echo $listing['bathrooms']; ?>, </li>
-		            <li>Half Baths: <?php echo $listing['half_baths']; ?>, </li>
-		            <li>Price: <?php echo $listing['price']; ?>, </li>
-		            <li>Available On: <?php echo $listing['available_on']; ?>, </li>
-		        </ul>
-		    </header>
-		    <div class="entry-summary grid_8 alpha">
-		        <p>
-		            <?php if (isset($listing['image_url'])): ?>
-		                <div id="listing-thumbnail" class="grid_3 alpha">
-		                    <div class="outline">
-		                        <img src="<?php echo $listing['image_url'] ?>" width=200 alt="">
-		                    </div>
-		                </div>
-		                <div id="listing-description" class="grid_5 omega">
-		                    <?php echo substr($listing['description'], 0, 300); ?>    
-		                </div>
-		            <?php else: ?>
-		                <div id="listing-description" class="grid_8 omega">
-		                    <?php echo substr($listing['description'], 0, 300); ?>    
-		                </div>
-		            <?php endif ?>
-		        </p>                
-		    </div><!-- .entry-summary -->
-		    <div class="entry-meta">
-		        <a class="more-link" href="<?php echo $listing['url']; ?>">View Details</a>
-		    </div><!-- .entry-meta -->
-		    <footer class="grid_8 alpha">
-		        
-		        <ul>
-		            <li>This listing has: </li>
-		        <?php foreach ($listing as $key => $value): ?>
-		            <li><?php echo $key; ?>,</li>
-		        <?php endforeach ?>    
-		        </ul>
-		    </footer>
-		</article>
+                                <?php echo PLS_Image::load($listing['image_url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                            </div>
+                        </div>
+                    <?php endif ?>
 
+                    <div class="basic-details">
+                        <h3>Basic Details</h3>
+                        <p>Beds: <?php echo @$listing['bedrooms']; ?></p>
+                        <p>Baths: <?php echo @$listing['bathrooms']; ?></p>
+                        <p>Half Baths: <?php echo @$listing['half_baths']; ?></p>
+                        <p>Price: <?php echo @$listing['price']; ?></p>
+                        <p>Available On: <?php echo @$listing['available_on']; ?></p>
+                    </div>
 
+                    <div id="listing-description">
+                        <?php echo substr($listing['description'], 0, 300); ?>
+                    </div>
+                    <div class="actions">
+                        <a class="more-link" href="<?php echo $listing['url']; ?>">View Property Details</a>
+                    </div>
+                </div>
+            </div>
+        </article>
 
 		<?php
 
@@ -63,7 +54,7 @@ class PLS_Partials_Custom_Ajax_Listing_List {
 		// current js build throws a fit when newlines are present
 		// will need to strip them. 
 		// added EMCA tag will solve in the future.
-		$html = preg_replace('/[\n\r\t]/', ' ', $html);
+		$html = preg_replace('/[\n\r\t]/', '', $html);
 
 		return $html;
 
