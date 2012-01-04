@@ -207,10 +207,10 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Add the bedrooms select element. */
-        if ($bathrooms == 1) {
+        if ($bedrooms == 1) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
-                array( 'name' => 'bedrooms' ) + $form_opt_attr['bedrooms'],
+                array( 'name' => 'bedrooms') + $form_opt_attr['bedrooms'],
                     /** Get the list of options with the empty valued element selected. */
                     pls_h_options( $form_options['bedrooms'], "" )
                 );
@@ -346,13 +346,13 @@ class PLS_Partials_Listing_Search_Form {
         
 
         $section_title = array(
-            'bedrooms' => __( 'Bedrooms', pls_get_textdomain() ),
-            'bathrooms' => __( 'Bathrooms', pls_get_textdomain() ),
-            'half_baths' => __( 'Half baths', pls_get_textdomain() ),
+            'bedrooms' => __( 'Beds', pls_get_textdomain() ),
+            'bathrooms' => __( 'Baths', pls_get_textdomain() ),
+            'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
             'property_type' => __( 'Property Type', pls_get_textdomain() ),
-            'zoning_types' => __( 'Zoning Types', pls_get_textdomain() ),
-            'listing_types' => __( 'Listing Types', pls_get_textdomain() ),
-            'purchase_types' => __( 'Purchase Types', pls_get_textdomain() ),
+            'zoning_types' => __( 'Zoning Type', pls_get_textdomain() ),
+            'listing_types' => __( 'Listing Type', pls_get_textdomain() ),
+            'purchase_types' => __( 'Purchase Type', pls_get_textdomain() ),
             'available_on' => __( 'Available', pls_get_textdomain() ),
             'cities' => __( 'Near', pls_get_textdomain() ),
             'states' => __( 'State', pls_get_textdomain() ),

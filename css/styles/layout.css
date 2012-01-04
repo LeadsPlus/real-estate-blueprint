@@ -27,8 +27,56 @@ nav {
 
 aside h3 {
   padding: 10px 0px; }
-aside .placester_search_widget select {
-  width: 200px; }
+aside .widget-pls-quick-search .chzn-container-single {
+  padding: 5px 0px; }
+aside .widget-pls-quick-search .pls_search_form {
+  margin: 0px 10px;
+  float: left; }
+  aside .widget-pls-quick-search .pls_search_form label {
+    margin-right: 10px; }
+aside .widget-pls-quick-search .bedrooms label {
+  margin-right: 37px; }
+aside .widget-pls-quick-search .bathrooms, aside .widget-pls-quick-search .bedrooms, aside .widget-pls-quick-search .half_baths {
+  float: left; }
+  aside .widget-pls-quick-search .bathrooms select, aside .widget-pls-quick-search .bedrooms select, aside .widget-pls-quick-search .half_baths select {
+    width: 75px; }
+aside .widget-pls-quick-search .property_type label {
+  margin-right: 15px; }
+aside .widget-pls-quick-search .property_type select {
+  width: 185px; }
+aside .widget-pls-quick-search .listing_types label {
+  margin-right: 26px; }
+aside .widget-pls-quick-search .listing_types select {
+  width: 185px; }
+aside .widget-pls-quick-search .zoning_types label {
+  margin-right: 24px; }
+aside .widget-pls-quick-search .zoning_types select {
+  width: 185px; }
+aside .widget-pls-quick-search .purchase_types label {
+  margin-right: 10px; }
+aside .widget-pls-quick-search .purchase_types select {
+  width: 185px; }
+aside .widget-pls-quick-search .available_on label {
+  margin-right: 15px; }
+aside .widget-pls-quick-search .cities label, aside .widget-pls-quick-search .states label {
+  margin-right: 39px; }
+aside .widget-pls-quick-search .zips label {
+  margin-right: 17px; }
+aside .widget-pls-quick-search .zips select {
+  width: 210px; }
+aside .widget-pls-quick-search .available_on select, aside .widget-pls-quick-search .cities select, aside .widget-pls-quick-search .states select {
+  width: 210px; }
+aside .widget-pls-quick-search .min_price label {
+  margin-right: 17px; }
+aside .widget-pls-quick-search .min_price, aside .widget-pls-quick-search .max_price {
+  margin: 0px 5px; }
+  aside .widget-pls-quick-search .min_price select, aside .widget-pls-quick-search .max_price select {
+    width: 75px; }
+aside .widget-pls-quick-search input.pls_search_button {
+  float: right;
+  clear: both;
+  padding: 10px 15px;
+  margin-top: 10px; }
 
 /* Main Content */
 #main_content article {

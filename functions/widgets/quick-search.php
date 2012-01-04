@@ -30,17 +30,13 @@ class PLS_Quick_Search_Widget extends WP_Widget {
 
         $search_form_filter_string .= 'context=' . apply_filters('pls_widget_quick_search_context', 'quick_search_widget');
 
-        $search_form_filter_string .= apply_filters('pls_widget_quick_search_filter_string', '&ajax=1
-                                                    &property_type=0
-                                                    &listing_types=0
-                                                    &zoning_types=0
-                                                    &purchase_types=0
-                                                    &zips=0');
+        $search_form_filter_string .= apply_filters('pls_widget_quick_search_filter_string', '&ajax=1');
            echo $before_widget;
             echo "<h3>" . $title . "</h3>";
             echo PLS_Partials::get_listings_search_form($search_form_filter_string);
-        echo "</section>";   
-        echo $after_widget;    
+        echo "<div class='clearfix'></div";
+        echo "</section>";
+        echo $after_widget;
     }
 
     function update($new_instance, $old_instance){
