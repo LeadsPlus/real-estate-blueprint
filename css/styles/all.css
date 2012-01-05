@@ -352,9 +352,11 @@ article .entry-meta {
 article .outline {
   border: 1px solid #DBDBDB; }
 article nav .prev {
-  float: left; }
+  float: left;
+  text-align: left; }
 article nav .next {
-  float: right; }
+  float: right;
+  text-align: right; }
 article nav div {
   width: 300px;
   padding: 20px 0; }

@@ -82,9 +82,11 @@ article {
     nav {
         .prev {
             float: left;
+            text-align: left;
         }
         .next {
             float: right;
+            text-align: right;
         }
         div {
             width: 300px;
