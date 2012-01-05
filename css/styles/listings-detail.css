@@ -26,3 +26,5 @@ article.property-details {
         border: 1px solid #DBDBDB;
         padding: 10px;
         margin: 10px 10px 10px 0; }
+    article.property-details .property-image-gallery a:hover {
+      background-color: inherit; }

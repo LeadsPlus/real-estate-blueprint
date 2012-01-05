@@ -24,14 +24,19 @@ article.property-details {
         padding: 10px;
     }
     .property-image-gallery {
-            padding-left: 0px;
-            li {
-                list-style-type: none;
-                float: left;
-                img {
-                    @include image-outline;
-                    margin: 10px 10px 10px 0;
-                 }
+        padding-left: 0px;
+        li {
+            list-style-type: none;
+            float: left;
+            img {
+                @include image-outline;
+                margin: 10px 10px 10px 0;
+             }
+        }
+        a {
+            &:hover {
+                background-color: inherit;
             }
         }
+    }
 }

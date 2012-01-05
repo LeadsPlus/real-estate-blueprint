@@ -31,6 +31,8 @@
   #main_content div.listing-item header h3, #main_content div.listing-item footer h3 {
     margin: 10px 0 10px 0;
     font-size: 20px; }
+    #main_content div.listing-item header h3 a:hover, #main_content div.listing-item footer h3 a:hover {
+      color: #1982D1; }
   #main_content div.listing-item header ul, #main_content div.listing-item footer ul {
     padding: 0px; }
     #main_content div.listing-item header ul li, #main_content div.listing-item footer ul li {

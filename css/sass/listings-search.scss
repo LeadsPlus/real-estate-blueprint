@@ -45,6 +45,11 @@
 			h3 {
 				margin: 10px 0 10px 0;
 	            font-size: 20px;
+	            a {
+		            &:hover {
+		                color: #1982D1;     
+		            }
+		        }
 			}
 			ul {
 				padding: 0px;
