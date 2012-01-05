@@ -13,3 +13,8 @@
 		color: #1982D1;
 	 }
 }
+
+@mixin image-outline {
+	border: 1px solid #DBDBDB;
+    padding: 10px;
+}

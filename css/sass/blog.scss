@@ -1,0 +1,67 @@
+/* General Blog */
+article {
+
+    nav {
+        .prev {
+            float: left;
+        }
+        .next {
+            float: right;
+        }
+        div {
+            width: 300px;
+            padding: 20px 0;
+            a {
+                @include rounded-corners;
+                background-color: #EEE;
+                padding: 10px;
+            }
+            a:hover {
+                background-color: #5e5e5e;
+                color: white;
+            }
+        }
+
+    }
+}
+#main_content {
+    h2 {
+        // border-bottom: 1px solid #DBDBDB;   
+    }
+    article {
+        border-bottom: 1px solid #DBDBDB;
+        header {
+            font-size: 12px;
+            color: #888;
+            a {
+                @include blue-hover;
+            }
+            h3 {
+                font-size: 24px;
+            }
+        }
+        .entry-meta {
+            a {
+                background-color: #EEE;
+                @include rounded-corners;
+                &:hover {
+                    background-color: #1982D1;
+                    color: white;
+                }   
+            }
+        }
+        footer {
+            color: #888;
+            font-size: 12px;
+            a { 
+                color: #2793e5;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .outline {
+            border: 1px solid #DBDBDB;
+        }
+    }
+}
