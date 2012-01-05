@@ -32,14 +32,29 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
         if ( get_theme_support( 'pls-default-960' ) ) {
             wp_enqueue_style( 'pls-default-960', trailingslashit( PLS_CSS_URL ) . 'styles/960.css' );
         }
-        /** Include default style only if supported. */
-        if ( get_theme_support( 'pls-default-style' ) ) {
-            wp_enqueue_style( 'pls-default-style', trailingslashit( PLS_CSS_URL ) . 'styles/style.css' );
-        }
             
         /** Include default layout only if supported. */
-        if ( get_theme_support( 'pls-default-layout' ) ) {
-            wp_enqueue_style( 'pls-default-layout', trailingslashit( PLS_CSS_URL ) . 'styles/layout.css' );
+        if ( get_theme_support( 'pls-default-css' ) ) {
+            wp_enqueue_style( 'pls-default-css', trailingslashit( PLS_CSS_URL ) . 'styles/all.css' );
+        } else {
+            if ( get_theme_support( 'pls-default-css-header' ) ) {
+                wp_enqueue_style( 'pls-default-css-header', trailingslashit( PLS_CSS_URL ) . 'styles/header.css' );
+            }   
+            if ( get_theme_support( 'pls-default-css-nav' ) ) {
+                wp_enqueue_style( 'pls-default-css-nav', trailingslashit( PLS_CSS_URL ) . 'styles/nav.css' );
+            }   
+            if ( get_theme_support( 'pls-default-css-sidebar-widgets' ) ) {
+                wp_enqueue_style( 'pls-default-css-sidebar-widgets', trailingslashit( PLS_CSS_URL ) . 'styles/sidebar-widgets.css' );
+            }   
+            if ( get_theme_support( 'pls-default-css-listings-search' ) ) {
+                wp_enqueue_style( 'pls-default-css-listings-search', trailingslashit( PLS_CSS_URL ) . 'styles/listings-search.css' );
+            }   
+            if ( get_theme_support( 'pls-default-css-listings-detail' ) ) {
+                wp_enqueue_style( 'pls-default-css-listings-detail', trailingslashit( PLS_CSS_URL ) . 'styles/css-listings-detail.css' );
+            }   
+            if ( get_theme_support( 'pls-default-css-blog' ) ) {
+                wp_enqueue_style( 'pls-default-css-blog', trailingslashit( PLS_CSS_URL ) . 'styles/blog.css' );
+            }   
         }
             
 
