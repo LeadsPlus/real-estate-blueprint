@@ -212,6 +212,8 @@ class PLS_Slideshow {
 
     static function prepare_single_listing ($listing = false) {
 
+        $slide_array = array();
+
         if ($listing && isset($listing['images'])) {
 
             foreach ($listing['images'] as $image) {
