@@ -1,5 +1,7 @@
 <?php
 /**
+ * Version 0.0.1
+ * 
  * Placester Blueprint - A Wordpress theme development framework that integrates 
  * with the Placester Real Estate Pro plugin
  *
