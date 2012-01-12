@@ -102,7 +102,7 @@ class PLS_Map {
 	private static function process_marker_defaults ($listing, $args) {
 
 		// pls_dump($listing);
-		if (isset($listing) && isset($listing['location'])) {
+		if (isset($listing) && is_array($listing) && isset($listing['location'])) {
 			$coords = $listing['location']['coords'];
 			$args['lat'] = $coords['latitude'];
 			$args['lng'] = $coords['longitude'];
