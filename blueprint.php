@@ -1,6 +1,5 @@
 <?php
 /**
- * Version 0.0.1
  * 
  * Placester Blueprint - A Wordpress theme development framework that integrates 
  * with the Placester Real Estate Pro plugin
@@ -243,7 +242,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-default-normalize' );
         add_theme_support( 'pls-default-960' );
         add_theme_support( 'pls-default-style' );
-        add_theme_support( 'pls-default-layout' );
+        add_theme_support( 'pls-default-css' );
         add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ) ) );
         add_theme_support( 'pls-theme-options' );
         add_theme_support( 'pls-image-util', array('fancybox') );
