@@ -236,7 +236,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-menus', array( 'primary', 'subsidiary' ) );
 
         /** Add theme support for sidebars */
-        add_theme_support( 'pls-sidebars', array( 'primary', 'listings-search', 'footer' ) );
+        add_theme_support( 'pls-sidebars', array( 'primary', 'listings-search', 'footer-widgets' ) );
 
         // Adds default styling out of the box
         add_theme_support( 'pls-default-normalize' );
