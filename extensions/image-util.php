@@ -124,6 +124,8 @@ class PLS_Image {
 			<?php
 			
 			return trim( ob_get_clean() );
+			
+			
 		} else {
 			ob_start();
 			?>
@@ -131,8 +133,6 @@ class PLS_Image {
 			<?php
 		
 			return trim(ob_get_clean());
-		
-
 		}
 		
 	}
@@ -220,14 +220,15 @@ class PLS_Image {
 			endif;
 		endif;
 
-		if (is_writable($newPath) == false):
-
-			// if we can't create something new
-			// don't try.
-			// use the old image.
-			$create = false;
-			$newPath = $imagePath;
-		endif;
+		// Commented out so $create = true
+		// if (is_writable($newPath) == false):
+		// 
+		// 	// if we can't create something new
+		// 	// don't try.
+		// 	// use the old image.
+		// 	$create = false;
+		// 	$newPath = $imagePath;
+		// endif;
 
 		if($create == true):
 			if(!empty($w) and !empty($h)):
