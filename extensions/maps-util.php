@@ -1,5 +1,6 @@
 <?php 
 
+PLS_Map::init();
 class PLS_Map {
 	
 	// we'll build our response in here so we can
@@ -7,14 +8,44 @@ class PLS_Map {
 	// then the needed order for google maps. 
 	static $response;
 
+	static $map_js_var;
+
 	static $markers = array();
 
+	function init() {
+		
+		add_action('wp_head', array(__CLASS__,'add_marker_js'));
+
+	}
 
 	static function dynamic($listings = array(), $map_args = array(), $marker_args = array())
 	{
 		self::make_markers($listings, $marker_args);
 		
 		return self::assemble_map($map_args);
+	}
+
+	public function add_marker_js() {
+		
+		ob_start()
+		?>
+			<script type="text/javascript">
+				
+				var markers = [];
+
+				function pls_js_add_marker(row) {
+                    
+					markers.push(new google.maps.Marker({
+                        position: new google.maps.LatLng(row.location.coords.latitude, row.location.coords.longitude)
+                    }));
+                    
+				}
+
+			</script>
+		<?php
+		echo ob_get_clean();
+
+		
 	}
 
 	private static function make_markers($listings, $args) {
@@ -47,13 +78,18 @@ class PLS_Map {
 	private static function assemble_map($args) {
 		
 		extract(self::process_defaults($args), EXTR_SKIP);
+
+		// make id available to everyone
+		self::$map_js_var = $map_js_var;
 		
 		ob_start();
 		?>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript">
 		  
-		  $(function() {
+		  var <?php echo $map_js_var; ?>;
+
+		  $(function() { 
 
 		  	var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
 		    var myOptions = {
@@ -61,14 +97,25 @@ class PLS_Map {
 		      center: latlng,
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		    };
-		    var <?php echo $map_js_var ?> = new google.maps.Map(document.getElementById("<?php echo $id ?>"),
+		    <?php echo $map_js_var ?> = new google.maps.Map(document.getElementById("<?php echo $id ?>"),
 		        myOptions);
 		
 			<?php foreach (self::$markers as $marker): ?>
 				<?php echo $marker; ?>
 			<?php endforeach ?>	
-
+			
 		});	  
+		
+
+
+		function pls_js_render_markers () {
+				if (markers) {
+					for (var i = markers.length - 1; i >= 0; i--) {
+						markers[i].setMap(<?php echo $map_js_var ?>);
+					};
+				};
+
+			}
 		</script>
 		
 		<div class="<?php echo $class ?>" id="<?php echo $id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
