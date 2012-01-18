@@ -18,7 +18,7 @@
         <?php pls_do_atomic( 'open_entry' ); ?>
 
         <header>
-            <?php get_template_part( 'loop', 'meta' ) ?>
+            <?php PLS_Route::get_template_part( 'loop', 'meta' ) ?>
         </header>
 
         <?php pls_do_atomic( 'before_entry_content' ); ?>
