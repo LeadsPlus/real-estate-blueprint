@@ -109,10 +109,15 @@ class PLS_Map {
 
 
 		function pls_js_render_markers () {
+				
+				var bounds = new google.maps.LatLngBounds();
+
 				if (markers) {
 					for (var i = markers.length - 1; i >= 0; i--) {
 						markers[i].setMap(<?php echo $map_js_var ?>);
+						bounds.extend(markers[i].getPosition());
 					};
+					<?php echo $map_js_var ?>.fitBounds(bounds);
 				};
 
 			}
