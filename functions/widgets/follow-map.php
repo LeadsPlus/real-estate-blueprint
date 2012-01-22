@@ -11,7 +11,7 @@
  *
  * @since 0.0.1
  */
-class PLS_Follow_Map extends WP_Widget {
+class PLS_Floating_Map extends WP_Widget {
 
 	/**
 	 * Textdomain for the widget.
@@ -30,12 +30,12 @@ class PLS_Follow_Map extends WP_Widget {
 
 		/* Set up the widget options. */
 		$widget_options = array(
-			'classname' => 'pls-follow-map',
+			'classname' => 'pls-floating-map',
 			'description' => esc_html__( 'A map that follows you as you scroll and will display properties on all ajax search pages.', $this->textdomain )
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-follow-map", esc_attr__( 'Placester Follow Search Map', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-floating-map", esc_attr__( 'Placester floating Search Map', $this->textdomain ), $widget_options );
 	}
 
 	/**
