@@ -22,6 +22,9 @@ function pls_register_widgets() {
 	/** Load the Placester Agent widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/agent.php' );
 
+	/** Load the Placester Agent widget. */
+	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/follow-map.php' );
+
 	/** Load the Placester Recent Posts widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/recent-posts.php' );
 
@@ -33,6 +36,9 @@ function pls_register_widgets() {
 
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Agent' );
+
+	/* Register each of the widgets. */	
+	register_widget( 'PLS_Floating_Map' );
 
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Recent_Posts' );
