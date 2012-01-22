@@ -50,7 +50,7 @@ class PLS_Floating_Map extends WP_Widget {
 	function widget( $args, $instance ) {
 
 		echo "<div id='pls-floating-map-widget' style='float:left; height: 1000px; position: absolute;'>";
-		echo PLS_Map::dynamic(null, array('ajax' => true, 'zoom' => '8','width' => 282,'height' => 400, 'class' => ' '), array());
+		echo PLS_Map::dynamic(null, array('ajax' => true, 'zoom' => '16','width' => 282,'height' => 400, 'class' => ' '), array());
 		echo "</div>";
         
 	}
