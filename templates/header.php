@@ -44,8 +44,13 @@
             <?php pls_do_atomic( 'open_header' ); ?>
             <div class="wrapper">
                 <hgroup>
-                    <h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
-                    <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
+                    <?php if (pls_get_option('pls-site-logo')): ?>
+                        <img src="<?php echo pls_get_option('pls-site-logo') ?>" alt="">
+                    <?php else: ?>
+                        <h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+                        <h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
+                    <?php endif ?>
+                    
                 </hgroup>
 
                 <?php pls_do_atomic( 'header' ); ?>    

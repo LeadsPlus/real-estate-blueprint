@@ -10,8 +10,8 @@ if ( is_admin() ) {
 	
 	// Load additional css and js for image uploads on the Options Framework page
 	$of_page= 'appearance_page_options-framework';
-	add_action( "admin_print_styles-$of_page", 'optionsframework_mlu_css', 0 );
-	add_action( "admin_print_scripts-$of_page", 'optionsframework_mlu_js', 0 );	
+	add_action( "admin_print_styles", 'optionsframework_mlu_css', 0 );
+	add_action( "admin_print_scripts", 'optionsframework_mlu_js', 0 );	
 }
 
 /**
@@ -68,7 +68,7 @@ if ( ! function_exists( 'optionsframework_mlu_css' ) ) {
 if ( ! function_exists( 'optionsframework_mlu_js' ) ) {
 
 	function optionsframework_mlu_js () {
-	
+
 		// Registers custom scripts for the Media Library AJAX uploader.
 		wp_register_script( 'of-medialibrary-uploader', OPTIONS_FRAMEWORK_DIRECTORY .'js/of-medialibrary-uploader.js', array( 'jquery', 'thickbox' ) );
 		wp_enqueue_script( 'of-medialibrary-uploader' );

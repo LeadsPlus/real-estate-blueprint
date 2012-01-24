@@ -25,7 +25,51 @@ class PLS_Style {
 
     static function get_options()
     {
-        include( trailingslashit( TEMPLATEPATH ) . 'blueprint/options/init.php' );
+        include( trailingslashit( PLS_OP_DIR ) . 'init.php' );
+
+        if( pls_get_option("pls-color-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'colors.php' );            
+        }
+
+        if( pls_get_option("pls-typography-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'typography.php' );            
+        }
+        
+        if( pls_get_option("pls-content-box-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'content-box.php' );            
+        }
+        
+        if( pls_get_option("pls-header-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'header.php' );            
+        }
+        
+        if( pls_get_option("pls-navigation-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'navigation.php' );            
+        }
+        
+        if( pls_get_option("pls-listing-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'listings.php' );            
+        }   
+        
+        if( pls_get_option("pls-post-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'post.php' );            
+        }
+
+        if( pls_get_option("pls-widget-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'widget.php' );            
+        }
+
+        if( pls_get_option("pls-footer-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'footer.php' );            
+        }
+
+        if( pls_get_option("pls-slideshow-options") ) {
+            include( trailingslashit( PLS_OP_DIR ) . 'slideshow.php' );            
+        }
+
+        if (pls_get_option("pls-css-options")) {
+            include( trailingslashit( PLS_OP_DIR ) . 'css.php' );            
+        }
     }
 
     public static function add ($options = false)
@@ -102,6 +146,7 @@ class PLS_Style {
             if (self::is_special_case($type)) {
                 
                 //handles edge cases, returns a property formatted string
+                
                 return self::handle_special_case($value, $id, $default, $type, $important);
             } else {
                 $css_style = self::make_style($style, $value, $important);
@@ -120,6 +165,47 @@ class PLS_Style {
                 
                 return self::handle_typography($value, $id, $default, $type, $important);
                 break;
+            case 'background':
+                return self::handle_background($value, $id, $default, $type, $important);
+                break;
+        }
+    }
+
+    private static function handle_background($value, $id, $default, $type, $important) {
+        // pls_dump($value);
+        // background-image:url('smiley.gif');
+        // background-repeat:no-repeat;
+        // background-attachment:fixed;
+        // background-position:center; 
+        
+        if (is_array($value)) {
+            
+            $css_style = '';
+            
+            foreach ($value as $key => $value) {
+                switch ($key) {
+                    case 'color':
+                            $css_style .= self::make_style('background-color', $value, $important);
+                        break;
+
+                    case 'image':
+                        $css_style .= self::make_style('background-image', $value, $important);
+                        break;
+                    
+                    case 'repeat':
+                        $css_style .= self::make_style('background-repeat', $value, $important);
+                        break;
+                    
+                    case 'position':
+                        $css_style .= self::make_style('background-position', $value, $important);
+                        break;
+
+                    case 'attachment':
+                        $css_style .= self::make_style('background-attachment', $value, $important);
+                        break;    
+                }    
+            }
+            return $css_style;
         }
     }
 
@@ -169,7 +255,15 @@ class PLS_Style {
             // log what styles are created.
             PLS_Debug::add_msg(array($style . ': ' . $value . ($important ? ' !important;' : '')));
 
-            return $style . ': ' . $value . ($important ? ' !important;' : '');            
+            switch ($style) {
+                case 'background-image':
+                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+                    break;
+                
+                default:
+                    return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";            
+                    break;
+            }
         }
 
     }
@@ -215,7 +309,7 @@ class PLS_Style {
 
     private static function is_special_case($option_type)
     {
-        $special_id_cases = array('typography');
+        $special_id_cases = array('typography', 'background');
         if ( in_array($option_type, $special_id_cases) ) {
             return true;
         } 

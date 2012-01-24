@@ -203,6 +203,10 @@ class Placester_Blueprint {
         define( 'PLS_PAR_DIR', trailingslashit( PLS_DIR ) . 'partials' );
         define( 'PLS_PAR_URL', trailingslashit( PLS_URL ) . 'partials' );
 
+        /** Template directory path and url */
+        define( 'PLS_OP_DIR', trailingslashit( PLS_DIR ) . 'options' );
+        define( 'PLS_OP_URL', trailingslashit( PLS_URL ) . 'options' );
+
         /** Styles directory path and url */
         define( 'PLS_IMG_DIR', trailingslashit( PLS_DIR ) . 'i' );
         define( 'PLS_IMG_URL', trailingslashit( PLS_URL ) . 'i' );
@@ -365,14 +369,14 @@ class Placester_Blueprint {
         /** Load the Options Framework extension if supported. */
         require_if_theme_supports( 'pls-theme-options', trailingslashit ( PLS_EXT_DIR ) . 'options-framework.php' );
 
+        /** Load the Style Util extension if supported. */
+        require_if_theme_supports( 'pls-style-util', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
+
         /** Load the Options Framework extension if supported. */
         require_if_theme_supports( 'pls-image-util', trailingslashit ( PLS_EXT_DIR ) . 'image-util.php' );
 
         /** Load the Maps Util extension if supported. */
         require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps-util.php' );
-
-        /** Load the Style Util extension if supported. */
-        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
 	}
 
     /**

@@ -26,7 +26,6 @@
 }
 .side-bar-nav-item a {
 	border: none;
-	border-bottom: 1px solid #DFDFDF;
 	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
 	margin: 0px;
 	width: 100%;
@@ -313,6 +312,6 @@
 	background-color: #F1F1F1;
     background-image: -moz-linear-gradient(center top , #F9F9F9, #ECECEC);
 }
-#optionsframework .button-primary {
-	float:right;
+h3#optionsframework-submit-top .button-primary {
+	margin-left: 25px;
 }
