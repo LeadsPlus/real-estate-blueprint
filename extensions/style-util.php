@@ -90,12 +90,12 @@ class PLS_Style {
             return false;
         } 
 
-		$styles = '<style type="text/css">  ';
+		$styles = '';
 
         foreach ( $sorted_selector_array as $selector => $options) {
 
-            $styles .= $selector . ' {';
-            PLS_Debug::add_msg($selector);
+            $styles .= apply_filters($selector, $selector) . ' {' . "\n";
+
             foreach ($options as $index => $option) {
                 
                 $defaults = array(
@@ -112,23 +112,27 @@ class PLS_Style {
 
                 /** Merge the arguments with the defaults. */
                 $option = wp_parse_args( $option, $defaults );
-
+                
                 if (!empty($option['style']) || self::is_special_case($option['type'])) {
+                
                     //if we have a style, then let's try to generate a stlye.
                     $styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
-                    continue;
+                    
+                        
                 } elseif (!empty($id)) {
                     //try to use the id as the style... saves time for power devs.
                     $styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);    
-                    continue;
+                    
                 } else {
-                    continue;
+                    
                 }
             }
-            $styles .= '}';   
+            $styles .= '}' . "\n";   
         }
-		$styles .= '  </style>';
-
+        
+        PLS_Debug::add_msg('<pre>' . $styles . '</pre>');
+        $styles = '<style type="text/css">' . $styles . '</style>';
+        
 		echo $styles;
     }
 
