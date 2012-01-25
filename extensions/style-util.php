@@ -25,51 +25,55 @@ class PLS_Style {
 
     static function get_options()
     {
-        include( trailingslashit( PLS_OP_DIR ) . 'init.php' );
+
+        require(PLS_Route::locate_blueprint_option('init.php'));
 
         if( pls_get_option("pls-color-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'colors.php' );            
+            require_if_theme_supports("pls-color-options", PLS_Route::locate_blueprint_option('colors.php'));
         }
 
         if( pls_get_option("pls-typography-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'typography.php' );            
+            require_if_theme_supports("pls-typography-options", PLS_Route::locate_blueprint_option('typography.php'));
         }
         
         if( pls_get_option("pls-content-box-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'content-box.php' );            
+            require_if_theme_supports("pls-content-box-options", PLS_Route::locate_blueprint_option('content-box.php'));
         }
         
         if( pls_get_option("pls-header-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'header.php' );            
+            require_if_theme_supports("pls-header-options", PLS_Route::locate_blueprint_option('header.php'));
         }
         
         if( pls_get_option("pls-navigation-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'navigation.php' );            
+            require_if_theme_supports("pls-navigation-options", PLS_Route::locate_blueprint_option('navigation.php'));
         }
         
         if( pls_get_option("pls-listing-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'listings.php' );            
+            require_if_theme_supports("pls-listing-options", PLS_Route::locate_blueprint_option('listings.php'));
         }   
         
         if( pls_get_option("pls-post-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'post.php' );            
+            require_if_theme_supports("pls-post-options", PLS_Route::locate_blueprint_option('post.php'));
         }
 
         if( pls_get_option("pls-widget-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'widget.php' );            
+            require_if_theme_supports("pls-widget-options", PLS_Route::locate_blueprint_option('widget.php'));
         }
 
         if( pls_get_option("pls-footer-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'footer.php' );            
+            require_if_theme_supports("pls-footer-options", PLS_Route::locate_blueprint_option('footer.php'));
         }
 
         if( pls_get_option("pls-slideshow-options") ) {
-            include( trailingslashit( PLS_OP_DIR ) . 'slideshow.php' );            
+            require_if_theme_supports("pls-slideshow-options", PLS_Route::locate_blueprint_option('slideshow.php'));
         }
 
         if (pls_get_option("pls-css-options")) {
-            include( trailingslashit( PLS_OP_DIR ) . 'css.php' );            
+            require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
         }
+
+        require(PLS_Route::locate_blueprint_option('utility.php'));
+            
     }
 
     public static function add ($options = false)
