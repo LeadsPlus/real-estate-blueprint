@@ -252,7 +252,6 @@ class Placester_Blueprint {
         add_theme_support( 'pls-image-util', array('fancybox') );
         add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
         add_theme_support( 'pls-maps-util');
-        add_theme_support( 'pls-style-util');
         add_theme_support( 'pls-debug');
 
         //style options, need to be set in style-util.php
@@ -383,7 +382,7 @@ class Placester_Blueprint {
         require_if_theme_supports( 'pls-theme-options', trailingslashit ( PLS_EXT_DIR ) . 'options-framework.php' );
 
         /** Load the Style Util extension if supported. */
-        require_if_theme_supports( 'pls-style-util', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
+        require_if_theme_supports( 'pls-theme-options', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
 
         /** Load the Options Framework extension if supported. */
         require_if_theme_supports( 'pls-image-util', trailingslashit ( PLS_EXT_DIR ) . 'image-util.php' );
