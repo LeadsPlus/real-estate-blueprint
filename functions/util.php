@@ -153,11 +153,3 @@ function default_wp_nav_menu_args( $args = '' ) {
 
     return $args;
 }
-
-if (!function_exists("pls_get_option")) {
-    function pls_get_option () {
-        return false;
-    }
-
-}
-

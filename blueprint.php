@@ -389,6 +389,9 @@ class Placester_Blueprint {
 
         /** Load the Maps Util extension if supported. */
         require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps-util.php' );
+
+                /** Load fallbacks last. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'fallback.php' );
 	}
 
     /**
