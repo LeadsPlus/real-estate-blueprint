@@ -180,12 +180,7 @@ class PLS_Style {
     }
 
     private static function handle_background($value, $id, $default, $type, $important) {
-        // pls_dump($value);
-        // background-image:url('smiley.gif');
-        // background-repeat:no-repeat;
-        // background-attachment:fixed;
-        // background-position:center; 
-        
+
         if (is_array($value)) {
             
             $css_style = '';
@@ -257,17 +252,23 @@ class PLS_Style {
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
     {
+
         if (empty($value) || $value == 'default') {
             return '';
         } else {
-            // log what styles are created.
-            PLS_Debug::add_msg(array($style . ': ' . $value . ($important ? ' !important;' : '')));
 
             switch ($style) {
-                case 'background-image':
-                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+                case 'radius':
+                    $item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
+                    $item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
+                    $item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
+                    return $item;
                     break;
                 
+            case 'radius':
+                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+                    break;
+
                 default:
                     return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";            
                     break;

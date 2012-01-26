@@ -28,22 +28,43 @@ PLS_Style::add(array(
 			"name" =>  "Button Text Size & Color",
 			"desc" => "Change the background CSS.",
 			"id" => "pls-all-button-text",
-			"selector" => "body.a:more-link", 
+			"selector" => "body a.more-link", 
 			"std" => $background_defaults, 
 			"type" => "typography"));
-
-PLS_Style::add(array( 
-			"name" =>  "Button Background Color",
-			"desc" => "The background color of all the buttons",
-			"id" => "pls-all-button-background-color",
-			"selector" => ".button-background-color", 
-			"type" => "color"));			
 
 PLS_Style::add(array( 
 			"name" =>  "Button Rounded Corners",
 			"desc" => "The background color of all the buttons",
 			"id" => "pls-all-button-radius",
+			"selector" => "body a.more-link",
+			"class" => "mini",
+			"type" => "text"));						
+
+PLS_Style::add(array( 
+			"name" =>  "Button Background Color",
+			"desc" => "The background color of all the buttons",
+			"id" => "pls-all-button-background-color",
+			"style" => "background-color",
+			"selector" => "body a.more-link", 
 			"type" => "color"));			
+
+PLS_Style::add(array( 
+			"name" =>  "Button Hover Text Size & Color",
+			"desc" => "Change the background CSS.",
+			"id" => "pls-all-button-hover-text",
+			"selector" => "body a.more-link:hover", 
+			"std" => $background_defaults, 
+			"type" => "typography"));			
+
+PLS_Style::add(array( 
+			"name" =>  "Button Background Color",
+			"desc" => "The background color of all the buttons",
+			"id" => "pls-all-button-background-color-hover",
+			"style" => "background-color",
+			"selector" => "body a.more-link:hover", 
+			"type" => "color"));			
+
+
 
 
 

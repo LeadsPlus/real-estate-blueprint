@@ -315,3 +315,13 @@
 h3#optionsframework-submit-top .button-primary {
 	margin-left: 25px;
 }
+
+
+.section-info {
+	background-color: #F1F1F1;
+	border-bottom: 1px solid #DFDFDF;
+}
+.section-info h4 {
+	font-size: 16px;
+	border-bottom: none !important;
+}
