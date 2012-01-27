@@ -57,7 +57,7 @@ function pls_register_sidebars() {
 
 	/** Set up the subsidiary sidebar arguments. */
 	$sidebars[] = array(
-		'id' => 'footer',
+		'id' => 'footer-widgets',
 		'name' => __( 'Footer', $textdomain ),
 		'description' => __( 'A widget area for the footer of the site.', $textdomain ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',

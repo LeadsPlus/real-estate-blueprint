@@ -89,6 +89,21 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             }
         }
 
+        if ( array_key_exists( 'floating', $js[0] ) ) {
+
+            /** Register the script and style. */
+            wp_register_script( 'floating', trailingslashit( PLS_JS_URL ) . 'scripts/floating.js' , array( 'jquery'), NULL, true );
+            
+
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['floating'] ) ) {
+                if ( in_array( 'script', $js[0]['floating'] ) ) {
+                    wp_enqueue_script( 'floating' );
+                }
+                    
+            }
+        }
+
     }
 
 

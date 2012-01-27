@@ -118,12 +118,14 @@ class PLS_Image {
 			ob_start();
 			// our basic fancybox html
 			?>
-				<a ref="" rel="" class="<?php echo @$fancybox['trigger_class'] . ' ' .  @$html['classes']; ?>" href="<?php echo @$old_image; ?>" >
+				<a ref="" rel="gallery" class="<?php echo @$fancybox['trigger_class'] . ' ' .  @$html['classes']; ?>" href="<?php echo @$old_image; ?>" >
 					<img alt="<?php echo @$html['alt']; ?>" title="<?php echo @$html['title'] ? $html['title'] : ''; ?>" class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" />
 				</a>
 			<?php
 			
 			return trim( ob_get_clean() );
+			
+			
 		} else {
 			ob_start();
 			?>
@@ -131,8 +133,6 @@ class PLS_Image {
 			<?php
 		
 			return trim(ob_get_clean());
-		
-
 		}
 		
 	}
@@ -220,14 +220,15 @@ class PLS_Image {
 			endif;
 		endif;
 
-		if (is_writable($newPath) == false):
-
-			// if we can't create something new
-			// don't try.
-			// use the old image.
-			$create = false;
-			$newPath = $imagePath;
-		endif;
+		// Commented out so $create = true
+		// if (is_writable($newPath) == false):
+		// 
+		// 	// if we can't create something new
+		// 	// don't try.
+		// 	// use the old image.
+		// 	$create = false;
+		// 	$newPath = $imagePath;
+		// endif;
 
 		if($create == true):
 			if(!empty($w) and !empty($h)):

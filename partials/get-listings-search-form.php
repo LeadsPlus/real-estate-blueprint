@@ -391,6 +391,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Wrap the combined form content in the form element and filter it. */
         $form_id = pls_get_merged_strings( array( 'pls-listings-search-form', $context ), '-', 'pre', false );
+
         $form = pls_h(
             'form',
             array( 'action' => $form_data->action, 'method' => 'get', 'id' => $form_id ),
@@ -398,7 +399,7 @@ class PLS_Partials_Listing_Search_Form {
         );
 
         /** Filter the form. */
-        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $context_var );
+        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
 
         /** Add the JS that makes this work ajaxomagically. */
         if ( $ajax ) 

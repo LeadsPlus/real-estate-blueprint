@@ -112,6 +112,26 @@ class PLS_Route {
 		}
 		return $located;
 	}
+
+		// determines which file to load
+	// broken off from router so it can be reused. 
+	function locate_blueprint_option ($template_names)
+	{
+		$located = '';
+
+		foreach ( (array) $template_names as $template_name ) {
+			if ( !$template_name )
+				continue;
+			if ( file_exists(trailingslashit(STYLESHEETPATH) . 'options/' . $template_name)) {
+				$located = trailingslashit(STYLESHEETPATH) . 'options/' . $template_name;
+				break;
+			} else if ( file_exists(trailingslashit( PLS_OP_DIR ) . $template_name) ) {
+				$located = trailingslashit( PLS_OP_DIR ) . $template_name;
+				break;
+			}
+		}
+		return $located;
+	}
 	
 	// displays the html of a given page. 
 	//

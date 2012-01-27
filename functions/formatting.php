@@ -44,6 +44,34 @@ class PLS_Format {
 
 	}
 
+	static public function listing_price ($listing, $args) {
+
+		if (is_array($listing)) {
+		
+			$price = self::number($listing['price'], $args);
+
+			if ($listing['purchase_types'][0] == 'rental') {
+				$price .= "/month";
+			}
+
+			return $price;
+
+		} elseif (is_object($listing)) {
+			
+			$price = self::number($listing->price, $args);
+
+			if ($listing->purchase_types[0] == 'rental') {
+				$price .= "/month";
+			}
+
+			return $price;
+		}
+
+
+		return "";
+
+	}
+
 	// formats the given number based on the supplied options. 
 	static public function number ( $number, $options = '') {
 		
