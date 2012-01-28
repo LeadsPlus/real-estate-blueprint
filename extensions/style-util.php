@@ -41,7 +41,6 @@ class PLS_Style {
         require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
         
         require(PLS_Route::locate_blueprint_option('utility.php'));
-            
     }
 
     public static function add ($options = false)
