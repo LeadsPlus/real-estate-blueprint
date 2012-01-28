@@ -82,6 +82,7 @@ class PLS_Slideshow {
         extract( $args, EXTR_SKIP );
 
         if ( ! $data || ! is_array( $data ) ) {
+
             /** Process the listings args. */
             $listings_args = wp_parse_args( $listings );
 
@@ -148,7 +149,7 @@ class PLS_Slideshow {
 
             /** Create the img element. */
             $slide = pls_h_img( PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false ) ), false, $extra_attr );
-            // $slide = PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'as_html' => true, 'html' => array('width' => $width, 'height' => $height, 'title' => $html['captions'], 'alt' => $extra_attr['title'] ) ) );
+// pls_dump(PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false )));
             // pls_dump($slide);
 
             /** Wrap it in an achor if the anchor exists. */
@@ -156,13 +157,14 @@ class PLS_Slideshow {
                 $slide = pls_h_a( $data['links'][$index], $slide );
 
             $html['slides'] .= $slide;
-        }
 
+}
         /** Combine the html. */
         $html = pls_h_div(
             $html['slides'],
-            array( 'id' => 'slider', 'class' => 'nivoSlider' )
+            array( 'id' => 'slider', 'class' => 'nivoSlider' ) 
         ) . $html['captions'];
+        
 
         /** Filter the html array. */
         $html = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_html', $context ), '_', 'pre', false ), $html, $data, $context, $context_var, $args );
@@ -212,6 +214,7 @@ class PLS_Slideshow {
 
     static function prepare_single_listing ($listing = false) {
 
+
         $slide_array = array();
 
         if ($listing && isset($listing['images'])) {
@@ -225,8 +228,17 @@ class PLS_Slideshow {
 
             // Slide array successfully created
             return $slide_array;
+        } elseif ($listing && isset($listing->images)) {
+						foreach ($listing->images as $image) {
+		          $slide_array['images'][] = $image->url;
+		          // $slide_array['links'][] = 'google.com';
+		          $slide_array['captions'][] = '';
+		          // $slide_array['listing'][] = $data;
+	          }
 
-        }
+	          // Slide array successfully created
+	          return $slide_array;
+				}	
 
         return false;
     }

@@ -25,7 +25,22 @@ class PLS_Style {
 
     static function get_options()
     {
-        include( trailingslashit( TEMPLATEPATH ) . 'blueprint/options/init.php' );
+
+        require(PLS_Route::locate_blueprint_option('init.php'));
+
+        require_if_theme_supports("pls-color-options", PLS_Route::locate_blueprint_option('colors.php'));    
+        require_if_theme_supports("pls-typography-options", PLS_Route::locate_blueprint_option('typography.php'));
+        require_if_theme_supports("pls-content-box-options", PLS_Route::locate_blueprint_option('content-box.php'));
+        require_if_theme_supports("pls-header-options", PLS_Route::locate_blueprint_option('header.php'));
+        require_if_theme_supports("pls-navigation-options", PLS_Route::locate_blueprint_option('navigation.php'));   
+        require_if_theme_supports("pls-listing-options", PLS_Route::locate_blueprint_option('listings.php'));
+        require_if_theme_supports("pls-post-options", PLS_Route::locate_blueprint_option('post.php'));
+        require_if_theme_supports("pls-widget-options", PLS_Route::locate_blueprint_option('widget.php'));
+        require_if_theme_supports("pls-footer-options", PLS_Route::locate_blueprint_option('footer.php'));
+        require_if_theme_supports("pls-slideshow-options", PLS_Route::locate_blueprint_option('slideshow.php'));
+        require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
+        
+        require(PLS_Route::locate_blueprint_option('utility.php'));
     }
 
     public static function add ($options = false)
@@ -46,12 +61,12 @@ class PLS_Style {
             return false;
         } 
 
-		$styles = '<style type="text/css">  ';
+		$styles = '';
 
         foreach ( $sorted_selector_array as $selector => $options) {
 
-            $styles .= $selector . ' {';
-            PLS_Debug::add_msg($selector);
+            $styles .= apply_filters($selector, $selector) . ' {' . "\n";
+
             foreach ($options as $index => $option) {
                 
                 $defaults = array(
@@ -68,23 +83,27 @@ class PLS_Style {
 
                 /** Merge the arguments with the defaults. */
                 $option = wp_parse_args( $option, $defaults );
-
+                
                 if (!empty($option['style']) || self::is_special_case($option['type'])) {
+                
                     //if we have a style, then let's try to generate a stlye.
                     $styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
-                    continue;
+                    
+                        
                 } elseif (!empty($id)) {
                     //try to use the id as the style... saves time for power devs.
                     $styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);    
-                    continue;
+                    
                 } else {
-                    continue;
+                    
                 }
             }
-            $styles .= '}';   
+            $styles .= '}' . "\n";   
         }
-		$styles .= '  </style>';
-
+        
+        PLS_Debug::add_msg('<pre>' . $styles . '</pre>');
+        $styles = '<style type="text/css">' . $styles . '</style>';
+        
 		echo $styles;
     }
 
@@ -102,6 +121,7 @@ class PLS_Style {
             if (self::is_special_case($type)) {
                 
                 //handles edge cases, returns a property formatted string
+                
                 return self::handle_special_case($value, $id, $default, $type, $important);
             } else {
                 $css_style = self::make_style($style, $value, $important);
@@ -120,6 +140,42 @@ class PLS_Style {
                 
                 return self::handle_typography($value, $id, $default, $type, $important);
                 break;
+            case 'background':
+                return self::handle_background($value, $id, $default, $type, $important);
+                break;
+        }
+    }
+
+    private static function handle_background($value, $id, $default, $type, $important) {
+
+        if (is_array($value)) {
+            
+            $css_style = '';
+            
+            foreach ($value as $key => $value) {
+                switch ($key) {
+                    case 'color':
+                            $css_style .= self::make_style('background-color', $value, $important);
+                        break;
+
+                    case 'image':
+                        $css_style .= self::make_style('background-image', $value, $important);
+                        break;
+                    
+                    case 'repeat':
+                        $css_style .= self::make_style('background-repeat', $value, $important);
+                        break;
+                    
+                    case 'position':
+                        $css_style .= self::make_style('background-position', $value, $important);
+                        break;
+
+                    case 'attachment':
+                        $css_style .= self::make_style('background-attachment', $value, $important);
+                        break;    
+                }    
+            }
+            return $css_style;
         }
     }
 
@@ -163,13 +219,27 @@ class PLS_Style {
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
     {
+
         if (empty($value) || $value == 'default') {
             return '';
         } else {
-            // log what styles are created.
-            PLS_Debug::add_msg(array($style . ': ' . $value . ($important ? ' !important;' : '')));
 
-            return $style . ': ' . $value . ($important ? ' !important;' : '');            
+            switch ($style) {
+                case 'radius':
+                    $item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
+                    $item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
+                    $item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
+                    return $item;
+                    break;
+                
+            case 'radius':
+                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+                    break;
+
+                default:
+                    return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";            
+                    break;
+            }
         }
 
     }
@@ -215,7 +285,7 @@ class PLS_Style {
 
     private static function is_special_case($option_type)
     {
-        $special_id_cases = array('typography');
+        $special_id_cases = array('typography', 'background');
         if ( in_array($option_type, $special_id_cases) ) {
             return true;
         } 

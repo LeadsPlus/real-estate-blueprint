@@ -213,12 +213,18 @@ function optionsframework_page() {
     <?php /* <h2 class="nav-tab-wrapper"><?php //echo $return[1]; ?></h2> */ ?>
     
     <div class="metabox-holder">
-	
-	    <div class="side-nav nav-tab-wrapper">
-	    	<ul>
-		    	<?php echo $return[1]; ?>		
-	    	</ul>
-	    </div>
+	<div class="blueprint-header">
+		<div class="blueprint-logo"></div>
+		<div class="builder-options">Theme Options</div>
+		<div class="version">
+			<p>Builder Version: 1.0.0</p>
+		</div>
+	</div>
+    <div class="side-nav nav-tab-wrapper">
+    	<ul>
+	    	<?php echo $return[1]; ?>		
+    	</ul>
+    </div>
     
     <div id="optionsframework" class="postbox" >
 		<form action="options.php" method="post">

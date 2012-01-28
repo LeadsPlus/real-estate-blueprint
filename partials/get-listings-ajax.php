@@ -46,6 +46,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'listings_per_page' => get_option( 'posts_per_page' ),
             'context' => '',
             'context_var' => NULL,
+            'append_to_map' => true
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -101,6 +102,8 @@ class PLS_Partials_Get_Listings_Ajax {
                     'location.state',
                     'location.address',
                     'location.zip',
+                    'location.coords.latitude',
+                    'location.coords.longitude',
                     'id',
                     'available_on',
                     'amenities'
@@ -251,6 +254,18 @@ class PLS_Partials_Get_Listings_Ajax {
             } else {
                 var image = null_image;
             };
+
+            <?php if ($append_to_map) {
+                ?>
+                    
+                    pls_js_add_marker(row);
+
+                    if(typeof pls_js_render_markers == 'function') { 
+                        pls_js_render_markers(); 
+                    }
+                
+                <?php
+            }; ?>
 
             return '<?php echo str_replace( $listings_placeholders, $listing_html, $listing_item_html ); ?>';
         };

@@ -301,7 +301,7 @@ function optionsframework_fields() {
 			$jquery_click_hook = "of-option-" . $jquery_click_hook;
 			$menu .= '<li class="side-bar-nav-item"><a id="'.  esc_attr( $jquery_click_hook ) . '-tab" class="nav-tab" title="' . esc_attr( $value['name'] ) . '" href="' . esc_attr( '#'.  $jquery_click_hook ) . '">' . esc_html( $value['name'] ) . '</a></li>';
 			$output .= '<div class="group" id="' . esc_attr( $jquery_click_hook ) . '">';
-			$output .= '<h3>' . esc_html( $value['name'] ) . '<input type="submit" class="top-button button-primary" name="update" value="'. 'Save Options'  . '" /></h3>' . "\n";
+			$output .= '<h3 id="optionsframework-submit-top" >' . esc_html( $value['name'] ) . '<input type="submit" class="top-button button-primary" name="update" value="'. 'Save Options'  . '" /></h3>' . "\n";
 
 
 			break;

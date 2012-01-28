@@ -17,22 +17,15 @@
 	border-style: solid;
 	border-color: #DFDFDF;
 	background-color: #F1F1F1;
-	border-bottom-left-radius: 3px;
-	border-top-left-radius: 3px;
-	border-bottom-right-radius: 0px;
-	border-top-right-radius: 0px;
 }
 .side-nav ul li {
 	margin: 0px;
 	margin-bottom: -1px;
-	border-top: solid 1px;
 	border-bottom: solid 1px;
-	border-top-color: #F9F9F9;
 	border-bottom-color: #DFDFDF;
 }
 .side-bar-nav-item a {
 	border: none;
-	border-bottom: 1px solid #DFDFDF;
 	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
 	margin: 0px;
 	width: 100%;
@@ -57,6 +50,54 @@
 }
 .top-button {
 	margin-bottom: 3px
+}
+
+.metabox-holder {
+	float: left;
+	width: 953px;
+}
+
+.blueprint-header {
+	border-bottom-left-radius: 3px;
+	border-top-left-radius: 3px;
+	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0px;
+	border-top: solid 1px;
+	border-top-color: #DFDFDF;
+	border-right: solid 1px;
+	border-right-color: #DFDFDF;
+	border-left: solid 1px;
+	border-left-color: #DFDFDF;
+	background-color: #F1F1F1;
+	height: 50px;
+	clear: both;
+}
+
+.version {
+	float: right;
+	color: #999;
+	margin-right: 20px;
+}
+.version p {
+	font-size: 14px;
+	padding: 0px;
+	margin: 15px 0 0 0;
+}
+
+.blueprint-logo {
+	background: url(https://placester.com/wp-content/themes/v2/img/placester-logo.png) no-repeat left top;
+	width: 150px;
+	height: 30px;
+	margin: 10px 0 0 20px;
+	float: left;
+}
+.builder-options {
+	float: left;
+	margin: 20px 0 0 0; 
+	font-weight: bold;
+	text-shadow: white 0 1px 0;
+	font-size: 16px;
+	color: #666;
 }
 
 #optionsframework {
@@ -271,6 +312,16 @@
 	background-color: #F1F1F1;
     background-image: -moz-linear-gradient(center top , #F9F9F9, #ECECEC);
 }
-#optionsframework .button-primary {
-	float:right;
+h3#optionsframework-submit-top .button-primary {
+	margin-left: 25px;
+}
+
+
+.section-info {
+	background-color: #F1F1F1;
+	border-bottom: 1px solid #DFDFDF;
+}
+.section-info h4 {
+	font-size: 16px;
+	border-bottom: none !important;
 }

@@ -100,13 +100,13 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Prepend the default empty valued element. */
-        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
         
         /** Prepend the default empty valued element. */
-        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
 
         /** Prepend the default empty valued element. */
-        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
 
         /** Generate an array with the next 12 months. */
         $current_month = (int) date('m');
@@ -121,11 +121,15 @@ class PLS_Partials_Listing_Search_Form {
         $form_options['listing_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'listing' );
 
         /** Get the zoning type options. */
-        $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+        // $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
+        $form_options['zoning_types'] = PLS_Plugin_API::get_type_values( 'zoning' );
 
         /** Get the purchase type options. */
-        $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
-
+        // $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
+				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
+				$form_options['purchase_types'] = PLS_Plugin_API::get_type_values( 'purchase' );
+				
         /** Prepend the default empty valued element. */
         $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
 
@@ -391,6 +395,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Wrap the combined form content in the form element and filter it. */
         $form_id = pls_get_merged_strings( array( 'pls-listings-search-form', $context ), '-', 'pre', false );
+
         $form = pls_h(
             'form',
             array( 'action' => $form_data->action, 'method' => 'get', 'id' => $form_id ),
@@ -398,7 +403,7 @@ class PLS_Partials_Listing_Search_Form {
         );
 
         /** Filter the form. */
-        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $context_var );
+        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
 
         /** Add the JS that makes this work ajaxomagically. */
         if ( $ajax ) 

@@ -40,7 +40,7 @@ class PLS_Debug {
         if ($show_debug == 1) {
             self::assemble_messages();
             ?>
-            <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px; color: black;">
+            <div style="position:fixed; bottom: 0px; left: 0px; width:100%; height: 35%; background-color: #F8F8F8 ; overflow: auto; border-top: 2px solid black; font-size: 11px; color: black;z-index: 9999">
                 <h4>Blueprint Debug Messages</h4>
                 <?php echo self::$message_text; ?>    
             </div>

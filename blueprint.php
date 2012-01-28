@@ -203,6 +203,10 @@ class Placester_Blueprint {
         define( 'PLS_PAR_DIR', trailingslashit( PLS_DIR ) . 'partials' );
         define( 'PLS_PAR_URL', trailingslashit( PLS_URL ) . 'partials' );
 
+        /** Template directory path and url */
+        define( 'PLS_OP_DIR', trailingslashit( PLS_DIR ) . 'options' );
+        define( 'PLS_OP_URL', trailingslashit( PLS_URL ) . 'options' );
+
         /** Styles directory path and url */
         define( 'PLS_IMG_DIR', trailingslashit( PLS_DIR ) . 'i' );
         define( 'PLS_IMG_URL', trailingslashit( PLS_URL ) . 'i' );
@@ -236,21 +240,33 @@ class Placester_Blueprint {
         add_theme_support( 'pls-menus', array( 'primary', 'subsidiary' ) );
 
         /** Add theme support for sidebars */
-        add_theme_support( 'pls-sidebars', array( 'primary', 'listings-search', 'footer' ) );
+        add_theme_support( 'pls-sidebars', array( 'primary', 'listings-search', 'footer-widgets' ) );
 
         // Adds default styling out of the box
         add_theme_support( 'pls-default-normalize' );
         add_theme_support( 'pls-default-960' );
         add_theme_support( 'pls-default-style' );
         add_theme_support( 'pls-default-css' );
-        add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ) ) );
+        add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ), 'floating' => array('script' => true, 'style' => true) ) );
         add_theme_support( 'pls-theme-options' );
         add_theme_support( 'pls-image-util', array('fancybox') );
         add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
         add_theme_support( 'pls-maps-util');
-        add_theme_support( 'pls-style-util');
         add_theme_support( 'pls-debug');
 
+        //style options, need to be set in style-util.php
+        add_theme_support( 'pls-color-options');
+        add_theme_support( 'pls-typography-options');
+        add_theme_support( 'pls-content-box-options');
+        add_theme_support( 'pls-header-options');
+        add_theme_support( 'pls-navigation-option');
+        add_theme_support( 'pls-listing-options');
+        add_theme_support( 'pls-post-options');
+        add_theme_support( 'pls-widget-options');
+        add_theme_support( 'pls-footer-options');
+        add_theme_support( 'pls-slideshow-options');
+        add_theme_support( 'pls-css-options');
+        
     }
 
 	/**
@@ -365,14 +381,17 @@ class Placester_Blueprint {
         /** Load the Options Framework extension if supported. */
         require_if_theme_supports( 'pls-theme-options', trailingslashit ( PLS_EXT_DIR ) . 'options-framework.php' );
 
+        /** Load the Style Util extension if supported. */
+        require_if_theme_supports( 'pls-theme-options', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
+
         /** Load the Options Framework extension if supported. */
         require_if_theme_supports( 'pls-image-util', trailingslashit ( PLS_EXT_DIR ) . 'image-util.php' );
 
         /** Load the Maps Util extension if supported. */
         require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps-util.php' );
 
-        /** Load the Style Util extension if supported. */
-        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'style-util.php' );
+                /** Load fallbacks last. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'fallback.php' );
 	}
 
     /**
