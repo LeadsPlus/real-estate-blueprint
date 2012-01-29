@@ -66,6 +66,7 @@ class PLS_Partial_Get_Listings {
 
         /** Request the list of properties. */
         $listings_raw = PLS_Plugin_API::get_property_list( $request_params );
+        // pls_dump($listings_raw);
 
         /** Display a placeholder if the plugin is not active or there is no API key. */
         if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
@@ -87,25 +88,25 @@ class PLS_Partial_Get_Listings {
 
         /** Collect the html for each listing. */
         $listings_html = array();
-        foreach ( $listings_raw->properties as $listing_data ) {
-
+        foreach ( $listings_raw['listings'] as $listing_data ) {
+            // pls_dump($listing_data);
             /**
              * Curate the listing_data.
              */
 
             /** Overwrite the placester url with the local url. */
-            $listing_data->url = PLS_Plugin_API::get_property_url( $listing_data->id );
+            // $listing_data->url = PLS_Plugin_API::get_property_url( $listing_data->id );
 
             /** Use the placeholder image if the property has no photo. */
-            if ( empty( $listing_data->images ) ) {
-                $listing_data->images[0]->url = $placeholder_img;
-                $listing_data->images[0]->order = 0;
+            if ( !$listing_data['images'] ) {
+                $listing_data['images'][0]['url'] = $placeholder_img;
+                $listing_data['images'][0]['order'] = 0;
             }
 
             /** Remove the ID for each image (not needed by theme developers) and add the image html. */
-            foreach ( $listing_data->images as $image ) {
-                unset( $image->id );
-                $image->html = pls_h_img( $image->url, $listing_data->location->full_address, $listing_img_attr );
+            foreach ( $listing_data['images'] as $image ) {
+                unset( $image['id'] );
+                $image['html'] = pls_h_img( $image['url'], $listing_data['location']['address'], $listing_img_attr );
             }
 
              ob_start();
@@ -113,46 +114,45 @@ class PLS_Partial_Get_Listings {
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
-                <h3><a href="<?php echo $listing_data->url; ?>" rel="bookmark" title="<?php echo $listing_data->location->full_address ?>"><?php echo $listing_data->location->full_address ?></a></h2>
+                <h3><a href="<?php echo $listing_data['url']; ?>" rel="bookmark" title="<?php echo $listing_data['location']['address'] ?>"><?php echo $listing_data['location']['address'] ?></a></h2>
                 <!-- Display Listings -->
-                <?php if (!empty($listing_data->description)): ?>
+                <?php if (!empty($listing_data['description'])): ?>
                     <ul>
-                        <li>Beds: <?php echo @$listing_data->bedrooms; ?>, </li>
-                        <li>Baths: <?php echo @$listing_data->bathrooms; ?>, </li>
-                        <li>Half Baths: <?php echo @$listing_data->half_baths; ?>, </li>
-                        <li>Price: <?php echo @$listing_data->price; ?>, </li>
-                        <li>Available On: <?php echo @$listing_data->available_on; ?>, </li>
-                    </ul>    
+                        <li>Beds: <?php echo @$listing_data['cur_data']['beds']; ?>, </li>
+                        <li>Baths: <?php echo @$listing_data['cur_data']['baths']; ?>, </li>
+                        <li>Half Baths: <?php echo @$listing_data['cur_data']['half_baths']; ?>, </li>
+                        <li>Price: <?php echo @$listing_data['cur_data']['price']; ?>, </li>
+                        <li>Available On: <?php echo @$listing_data['cur_data']['avail_on']; ?>, </li>
+                    </ul>     
                 <?php endif ?>
             </header>
             <div class="listing-item-content grid_8 alpha">
                 <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
-                    <?php if (is_array($listing_data->images)): ?>
+                    <?php if (is_array($listing_data['images'])): ?>
                         <div id="listing-thumbnail" class="listing-thumbnail">
                             <div class="outline">
-                                <?php echo PLS_Image::load($listing_data->images[0]->url, array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
                             </div>
                         </div>
                     <?php endif ?>
 
                     <!-- if we don't have a description, display property details -->
-                    <?php if (!empty($listing_data->description)): ?>
+                    <?php if (!empty($listing_data['description'])): ?>
                         <div id="listing-description" class="grid_8 omega">
-                            <?php echo substr($listing_data->description, 0, 300); ?>
+                            <?php echo substr($listing_data['description'], 0, 300); ?>
                         </div>
                     <?php else: ?>
-                        <div class="basic-details">
-                            <h3>Basic Details</h3>
-                            <p>Beds: <?php echo @$listing_data->bedrooms; ?></p>
-                            <p>Baths: <?php echo @$listing_data->bathrooms; ?></p>
-                            <p>Half Baths: <?php echo @$listing_data->half_baths; ?></p>
-                            <p>Price: <?php echo @$listing_data->price; ?></p>
-                            <p>Available On: <?php echo @$listing_data->available_on; ?></p>
-                        </div>
+                        <ul>
+                            <li>Beds: <?php echo @$listing_data['cur_data']['beds']; ?>, </li>
+                            <li>Baths: <?php echo @$listing_data['cur_data']['baths']; ?>, </li>
+                            <li>Half Baths: <?php echo @$listing_data['cur_data']['half_baths']; ?>, </li>
+                            <li>Price: <?php echo @$listing_data['cur_data']['price']; ?>, </li>
+                            <li>Available On: <?php echo @$listing_data['cur_data']['avail_on']; ?>, </li>
+                        </ul>     
                     <?php endif ?>
                     <div class="actions">
-                        <a class="more-link" href="<?php echo $listing_data->url; ?>">View Property Details</a>
+                        <a class="more-link" href="<?php echo $listing_data['url']; ?>">View Property Details</a>
                     </div>
                 </div>
             </div><!-- .entry-summary -->
