@@ -152,7 +152,7 @@ class PLS_Plugin_API {
     static function get_property_list( $params ) {
 
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions( 'placester_property_list', $params );
+        $return = self::_try_for_exceptions( array('PL_Listing_Helper','results'), $params );
 
         /** If no exceptions were detected, return the result. */
         if ( $return ) {
