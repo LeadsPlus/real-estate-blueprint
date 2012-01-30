@@ -50,7 +50,7 @@ class PLS_Format {
 		
 			$price = self::number($listing['price'], $args);
 
-			if ($listing['purchase_types'][0] == 'rental') {
+			if (isset($listing['purchase_types']) && ($listing['purchase_types'][0] == 'rental')) {
 				$price .= "/month";
 			}
 
@@ -60,7 +60,7 @@ class PLS_Format {
 			
 			$price = self::number($listing->price, $args);
 
-			if ($listing->purchase_types[0] == 'rental') {
+			if (isset($listing->purchase_types) && ($listing->purchase_types[0] == 'rental')) {
 				$price .= "/month";
 			}
 

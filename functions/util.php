@@ -153,4 +153,3 @@ function default_wp_nav_menu_args( $args = '' ) {
 
     return $args;
 }
-
