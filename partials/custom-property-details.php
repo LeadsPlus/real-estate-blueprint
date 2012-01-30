@@ -56,7 +56,7 @@ class PLS_Partials_Property_Details {
                         <li><span>Beds </span><?php echo $listing_data['bedrooms'] ?></li>
                         <li><span>Baths </span><?php echo $listing_data['bedrooms'] ?></li>
                         <li><span>Half Baths </span><?php echo $listing_data['bedrooms'] ?></li>
-                        <li><span>Available </span><?php echo $listing_data['available_on'] ?></li>
+                        <li><span>Available </span><?php echo @$listing_data['available_on'] ?></li>
                         <li><span>Square Feet </span><?php echo $listing_data['sqft'] ?></li>
                     </ul>
                 </div>
