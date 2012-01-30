@@ -286,8 +286,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $row_rendering_js = ob_get_clean();
 
         /** Filter the concatenated html. This allows developers to wrap the components in different markup and change their order. */
-        // $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
-				$return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $loader_html . $listings_list . $pagination_html, $listings_list, $loader_html, $pagination_html );
+        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
 
         /** Append the extra javascript and return. */
         return $return . $row_rendering_js;
