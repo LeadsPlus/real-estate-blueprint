@@ -100,13 +100,13 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Prepend the default empty valued element. */
-        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
+        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );
         
         /** Prepend the default empty valued element. */
-        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
+        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
 
         /** Prepend the default empty valued element. */
-        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 9 );
+        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
 
         /** Generate an array with the next 12 months. */
         $current_month = (int) date('m');
@@ -170,7 +170,17 @@ class PLS_Partials_Listing_Search_Form {
             '2000' => '2,000',
             '3000' => '3,000',
             '4000' => '4,000',
-            '5000' => '5,000'
+            '5000' => '5,000',
+						'6000' => '6,000',
+						'7000' => '7,000',
+						'8000' => '8,000',
+						'9000' => '9,000',
+						'10000' => '10,000',
+						'11000' => '11,000',
+						'12000' => '12,000',
+						'13000' => '13,000',
+						'14000' => '14,000',
+						'15000' => '15,000',
         );
 
         /** Set the maximum price options array. */
