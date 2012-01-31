@@ -25,12 +25,12 @@ class PLS_Image {
 	
 	static function init() {
 	
-        self::enqueue();
+        // self::enqueue();
+				add_action('wp_head', array(__CLASS__,'enqueue'));
 		
 	}
 
-    static private function enqueue()
-	{
+    static function enqueue() {
 
         $image_util_support = get_theme_support( 'pls-image-util' );
 
