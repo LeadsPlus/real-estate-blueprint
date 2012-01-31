@@ -108,13 +108,14 @@ class PLS_Partial_Get_Listings {
                 unset( $image['id'] );
                 $image['html'] = pls_h_img( $image['url'], $listing_data['location']['address'], $listing_img_attr );
             }
-
+                $location = $listing_data['location'];
+                $full_address = $location['address'] . ' ' . $location['region'] . ', ' . $location['locality'] . ' ' . $location['postal'];
              ob_start();
              ?>
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
-                <h3><a href="<?php echo $listing_data['url']; ?>" rel="bookmark" title="<?php echo $listing_data['location']['address'] ?>"><?php echo $listing_data['location']['address'] ?></a></h2>
+                <h3><a href="<?php echo $listing_data['url']; ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
                 <!-- Display Listings -->
                 <?php if (!empty($listing_data['description'])): ?>
                     <ul>
