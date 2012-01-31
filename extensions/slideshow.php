@@ -21,8 +21,9 @@ class PLS_Slideshow {
      */
     static function init() {
 
-        // self::enqueue();
-				add_action('wp_head', array(__CLASS__,'enqueue'));
+        self::enqueue();
+				// For Wordpress 3.3.0
+				// add_action('wp_head', array(__CLASS__,'enqueue'));
     }
 
     static function enqueue() {
