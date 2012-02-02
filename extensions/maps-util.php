@@ -35,10 +35,11 @@ class PLS_Map {
 
 				function pls_js_add_marker(row) {
                     
-					markers.push(new google.maps.Marker({
-                        position: new google.maps.LatLng(row.location.coords.latitude, row.location.coords.longitude)
-                    }));
-                    
+                    if (typeof google != 'undefined') {
+	                    markers.push(new google.maps.Marker({
+	                        position: new google.maps.LatLng(row.location.coords.latitude, row.location.coords.longitude)
+	                    }));	
+                    };
 				}
 
 			</script>

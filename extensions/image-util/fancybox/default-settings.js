@@ -1,7 +1,7 @@
-$(document).ajaxStop(function() {
+jQuery(document).ajaxStop(function() {
 	
 	/* Apply fancybox to multiple items */
-	$("a.pls_use_fancy").fancybox({
+	jQuery("a.pls_use_fancy").fancybox({
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'speedIn'		:	600, 
@@ -10,10 +10,10 @@ $(document).ajaxStop(function() {
 	});
 	
 });
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	
 	/* Apply fancybox to multiple items */
-	$("a.pls_use_fancy").fancybox({
+	jQuery("a.pls_use_fancy").fancybox({
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'speedIn'		:	600, 
