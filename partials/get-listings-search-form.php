@@ -122,6 +122,8 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Get the zoning type options. */
         $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
+        // $form_options['zoning_types'] = PLS_Plugin_API::get_type_values( 'zoning' ); // for Multiple, not for single, see below
 
         /** Get the purchase type options. */
         $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
@@ -262,7 +264,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
-                array( 'name' => 'zoning_types', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
+                array( 'name' => 'zoning_types[zoning_type]'  ) + $form_opt_attr['zoning_types'],
+                // array( 'name' => 'zoning_types[zoning_type]', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
                 /** Get the list of options with the empty valued element selected. */
                 pls_h_options( $form_options['zoning_types'], "" )
             );
