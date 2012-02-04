@@ -110,25 +110,34 @@ class PLS_Format {
 
 		
 		if ( !strpos( (string) $number, ',')) {
-			$formatted_number = number_format($number);			
+			$formatted_number = number_format($number);
 		}
-
 		// Force length intellegently
 		$number_blocks = explode(',', $number);
 
 		$block_length = count($number_blocks);
-	
-		switch ($block_length) {				
+
+		switch ($block_length) {
 			case 1:
 				$abbreviated_number = $number;
 				break;
 
 			case 2:
-				$abbreviated_number = $number_blocks[0] . 'K';
+				$b = $number[2];
+				if ($b == 0) {
+					$abbreviated_number = $number_blocks[0] . 'K';
+				} else {
+					$abbreviated_number = $number_blocks[0] . '.' . $b . 'K';
+				}
 				break;
 
 			case 3:
-				$abbreviated_number = $number_blocks[0] . 'M';
+				$b = $number[2];
+				if ($b == 0) {
+					$abbreviated_number = $number_blocks[0] . 'M';
+				} else {
+					$abbreviated_number = $number_blocks[0] . '.' . $b . 'M';
+				}
 				break;
 
 			default:
