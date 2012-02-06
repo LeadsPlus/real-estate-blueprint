@@ -100,13 +100,13 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Prepend the default empty valued element. */
-        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );
         
         /** Prepend the default empty valued element. */
-        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
 
         /** Prepend the default empty valued element. */
-        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 1, 9 );
+        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
 
         /** Generate an array with the next 12 months. */
         $current_month = (int) date('m');
@@ -122,10 +122,14 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Get the zoning type options. */
         $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
+        // $form_options['zoning_types'] = PLS_Plugin_API::get_type_values( 'zoning' ); // for Multiple, not for single, see below
 
         /** Get the purchase type options. */
         $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
-
+				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
+				// $form_options['purchase_types'] = PLS_Plugin_API::get_type_values( 'purchase' );
+				
         /** Prepend the default empty valued element. */
         $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
 
@@ -166,7 +170,17 @@ class PLS_Partials_Listing_Search_Form {
             '2000' => '2,000',
             '3000' => '3,000',
             '4000' => '4,000',
-            '5000' => '5,000'
+            '5000' => '5,000',
+						'6000' => '6,000',
+						'7000' => '7,000',
+						'8000' => '8,000',
+						'9000' => '9,000',
+						'10000' => '10,000',
+						'11000' => '11,000',
+						'12000' => '12,000',
+						'13000' => '13,000',
+						'14000' => '14,000',
+						'15000' => '15,000',
         );
 
         /** Set the maximum price options array. */
@@ -262,7 +276,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
-                array( 'name' => 'zoning_types', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
+                array( 'name' => 'zoning_types[zoning_type]'  ) + $form_opt_attr['zoning_types'],
+                // array( 'name' => 'zoning_types[zoning_type]', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
                 /** Get the list of options with the empty valued element selected. */
                 pls_h_options( $form_options['zoning_types'], "" )
             );
@@ -273,7 +288,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
+                array( 'name' => 'purchase_types[purchase_type]' ) + $form_opt_attr['purchase_types'],
+                // array( 'name' => 'purchase_types[purchase_type]', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
                 /** Get the list of options with the empty valued element selected. */
                 pls_h_options( $form_options['purchase_types'], "" )
             );

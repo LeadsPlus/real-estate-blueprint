@@ -41,7 +41,6 @@ class PLS_Style {
         require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
         
         require(PLS_Route::locate_blueprint_option('utility.php'));
-            
     }
 
     public static function add ($options = false)
@@ -117,7 +116,7 @@ class PLS_Style {
             $css_style = '';
             
             // check for special cases
-            // sometimes the optoins framework saves certain options
+            // sometimes the options framework saves certain options
             // in unique ways which can't be directly translated into styles
             if (self::is_special_case($type)) {
                 
