@@ -259,7 +259,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-typography-options');
         add_theme_support( 'pls-content-box-options');
         add_theme_support( 'pls-header-options');
-        add_theme_support( 'pls-navigation-option');
+        add_theme_support( 'pls-navigation-options');
         add_theme_support( 'pls-listing-options');
         add_theme_support( 'pls-post-options');
         add_theme_support( 'pls-widget-options');

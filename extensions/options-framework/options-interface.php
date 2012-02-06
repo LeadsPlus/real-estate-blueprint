@@ -187,6 +187,21 @@ function optionsframework_fields() {
 		
 			$typography_stored = $val;
 			
+			// GALEN
+       if ( !isset( $typography_stored['size'] ) ) {
+         $typography_stored['size'] = '';
+       }
+       if ( !isset( $typography_stored['face'] ) ) {
+         $typography_stored['face'] = '';
+       }
+       if ( !isset( $typography_stored['style'] ) ) {
+         $typography_stored['style'] = '';
+       }
+       if ( !isset( $typography_stored['color'] ) ) {
+         $typography_stored['color'] = '';
+       }
+       //
+			
 			// Font Size
 			$output .= '<select class="of-typography of-typography-size" name="' . esc_attr( $option_name . '[' . $value['id'] . '][size]' ) . '" id="' . esc_attr( $value['id'] . '_size' ) . '">';
 			for ($i = 9; $i < 71; $i++) { 
@@ -215,7 +230,7 @@ function optionsframework_fields() {
 			}
 			$output .= '</select>';
 
-			// Font Color		
+			// Font Color
 			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $typography_stored['color'] ) . '"></div></div>';
 			$output .= '<input class="of-color of-typography of-typography-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $typography_stored['color'] ) . '" />';
 
@@ -225,8 +240,8 @@ function optionsframework_fields() {
 		case 'background':
 			
 			$background = $val;
-			
-			// Background Color		
+
+			// Background Color
 			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $background['color'] ) . '"></div></div>';
 			$output .= '<input class="of-color of-background of-background-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $background['color'] ) . '" />';
 			
@@ -245,7 +260,19 @@ function optionsframework_fields() {
 			// Background Repeat
 			$output .= '<select class="of-background of-background-repeat" name="' . esc_attr( $option_name . '[' . $value['id'] . '][repeat]'  ) . '" id="' . esc_attr( $value['id'] . '_repeat' ) . '">';
 			$repeats = of_recognized_background_repeat();
-			
+
+      // GALEN
+      if ( !isset( $background['repeat'] ) ) {
+        $background['repeat'] = '';
+      }
+      if ( !isset( $background['position'] ) ) {
+        $background['position'] = '';
+      }
+      if ( !isset( $background['attachment'] ) ) {
+        $background['attachment'] = '';
+      }
+      //
+      
 			foreach ($repeats as $key => $repeat) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['repeat'], $key, false ) . '>'. esc_html( $repeat ) . '</option>';
 			}
@@ -263,7 +290,7 @@ function optionsframework_fields() {
 			// Background Attachment
 			$output .= '<select class="of-background of-background-attachment" name="' . esc_attr( $option_name . '[' . $value['id'] . '][attachment]' ) . '" id="' . esc_attr( $value['id'] . '_attachment' ) . '">';
 			$attachments = of_recognized_background_attachment();
-			
+
 			foreach ($attachments as $key => $attachment) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['attachment'], $key, false ) . '>' . esc_html( $attachment ) . '</option>';
 			}

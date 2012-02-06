@@ -1,22 +1,22 @@
 <?php 
 
-$background_defaults = array('color' => '', 'image' => '', 'repeat' => 'repeat','position' => 'top center','attachment'=>'scroll');
+$typography_defaults = array('color' => '', 'face' => '', 'size' => '', 'style' => '');
 
 PLS_Style::add(array( 
-            "name" => "Colors & Buttons",
-            "type" => "heading"));
+    "name" => "Colors & Buttons",
+    "type" => "heading"));
 
-PLS_Style::add(array( 
-			"name" => "General",
-			"type" => "info",
-			"desc" => "testsetsetet"));
+PLS_Style::add(array(
+    "name" => "General",
+    "type" => "info",
+    "desc" => "The follow options apply to attributes across your site"));
 
 
 PLS_Style::add(array( 
 			"name" =>  "Example Background",
 			"desc" => "Change the background CSS.",
 			"id" => "example_background",
-			"std" => $background_defaults, 
+			"std" => $typography_defaults, 
 			"type" => "background"));
 
 PLS_Style::add(array( 
@@ -29,7 +29,7 @@ PLS_Style::add(array(
 			"desc" => "Change the background CSS.",
 			"id" => "pls-all-button-text",
 			"selector" => "body a.more-link", 
-			"std" => $background_defaults, 
+			"std" => $typography_defaults, 
 			"type" => "typography"));
 
 PLS_Style::add(array( 
@@ -38,7 +38,7 @@ PLS_Style::add(array(
 			"id" => "pls-all-button-radius",
 			"selector" => "body a.more-link",
 			"class" => "mini",
-			"type" => "text"));						
+			"type" => "text"));
 
 PLS_Style::add(array( 
 			"name" =>  "Button Background Color",
@@ -53,16 +53,16 @@ PLS_Style::add(array(
 			"desc" => "Change the background CSS.",
 			"id" => "pls-all-button-hover-text",
 			"selector" => "body a.more-link:hover", 
-			"std" => $background_defaults, 
-			"type" => "typography"));			
+			"std" => $typography_defaults, 
+			"type" => "typography"));
 
-PLS_Style::add(array( 
+PLS_Style::add(array(
 			"name" =>  "Button Background Color",
 			"desc" => "The background color of all the buttons",
 			"id" => "pls-all-button-background-color-hover",
 			"style" => "background-color",
 			"selector" => "body a.more-link:hover", 
-			"type" => "color"));			
+			"type" => "color"));
 
 
 
