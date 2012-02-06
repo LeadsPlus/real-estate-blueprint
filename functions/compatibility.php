@@ -276,7 +276,7 @@ class PLS_Plugin_API {
                 'price' => __( 'Price', pls_get_textdomain() ),
                 // 'sqft' => __( 'Square Feet', pls_get_textdomain() ),
                 // 'description' => __( 'Description', pls_get_textdomain() ), 
-                'bedrooms' => __( 'Bedroom', pls_get_textdomain() ),
+                // 'bedrooms' => __( 'Bedroom', pls_get_textdomain() ),
                 // 'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
                 // 'available_on' => __( 'Available On', pls_get_textdomain() ),
                 'location.address' => __( 'Address', pls_get_textdomain() ),
