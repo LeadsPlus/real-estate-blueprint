@@ -20,7 +20,7 @@ PLS_Style::add(array(
 			// div id in Theme Options Menu
 			"id" => "example_background",
 			//
-			"std" => $background_defaults,
+			// "std" => $background_defaults,
 			// selector of targeted tag being changed
 			"selector" => "",
 			// Theme Options Tab (type) which holds option being changed.
