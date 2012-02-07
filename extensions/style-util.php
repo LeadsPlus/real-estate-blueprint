@@ -155,7 +155,8 @@ class PLS_Style {
             foreach ($value as $key => $value) {
                 switch ($key) {
                     case 'color':
-                            $css_style .= self::make_style('background-color', $value, $important);
+												$css_style .= self::make_style('background', $value, $important);
+												// $css_style .= self::make_style('background-color', $value, $important);
                         break;
 
                     case 'image':
