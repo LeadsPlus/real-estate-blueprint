@@ -187,7 +187,7 @@ function optionsframework_fields() {
 		
 			$typography_stored = $val;
 
-			// GALEN
+			// Check if null
        if ( !isset( $typography_stored['size'] ) ) {
          $typography_stored['size'] = '';
        }
@@ -200,16 +200,17 @@ function optionsframework_fields() {
        if ( !isset( $typography_stored['color'] ) ) {
          $typography_stored['color'] = '';
        }
-       //
 
 			// Font Size
 			$output .= '<select class="of-typography of-typography-size" name="' . esc_attr( $option_name . '[' . $value['id'] . '][size]' ) . '" id="' . esc_attr( $value['id'] . '_size' ) . '">';
 			for ($i = 9; $i < 71; $i++) { 
 				$size = $i . 'px';
-				// GALEN
+				
+				// Check if null
 				if(!isset($typography_stored['size'])) {
 					$typography_stored['size'] = '';
 				}
+				
 				$output .= '<option value="' . esc_attr( $size ) . '" ' . selected( $typography_stored['size'], $size, false ) . '>' . esc_html( $size ) . '</option>';
 			}
 			$output .= '</select>';
@@ -218,10 +219,12 @@ function optionsframework_fields() {
 			$output .= '<select class="of-typography of-typography-face" name="' . esc_attr( $option_name . '[' . $value['id'] . '][face]' ) . '" id="' . esc_attr( $value['id'] . '_face' ) . '">';
 			
 			$faces = of_recognized_font_faces();
-			// GALEN
+
+			// Check if null
 			if(!isset($typography_stored['face'])) {
 				$typography_stored['face'] = '';
 			}
+
 			foreach ( $faces as $key => $face ) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $typography_stored['face'], $key, false ) . '>' . esc_html( $face ) . '</option>';
 			}			
@@ -232,10 +235,12 @@ function optionsframework_fields() {
 			$output .= '<select class="of-typography of-typography-style" name="'.$option_name.'['.$value['id'].'][style]" id="'. $value['id'].'_style">';
 
 			/* Font Style */
-			// GALEN
+
+			// Check if null
 			if(!isset($typography_stored['style'])) {
 				$typography_stored['style'] = '';
 			}
+
 			$styles = of_recognized_font_styles();
 			foreach ( $styles as $key => $style ) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $typography_stored['style'], $key, false ) . '>'. $style .'</option>';
@@ -273,18 +278,17 @@ function optionsframework_fields() {
 			$output .= '<select class="of-background of-background-repeat" name="' . esc_attr( $option_name . '[' . $value['id'] . '][repeat]'  ) . '" id="' . esc_attr( $value['id'] . '_repeat' ) . '">';
 			$repeats = of_recognized_background_repeat();
 
-      // GALEN
-      if ( !isset( $background['repeat'] ) ) {
-        $background['repeat'] = '';
-      }
-      if ( !isset( $background['position'] ) ) {
-        $background['position'] = '';
-      }
-      if ( !isset( $background['attachment'] ) ) {
-        $background['attachment'] = '';
-      }
-      //
-      
+			// Check if null
+			if ( !isset( $background['repeat'] ) ) {
+			  $background['repeat'] = '';
+			}
+			if ( !isset( $background['position'] ) ) {
+			  $background['position'] = '';
+			}
+			if ( !isset( $background['attachment'] ) ) {
+			  $background['attachment'] = '';
+			}
+
 			foreach ($repeats as $key => $repeat) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['repeat'], $key, false ) . '>'. esc_html( $repeat ) . '</option>';
 			}
