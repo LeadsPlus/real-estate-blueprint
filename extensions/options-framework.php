@@ -61,7 +61,9 @@ class PLS_Options_Framework {
 
         /** Replace the admin submenu with a page. */
         remove_action( 'admin_menu', 'optionsframework_add_page' );
-        add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
+
+				// Theme Options Temporarily Turned Off - GALEN
+        // add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
 
         /** 
          * This action hook has been been added by hacking the 
