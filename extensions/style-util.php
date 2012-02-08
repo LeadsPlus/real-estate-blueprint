@@ -225,23 +225,24 @@ class PLS_Style {
             return '';
         } else {
 
-            switch ($style) {
-                case 'radius':
-                    $item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
-                    $item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
-                    $item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
-                    return $item;
-                    break;
-                
-            case 'radius':
-                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
-                    break;
+					switch ($style) {
 
-                default:
-                    return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";            
-                    break;
-            }
-        }
+						case 'radius':
+							$item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
+							$item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
+							$item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
+							return $item;
+							break;
+                
+						case 'background-image':
+							return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+							break;
+
+						default:
+							return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";
+							break;
+						}
+					}
 
     }
 
