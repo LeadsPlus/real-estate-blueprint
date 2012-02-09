@@ -15,8 +15,11 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
     function pls_styles() {
 
         // wp_enqueue_style( 'pls-default', '/css/style.css' . get_bloginfo( 'stylesheet_url' ) );
-
-        /**
+				
+				// Required by WordPress
+				if ( ! isset( $content_width ) ) $content_width = 900;
+        
+				/**
          *  If the plugin is inactive, or the api key is missing from the 
          *  plugin enqueue a css file that deals with styling the plugin 
          *  notifications. Accompanied by plugin-nags.js.

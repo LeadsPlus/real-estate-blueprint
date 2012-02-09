@@ -266,7 +266,9 @@ class Placester_Blueprint {
         add_theme_support( 'pls-footer-options');
         add_theme_support( 'pls-slideshow-options');
         add_theme_support( 'pls-css-options');
-        
+
+				// Required for WordPress
+				add_theme_support( 'automatic-feed-links' );
     }
 
 	/**

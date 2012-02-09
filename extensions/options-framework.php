@@ -61,7 +61,9 @@ class PLS_Options_Framework {
 
         /** Replace the admin submenu with a page. */
         remove_action( 'admin_menu', 'optionsframework_add_page' );
-        add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
+
+				// Theme Options Temporarily Turned Off - GALEN
+        // add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
 
         /** 
          * This action hook has been been added by hacking the 
@@ -131,14 +133,15 @@ class PLS_Options_Framework {
         $page_name = apply_filters( 'pls_theme_options_menu_page_title', __( 'Theme Options', pls_get_textdomain() ) );
 
         /** Add the menu page. */
-        $of_page = add_menu_page( 
-            $page_name, 
-            $page_name, 
-            'edit_theme_options', 
-            'pls-theme-options', 
-            'optionsframework_page', 
-            trailingslashit( PLS_IMG_URL ) . 'icons/theme_options.png', 
-            '3c' /* position between 3 and 4 */ );
+				// Commented out for passing WordPress theme test
+        // $of_page = add_menu_page( 
+        //     $page_name, 
+        //     $page_name, 
+        //     'edit_theme_options', 
+        //     'pls-theme-options', 
+        //     'optionsframework_page', 
+        //     trailingslashit( PLS_IMG_URL ) . 'icons/theme_options.png', 
+        //     '3c' /* position between 3 and 4 */ );
 
         /** Adds actions to hook in the required css and javascript. */
         add_action( "admin_print_styles-$of_page", 'optionsframework_load_styles' );
