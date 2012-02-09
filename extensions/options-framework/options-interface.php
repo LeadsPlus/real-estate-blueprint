@@ -312,9 +312,10 @@ function optionsframework_fields() {
 			}
 			$output .= '</select>';
 			$output .= '</div>';
-		
+
 		break;  
-		
+
+
 		// Info
 		case "info":
 			$class = 'section';
@@ -333,8 +334,49 @@ function optionsframework_fields() {
 				$output .= apply_filters('of_sanitize_info', $value['desc'] ) . "\n";
 			}
 			$output .= '<div class="clear"></div></div>' . "\n";
-		break;                       
+
+		break;
+
+
+		// Border
+		case 'border':
 		
+			$border_stored = $val;
+
+			// Check if null
+			if ( !isset( $border_stored['size'] ) ) {
+				$border_stored['size'] = '';
+			}
+			if ( !isset( $border_stored['style'] ) ) {
+				$border_stored['style'] = '';
+			}
+			if ( !isset( $border_stored['color'] ) ) {
+				$border_stored['color'] = '';
+			}
+
+			// Border Size
+			$output .= '<select class="of-border of-border-size" name="' . esc_attr( $option_name . '[' . $value['id'] . '][size]' ) . '" id="' . esc_attr( $value['id'] . '_size' ) . '">';
+			for ($i = 1; $i < 11; $i++) { 
+				$size = $i . 'px';
+				$output .= '<option value="' . esc_attr( $size ) . '" ' . selected( $border_stored['size'], $size, false ) . '>' . esc_html( $size ) . '</option>';
+			}
+			$output .= '</select>';
+
+			// Border Style
+			$styles = of_recognized_border_styles();
+			$output .= '<select class="of-border of-border-style" name="'.$option_name.'['.$value['id'].'][style]" id="'. $value['id'].'_style">';
+			foreach ( $styles as $key => $style ) {
+				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $border_stored['style'], $key, false ) . '>'. $style .'</option>';
+			}
+			$output .= '</select>';
+
+			// Border Color
+			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $border_stored['color'] ) . '"></div></div>';
+			$output .= '<input class="of-color of-border of-border-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $border_stored['color'] ) . '" />';
+
+		break;
+
+
 		// Heading for Navigation
 		case "heading":
 			if ($counter >= 2) {
@@ -345,8 +387,6 @@ function optionsframework_fields() {
 			$menu .= '<li class="side-bar-nav-item"><a id="'.  esc_attr( $jquery_click_hook ) . '-tab" class="nav-tab" title="' . esc_attr( $value['name'] ) . '" href="' . esc_attr( '#'.  $jquery_click_hook ) . '">' . esc_html( $value['name'] ) . '</a></li>';
 			$output .= '<div class="group" id="' . esc_attr( $jquery_click_hook ) . '">';
 			$output .= '<h3 id="optionsframework-submit-top" >' . esc_html( $value['name'] ) . '<input type="submit" class="top-button button-primary" name="update" value="'. 'Save Options'  . '" /></h3>' . "\n";
-
-
 			break;
 		}
 

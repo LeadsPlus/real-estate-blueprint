@@ -109,8 +109,8 @@ class PLS_Style {
 
 	//for quick styling
 	private static function handle_style ($style, $id, $default, $type, $important) 
-	{        
-        
+	{
+
         if ($value = pls_get_option($id, $default)) {
             
             $css_style = '';
@@ -137,12 +137,14 @@ class PLS_Style {
     {
         switch ($type) {
             case 'typography':
-                
                 return self::handle_typography($value, $id, $default, $type, $important);
                 break;
             case 'background':
                 return self::handle_background($value, $id, $default, $type, $important);
                 break;
+						case 'border':
+								return self::handle_border($value, $id, $default, $type, $important);
+								break;
         }
     }
 
@@ -155,7 +157,7 @@ class PLS_Style {
             foreach ($value as $key => $value) {
                 switch ($key) {
                     case 'color':
-                            $css_style .= self::make_style('background-color', $value, $important);
+												$css_style .= self::make_style('background', $value, $important);
                         break;
 
                     case 'image':
@@ -216,6 +218,23 @@ class PLS_Style {
         }
     }
 
+		private static function handle_border ($value, $id, $default, $type, $important) {
+
+			if (is_array($value)) {
+
+				$css_style = "border: ";
+
+				foreach ($value as $key => $value) {
+					if ($key == "size") {$value = $value . 'px';}
+					$css_style .= $value . ' ';
+				}
+				return $css_style;
+
+			} else {
+				return '';
+			}
+    }
+
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
     {
@@ -224,23 +243,24 @@ class PLS_Style {
             return '';
         } else {
 
-            switch ($style) {
-                case 'radius':
-                    $item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
-                    $item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
-                    $item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
-                    return $item;
-                    break;
-                
-            case 'radius':
-                    return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
-                    break;
+					switch ($style) {
 
-                default:
-                    return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";            
-                    break;
-            }
-        }
+						case 'radius':
+							$item = 'border-radius:'. $value . "px " . ($important ? ' !important;' : '') . "\n";
+							$item .= '-moz-border-radius:' . $value . "px " . ($important ? ' !important;' : '') . "\n";
+							$item .= '-webkit-border-radius:' . $value . "px" . ($important ? ' !important;' : '') . "\n";
+							return $item;
+							break;
+                
+						case 'background-image':
+							return 'background-image: url(\'' . $value . "') " . ($important ? ' !important;' : '') . "\n";
+							break;
+
+						default:
+							return $style . ': ' . $value . ($important ? ' !important;' : '') . "\n";
+							break;
+						}
+					}
 
     }
 
@@ -285,7 +305,7 @@ class PLS_Style {
 
     private static function is_special_case($option_type)
     {
-        $special_id_cases = array('typography', 'background');
+        $special_id_cases = array('typography', 'background', 'border');
         if ( in_array($option_type, $special_id_cases) ) {
             return true;
         } 

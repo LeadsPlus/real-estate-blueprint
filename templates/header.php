@@ -27,6 +27,9 @@
 
     <title><?php pls_document_title(); ?></title>
 
+		<?php //Required by WordPress
+		if ( is_singular() ) wp_enqueue_script( "comment-reply" ); ?>
+
     <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="all" />
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 

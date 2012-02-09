@@ -248,7 +248,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-default-style' );
         add_theme_support( 'pls-default-css' );
         add_theme_support( 'pls-js', array( 'chosen' => array( 'script' => true, 'style' => true ), 'floating' => array('script' => true, 'style' => true) ) );
-        add_theme_support( 'pls-theme-options' );
+        // add_theme_support( 'pls-theme-options' );
         add_theme_support( 'pls-image-util', array('fancybox') );
         add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
         add_theme_support( 'pls-maps-util');
@@ -266,7 +266,9 @@ class Placester_Blueprint {
         add_theme_support( 'pls-footer-options');
         add_theme_support( 'pls-slideshow-options');
         add_theme_support( 'pls-css-options');
-        
+
+				// Required for WordPress
+				add_theme_support( 'automatic-feed-links' );
     }
 
 	/**
