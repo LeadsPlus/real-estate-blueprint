@@ -169,3 +169,12 @@ article .alignright {
   margin: 20px 0 20px 20px;
   display: inline;
   float: right; }
+
+.sticky {
+  margin: inherit; }
+
+.gallery-caption {
+  margin: inherit; }
+
+.bypostauthor {
+  margin: inherit; }
