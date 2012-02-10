@@ -30,8 +30,8 @@ class PLS_Slideshow {
 
         $slideshow_support = get_theme_support( 'pls-slideshow' );
 
-        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit-slider/jquery.orbit.js' , array( 'jquery' ), NULL, true );
-        wp_register_style( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit-slider/orbit.css' );
+        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, true );
+        wp_register_style( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/orbit.css' );
 
         if ( is_array( $slideshow_support ) ) {
             if ( in_array( 'script', $slideshow_support[0] ) )
