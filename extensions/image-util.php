@@ -15,6 +15,9 @@ Here's Wes' requested attribution for the modified "resize" function:
 function by Wes Edling .. http://joedesigns.com
 feel free to use this in any project, i just ask for a credit in the source code.
 a link back to my site would be nice too.
+
+** Wes' resizing was removed because WP Theme Submission didn't allow file_get_contents();
+
 */
 
 // Include the GD image manipulation library. 
