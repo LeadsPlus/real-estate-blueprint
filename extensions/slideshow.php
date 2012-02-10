@@ -73,11 +73,15 @@ class PLS_Slideshow {
 					'captionAnimation' => 'fade', 					// fade, slideOpen, none
 					'captionAnimationSpeed' => 800, 				// if so how quickly should they animate in
 					'bullets' => true,											// true or false to activate the bullet navigation
-					'width' => 590,
-					'height' => 250,
+					'afterSlideChange' => 'function(){}',		// empty function
+					'bullets' => false,			 // true or false to activate the bullet navigation
+			    'bulletThumbs' => false,		 // thumbnails for the bullets
+			    'bulletThumbLocation' => '',		 // location from this file where thumbs will be
+					'width' => 620,
+					'height' => 300,
 					'context' => '',
 					'context_var' => false,
-					'listings' => 'limit=5&width=590&height=250&sort_by=price',
+					'listings' => 'limit=5&is_featured=true&sort_by=price',
 					'data' => false,
         );
 
@@ -124,7 +128,7 @@ class PLS_Slideshow {
                 /** Get the listing caption. */
                 ob_start();
 				?>
-	             <div id="caption-<?php echo $index ?>" class="nivo-html-caption">
+	             <div id="caption-<?php echo $index ?>" class="orbit-caption">
 	                <p><a href="<?php echo $listing_url ?>"><?php echo $listing->location->full_address ?></a></p>
 	                <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing->bedrooms, $listing->bathrooms ); ?></p>
 	                <a class="button details" href="<?php echo $listing_url ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
@@ -154,13 +158,11 @@ class PLS_Slideshow {
             }
 
             /** Create the img element. */
-            $slide = pls_h_img( PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false ) ), false, $extra_attr );
-// pls_dump(PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false )));
-            // pls_dump($slide);
+						$slide = pls_h_img($slide_src, false, $extra_attr);
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
-                $slide = pls_h_a( $data['links'][$index], $slide );
+                $slide = pls_h_a( $data['links'][$index], $slide, array('data-caption' => "#caption-{$index}") );
 
             $html['slides'] .= $slide;
 
@@ -168,32 +170,33 @@ class PLS_Slideshow {
         /** Combine the html. */
         $html = pls_h_div(
             $html['slides'],
-            array( 'id' => 'slider', 'class' => 'nivoSlider' ) 
+            array( 'id' => 'slider', 'class' => 'orbitSlider' ) 
         ) . $html['captions'];
         
-
         /** Filter the html array. */
         $html = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_html', $context ), '_', 'pre', false ), $html, $data, $context, $context_var, $args );
 
-        /** The javascript needed for nivo. */
+        /** The javascript needed for orbit. */
         ob_start();
 		?>
 		<style type="text/css">
-			#slider {
+			.orbit-wrapper {
+				width:<?php echo $width; ?>px !important;
+				height:<?php echo $height; ?>px !important;
+				overflow: hidden;
+			}
+			#slider, #slider img {
 				width:<?php echo $width; ?>px !important;
 				height:<?php echo $height; ?>px !important;
 				background: #000 url( <?php echo PLS_EXT_URL; ?> '/orbit-slider/orbit/loading.gif') no-repeat center center; 
 				overflow: hidden;
-			}
-			#featured img, #featured div { 
-				display: none;
 			}
 		</style>
 		<?php 
 		        /** Geth the css. */
 		        $css = ob_get_clean();
 
-		        /** The javascript needed for nivo. */
+		        /** The javascript needed for orbit. */
 		        ob_start();
 		?>
 		<script type="text/javascript">
@@ -210,12 +213,16 @@ class PLS_Slideshow {
 						captions: <?php echo $captions ?>, 																			// do you want captions?
 						captionAnimation: '<?php echo $captionAnimation ?>',										// fade, slideOpen, none
 						captionAnimationSpeed: <?php echo $captionAnimationSpeed ?>, 						// if so how quickly should they animate in
-						width: 590,
-						height: 250,
+						// bullets: <?php echo $bullets ?>,			 // true or false to activate the bullet navigation
+						// bulletThumbs: false,		 // thumbnails for the bullets
+						// bulletThumbLocation: '',		 // location from this file where thumbs will be
+				    
+						width: 620,
+						height: 300,
 						context: '',
 						context_var: false,
-						listings: 'limit=5&width=590&height=250&sort_by=price',
-						data: false,
+						listings: '<?php echo $listings ?>',
+						data: '<?php echo $data ?>',
 		
 		    });
 		});
