@@ -23,12 +23,12 @@ PLS_Style::add(array(
 PLS_Style::add(array( 
                 "name" => "Site Favicon",
                 "desc" => "Upload your favicon here. It will appear in your visitors url and bookmark bar.",
-                "id" => "pls-site-favicon",
+                "id" => "pls-favicon",
                 "type" => "upload"));
 
 PLS_Style::add(array( 
                 "name" => "Google Analytics Tracking Code",
-                "desc" => "Add your google analytics tracking code here. It will be loaded into the footer of your site.",
+                "desc" => "Add your google analytics tracking code here. It will be loaded just before the </body> tag in your site. Copy and paste your Google Analytics code, including the script tags.",
                 "id" => "pls-google-analytics",
                 "type" => "textarea"));
 
