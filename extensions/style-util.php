@@ -50,62 +50,62 @@ class PLS_Style {
         }
     }
 
-    public static function create_css ()
-    {
-        PLS_Debug::add_msg('Styles being created');
-        // groups all the styles by selector so they can 
-        // be combine in a string, which is echo'd out. 
-        $sorted_selector_array = self::sort_by_selector(self::$styles);
+	public static function create_css () {
 
-        if ( empty($sorted_selector_array) ) {
-            return false;
-        } 
+			PLS_Debug::add_msg('Styles being created');
+				// groups all the styles by selector so they can 
+				// be combine in a string, which is echo'd out. 
+				$sorted_selector_array = self::sort_by_selector(self::$styles);
 
-		$styles = '';
+				if ( empty($sorted_selector_array) ) {
+					return false;
+				}
 
-        foreach ( $sorted_selector_array as $selector => $options) {
+			$styles = '';
 
-            $styles .= apply_filters($selector, $selector) . ' {' . "\n";
+			foreach ( $sorted_selector_array as $selector => $options) {
 
-            foreach ($options as $index => $option) {
-                
-                $defaults = array(
-                    "name" => "",
-                    "desc" => "",
-                    "id" => "",
-                    "std" => "",
-                    "selector" => "body",
-                    "style" => "",
-                    "type" => "",
-                    "important" => true,
-                    "default" => ""
-                );
+				$styles .= apply_filters($selector, $selector) . ' {' . "\n";
 
-                /** Merge the arguments with the defaults. */
-                $option = wp_parse_args( $option, $defaults );
-                
-                if (!empty($option['style']) || self::is_special_case($option['type'])) {
-                
-                    //if we have a style, then let's try to generate a stlye.
-                    $styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
-                    
-                        
-                } elseif (!empty($id)) {
-                    //try to use the id as the style... saves time for power devs.
-                    $styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);    
-                    
-                } else {
-                    
-                }
-            }
-            $styles .= '}' . "\n";   
-        }
-        
-        PLS_Debug::add_msg('<pre>' . $styles . '</pre>');
-        $styles = '<style type="text/css">' . $styles . '</style>';
-        
-		echo $styles;
-    }
+				foreach ($options as $index => $option) {
+
+					$defaults = array(
+						"name" => "",
+						"desc" => "",
+						"id" => "",
+						"std" => "",
+						"selector" => "body",
+						"style" => "",
+						"type" => "",
+						"important" => true,
+						"default" => ""
+					);
+
+					/** Merge the arguments with the defaults. */
+					$option = wp_parse_args( $option, $defaults );
+
+					if (!empty($option['style']) || self::is_special_case($option['type'])) {
+
+						//if we have a style, then let's try to generate a stlye.
+						$styles .= self::handle_style($option['style'], $option['id'], $option['default'], $option['type'], $option['important']);
+
+					} elseif (!empty($id)) {
+						//try to use the id as the style... saves time for power devs.
+						$styles .= self::handle_style($option['id'], $option['id'], $option['default'], $option['type'], $option['important']);
+
+					} else {
+					}
+				}
+				$styles .= '}' . "\n";
+			}
+
+			PLS_Debug::add_msg('<pre>' . $styles . '</pre>');
+
+			$styles = '<style type="text/css">' . $styles . '</style>';
+
+			echo $styles;
+
+	}
 
 	//for quick styling
 	private static function handle_style ($style, $id, $default, $type, $important) 
@@ -144,6 +144,9 @@ class PLS_Style {
                 break;
 						case 'border':
 								return self::handle_border($value, $id, $default, $type, $important);
+								break;
+						case 'textarea':
+								return self::handle_textarea($value, $id, $default, $type, $important);
 								break;
         }
     }
@@ -235,6 +238,23 @@ class PLS_Style {
 			}
     }
 
+		private static function handle_textarea ($value, $id, $default, $type, $important) {
+
+			if (isset($value)) {
+				// Custom CSS
+				if ($id == "pls-custom-css") {
+					return $value;
+				}
+				// Custom Google Analytics
+				if ($id == "pls-google-analytics") {
+					
+				}
+			} else {
+				return '';
+			}
+
+		}
+
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
     {
@@ -305,7 +325,7 @@ class PLS_Style {
 
     private static function is_special_case($option_type)
     {
-        $special_id_cases = array('typography', 'background', 'border');
+        $special_id_cases = array('typography', 'background', 'border', 'textarea');
         if ( in_array($option_type, $special_id_cases) ) {
             return true;
         } 

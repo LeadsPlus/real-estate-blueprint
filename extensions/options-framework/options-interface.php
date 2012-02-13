@@ -80,7 +80,6 @@ function optionsframework_fields() {
 		if ( isset( $value['desc'] ) ) {
 			$explain_value = $value['desc'];
 		}
-		                                
 		switch ( $value['type'] ) {
 		
 		// Basic text input
@@ -103,6 +102,7 @@ function optionsframework_fields() {
 			$val = stripslashes( $val );
 			
 			$output .= '<textarea id="' . esc_attr( $value['id'] ) . '" class="of-input" name="' . esc_attr( $option_name . '[' . $value['id'] . ']' ) . '" cols="'. esc_attr( $cols ) . '" rows="8">' . esc_textarea( $val ) . '</textarea>';
+
 		break;
 		
 		// Select Box
@@ -404,3 +404,4 @@ function optionsframework_fields() {
     $output .= '</div>';
     return array($output,$menu);
 }
+
