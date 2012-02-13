@@ -8,7 +8,8 @@ nav {
 		float: left;
 		li {
 			float: left;
-			width: auto;	
+			width: auto;
+			@include rounded-corners;
 			a {
 				position: relative;
 				display: block;
@@ -16,8 +17,8 @@ nav {
 				font-size: 15px;
 				color: #555;
 				&:hover {
+          @include rounded-corners;
 					background-color: #EEE;
-					@include rounded-corners;
 				}
 			}
 		}	

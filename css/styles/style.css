@@ -47,10 +47,7 @@ nav {
     float: left; }
     nav ul li {
       float: left;
-      width: auto;
-      border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px; }
+      width: auto; }
       nav ul li a {
         position: relative;
         display: block;
@@ -58,10 +55,10 @@ nav {
         font-size: 15px;
         color: #555; }
         nav ul li a:hover {
+          background-color: #EEE;
           border-radius: 5px;
           -moz-border-radius: 5px;
-          -webkit-border-radius: 5px;
-          background-color: #EEE; }
+          -webkit-border-radius: 5px; }
 
 aside {
   margin-top: -15px;
@@ -148,20 +145,19 @@ aside {
   aside .pls-listing-get_listings_widget .details {
     font-size: 14px;
     margin-bottom: 10px; }
-  aside .pls-listing-get_listings_widget .featured-image {
-    width: 301px;
-    height: 191px; }
-    aside .pls-listing-get_listings_widget .featured-image img {
-      border: 1px solid #DBDBDB;
-      padding: 10px; }
+  aside .pls-listing-get_listings_widget .featured-image img {
+    border: 1px solid #DBDBDB;
+    padding: 10px; }
   aside .pls-listing-get_listings_widget a.learn-more {
     margin: 10px 0;
     float: right;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    padding: 10px; }
+    padding: 10px;
+    background-color: #EEE; }
   aside .pls-listing-get_listings_widget a.learn-more:hover {
+    background-color: #5e5e5e;
     color: white; }
 
 /* Mixins */
@@ -254,9 +250,11 @@ aside {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    padding: 10px; }
+    padding: 10px;
+    background-color: #EEE; }
   .listing-item .actions a:hover {
-    color: #1982D1; }
+    background-color: #5e5e5e;
+    color: white; }
 
 /* Mixins */
 /* Property Details Page */

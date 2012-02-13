@@ -255,16 +255,16 @@ class Placester_Blueprint {
         add_theme_support( 'pls-debug');
 
         //style options, need to be set in style-util.php
-        add_theme_support( 'pls-color-options');
+        // add_theme_support( 'pls-color-options');
         add_theme_support( 'pls-typography-options');
-        add_theme_support( 'pls-content-box-options');
+        // add_theme_support( 'pls-content-box-options');
         add_theme_support( 'pls-header-options');
         add_theme_support( 'pls-navigation-options');
         add_theme_support( 'pls-listing-options');
         add_theme_support( 'pls-post-options');
         add_theme_support( 'pls-widget-options');
-        add_theme_support( 'pls-footer-options');
-        add_theme_support( 'pls-slideshow-options');
+        // add_theme_support( 'pls-footer-options');
+        // add_theme_support( 'pls-slideshow-options');
         add_theme_support( 'pls-css-options');
 
 				// Required for WordPress

@@ -258,26 +258,6 @@ function optionsframework_fields() {
 			
 			$background = $val;
 
-			// Background Color
-			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $background['color'] ) . '"></div></div>';
-			$output .= '<input class="of-color of-background of-background-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $background['color'] ) . '" />';
-			
-			// Background Image - New AJAX Uploader using Media Library
-			if (!isset($background['image'])) {
-				$background['image'] = '';
-			}
-			
-			$output .= optionsframework_medialibrary_uploader( $value['id'], $background['image'], null, '',0,'image');
-			$class = 'of-background-properties';
-			if ( '' == $background['image'] ) {
-				$class .= ' hide';
-			}
-			$output .= '<div class="' . esc_attr( $class ) . '">';
-			
-			// Background Repeat
-			$output .= '<select class="of-background of-background-repeat" name="' . esc_attr( $option_name . '[' . $value['id'] . '][repeat]'  ) . '" id="' . esc_attr( $value['id'] . '_repeat' ) . '">';
-			$repeats = of_recognized_background_repeat();
-
 			// Check if null
 			if ( !isset( $background['repeat'] ) ) {
 			  $background['repeat'] = '';
@@ -288,6 +268,29 @@ function optionsframework_fields() {
 			if ( !isset( $background['attachment'] ) ) {
 			  $background['attachment'] = '';
 			}
+			if (!isset($background['image'])) {
+				$background['image'] = '';
+			}
+			if (!isset($background['color'])) {
+				$background['color'] = '';
+			}
+
+			// Background Color
+			$output .= '<div id="' . esc_attr( $value['id'] ) . '_color_picker" class="colorSelector"><div style="' . esc_attr( 'background-color:' . $background['color'] ) . '"></div></div>';
+			$output .= '<input class="of-color of-background of-background-color" name="' . esc_attr( $option_name . '[' . $value['id'] . '][color]' ) . '" id="' . esc_attr( $value['id'] . '_color' ) . '" type="text" value="' . esc_attr( $background['color'] ) . '" />';
+
+			// Background Image - New AJAX Uploader using Media Library
+			$output .= optionsframework_medialibrary_uploader( $value['id'], $background['image'], null, '',0,'image');
+			$class = 'of-background-properties';
+			if ( '' == $background['image'] ) {
+				$class .= ' hide';
+			}
+			$output .= '<div class="' . esc_attr( $class ) . '">';
+
+			// Background Repeat
+			$output .= '<select class="of-background of-background-repeat" name="' . esc_attr( $option_name . '[' . $value['id'] . '][repeat]'  ) . '" id="' . esc_attr( $value['id'] . '_repeat' ) . '">';
+			$repeats = of_recognized_background_repeat();
+
 
 			foreach ($repeats as $key => $repeat) {
 				$output .= '<option value="' . esc_attr( $key ) . '" ' . selected( $background['repeat'], $key, false ) . '>'. esc_html( $repeat ) . '</option>';
