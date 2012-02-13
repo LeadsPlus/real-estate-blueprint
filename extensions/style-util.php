@@ -239,16 +239,13 @@ class PLS_Style {
     }
 
 		private static function handle_textarea ($value, $id, $default, $type, $important) {
-
 			if (isset($value)) {
+
 				// Custom CSS
 				if ($id == "pls-custom-css") {
 					return $value;
 				}
-				// Custom Google Analytics
-				if ($id == "pls-google-analytics") {
-					
-				}
+
 			} else {
 				return '';
 			}
@@ -340,4 +337,3 @@ class PLS_Style {
 function optionsframework_options() {
     return PLS_Style::$styles;
 }
-

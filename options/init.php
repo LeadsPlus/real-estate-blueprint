@@ -29,7 +29,7 @@ PLS_Style::add(array(
 PLS_Style::add(array( 
                 "name" => "Google Analytics Tracking Code",
                 "desc" => "Add your google analytics tracking code here. It will be loaded into the footer of your site.",
-                "id" => "pls-site-google-analytics",
+                "id" => "pls-google-analytics",
                 "type" => "textarea"));
 
            
