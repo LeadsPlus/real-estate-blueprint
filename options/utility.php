@@ -28,14 +28,6 @@ PLS_Style::add(array(
 		"std" => "1",
 		"type" => "checkbox"));
 
-// PLS_Style::add(array(
-// 		"name" => "Activate content box style options",
-// 		"desc" => "Allows you to set the styles for content boxes across the entire site. Content boxes are the containters that each site element sits in. Will override the default theme styles. Activated by default.",
-// 		"id" => "pls-content-box-options",
-// 		"std" => "1",
-// 		"type" => "checkbox"));
-
-
 PLS_Style::add(array(
 		"name" => "Activate header style options",
 		"desc" => "Allows you to style the header of your website. The header appears at the top of every page. Will override default theme styles. Activated by default.",
@@ -71,20 +63,6 @@ PLS_Style::add(array(
 		"std" => "1",
 		"type" => "checkbox"));
 
-// PLS_Style::add(array(
-// 		"name" => "Activate footer style options",
-// 		"desc" => "Allows you to style the way the footer is displayed. The footer is the area at the bottom of every page. Will override theme defaults. Activated by default.",
-// 		"id" => "pls-footer-options",
-// 		"std" => "1",
-// 		"type" => "checkbox"));
-
-// PLS_Style::add(array(
-// 		"name" => "Activate slideshow options",
-// 		"desc" => "Allows you to control the settings associated with the slideshow. Will override theme defaults. Activated by default.",
-// 		"id" => "pls-slideshow-options",
-// 		"std" => "1",
-// 		"type" => "checkbox"));
-
 PLS_Style::add(array(
 		"name" => "Activate custom css options",
 		"desc" => "Allows you to enter custom css directly. Will override theme defaults, as well as any options you've set",
@@ -98,10 +76,3 @@ PLS_Style::add(array(
 		"id" => "display-debug-messages",
 		"std" => "0",
 		"type" => "checkbox"));
-
-// PLS_Style::add(array(
-// 		"name" => "Display Placester Attribution",
-// 		"desc" => "Display a small Placester attribution text in the footer of your website.",
-// 		"id" => "display-placester-attribution",
-// 		"std" => "1",
-// 		"type" => "checkbox"));
