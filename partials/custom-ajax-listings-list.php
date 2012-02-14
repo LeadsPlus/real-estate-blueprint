@@ -20,16 +20,14 @@ class PLS_Partials_Custom_Ajax_Listing_List {
                 <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
                     <?php if (isset($listing['image_url'])): ?>
-                        <div id="listing-thumbnail" class="listing-thumbnail">
+                        <div class="listing-thumbnail">
                             <div class="outline">
-
                                 <?php echo PLS_Image::load($listing['image_url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
                             </div>
                         </div>
                     <?php endif ?>
 
                     <div class="basic-details">
-                        <h3>Basic Details</h3>
                         <p>Beds: <?php echo @$listing['bedrooms']; ?></p>
                         <p>Baths: <?php echo @$listing['bathrooms']; ?></p>
                         <p>Half Baths: <?php echo @$listing['half_baths']; ?></p>
@@ -37,7 +35,7 @@ class PLS_Partials_Custom_Ajax_Listing_List {
                         <p>Available On: <?php echo @$listing['available_on']; ?></p>
                     </div>
 
-                    <div id="listing-description">
+                    <div class="listing-description">
                         <?php echo substr($listing['description'], 0, 300); ?>
                     </div>
                     <div class="actions">

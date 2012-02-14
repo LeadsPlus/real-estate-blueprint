@@ -108,9 +108,8 @@
         width: 270px;
    }
     .basic-details {
-        width: 250px;
+        width: 350px;
         float: left;
-        padding-left: 15px;
         h3 {
             margin-top: 0px;
             color: #333;
@@ -120,8 +119,13 @@
             margin: 3px 0px;
         }
     }
+    .listing-description {
+      float: left;
+      padding-top: 5px;
+      margin: 0;
+      width: 350px;
+    }
     .actions {
-        width: 330px;
         padding-right: 5px;
         float: left;
         margin-top: 10px;

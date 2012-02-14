@@ -233,10 +233,10 @@ class PLS_Style {
 						$css_style .= $value . ' ';
 					}
 					if($key == "style") {
-						$value = $value . ' ';
+						$css_style .= $value . ' ';
 					}
 					if($key == "color") {
-						$css_style .= $value . '!important;';
+						$css_style .= $value . ' !important;';
 					}
 				}
 				return $css_style . "\n";
