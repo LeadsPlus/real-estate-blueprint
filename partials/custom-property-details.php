@@ -27,7 +27,7 @@ class PLS_Partials_Property_Details {
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
-								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 600, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
+								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
 								<!--<?php// echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>-->
 							</div>
 
@@ -80,10 +80,10 @@ class PLS_Partials_Property_Details {
                     <?php endif ?>
                 </div>
 
-	            <div class="grid_8 alpha">
+	            <div class="map-wrapper grid_8 alpha">
 	                <h3>Property Map</h3>
                     <div class="map">
-                        <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords']['latitude'], 'lng'=>$listing_data['location']['coords']['longitude'], 'width' => 600, 'height' => 250, 'zoom' => 16)); ?>
+                        <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords']['latitude'], 'lng'=>$listing_data['location']['coords']['longitude'], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
                     </div>
 	            </div>
 

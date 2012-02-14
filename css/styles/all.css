@@ -278,6 +278,8 @@ article.property-details {
   article.property-details h3 {
     margin: 40px 0 0px 0;
     padding: 0; }
+  article.property-details .details-wrapper li {
+    list-style-type: none; }
   article.property-details .map {
     margin-top: 10px;
     border: 1px solid #DBDBDB;
@@ -293,6 +295,14 @@ article.property-details {
         margin: 10px 10px 10px 0; }
     article.property-details .property-image-gallery a:hover {
       background-color: inherit; }
+  article.property-details .property-bottom-nav {
+    margin: 10px 0px;
+    background: none; }
+    article.property-details .property-bottom-nav a {
+      background: none; }
+      article.property-details .property-bottom-nav a:hover {
+        color: #aaa;
+        background: none; }
 
 /* Mixins */
 /* General Blog */

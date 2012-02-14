@@ -5,7 +5,7 @@ PLS_Style::add(array(
 		"type" => "heading"));
 
 		PLS_Style::add(array( 
-				"name" => "Listing Styles",
+				"name" => "General Listing Styles",
 				"desc" => "",
 				"type" => "info"));
 
@@ -54,7 +54,7 @@ PLS_Style::add(array(
 				PLS_Style::add(array(
 						"name" => "Listing Description",
 						"desc" => "",
-						"id" => "listing_description",
+						"id" => "listing_description_text",
 						"selector" => ".listing-item .listing-description",
 						"type" => "typography"));
 
@@ -89,14 +89,14 @@ PLS_Style::add(array(
 						"name" => "Single Property Section Titles",
 						"desc" => "",
 						"id" => "single_property_section_titles",
-						"selector" => "body.single-property .details-wrapper h3, body.single-property .amenities h3",
+						"selector" => "body.single-property .details-wrapper h3, body.single-property .amenities h3, body.single-property .map-wrapper h3",
 						"type" => "typography"));
 
 				PLS_Style::add(array(
 						"name" => "Single Property Paragraph Text",
 						"desc" => "",
 						"id" => "single_property_paragraph_text",
-						"selector" => "body.single-property .details-wrapper p",
+						"selector" => "body.single-property .details-wrapper p, body.single-property .amenities p",
 						"type" => "typography"));
 
 				PLS_Style::add(array(
@@ -119,23 +119,4 @@ PLS_Style::add(array(
 						"id" => "single_property_gallery_image_border",
 						"selector" => "body.single-property .property-image-gallery img, body.single-property .map",
 						"type" => "border"));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

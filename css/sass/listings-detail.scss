@@ -18,6 +18,11 @@ article.property-details {
         margin: 40px 0 0px 0;
         padding: 0;
     }
+    .details-wrapper {
+      li {
+        list-style-type: none;
+      }
+    }
     .map {
         margin-top: 10px;
         border: 1px solid #DBDBDB;
@@ -39,4 +44,16 @@ article.property-details {
             }
         }
     }
+    .property-bottom-nav {
+			margin: 10px 0px;
+			background: none;
+			a {
+			  background: none;
+        &:hover {
+          color: #aaa;
+          background: none;
+        }
+      }
+		}
+		
 }
