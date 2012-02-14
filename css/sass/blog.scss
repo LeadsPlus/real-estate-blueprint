@@ -38,10 +38,7 @@ article {
     }
     a {
         color: #2793E5;
-        &:hover {
-            background-color: #2793E5;
-            color: white;
-        }
+        text-decoration: none;
     }
     h3 {
         margin: 20px 0 0 0;
@@ -73,7 +70,6 @@ article {
         clear: both;
         a.more-link {
             float: right;
-            @include grey-button;
         }
     }
     .outline {
@@ -103,9 +99,6 @@ article {
         line-height: 1.2;
         a { 
             color: #2793e5;
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
     .comment-list {

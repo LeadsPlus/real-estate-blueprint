@@ -63,6 +63,7 @@ nav {
           -webkit-border-radius: 5px;
           background-color: #EEE; }
 
+/* Mixins */
 aside {
   margin-top: -15px;
   font-size: 12px; }
@@ -321,10 +322,8 @@ article header {
   article header h3 {
     font-size: 24px; }
 article a {
-  color: #2793E5; }
-  article a:hover {
-    background-color: #2793E5;
-    color: white; }
+  color: #2793E5;
+  text-decoration: none; }
 article h3 {
   margin: 20px 0 0 0; }
   article h3 a {
@@ -345,16 +344,7 @@ article img {
 article .entry-meta {
   clear: both; }
   article .entry-meta a.more-link {
-    float: right;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    background-color: #EEE;
-    padding: 10px;
-    color: #5e5e5e; }
-    article .entry-meta a.more-link:hover {
-      background-color: #5e5e5e;
-      color: white; }
+    float: right; }
 article .outline {
   border: 1px solid #DBDBDB; }
 article nav .prev {
@@ -382,8 +372,6 @@ article footer {
   line-height: 1.2; }
   article footer a {
     color: #2793e5; }
-    article footer a:hover {
-      text-decoration: underline; }
 article .comment-list {
   list-style: none;
   margin: 10px auto 0 auto; }
