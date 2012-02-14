@@ -145,9 +145,6 @@ class PLS_Style {
 						case 'border':
 								return self::handle_border($value, $id, $default, $type, $important);
 								break;
-						case 'textarea':
-								return self::handle_textarea($value, $id, $default, $type, $important);
-								break;
         }
     }
 
@@ -246,19 +243,6 @@ class PLS_Style {
 			}
     }
 
-		private static function handle_textarea ($value, $id, $default, $type, $important) {
-			if (isset($value)) {
-
-				// Custom CSS
-				if ($id == "pls-custom-css") {
-					return $value;
-				}
-
-			} else {
-				return '';
-			}
-
-		}
 
     //given a syle, and a value, it returns a propertly formated styles
     private static function make_style($style, $value, $important = false)
@@ -330,7 +314,7 @@ class PLS_Style {
 
     private static function is_special_case($option_type)
     {
-        $special_id_cases = array('typography', 'background', 'border', 'textarea');
+        $special_id_cases = array('typography', 'background', 'border');
         if ( in_array($option_type, $special_id_cases) ) {
             return true;
         } 

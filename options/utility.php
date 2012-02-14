@@ -58,7 +58,7 @@ PLS_Style::add(array(
 		"type" => "checkbox"));
 
 PLS_Style::add(array(
-		"name" => "Activate post style options",
+		"name" => "Activate blog style options",
 		"desc" => "Allows you to style the way blog posts and pages are displayed. Will override theme defaults. Activated by default.",
 		"id" => "pls-post-options",
 		"std" => "1",
