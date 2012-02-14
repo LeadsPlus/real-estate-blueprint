@@ -27,7 +27,13 @@
 
     <title><?php pls_document_title(); ?></title>
 
-		<link href="<?php echo pls_get_option('pls-favicon'); ?>" rel="shortcut icon" type="image/x-icon" />
+		<?php if ( pls_get_option('pls-site-favicon') ) { ?>
+		<link href="<?php echo pls_get_option('pls-site-favicon'); ?>" rel="shortcut icon" type="image/x-icon" />
+		<?php } ?>
+
+		<?php if ( (pls_get_option('pls-css-options')) && (pls_get_option('pls-custom-css')) ) { ?>
+			<style type="text/css"><?php echo pls_get_option('pls-custom-css'); ?></style>
+		<?php } ?>
 
 		<?php //Required by WordPress
 		if ( is_singular() ) wp_enqueue_script( "comment-reply" ); ?>

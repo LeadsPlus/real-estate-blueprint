@@ -32,4 +32,9 @@ PLS_Style::add(array(
 				"id" => "pls-google-analytics",
 				"type" => "textarea"));
 
-           
+		PLS_Style::add(array(
+				"name" => "Display Theme Debug Messages",
+				"desc" => "Display the theme debug panel at the bottom of all non-admin pages. Great for debugging issues with the themes.",
+				"id" => "display-debug-messages",
+				"std" => "0",
+				"type" => "checkbox"));

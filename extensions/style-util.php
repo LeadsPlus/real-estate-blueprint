@@ -30,17 +30,14 @@ class PLS_Style {
 
         require_if_theme_supports("pls-color-options", PLS_Route::locate_blueprint_option('colors.php'));    
         require_if_theme_supports("pls-typography-options", PLS_Route::locate_blueprint_option('typography.php'));
-        require_if_theme_supports("pls-content-box-options", PLS_Route::locate_blueprint_option('content-box.php'));
         require_if_theme_supports("pls-header-options", PLS_Route::locate_blueprint_option('header.php'));
         require_if_theme_supports("pls-navigation-options", PLS_Route::locate_blueprint_option('navigation.php'));   
         require_if_theme_supports("pls-listing-options", PLS_Route::locate_blueprint_option('listings.php'));
         require_if_theme_supports("pls-post-options", PLS_Route::locate_blueprint_option('post.php'));
         require_if_theme_supports("pls-widget-options", PLS_Route::locate_blueprint_option('widget.php'));
         require_if_theme_supports("pls-footer-options", PLS_Route::locate_blueprint_option('footer.php'));
-        require_if_theme_supports("pls-slideshow-options", PLS_Route::locate_blueprint_option('slideshow.php'));
         require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
-        
-        require(PLS_Route::locate_blueprint_option('utility.php'));
+
     }
 
     public static function add ($options = false)
