@@ -211,7 +211,8 @@ aside {
       padding: 5px 10px; }
   #main_content div.listing-item .outline img {
     border: 1px solid #DBDBDB;
-    padding: 10px; }
+    padding: 10px;
+    padding: 5px; }
   #main_content div.listing-item .property-image-gallery {
     padding-left: 0px; }
     #main_content div.listing-item .property-image-gallery li {

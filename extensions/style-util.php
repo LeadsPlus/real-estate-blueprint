@@ -228,10 +228,18 @@ class PLS_Style {
 				$css_style = "border: ";
 
 				foreach ($value as $key => $value) {
-					if ($key == "size") {$value = $value . 'px';}
-					$css_style .= $value . ' ';
+					if ($key == "size") {
+						$value = $value . 'px';
+						$css_style .= $value . ' ';
+					}
+					if($key == "style") {
+						$value = $value . ' ';
+					}
+					if($key == "color") {
+						$css_style .= $value . '!important;';
+					}
 				}
-				return $css_style;
+				return $css_style . "\n";
 
 			} else {
 				return '';

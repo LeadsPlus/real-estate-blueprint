@@ -22,7 +22,7 @@ PLS_Style::add(array(
 				"name" => "Listing Details",
 				"desc" => "",
 				"id" => "listing_details",
-				"selector" => ".listing-item ul li",
+				"selector" => ".listing-item ul li, .listing-item .basic-details p",
 				"type" => "typography"));
 
 		PLS_Style::add(array(
@@ -36,21 +36,21 @@ PLS_Style::add(array(
 				"name" => "Listing Image Border",
 				"desc" => "",
 				"id" => "listing_image_border",
-				"selector" => ".listing-item .listing-thumbnail img",
+				"selector" => ".listing-item #listing-thumbnail img",
 				"type" => "border"));
 
 		PLS_Style::add(array(
 				"name" => "Listing Image Background",
 				"desc" => "",
 				"id" => "listing_image_background",
-				"selector" => ".listing-item .listing-thumbnail img",
+				"selector" => ".listing-item #listing-thumbnail img",
 				"type" => "background"));
 
 		PLS_Style::add(array(
 				"name" => "Listing Description",
 				"desc" => "",
 				"id" => "listing_description",
-				"selector" => ".listing-item listing-description",
+				"selector" => ".listing-item #listing-description",
 				"type" => "typography"));
 
 		PLS_Style::add(array(
