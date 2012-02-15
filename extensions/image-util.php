@@ -24,9 +24,9 @@ include(trailingslashit ( PLS_EXT_DIR ) . 'image-util/image-resize-writer.php');
 class PLS_Image {
 	
 	static function init() {
-	
-        self::enqueue();
-		
+		if (!is_admin()) {
+			self::enqueue();
+		}
 	}
 
     static private function enqueue()
