@@ -1,5 +1,4 @@
 /* Mixins */
-/* Mixins */
 body {
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -11,6 +10,10 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #111; }
+
+#inner {
+  padding: 20px 10px;
+  float: left; }
 
 ul {
   padding: 0 0 0 20px;
@@ -39,11 +42,12 @@ ul {
     font-weight: normal; }
 
 nav {
-  margin: 30px 0px;
+  margin: 15px 0 0 0;
   border-top: 1px solid #DBDBDB;
-  border-bottom: 1px solid #DBDBDB; }
+  border-bottom: 1px solid #DBDBDB;
+  padding: 0 10px; }
   nav ul {
-    padding-left: 10px;
+    padding-left: 0;
     float: left; }
     nav ul li {
       float: left;
@@ -63,7 +67,6 @@ nav {
           -webkit-border-radius: 5px;
           background-color: #EEE; }
 
-/* Mixins */
 aside {
   margin-top: -15px;
   font-size: 12px; }
@@ -165,7 +168,6 @@ aside {
   aside .pls-listing-get_listings_widget a.learn-more:hover {
     color: white; }
 
-/* Mixins */
 /* search */
 .complex-search .pls_search_form {
   float: left;
@@ -263,7 +265,6 @@ aside {
   .listing-item .actions a:hover {
     color: #1982D1; }
 
-/* Mixins */
 /* Property Details Page */
 article.property-details {
   border-bottom: none !important; }
@@ -304,7 +305,6 @@ article.property-details {
         color: #aaa;
         background: none; }
 
-/* Mixins */
 /* General Blog */
 #main_content h2 {
   font-size: 30px;
