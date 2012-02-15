@@ -262,7 +262,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-post-options');
         add_theme_support( 'pls-widget-options');
         add_theme_support( 'pls-css-options');
-
+        add_theme_support( 'pls-color-options');
 
 				// Required for WordPress
 				add_theme_support( 'automatic-feed-links' );
