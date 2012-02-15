@@ -15,5 +15,5 @@ PLS_Style::add(array(
 			"name" =>  "Inner Background",
 			"desc" => "Change the site's inner background.",
 			"id" => "inner_background",
-			"selector" => "#inner",
+			"selector" => ".inner",
 			"type" => "background"));
