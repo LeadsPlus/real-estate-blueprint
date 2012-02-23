@@ -25,6 +25,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
     add_action( 'template_redirect', 'pls_scripts' );
     function pls_scripts() {
 
+        
+        
+
         /** Register Modernizr. Will be enqueued using 'wp_print_scripts'. */
         wp_register_script( 'modernizr', trailingslashit( PLS_JS_URL ) . 'libs/modernizr/modernizr.min.js' , array(), '2.0.6' );
 
@@ -34,12 +37,14 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          */
         wp_deregister_script( 'jquery' );
         wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', array(), NULL );
-
+        // declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
+        wp_localize_script( 'jquery', 'info', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
         /**
          *  If the plugin is inactive, register the script that deals with adding 
          *  notification about needing the plugin. Localize the notification 
          *  message. Accompanied by plugin-nags.css.
          */
+
         if ( pls_has_plugin_error() ) {
             /** Register the nag script. */
             wp_register_script( 'pls-plugin-nags', trailingslashit( PLS_JS_URL ) . 'scripts/plugin-nags.js' , array( 'jquery' ), NULL, true );
