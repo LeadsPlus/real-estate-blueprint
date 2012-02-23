@@ -5,12 +5,35 @@ $(document).ready(function($) {
         "bServerSide": true,
         "sServerMethod": "POST",
         'sPaginationType': 'full_numbers',
-        'sDom': '<"dataTables_top"pi>lftpir',
-        "sAjaxSource": info.ajaxurl, //wordpress url thing 
-        "fnServerParams": function ( aoData ) {
+        "sAjaxSource": info.ajaxurl, //wordpress url thing
+        "fnServerData": function ( sSource, aoData, fnCallback ) {
             aoData.push( { "name": "action", "value" : "pls_listings_ajax"} );
             aoData = my_listings_search_params(aoData);
-        }
+            $.ajax({
+                "dataType" : 'json',
+                "type" : "POST",
+                "url" : sSource,
+                "data" : aoData,
+                "success" : function(ajax_response) {
+                    if (ajax_response && ajax_response['aaData']) {
+                        var bounds = new google.maps.LatLngBounds();
+                        for (var listing in ajax_response['aaData']) {
+                            var listing_json = ajax_response['aaData'][listing][1];
+                            var marker = new google.maps.Marker({
+                                position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
+                                map: pls_google_map,
+                            });
+                            marker.setMap(pls_google_map);
+                            bounds.extend(marker.getPosition());
+                        }
+                        pls_google_map.fitBounds(bounds);
+                    };
+
+                    //required to load the datatable
+                   fnCallback(ajax_response)
+                }
+            });
+        } 
     });
 
     // prevents default on search button
