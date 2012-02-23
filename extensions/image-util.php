@@ -27,10 +27,11 @@ class PLS_Image {
 		if (!is_admin()) {
 			self::enqueue();
 		}
+		add_action('wp_head', array(__CLASS__,'enqueue'));
+
 	}
 
-    static private function enqueue()
-	{
+    static function enqueue() {
 
         $image_util_support = get_theme_support( 'pls-image-util' );
 
@@ -118,7 +119,7 @@ class PLS_Image {
 			ob_start();
 			// our basic fancybox html
 			?>
-				<a ref="" rel="gallery" class="<?php echo @$fancybox['trigger_class'] . ' ' .  @$html['classes']; ?>" href="<?php echo @$old_image; ?>" >
+				<a ref="" rel="<?php echo @$html['rel']; ?>" class="<?php echo @$fancybox['trigger_class'] . ' ' .  @$html['classes']; ?>" href="<?php echo @$old_image; ?>" >
 					<img alt="<?php echo @$html['alt']; ?>" title="<?php echo @$html['title'] ? $html['title'] : ''; ?>" class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" />
 				</a>
 			<?php
@@ -269,12 +270,12 @@ class PLS_Image {
         $defaults = array(
             'resize' => array(
             	'w' => false,
-				'h' => false,
-				'method' => 'auto'
+							'h' => false,
+							'method' => 'auto'
             ),
             'html' => array(
         		'ref' => '',
-        		'rel' => '',
+        		'rel' => 'gallery',
         		'a_classes' => '',
         		'img_classes' => '',
         		'alt' => '',
