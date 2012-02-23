@@ -66,28 +66,24 @@ class PLS_Plugin_API {
      */
     static private function _try_for_exceptions() {
 
-        if ( pls_has_plugin_error() ) 
+        if ( pls_has_plugin_error() )  {
             return false;
-
+        }
+            
         $parameters = func_get_args();
-
         $function_name = array_shift( $parameters );
 
         try {
             /** Call the function with its parmamters. */
             $return = call_user_func_array( $function_name, $parameters );
-
         } catch ( Exception $e ) {
-
             /** Assumes an exception with a private message is a timeout. */
             if ( ! isset( $e->message ) ) {
                 global $placester_blueprint;
                 $placester_blueprint->has_plugin_error = 'timeout';
             }
-
             return false;
         }
-
         return $return;
     }
 
@@ -449,14 +445,12 @@ class PLS_Plugin_API {
      * @since 0.0.1
      */
     static function get_listings_list( $args ) {
-
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions( 'placester_listings_list', $args, true );
-
+        $return = self::_try_for_exceptions(array("PL_Listing", "get"), $args, true );
         /** If no exceptions were detected, return the result. */
-        if ( $return ) 
+        if ( $return )  {
             return $return;
-
+        }
         return false;
     }
 
