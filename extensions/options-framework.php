@@ -61,6 +61,8 @@ class PLS_Options_Framework {
 
         /** Replace the admin submenu with a page. */
         remove_action( 'admin_menu', 'optionsframework_add_page' );
+
+				// Theme Options Temporarily Turned Off - GALEN
         add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
 
         /** 
@@ -113,6 +115,7 @@ class PLS_Options_Framework {
         /** Add filtering for the name of options page. */
         $page_name = apply_filters( 'pls_admin_bar_menu_page', __( 'Theme Options', pls_get_textdomain() ) );
 
+				// Commented out for WordPress theme submission
         $wp_admin_bar->add_menu( array(
             'id' => 'of_theme_options',
             'title' => $page_name,
@@ -130,6 +133,7 @@ class PLS_Options_Framework {
         /** Add filtering for the name of options page. */
         $page_name = apply_filters( 'pls_theme_options_menu_page_title', __( 'Theme Options', pls_get_textdomain() ) );
 
+				// Commented out for WordPress theme submission
         /** Add the menu page. */
         $of_page = add_menu_page( 
             $page_name, 
@@ -145,5 +149,3 @@ class PLS_Options_Framework {
         add_action( "admin_print_scripts-$of_page", 'optionsframework_load_scripts' );
     }
 }
-
-

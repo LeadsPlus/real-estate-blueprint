@@ -110,6 +110,7 @@ function of_sanitize_enum( $input, $option ) {
 /* Background */
 
 function of_sanitize_background( $input ) {
+
 	$output = wp_parse_args( $input, array(
 		'color' => '',
 		'image'  => '',
@@ -118,11 +119,11 @@ function of_sanitize_background( $input ) {
 		'attachment' => 'scroll'
 	) );
 
-	$output['color'] = apply_filters( 'of_sanitize_hex', $input['color'] );
-	$output['image'] = apply_filters( 'of_sanitize_upload', $input['image'] );
-	$output['repeat'] = apply_filters( 'of_background_repeat', $input['repeat'] );
-	$output['position'] = apply_filters( 'of_background_position', $input['position'] );
-	$output['attachment'] = apply_filters( 'of_background_attachment', $input['attachment'] );
+	$output['color'] = apply_filters( 'of_sanitize_hex', $output['color'] );
+	$output['image'] = apply_filters( 'of_sanitize_upload', $output['image'] );
+	$output['repeat'] = apply_filters( 'of_background_repeat', $output['repeat'] );
+	$output['position'] = apply_filters( 'of_background_position', $output['position'] );
+	$output['attachment'] = apply_filters( 'of_background_attachment', $output['attachment'] );
 
 	return $output;
 }
@@ -205,6 +206,46 @@ function of_sanitize_font_face( $value ) {
 	return apply_filters( 'of_default_font_face', current( $recognized ) );
 }
 add_filter( 'of_font_face', 'of_sanitize_font_face' );
+
+/* Border */
+
+function of_sanitize_border( $input ) {
+	$output = wp_parse_args( $input, array(
+		'size'  => '',
+		'style' => '',
+		'color' => ''
+	) );
+
+	$output['size']  = apply_filters( 'of_border_size', $output['size'] );
+	$output['style'] = apply_filters( 'of_border_style', $output['style'] );
+	$output['color'] = apply_filters( 'of_color', $output['color'] );
+
+	return $output;
+}
+add_filter( 'of_sanitize_border', 'of_sanitize_border' );
+
+
+function of_sanitize_border_size( $value ) {
+	$recognized = of_recognized_border_sizes();
+	$value = preg_replace('/px/','', $value);
+	if ( in_array( (int) $value, $recognized ) ) {
+		return (int) $value;
+	}
+	return (int) apply_filters( 'of_default_border_size', $recognized );
+}
+add_filter( 'of_border_size', 'of_sanitize_border_size' );
+
+
+function of_sanitize_border_style( $value ) {
+	$recognized = of_recognized_border_styles();
+	if ( array_key_exists( $value, $recognized ) ) {
+		return $value;
+	}
+	return apply_filters( 'of_default_border_style', current( $recognized ) );
+}
+add_filter( 'of_border_style', 'of_sanitize_border_style' );
+
+
 
 /**
  * Get recognized background repeat settings
@@ -334,6 +375,43 @@ function of_recognized_font_styles() {
 		'bold italic' => 'Bold Italic'
 		);
 	return apply_filters( 'of_recognized_font_styles', $default );
+}
+
+/**
+ * Get recognized border styles.
+ *
+ * Returns an array of all recognized border styles.
+ * Keys are intended to be stored in the database
+ * while values are ready for display in in html.
+ *
+ * @return   array
+ *
+ */
+function of_recognized_border_styles() {
+	$default = array(
+		'default'     => 'default',
+		'hidden'      => 'Hidden',
+		'dotted'      => 'Dotted',
+		'solid'        => 'Solid'
+		);
+	return apply_filters( 'of_recognized_border_styles', $default );
+}
+
+/**
+ * Get recognized border sizes.
+ *
+ * Returns an indexed array of all recognized border sizes.
+ * Values are integers and represent a range of sizes from
+ * smallest to largest.
+ *
+ * @return   array
+ */
+ 
+function of_recognized_border_sizes() {
+	$sizes = range( 1, 11 );
+	$sizes = apply_filters( 'of_recognized_border_sizes', $sizes );
+	$sizes = array_map( 'absint', $sizes );
+	return $sizes;
 }
 
 /**

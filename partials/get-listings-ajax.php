@@ -41,7 +41,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
             'loading_img' => admin_url( 'images/wpspin_light.gif' ),
             'image_width' => 100,
-            'sort_type' => 'asc',
+            'sort_type' => 'desc',
             'crop_description' => 0,
             'listings_per_page' => get_option( 'posts_per_page' ),
             'context' => '',
@@ -63,7 +63,8 @@ class PLS_Partials_Get_Listings_Ajax {
         $listings_list = PLS_Plugin_API::get_listings_list(
             array(
                 'table_type' => 'html',
-                'sort_by' => 'bathrooms',
+                'sort_by' => 'price',
+								'sort_type' => 'desc',
                 'js_row_renderer' => 'placesterListLone_createRowHtml',
                 'loading' => array (
                     'render_in_dom_element' => 'loader'
@@ -286,7 +287,9 @@ class PLS_Partials_Get_Listings_Ajax {
         $row_rendering_js = ob_get_clean();
 
         /** Filter the concatenated html. This allows developers to wrap the components in different markup and change their order. */
-        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
+        // $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
+				// Sort-by removed
+        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $loader_html . $listings_list . $pagination_html, $listings_list, $loader_html, $pagination_html );
 
         /** Append the extra javascript and return. */
         return $return . $row_rendering_js;

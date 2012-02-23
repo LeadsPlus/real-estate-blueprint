@@ -32,7 +32,7 @@
  * Big thanks to Justin Tadlock for inspiration with his HybridCore Framework.
  *
  * @package PlacesterBlueprint
- * @version 0.0.1 
+ * @version 1.0.2
  * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com/themes/blueprint/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -255,18 +255,17 @@ class Placester_Blueprint {
         add_theme_support( 'pls-debug');
 
         //style options, need to be set in style-util.php
-        add_theme_support( 'pls-color-options');
         add_theme_support( 'pls-typography-options');
-        add_theme_support( 'pls-content-box-options');
         add_theme_support( 'pls-header-options');
-        add_theme_support( 'pls-navigation-option');
+        add_theme_support( 'pls-navigation-options');
         add_theme_support( 'pls-listing-options');
         add_theme_support( 'pls-post-options');
         add_theme_support( 'pls-widget-options');
-        add_theme_support( 'pls-footer-options');
-        add_theme_support( 'pls-slideshow-options');
         add_theme_support( 'pls-css-options');
-        
+        add_theme_support( 'pls-color-options');
+
+				// Required for WordPress
+				add_theme_support( 'automatic-feed-links' );
     }
 
 	/**

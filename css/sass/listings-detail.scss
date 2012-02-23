@@ -1,5 +1,3 @@
-@import "mixins";
-
 /* Property Details Page */
 article.property-details {
     border-bottom: none !important;
@@ -17,6 +15,11 @@ article.property-details {
     h3 {
         margin: 40px 0 0px 0;
         padding: 0;
+    }
+    .details-wrapper {
+      li {
+        list-style-type: none;
+      }
     }
     .map {
         margin-top: 10px;
@@ -39,4 +42,16 @@ article.property-details {
             }
         }
     }
+    .property-bottom-nav {
+			margin: 10px 0px;
+			background: none;
+			a {
+			  background: none;
+        &:hover {
+          color: #aaa;
+          background: none;
+        }
+      }
+		}
+		
 }

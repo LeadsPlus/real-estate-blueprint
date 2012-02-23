@@ -187,6 +187,16 @@
 	margin-right:5px;
 	float:left
 }
+#optionsframework .controls .of-border-size {
+	width:80px;
+	margin-right:5px;
+	float:left
+}
+#optionsframework .controls .of-border-style {
+	width:50px;
+	margin-right:5px;
+	float:left
+}
 #optionsframework .of-background-properties {
 	clear:both;
 	margin-top: 18px;	

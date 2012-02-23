@@ -4,7 +4,7 @@ PLS_Route::init();
 
 class PLS_Route {
 
-	static $request;
+	static $request = array();
 
 	/**
 	 * Stores the base name of the template file; e.g. 'page' for 'page.php' etc.

@@ -139,6 +139,7 @@ class PLS_Partial_Get_Listings {
                     <?php endif ?>
 
                     <!-- if we don't have a description, display property details -->
+
                     <?php if (!empty($listing_data['description'])): ?>
                         <div id="listing-description" class="grid_8 omega">
                             <?php echo substr($listing_data['description'], 0, 300); ?>

@@ -21,32 +21,30 @@ class PLS_Slideshow {
      */
     static function init() {
 
-        // self::enqueue();
-				add_action('wp_head', array(__CLASS__,'enqueue'));
+        self::enqueue();
+				// For Wordpress 3.3.0
+				// add_action('wp_head', array(__CLASS__,'enqueue'));
     }
 
     static function enqueue() {
 
         $slideshow_support = get_theme_support( 'pls-slideshow' );
 
-        wp_register_script( 'pls-slideshow-nivo', trailingslashit( PLS_EXT_URL ) . 'slideshow/nivo-slider/jquery.nivo.slider.js' , array( 'jquery' ), NULL, true );
-        wp_register_style( 'pls-slideshow-nivo', trailingslashit( PLS_EXT_URL ) . 'slideshow/nivo-slider/nivo-slider.css' );
-        wp_register_style( 'pls-slideshow-nivo-default', trailingslashit( PLS_EXT_URL ) . 'slideshow/nivo-slider/themes/default/default.css' );
+        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, true );
+        wp_register_style( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/orbit.css' );
 
         if ( is_array( $slideshow_support ) ) {
-            if ( in_array( 'script', $slideshow_support[0] ) ) 
-                wp_enqueue_script( 'pls-slideshow-nivo' );
+            if ( in_array( 'script', $slideshow_support[0] ) )
+                wp_enqueue_script( 'pls-slideshow-orbit' );
 
             if ( in_array( 'style', $slideshow_support[0] ) ) {
-                wp_enqueue_style( 'pls-slideshow-nivo' );
-                wp_enqueue_style( 'pls-slideshow-nivo-default' );
+                wp_enqueue_style( 'pls-slideshow-orbit' );
             }
             return;
         }
 
-        wp_enqueue_script( 'pls-slideshow-nivo' );
-        wp_enqueue_style( 'pls-slideshow-nivo' );
-        wp_enqueue_style( 'pls-slideshow-nivo-default' );
+        wp_enqueue_script( 'pls-slideshow-orbit' );
+        wp_enqueue_style( 'pls-slideshow-orbit' );
         
     }
 
@@ -62,18 +60,29 @@ class PLS_Slideshow {
     static function slideshow( $args = '' ) {
 
         /** Define the default argument array. */
-        $defaults = array(
-            'anim_speed' => 1000,
-            'pause_time' => 3000,
-            'keyboard_nav' => true,
-            'direction_nav' => true,
-            'control_nav' => true,
-            'width' => 590,
-            'height' => 250,
-            'context' => '',
-            'context_var' => false,
-            'listings' => 'limit=5&width=590&height=250&sort_by=price',
-            'data' => false,
+				$defaults = array(
+					'animation' => 'fade', 									// fade, horizontal-slide, vertical-slide, horizontal-push
+					'animationSpeed' => 800, 								// how fast animtions are
+					'timer' => false, 											// true or false to have the timer
+					'advanceSpeed' => 4000,									// if timer is enabled, time between transitions 
+					'pauseOnHover' => true,									// if you hover pauses the slider
+					'startClockOnMouseOut' => true,					// if clock should start on MouseOut
+					'startClockOnMouseOutAfter' => 500,			// how long after MouseOut should the timer start again
+					'directionalNav' => true, 							// manual advancing directional navs
+					'captions' => true, 										// do you want captions?
+					'captionAnimation' => 'fade', 					// fade, slideOpen, none
+					'captionAnimationSpeed' => 800, 				// if so how quickly should they animate in
+					'bullets' => true,											// true or false to activate the bullet navigation
+					'afterSlideChange' => 'function(){}',		// empty function
+					'bullets' => false,											// true or false to activate the bullet navigation
+			    'bulletThumbs' => false,								// thumbnails for the bullets
+			    'bulletThumbLocation' => '',						// location from this file where thumbs will be
+					'width' => 620,
+					'height' => 300,
+					'context' => '',
+					'context_var' => false,
+					'listings' => 'limit=5&is_featured=true&sort_by=price',
+					'data' => false,
         );
 
         /** Merge the arguments with the defaults. */
@@ -119,7 +128,7 @@ class PLS_Slideshow {
                 /** Get the listing caption. */
                 ob_start();
 				?>
-	             <div id="caption-<?php echo $index ?>" class="nivo-html-caption">
+	             <div id="caption-<?php echo $index ?>" class="orbit-caption">
 	                <p><a href="<?php echo $listing_url ?>"><?php echo $listing->location->full_address ?></a></p>
 	                <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing->bedrooms, $listing->bathrooms ); ?></p>
 	                <a class="button details" href="<?php echo $listing_url ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
@@ -149,13 +158,11 @@ class PLS_Slideshow {
             }
 
             /** Create the img element. */
-            $slide = pls_h_img( PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false ) ), false, $extra_attr );
-// pls_dump(PLS_Image::load($slide_src, array('resize' => array('w' => $width, 'h' => $height), 'fancybox' => false )));
-            // pls_dump($slide);
+						$slide = pls_h_img($slide_src, false, $extra_attr);
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
-                $slide = pls_h_a( $data['links'][$index], $slide );
+                $slide = pls_h_a( $data['links'][$index], $slide, array('data-caption' => "#caption-{$index}") );
 
             $html['slides'] .= $slide;
 
@@ -163,45 +170,60 @@ class PLS_Slideshow {
         /** Combine the html. */
         $html = pls_h_div(
             $html['slides'],
-            array( 'id' => 'slider', 'class' => 'nivoSlider' ) 
+            array( 'id' => 'slider', 'class' => 'orbitSlider' ) 
         ) . $html['captions'];
         
-
         /** Filter the html array. */
         $html = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_html', $context ), '_', 'pre', false ), $html, $data, $context, $context_var, $args );
 
-
-        /** The javascript needed for nivo. */
+        /** The javascript needed for orbit. */
         ob_start();
 		?>
 		<style type="text/css">
-		#slider {
-		    width:<?php echo $width; ?>px !important;
-		    height:<?php echo $height; ?>px !important;
-		}
+			.orbit-wrapper {
+				width:<?php echo $width; ?>px !important;
+				height:<?php echo $height; ?>px !important;
+				overflow: hidden;
+			}
+			#slider, #slider img {
+				width:<?php echo $width; ?>px !important;
+				height:<?php echo $height; ?>px !important;
+				background: #000 url( <?php echo PLS_EXT_URL; ?> '/orbit-slider/orbit/loading.gif') no-repeat center center; 
+				overflow: hidden;
+			}
 		</style>
 		<?php 
 		        /** Geth the css. */
 		        $css = ob_get_clean();
 
-		        /** The javascript needed for nivo. */
+		        /** The javascript needed for orbit. */
 		        ob_start();
 		?>
 		<script type="text/javascript">
 		$(window).load(function() {
-		    $('#slider').nivoSlider({
-		        effect: 'fade', 
-		        slices: 2, 
-		        animSpeed: <?php echo $anim_speed ?>,
-		        pauseTime: <?php echo $pause_time ?>, 
-		        startSlide: 0, 
-		        directionNav: <?php echo $direction_nav ?>,
-		        directionNavHide: true, 
-		        controlNav: <?php echo $control_nav ?>, 
-		        keyboardNav: <?php echo $keyboard_nav ?>, 
-		        pauseOnHover: true, 
-		        prevText: '<?php _e( 'Prev', pls_get_textdomain() ) ?>', 
-		        nextText: '<?php _e( 'Next', pls_get_textdomain() ) ?>',
+		    $('#slider').orbit({
+						animation: '<?php echo $animation ?>', 																	// fade, horizontal-slide, vertical-slide, horizontal-push
+						animationSpeed: <?php echo $animationSpeed ?>, 													// how fast animtions are
+						timer: <?php echo $timer ?>, 																						// true or false to have the timer
+						advanceSpeed: <?php echo $advanceSpeed ?>,															// if timer is enabled, time between transitions 
+						pauseOnHover: <?php echo $pauseOnHover ?>,															// if you hover pauses the slider
+						startClockOnMouseOut: <?php echo $startClockOnMouseOut ?>,							// if clock should start on MouseOut
+						startClockOnMouseOutAfter: <?php echo $startClockOnMouseOutAfter ?>,		// how long after MouseOut should the timer start again
+						directionalNav: <?php echo $directionalNav ?>, 													// manual advancing directional navs
+						captions: <?php echo $captions ?>, 																			// do you want captions?
+						captionAnimation: '<?php echo $captionAnimation ?>',										// fade, slideOpen, none
+						captionAnimationSpeed: <?php echo $captionAnimationSpeed ?>, 						// if so how quickly should they animate in
+						// bullets: <?php echo $bullets ?>,			 // true or false to activate the bullet navigation
+						// bulletThumbs: false,		 // thumbnails for the bullets
+						// bulletThumbLocation: '',		 // location from this file where thumbs will be
+				    
+						width: 620,
+						height: 300,
+						context: '',
+						context_var: false,
+						listings: '<?php echo $listings ?>',
+						data: '<?php echo $data ?>',
+		
 		    });
 		});
 		</script>
