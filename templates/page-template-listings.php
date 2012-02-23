@@ -15,6 +15,6 @@
 </section>
 
 <div class="grid_8 alpha" id="content" role="main">
-    <?php echo PLS_Partials::get_listings_list_ajax('crop_description=1&context=listings_search'); ?>
+    <?php echo PLS_Partials::get_listings_list_ajax('context=listings_search'); ?>
 </div>
 

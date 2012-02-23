@@ -31,7 +31,6 @@ class PLS_Partials {
     // links in all the hooks and includes. 
     function init () {
         // all the includes
-        include_once( trailingslashit(PLS_PAR_DIR) . 'custom-ajax-listings-list.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'custom-property-details.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'custom-listings-widget.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-cities.php');
@@ -74,7 +73,7 @@ class PLS_Partials {
     // wrapper for listings list ajax content
     static function get_listings_list_ajax( $args = '' ) {
         
-        return PLS_Partials_Get_Listings_Ajax::init($args);       
+        return PLS_Partials_Get_Listings_Ajax::load($args);       
     }
 
     // wrapper for property details page content

@@ -1,5 +1,5 @@
 <?php 
-
+PLS_Partials_Get_Listings_Ajax::init();
 class PLS_Partials_Get_Listings_Ajax {
 	
 
@@ -34,9 +34,46 @@ class PLS_Partials_Get_Listings_Ajax {
      * @return string The html and js.
      * @since 0.0.1
      */
-	function init ($args = '') {
-			
-		  /** Define the default argument array. */
+    function init() {
+        // Hook the callback for ajax requests
+        add_action('wp_ajax_pls_listings_ajax', array(__CLASS__, 'get' ) );
+        add_action('wp_ajax_nopriv_pls_listings_ajax', array(__CLASS__, 'get' ) );
+        wp_register_script( 'get-listings-ajax', trailingslashit( PLS_JS_URL ) . 'scripts/get-listings-ajax.js' , NULL, NULL, true );
+        wp_enqueue_script('get-listings-ajax');
+    }
+
+    function load() {
+    
+        ob_start();
+        ?>
+            <div id="container" style="width: 99%">
+              <table id="placester_listings_list" class="widefat post fixed placester_properties" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th><span></span></th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+        <?php
+        echo ob_get_clean();
+    }
+
+	function get ($args = array()) {	
+        /** Display a placeholder if the plugin is not active or there is no API key. */
+        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
+            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
+        } elseif ( pls_has_plugin_error() ) {
+            return NULL;
+        }
+        
+		/** Define the default argument array. */
         $defaults = array(
             'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
             'loading_img' => admin_url( 'images/wpspin_light.gif' ),
@@ -46,101 +83,83 @@ class PLS_Partials_Get_Listings_Ajax {
             'listings_per_page' => get_option( 'posts_per_page' ),
             'context' => '',
             'context_var' => NULL,
-            'append_to_map' => true
+            'append_to_map' => true,
+            'search_query' => $_POST
         );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
-        /** The crop settings. [start, length, sentence/word/midword crop, suffix]. */
-        $crop_settings = array( 0, 200, 2, '.' );
-
-        /** Set the description cropping settings and filter them. */
-        $crop_description = $crop_description ? $crop_settings : $crop_description; 
-        $crop_description = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_description_crop", $context ), '_', 'pre', false ), $crop_description, $context_var );
-
         /** Get the listings list markup and javascript. */
-        $listings_list = PLS_Plugin_API::get_listings_list(
-            array(
-                'table_type' => 'html',
-                'sort_by' => 'price',
-								'sort_type' => 'desc',
-                'js_row_renderer' => 'placesterListLone_createRowHtml',
-                'loading' => array (
-                    'render_in_dom_element' => 'loader'
-                ),
-                'pager' => array(
-                    'render_in_dom_element' => 'listings-pagination',
-                    'rows_per_page' => $listings_per_page, 
-                    'css_current_button' => 'current',
-                    'css_not_current_button' => '',
-                    'first_page' => array( 'visible' => false, 'label' => 'First' ),
-                    'previous_page' => array( 'visible' => true, 'label' => 'Prev' ),
-                    'numeric_links' => array(
-                        'visible' => false, 
-                        'max_count' => 10,
-                        'more_label' => __( 'More...', pls_get_textdomain() ),
-                        'css_outer' => 'pager_numberic_block'
-                    ),
-                    'next_page' => array(
-                        'visible' => true,
-                        'label' => __( 'Next', pls_get_textdomain() ) 
-                    ),
-                    'last_page' => array (
-                        'visible' => false,
-                        'label' => __( 'Last', pls_get_textdomain() ) 
-                    )
-                ),
-                'attributes' => array (
-                    'bathrooms',
-                    'half_baths',
-                    'bedrooms',
-                    'price',
-                    'images',
-                    'description',
-                    'url',
-                    'location.city',
-                    'location.state',
-                    'location.address',
-                    'location.zip',
-                    'location.coords.latitude',
-                    'location.coords.longitude',
-                    'id',
-                    'available_on',
-                    'amenities'
-                ), 
-                'crop_description' => $crop_description,
-            )
-        );
+        $api_response = PLS_Plugin_API::get_listings_list($search_query);
+        
 
-        /** Display a placeholder if the plugin is not active or there is no API key. */
-        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
-            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
+        $response = array();
 
-        /** Return nothing when no plugin and user is not admin. */
-        if ( pls_has_plugin_error() )
-            return NULL;
+        // Sorting
+        $columns = array('images','location.address', 'location.locality', 'location.region', 'location.postal', 'zoning_types', 'purchase_types', 'listing_types', 'property_type', 'cur_data.beds', 'cur_data.baths', 'cur_data.price', 'cur_data.sqft', 'cur_data.avail_on');
+        $_POST['sort_by'] = $columns[$_POST['iSortCol_0']];
+        $_POST['sort_type'] = $_POST['sSortDir_0'];
 
-        /** Define an array with placeholders to be passed through the filter. */
-        $listings_placeholders = array(
-            'url' => 'LISTING_URL',
-            'available_on' => 'LISTING_AVAILABLE_ON',
-            'description' => 'LISTING_DESCRIPTION',
-            'image_url' => 'LISTING_IMAGE_URL',
-            'address' => 'LISTING_ADDRESS',
-            'city' => 'LISTING_CITY',
-            'state' => "LISTING_STATE",
-            'bedrooms' => "LISTING_BEDROOMS",
-            'bathrooms' => "LISTING_BATHROOMS",
-            'half_baths' => "LISTING_HALF_BATHS",
-            'price' => "LISTING_PRICE",
-            'zip' => "LISTING_ZIP",
-            'amenities' => "LISTING_AMENITIES",
-        );
-        ksort( $listings_placeholders );
+        // Pagination
+        $_POST['limit'] = $_POST['iDisplayLength'];
+        $_POST['offset'] = $_POST['iDisplayStart'];     
+        
+        // build response for datatables.js
+        $listings = array();
+        foreach ($api_response['listings'] as $key => $listing) {
+            if (empty($listing['images'])) {
+                $listing['images'][0] = array('url' => $placeholder_img);
+            }
+            ob_start();
+            // pls_dump($listing);
+            ?>
+            <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
+                <header class="grid_8 alpha">
+                    <h3><a href="<?php echo $listing['cur_data']['url']; ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] ?></a></h2>
+                </header>
+                <div class="listing-item-content grid_8 alpha">
+                    <div class="grid_8 alpha">
+                        <!-- If we have a picture, show it -->
+                            <div class="listing-thumbnail">
+                                <div class="outline">
+                                    <?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                </div>
+                            </div>
 
-        /** Create the listing html template used when rendering the listings list. */
-        $listing_item_html = pls_h(
+                        <div class="basic-details">
+                            <p>Beds: <?php echo @$listing['cur_data']['beds']; ?></p>
+                            <p>Baths: <?php echo @$listing['cur_data']['baths']; ?></p>
+                            <p>Half Baths: <?php echo @$listing['cur_data']['half_baths']; ?></p>
+                            <p>Price: <?php echo @$listing['cur_data']['price']; ?></p>
+                            <p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
+                        </div>
+
+                        <div class="listing-description">
+                            <?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
+                        </div>
+                        <div class="actions">
+                            <a class="more-link" href="<?php echo $listing['cur_data']['url']; ?>">View Property Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $listings[$key][] = ob_get_clean();
+        }
+
+        // Required for datatables.js to function properly.
+        $response['sEcho'] = $_POST['sEcho'];
+        $response['aaData'] = $listings;
+        $response['iTotalRecords'] = $api_response['total'];
+        $response['iTotalDisplayRecords'] = $api_response['total'];
+        echo json_encode($response);
+
+        //wordpress echos out a 0 randomly. die prevents it.
+        die();
+
+
+        pls_h(
             'article',
             array( 'class' => 'pls-listing clearfix' ),
             pls_h_a( $listings_placeholders['url'], pls_h_img( $listings_placeholders['image_url'], $listings_placeholders['address'], array( 'width' => $image_width ) ) ) . 
@@ -168,28 +187,15 @@ class PLS_Partials_Get_Listings_Ajax {
             )
         );
 
+        
+
+        //here!!!!!!!!!!!!
+            
+
+
         /** Filter the listing item html. */
         $listing_item_html = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $listing_item_html ), $listings_placeholders, $context_var );
 
-        /**
-         * Define the replacements for each placeholder. 
-         * Needs to have the same keys as $listings_placeholders.
-         */
-        $listing_html = array(
-            'url' => "' + row.url + '",
-            'available_on' => "' + row.available_on + '",
-            'description' => "' + row.description + '",
-            'image_url' => "' + image + '",
-            'address' => "' + row.location.address + '",
-            'city' => "' + row.location.city + '",
-            'state' => "' + row.location.state + '",
-            'bedrooms' => "' + row.bedrooms + '",
-            'bathrooms' => "' + row.bathrooms + '",
-            'half_baths' => "' + row.half_baths + '",
-            'price' => "' + row.price + '",
-            'zip' => "' + row.zip + '",
-            'amenities' => "' + row.amenities + '",
-        );
         ksort( $listing_html );
 
         /** Set the options for the "Sort by" select. */
@@ -237,54 +243,6 @@ class PLS_Partials_Get_Listings_Ajax {
 
         /** Filter the no results html. */
         $no_results_html = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_no_results_html", $context ), '_', 'pre', false ), $no_results_html, $context_var );
-
-        /** Start outbuffering to save the js that deals with rendering the listings, and with the sort event. */
-        ob_start();
-?>
-<script>
-        <?php /** This function is needed by the javascript in $listings_list. */ ?>
-        function placesterListLone_createRowHtml( row ) {
-            <?php /** Placeholder image. */ ?>
-            var null_image = "<?php echo $placeholder_img; ?>";
-            <?php /** Get the first image if it exists, user placeholder otherwise. */ ?>
-            if ( row.images.length > 0 ) {
-                var images_array = ( '' + row.images ).split( ',' );
-                var image = '';
-                if ( images_array.length > 0 && images_array[0].length > 0 ) 
-                    image = images_array[0];
-            } else {
-                var image = null_image;
-            };
-
-            <?php if ($append_to_map) {
-                ?>
-                    
-                    pls_js_add_marker(row);
-
-                    if(typeof pls_js_render_markers == 'function') { 
-                        pls_js_render_markers(); 
-                    }
-                
-                <?php
-            }; ?>
-
-            return '<?php echo str_replace( $listings_placeholders, $listing_html, $listing_item_html ); ?>';
-        };
-        <?php /** Set on change event for the listings sorter. */ ?>
-        $( '#sort-by' ).change(function() {
-            var v = $( '#sort-by' ).val();
-            a = v.split(' ');
-            placesterListLone_setSorting( a[0], a[1] );
-        });
-        <?php /** Set the no results text. */ ?>
-        function custom_empty_listings_loader( dom_object ) {
-            var empty_property_search = '<?php echo $no_results_html; ?>';
-            dom_object.html( empty_property_search );
-        }
-</script>
-<?php 
-        /** Save the buffered javascript. */
-        $row_rendering_js = ob_get_clean();
 
         /** Filter the concatenated html. This allows developers to wrap the components in different markup and change their order. */
         // $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
