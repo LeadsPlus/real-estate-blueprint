@@ -69,20 +69,16 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          * {@link: http://harvesthq.github.com/chosen/}
          */
         if ( array_key_exists( 'chosen', $js[0] ) ) {
-
             /** Register the script and style. */
             wp_register_script( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.jquery.min.js' , array( 'jquery' ), NULL, true );
             wp_register_script( 'chosen-custom', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen-custom.js' , array( 'jquery' ), NULL, true );
             wp_register_style( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.css' );
-
             /** Enqueue scrip and styles only if supported. */
             if ( is_array( $js[0]['chosen'] ) ) {
                 if ( in_array( 'script', $js[0]['chosen'] ) ) {
                     wp_enqueue_script( 'chosen' );
                     wp_enqueue_script( 'chosen-custom' );
                 }
-                    
-
                 /** Enqueue the chosen style */
                 if ( in_array( 'style', $js[0]['chosen'] ) )
                     wp_enqueue_style( 'chosen' );
@@ -90,20 +86,26 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         }
 
         if ( array_key_exists( 'floating', $js[0] ) ) {
-
             /** Register the script and style. */
             wp_register_script( 'floating', trailingslashit( PLS_JS_URL ) . 'scripts/floating.js' , array( 'jquery'), NULL, true );
-            
-
             /** Enqueue scrip and styles only if supported. */
             if ( is_array( $js[0]['floating'] ) ) {
                 if ( in_array( 'script', $js[0]['floating'] ) ) {
                     wp_enqueue_script( 'floating' );
                 }
-                    
+            }
+        }   
+
+        if ( array_key_exists( 'datatable', $js[0] ) ) {
+            /** Register the script and style. */
+            wp_register_script( 'datatable', trailingslashit( PLS_JS_URL ) . 'libs/datatables/jquery.dataTables.js' , array( 'jquery'), NULL, true );
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['datatable'] ) ) {
+                if ( in_array( 'script', $js[0]['datatable'] ) ) {
+                    wp_enqueue_script( 'datatable' );
+                }
             }
         }
-
     }
 
 
