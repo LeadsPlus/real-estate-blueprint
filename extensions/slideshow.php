@@ -75,13 +75,13 @@ class PLS_Slideshow {
 					'bullets' => true,											// true or false to activate the bullet navigation
 					'afterSlideChange' => 'function(){}',		// empty function
 					'bullets' => false,											// true or false to activate the bullet navigation
-			    'bulletThumbs' => false,								// thumbnails for the bullets
-			    'bulletThumbLocation' => '',						// location from this file where thumbs will be
+			        'bulletThumbs' => false,								// thumbnails for the bullets
+			        'bulletThumbLocation' => '',						// location from this file where thumbs will be
 					'width' => 620,
 					'height' => 300,
 					'context' => '',
 					'context_var' => false,
-					'listings' => 'limit=5&is_featured=true&sort_by=price',
+					'listings' => array('limit' => 5, 'sort_by' => 'price'),
 					'data' => false,
         );
 
@@ -91,24 +91,18 @@ class PLS_Slideshow {
         /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
 
-        if ( ! $data || ! is_array( $data ) ) {
-
-            /** Process the listings args. */
-            $listings_args = wp_parse_args( $listings );
-
-            /** Process arguments that need to be sent to the API. */
-            $request_params = PLS_Plugin_API::get_valid_property_list_fields( $listings_args );
-
-            /** Request the list of properties. */
-            $listings_raw = PLS_Plugin_API::get_property_list( $request_params );
+        if ( !$data || ! is_array($data) ) {
 
             /** Display a placeholder if the plugin is not active or there is no API key. */
-            if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
+            if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
                 return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-
-            /** Return nothing when no plugin and user is not admin. */
-            if ( pls_has_plugin_error() )
+            } elseif (pls_has_plugin_error()) {
                 return NULL;
+            }
+
+            /** Request the list of properties. */
+            $api_response = PLS_Plugin_API::get_property_list( $listings );                
+            $listings = $api_response['listings'];
 
             /** Data assumed to take this form. */
             $data = array(
@@ -117,9 +111,9 @@ class PLS_Slideshow {
                 'captions' => array(),
             );
 
-            foreach ( $listings_raw->properties as $index => $listing ) {
-
-                $listing_url = PLS_Plugin_API::get_property_url( $listing->id );
+            foreach ($listings as $index => $listing) {
+                $listing_url = PLS_Plugin_API::get_property_url( $listing['cur_data']['url'] );
+                
                 /** Overwrite the placester url with the local url. */
                 $data['links'][] = $listing_url;
                 $data['images'][] = ! empty( $listing->images ) ?  $listing->images[0]->url : PLS_IMG_URL . "/null/listing-100x100.png";
@@ -127,14 +121,15 @@ class PLS_Slideshow {
 
                 /** Get the listing caption. */
                 ob_start();
-				?>
-	             <div id="caption-<?php echo $index ?>" class="orbit-caption">
-	                <p><a href="<?php echo $listing_url ?>"><?php echo $listing->location->full_address ?></a></p>
-	                <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing->bedrooms, $listing->bathrooms ); ?></p>
-	                <a class="button details" href="<?php echo $listing_url ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
-	            </div>
-				<?php 
+                ?>
+                 <div id="caption-<?php echo $index ?>" class="orbit-caption">
+                    <p><a href="<?php echo $listing_url ?>"><?php echo $listing['location']['address'] ?></a></p>
+                    <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
+                    <a class="button details" href="<?php echo $listing_url ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
+                </div>
+                <?php 
                 $data['captions'][] = trim( ob_get_clean() );
+
             }
         }
 

@@ -27,15 +27,11 @@
 						'width' => 620, 
 						'height' => 300, 
 						'context' => 'home', 
-						'listings' => 'limit=5&is_featured=true&sort_by=price'
+						'listings' => array('limit' => 5, 'sort_by' => 'price')
 					)
 			); 
 		?>
 </div>
 <div id="listing" class="grid_8 alpha">
     <?php echo pls_get_listings( "limit=5&is_featured=true&context=home" ) ?>
-    <?php 
-		$listings = PL_Config::PL_API_LISTINGS('get');
-		PL_Form::generate($listings['args']);
- 	?>
 </div>
