@@ -39,6 +39,7 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', array(), NULL );
         // declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
         wp_localize_script( 'jquery', 'info', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+        
         /**
          *  If the plugin is inactive, register the script that deals with adding 
          *  notification about needing the plugin. Localize the notification 
@@ -85,8 +86,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                     wp_enqueue_script( 'chosen-custom' );
                 }
                 /** Enqueue the chosen style */
-                if ( in_array( 'style', $js[0]['chosen'] ) )
+                if ( in_array( 'style', $js[0]['chosen'] ) ) {
                     wp_enqueue_style( 'chosen' );
+                }
             }
         }
 
@@ -111,6 +113,20 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                 }
             }
         }
+
+        if ( array_key_exists( 'jquery-ui', $js[0] ) ) {
+            wp_register_script( 'jquery-ui', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery-ui-1.8.17.custom.min.js' , array( 'jquery'), NULL, true );
+            wp_register_style( 'jquery-ui', trailingslashit( PLS_JS_URL ) . 'libs//jquery-ui/css/smoothness/jquery-ui-1.8.17.custom.css' );
+            if ( is_array( $js[0]['jquery-ui'] ) ) {
+                if ( in_array( 'script', $js[0]['jquery-ui'] ) ) {
+                    wp_enqueue_script( 'jquery-ui' );
+                }
+                if ( in_array( 'style', $js[0]['jquery-ui'] ) ) {
+                    wp_enqueue_style( 'jquery-ui' );
+                }
+            }
+        }
+
     }
 
 
