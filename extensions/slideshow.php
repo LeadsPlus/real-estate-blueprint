@@ -116,7 +116,7 @@ class PLS_Slideshow {
                 
                 /** Overwrite the placester url with the local url. */
                 $data['links'][] = $listing_url;
-                $data['images'][] = ! empty( $listing->images ) ?  $listing->images[0]->url : PLS_IMG_URL . "/null/listing-100x100.png";
+                $data['images'][] = ! empty( $listing['images'] ) ?  $listing['images'][0]['url'] : PLS_IMG_URL . "/null/listing-100x100.png";
                 $data['listing'][] = $listing;
 
                 /** Get the listing caption. */
