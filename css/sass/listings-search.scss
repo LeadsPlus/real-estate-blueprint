@@ -3,6 +3,7 @@
 	.pls_search_form {
 		float: left;
 		width: 300px;
+		height: 35px;
 		margin: 10px 10px 0 0;	
 		select {
 			margin-left: 10px;
@@ -11,19 +12,26 @@
 		.chzn-container {
 			float: right;
 		}
+		input {
+			width: 280px;
+		}
 	}
-	.pls_search_button {
+	#pls_search_form_submit_button {
 		float: right;
 		padding: 10px 30px;
 		margin: 10px 10px 0 0;
 	}
 }
-.sort_by_wrapper {
+.sort_wrapper {
 	float: right;
 	margin-top: 20px;
 	label {
 		float: left;
 		margin: 12px 10px 0 0;
+	}
+	.sort_item {
+		margin-left: 10px;
+		float: right;
 	}
 	#sort-by {
 		width: 200px;
@@ -138,4 +146,9 @@
 
     }
 
+}
+
+#custom section.form_group {
+	float: left;
+	clear:both;
 }

@@ -172,24 +172,30 @@ aside {
 .complex-search .pls_search_form {
   float: left;
   width: 300px;
+  height: 35px;
   margin: 10px 10px 0 0; }
   .complex-search .pls_search_form select {
     margin-left: 10px;
     width: 190px; }
   .complex-search .pls_search_form .chzn-container {
     float: right; }
-.complex-search .pls_search_button {
+  .complex-search .pls_search_form input {
+    width: 280px; }
+.complex-search #pls_search_form_submit_button {
   float: right;
   padding: 10px 30px;
   margin: 10px 10px 0 0; }
 
-.sort_by_wrapper {
+.sort_wrapper {
   float: right;
   margin-top: 20px; }
-  .sort_by_wrapper label {
+  .sort_wrapper label {
     float: left;
     margin: 12px 10px 0 0; }
-  .sort_by_wrapper #sort-by {
+  .sort_wrapper .sort_item {
+    margin-left: 10px;
+    float: right; }
+  .sort_wrapper #sort-by {
     width: 200px; }
 
 /* Main Content */
@@ -264,6 +270,10 @@ aside {
     padding: 10px; }
   .listing-item .actions a:hover {
     color: #1982D1; }
+
+#custom section.form_group {
+  float: left;
+  clear: both; }
 
 /* Property Details Page */
 article.property-details {
