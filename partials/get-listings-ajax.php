@@ -44,8 +44,38 @@ class PLS_Partials_Get_Listings_Ajax {
 
     function load() {
     
+        // * Set the options for the "Sort by" select. 
+        
+
+        $sort_by_options = array('images' => 'Images','location.address' => 'Address', 'location.locality' => 'City', 'location.region' => 'State', 'location.postal' => 'Zip', 'zoning_types' => 'Zoning', 'purchase_types' => 'Purchase Type', 'listing_types' => 'Listing Type', 'property_type' => 'Property Type', 'cur_data.beds' => 'Beds', 'cur_data.baths' => 'Baths', 'cur_data.price' => 'Price', 'cur_data.sqft' => 'Square Feet', 'cur_data.avail_on' => 'Date Available');;
+
+        // /** Filter the "Sort by" options. */
+        $sort_by_options = apply_filters("pls_listings_list_ajax_sort_by_options", $sort_by_options);
+
         ob_start();
         ?>
+            <!-- Sort Dropdown -->
+
+            <form class="sort_wrapper">
+                <div class="sort_item">
+                  <label for="sort_by">Sort By</label>
+                  <select name="sort_by" id="sort_by">
+                      <?php foreach ($sort_by_options as $key => $value): ?>
+                          <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                      <?php endforeach ?>
+                  </select>
+                </div>
+                <div class="sort_item">
+                  <label for="sort_by">Sort Direction</label>
+                  <select name="sort_type" id="sort_dir">
+                      <option value="asc">Ascending</option>
+                      <option value="asc">Descending</option>
+                  </select>
+                </div>
+            </form>
+
+            <!-- Datatable -->
+            <div class="clear"></div>
             <div id="container" style="width: 99%">
               <table id="placester_listings_list" class="widefat post fixed placester_properties" cellspacing="0">
                 <thead>
@@ -94,12 +124,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $api_response = PLS_Plugin_API::get_listings_list($search_query);
         
 
-        $response = array();
-
-        // Sorting
-        $columns = array('images','location.address', 'location.locality', 'location.region', 'location.postal', 'zoning_types', 'purchase_types', 'listing_types', 'property_type', 'cur_data.beds', 'cur_data.baths', 'cur_data.price', 'cur_data.sqft', 'cur_data.avail_on');
-        $_POST['sort_by'] = $columns[$_POST['iSortCol_0']];
-        $_POST['sort_type'] = $_POST['sSortDir_0'];
+        $response = array();        
 
         // Pagination
         $_POST['limit'] = $_POST['iDisplayLength'];
@@ -116,7 +141,7 @@ class PLS_Partials_Get_Listings_Ajax {
             ?>
             <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
                 <header class="grid_8 alpha">
-                    <h3><a href="<?php echo $listing['cur_data']['url']; ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] ?></a></h2>
+                    <h3><a href="<?php echo $listing['cur_data']['url']; ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a></h2>
                 </header>
                 <div class="listing-item-content grid_8 alpha">
                     <div class="grid_8 alpha">
@@ -145,7 +170,9 @@ class PLS_Partials_Get_Listings_Ajax {
                 </div>
             </div>
             <?php
-            $listings[$key][] = ob_get_clean();
+            $item_html = ob_get_clean();
+            $listings[$key][] = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $item_html ), $context_var );
+            $listings[$key][] = $listing;
         }
 
         // Required for datatables.js to function properly.
@@ -157,100 +184,6 @@ class PLS_Partials_Get_Listings_Ajax {
 
         //wordpress echos out a 0 randomly. die prevents it.
         die();
-
-
-        pls_h(
-            'article',
-            array( 'class' => 'pls-listing clearfix' ),
-            pls_h_a( $listings_placeholders['url'], pls_h_img( $listings_placeholders['image_url'], $listings_placeholders['address'], array( 'width' => $image_width ) ) ) . 
-            pls_h(
-                'section',
-                array( 'class' => 'info' ),
-                pls_h( 
-                    'h5',
-                    pls_h_a(
-                        $listings_placeholders['url'],
-                        pls_h_span( $listings_placeholders['address'], array( 'class' => 'address' ) ) . ', ' .
-                        pls_h_span( $listings_placeholders['city'], array( 'class' => 'city' ) ) . ', ' .
-                        pls_h_span( $listings_placeholders['state'], array( 'class' => 'state' ) )
-                    )
-                ) .
-                pls_h_div(
-                    $listings_placeholders['description'],
-                    array( 'class' => 'description' )
-                ) . 
-                pls_h_div(
-                    '$' . $listings_placeholders['price'],
-                    array( 'class' => 'price' )
-                ) .
-                pls_h_a( $listings_placeholders['url'], __( 'See More Details', pls_get_textdomain() ), array( 'class' => 'more' ) )
-            )
-        );
-
-        
-
-        //here!!!!!!!!!!!!
-            
-
-
-        /** Filter the listing item html. */
-        $listing_item_html = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $listing_item_html ), $listings_placeholders, $context_var );
-
-        ksort( $listing_html );
-
-        /** Set the options for the "Sort by" select. */
-        $sort_by_allowed_fields = PLS_Plugin_API::get_property_list_fields( 'sort_by' );
-        $sort_by_options = array();
-        foreach ( $sort_by_allowed_fields as $sort_field => $label ) {
-            $sort_by_options["{$sort_field} {$sort_type}"] = $label;
-        }
-
-        /** Filter the "Sort by" options. */
-        $sort_by_options = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_sort_by_options", $context ), '_', 'pre', false ), $sort_by_options, $context_var );
-
-        /** Define the "Sort by" select html. */
-        $sort_by_html = pls_h_div(
-            pls_h('label','Sort By: ') . 
-            pls_h('select', array( 'id' => 'sort-by' ),
-                pls_h_options( $sort_by_options, 'bathrooms asc' )
-                ),
-            array('class' => 'sort_by_wrapper')
-        );
-        $sort_by_html .= "<div class='clear'></div>";
-
-        
-        /** The loader div html. */
-        $loader_html = pls_h_div(
-            pls_h_img( $loading_img ) .
-            pls_h( 'span', __( 'Loading', pls_get_textdomain() ) ),
-            array( 'id' => 'loader' )
-        );
-
-        /** The pagination html. */
-        $pagination_html = pls_h_div(
-            pls_h_a( "#", __( 'Prev', pls_get_textdomain() ), array( 'class' => 'prev-btn' ) ).
-            pls_h_a( "#", __( 'Next', pls_get_textdomain() ), array( 'class' => 'next-btn' ) ),
-            array( 'id' => 'listings-pagination', 'class' => 'pagination' )
-        );
-
-        /** What should be displayed if no results are found. */
-        $no_results_html = pls_h(
-            'section',
-            array( 'class' => 'no-results' ),
-            pls_h( 'h5', __( 'No results', pls_get_textdomain() ) ) .
-            pls_h_p( __( 'Sorry, no listings match that search. Maybe try somthing a bit broader?' , pls_get_textdomain() ) )
-        );
-
-        /** Filter the no results html. */
-        $no_results_html = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_no_results_html", $context ), '_', 'pre', false ), $no_results_html, $context_var );
-
-        /** Filter the concatenated html. This allows developers to wrap the components in different markup and change their order. */
-        // $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $sort_by_html . $loader_html . $listings_list . $pagination_html, $listings_list, $sort_by_html, $loader_html, $pagination_html );
-				// Sort-by removed
-        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_html", $context ), '_', 'pre', false ), $loader_html . $listings_list . $pagination_html, $listings_list, $loader_html, $pagination_html );
-
-        /** Append the extra javascript and return. */
-        return $return . $row_rendering_js;
 	}
 
 }//end of class
