@@ -38,8 +38,6 @@ class PLS_Partials_Get_Listings_Ajax {
         // Hook the callback for ajax requests
         add_action('wp_ajax_pls_listings_ajax', array(__CLASS__, 'get' ) );
         add_action('wp_ajax_nopriv_pls_listings_ajax', array(__CLASS__, 'get' ) );
-        wp_register_script( 'get-listings-ajax', trailingslashit( PLS_JS_URL ) . 'scripts/get-listings-ajax.js' , NULL, NULL, true );
-        wp_enqueue_script('get-listings-ajax');
     }
 
     function load() {

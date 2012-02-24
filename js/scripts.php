@@ -26,7 +26,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
     function pls_scripts() {
 
         
-        
+        if (is_admin()) {
+            return;
+        }
 
         /** Register Modernizr. Will be enqueued using 'wp_print_scripts'. */
         wp_register_script( 'modernizr', trailingslashit( PLS_JS_URL ) . 'libs/modernizr/modernizr.min.js' , array(), '2.0.6' );
@@ -45,6 +47,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          *  notification about needing the plugin. Localize the notification 
          *  message. Accompanied by plugin-nags.css.
          */
+
+        wp_register_script( 'get-listings-ajax', trailingslashit( PLS_JS_URL ) . 'scripts/get-listings-ajax.js' , NULL, NULL, true );
+        wp_enqueue_script('get-listings-ajax');
 
         if ( pls_has_plugin_error() ) {
             /** Register the nag script. */
