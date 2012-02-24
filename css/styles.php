@@ -57,10 +57,8 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
             }   
             if ( get_theme_support( 'pls-default-css-blog' ) ) {
                 wp_enqueue_style( 'pls-default-css-blog', trailingslashit( PLS_CSS_URL ) . 'styles/blog.css' );
-            }   
+            }
         }
-            
-
     }
 }
 
