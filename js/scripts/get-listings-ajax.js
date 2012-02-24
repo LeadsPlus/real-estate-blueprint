@@ -55,4 +55,11 @@ $(document).ready(function($) {
         });
         return aoData;
     }
+
+    //datepicker
+    $("input#metadata-max_avail_on_picker, #metadata-min_avail_on_picker").datepicker({
+            showOtherMonths: true,
+            numberOfMonths: 2,
+            selectOtherMonths: true
+    });
 });
