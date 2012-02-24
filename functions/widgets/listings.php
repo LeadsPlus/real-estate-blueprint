@@ -61,10 +61,10 @@ class PLS_Widget_Listings extends WP_Widget {
 
         /* If a title was input by the user, display it. */
         $widget_title = '';
-        if ( !empty( $instance['title'] ) && ! pls_has_plugin_error() )
+        if ( !empty( $instance['title'] ) && ! pls_has_plugin_error() ) {
             $widget_title = $before_title . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . $after_title;
-		
-
+        }
+            
         /** Get the list of listings using the partial. */
         $listings_args = array(
             'limit' => $instance['number'],
@@ -75,23 +75,17 @@ class PLS_Widget_Listings extends WP_Widget {
             'context' => 'widget',
             'context_var' => $widget_id 
         );
-        
-        /** Set the listing type. */
-        switch ( $instance['type'] ) {
-            case 'new': 
-                $listings_args['is_new'] = true;
-            case 'featured': 
-                $listings_args['is_featured'] = true;
-        }
 
         /** If field is empty, remove it so that the function's defaults can be used. */
-        if ( empty( $instance['placeholder'] ) )
+        if ( empty( $instance['placeholder'] ) ) {
             unset( $listings_args['placeholder_img'] );
-
+        }
+            
         // set context so filter can customize the layout
         $listings_args['context'] = 'get_listings_widget';
 
-        $widget_body = PLS_Partials::get_listings_widget( $listings_args );
+        // pls_dump($listings_args);
+        $widget_body = PLS_Partials::get_listings( $listings_args );
 
         /** Apply a filter on the whole widget */
         echo apply_filters( 'pls_widget_listings', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $instance, $widget_id, $listings_args );
@@ -137,10 +131,10 @@ class PLS_Widget_Listings extends WP_Widget {
 			'title' => esc_attr__( 'Listings', $this->textdomain ),
             'type' => 'all',
 			'placeholder' => '',
+            'limit' => 5,
             'width' => 100,
             'height' => '',
             'number' => 5,
-
             'name' => true,
             'email' => true,
             'photo' => true,

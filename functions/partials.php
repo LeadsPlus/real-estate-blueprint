@@ -45,27 +45,18 @@ class PLS_Partials {
     }
 
     // wrapper for calling get listings directly. 
-    static function get_listings( $args = '' ) {
-
+    static function get_listings( $args = array() ) {
         return PLS_Partial_Get_Listings::init($args);
-    }
-
-    // wrapper for calling get listings directly. 
-    static function get_listings_widget( $args = array() ) {
-
-        return self::get_listings($args);
     }
 
     // wrapper for get cities api request
     static function get_cities( $args ) {
-           
         return PLS_Partial_Get_Cities::init($args);
       
     }
     
     // wrapper for listings search for content
     static function get_listings_search_form( $args ) {
-
         return PLS_Partials_Listing_Search_Form::init($args);
     }
 
