@@ -41,7 +41,6 @@ class PLS_Partials {
         // all the hooks, all partial files can be found in blueprint/partials/{file}.php
         add_filter('the_content', array( __CLASS__ ,'custom_property_details_html_filter'), 11);
         add_filter( 'pls_listings_list_ajax_item_html_listings_search', array( __CLASS__, 'custom_ajax_listings_html_filter'), 10, 3 );
-        add_filter( 'pls_listing_get_listings_widget', 'custom_widget_html_filter', 10, 2);
     }
 
     // wrapper for calling get listings directly. 
