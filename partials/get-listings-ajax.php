@@ -103,7 +103,11 @@ class PLS_Partials_Get_Listings_Ajax {
             return NULL;
         }
         
-		/** Define the default argument array. */
+		    // Pagination
+        $_POST['limit'] = $_POST['iDisplayLength'];
+        $_POST['offset'] = $_POST['iDisplayStart'];     
+
+        /** Define the default argument array. */
         $defaults = array(
             'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
             'loading_img' => admin_url( 'images/wpspin_light.gif' ),
@@ -126,9 +130,7 @@ class PLS_Partials_Get_Listings_Ajax {
 
         $response = array();        
 
-        // Pagination
-        $_POST['limit'] = $_POST['iDisplayLength'];
-        $_POST['offset'] = $_POST['iDisplayStart'];     
+       
         
         // build response for datatables.js
         $listings = array();
