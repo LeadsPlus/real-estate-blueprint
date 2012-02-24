@@ -26,7 +26,7 @@ $(document).ready(function($) {
                             var listing_json = ajax_response['aaData'][listing][1];
                             marker = new google.maps.Marker({
                                 position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
-                                map: pls_google_map,
+                                map: pls_google_map
                             });
                             marker.setMap(pls_google_map);
                             bounds.extend(marker.getPosition());
