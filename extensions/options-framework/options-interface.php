@@ -380,6 +380,99 @@ function optionsframework_fields() {
 		break;
 
 
+		// Featured Listing Selection
+		case "featured-listing":
+
+			ob_start();
+			?>
+			<style type="text/css" media="screen">
+				.section-featured-listing .controls {
+					width: 100% !important;
+					padding-bottom: 30px;
+				}
+				.fls-city {
+					width: 150px !important;
+				}
+				.fls-zip {
+					width: 70px !important;
+				}
+				.fls-beds {
+					width: 50px !important;
+				}
+				.fls-min-price {
+					width: 100px !important;
+				}
+				.fls-max-price {
+					width: 100px !important;
+				}
+				.fls-address-select {
+					width: 300px !important;
+				}
+				.fls-add-listing {
+					width: 100px !important;
+				}
+				.fls-option .controls {
+					width: 54% !important;
+				}
+			</style>
+				
+			<div class="featured-listing-search" id="featured-listing-search-1">
+				<div class="fls-top">
+					<select name="" class="fls-city" id="fls-city-1">
+						<option value="">Boston</option>
+						<option value="">Cambridge</option>
+						<option value="">Somerville</option>
+					</select>
+					<select name="" class="fls-zip" id="fls-zip-1">
+						<option value="">02116</option>
+					</select>
+					<select name="" class="fls-beds" id="fls-beds-1">
+						<option value="">1</option>
+					</select>
+					<select name="" class="fls-min-price" id="fls-min-price-1">
+						<option value="">1000</option>
+					</select>
+					<select name="" class="fls-max-price" id="fls-max-price-1">
+						<option value="">4000</option>
+					</select>
+				</div>
+
+				<div class="fls-address">
+					<select name="" class="fls-address-select" id="fls-select-address-1">
+						<option value="">147 Beacon Street, Boston, MA</option>
+						<option value="">247 Beacon Street, Boston, MA</option>
+						<option value="">347 Beacon Street, Boston, MA</option>
+						<option value="">447 Beacon Street, Boston, MA</option>
+					</select>
+					<input type="submit" name="" value="Add Listing" class="fls-add-listing" id="add-listing-1">
+				</div>
+<div id="here">
+	
+</div>
+				<h4 class="heading">Featured Listings</h4>
+
+				<div class="fls-option">
+					<div class="controls">
+						<ul id="fls-added-listings-1">
+							<li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-547BeaconStreetBostonMA">Remove</a></li>
+							<li>647 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-647BeaconStreetBostonMA">Remove</a></li>
+							<li>747 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-747BeaconStreetBostonMA">Remove</a></li>
+						</ul>
+					</div>
+					<div class="explain"><?php echo wp_kses( $explain_value, $allowedtags); ?></div>
+					<div class="clear"></div>
+				</div>
+
+			</div>
+		</div>
+		<div class="clear">
+	</div></div></div>
+
+			
+			<?php
+			$output .= trim( ob_get_clean() );
+		break;
+
 		// Heading for Navigation
 		case "heading":
 			if ($counter >= 2) {
@@ -393,7 +486,7 @@ function optionsframework_fields() {
 			break;
 		}
 
-		if ( ( $value['type'] != "heading" ) && ( $value['type'] != "info" ) ) {
+		if ( ( $value['type'] != "heading" ) && ( $value['type'] != "info" ) && ( $value['type'] != "featured-listing" ) ) {
 			if ( $value['type'] != "checkbox" ) {
 				$output .= '<br/>';
 			}
