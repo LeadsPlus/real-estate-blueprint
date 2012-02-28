@@ -416,35 +416,36 @@ function optionsframework_fields() {
 				}
 			</style>
 				
-			<div class="featured-listing-search" id="featured-listing-search-1">
+				<!-- REPLACE ALL ID NUMBERS WITH THE ID FROM THE OPTION -->
+			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
 				<div class="fls-top">
-					<select name="" class="fls-city" id="fls-city-1">
+					<select name="" class="fls-city" id="fls-city-<?php echo $value['id']; ?>">
 						<option value="">Boston</option>
 						<option value="">Cambridge</option>
 						<option value="">Somerville</option>
 					</select>
-					<select name="" class="fls-zip" id="fls-zip-1">
+					<select name="" class="fls-zip" id="fls-zip-<?php echo $value['id']; ?>">
 						<option value="">02116</option>
 					</select>
-					<select name="" class="fls-beds" id="fls-beds-1">
+					<select name="" class="fls-beds" id="fls-beds-<?php echo $value['id']; ?>">
 						<option value="">1</option>
 					</select>
-					<select name="" class="fls-min-price" id="fls-min-price-1">
+					<select name="" class="fls-min-price" id="fls-min-price-<?php echo $value['id']; ?>">
 						<option value="">1000</option>
 					</select>
-					<select name="" class="fls-max-price" id="fls-max-price-1">
+					<select name="" class="fls-max-price" id="fls-max-price-<?php echo $value['id']; ?>">
 						<option value="">4000</option>
 					</select>
 				</div>
 
 				<div class="fls-address">
-					<select name="" class="fls-address-select" id="fls-select-address-1">
+					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address">
 						<option value="">147 Beacon Street, Boston, MA</option>
 						<option value="">247 Beacon Street, Boston, MA</option>
 						<option value="">347 Beacon Street, Boston, MA</option>
 						<option value="">447 Beacon Street, Boston, MA</option>
 					</select>
-					<input type="submit" name="" value="Add Listing" class="fls-add-listing" id="add-listing-1">
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing" id="add-listing-<?php echo $value['id']; ?>">
 				</div>
 <div id="here">
 	
@@ -453,10 +454,10 @@ function optionsframework_fields() {
 
 				<div class="fls-option">
 					<div class="controls">
-						<ul id="fls-added-listings-1">
-							<li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-547BeaconStreetBostonMA">Remove</a></li>
-							<li>647 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-647BeaconStreetBostonMA">Remove</a></li>
-							<li>747 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete delete-747BeaconStreetBostonMA">Remove</a></li>
+						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
+
+							<!-- Dynamically load already featured listings here with following HTML -->
+							<!-- <li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete" id="delete-547BeaconStreetBostonMA">Remove</a></li> -->
 						</ul>
 					</div>
 					<div class="explain"><?php echo wp_kses( $explain_value, $allowedtags); ?></div>
