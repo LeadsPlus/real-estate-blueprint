@@ -156,9 +156,15 @@ class PLS_Map {
 
 		// pls_dump($listing);
 		if (isset($listing) && is_array($listing) && isset($listing['location'])) {
-			$coords = $listing['location']['coords'];
-			$args['lat'] = $coords['latitude'];
-			$args['lng'] = $coords['longitude'];
+			if (isset($listing['location']['coords']['latitude'])) {
+				$coords = $listing['location']['coords'];
+				$args['lat'] = $coords['latitude'];
+				$args['lng'] = $coords['longitude'];	
+			} elseif (is_array($listing['location']['coords'])) {
+				$coords = $listing['location']['coords'];
+				$args['lat'] = $coords[0];
+				$args['lng'] = $coords[1];	
+			}
 		}
 
 		/** Define the default argument array. */
