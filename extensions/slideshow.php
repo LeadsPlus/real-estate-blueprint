@@ -81,7 +81,7 @@ class PLS_Slideshow {
 					'height' => 300,
 					'context' => '',
 					'context_var' => false,
-					'listings' => array('limit' => 5, 'sort_by' => 'price'),
+					'listings' => 'limit=5&sort_by=price',
 					'data' => false,
         );
 

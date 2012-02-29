@@ -53,6 +53,7 @@ $(document).ready(function($) {
         $.each($('#pls_search_form:visible, .sort_wrapper').serializeArray(), function(i, field) {
             aoData.push({"name" : field.name, "value" : field.value});
         });
+        aoData.push({"name": "context", "value" : $('#context').attr('class')});
         return aoData;
     }
 
