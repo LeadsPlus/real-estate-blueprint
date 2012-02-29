@@ -6,16 +6,11 @@ class PLS_Quick_Search_Widget extends WP_Widget {
     
         /* Set the widget textdomain. */
         $this->textdomain = pls_get_textdomain();
-      
-      
-        $widget_options = array( 'classname' => 'pls-quick-search',
-                             'description' => esc_html__( 'Displays search filters for bedrooms, bathrooms, city, state, zip, minimum price, and maximum price', $this->textdomain )
-                             );
+            
+        $widget_options = array( 'classname' => 'pls-quick-search','description' => esc_html__( 'Displays search filters for bedrooms, bathrooms, city, state, zip, minimum price, and maximum price', $this->textdomain ));
 
         /* Create the widget. */
-        parent::__construct( "pls-quick-search", esc_attr__( 'Listings Quick Search Widget', $this->textdomain ), $widget_options );
-
-        
+        parent::__construct( "pls-quick-search", esc_attr__( 'Listings Quick Search Widget', $this->textdomain ), $widget_options );        
     }
 
     function widget($args, $instance) {

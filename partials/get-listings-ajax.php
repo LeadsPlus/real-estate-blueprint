@@ -1,7 +1,6 @@
 <?php 
 PLS_Partials_Get_Listings_Ajax::init();
 class PLS_Partials_Get_Listings_Ajax {
-	
 
 	/**
      * Returns the list of listings managed by ajax. It includes pagination and 
@@ -40,11 +39,24 @@ class PLS_Partials_Get_Listings_Ajax {
         add_action('wp_ajax_nopriv_pls_listings_ajax', array(__CLASS__, 'get' ) );
     }
 
-    function load() {
-    
+    function load($args = array()) {    
         // * Set the options for the "Sort by" select. 
-        
+        $defaults = array(
+            'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
+            'loading_img' => admin_url( 'images/wpspin_light.gif' ),
+            'image_width' => 100,
+            'sort_type' => 'desc',
+            'crop_description' => 0,
+            'listings_per_page' => get_option( 'posts_per_page' ),
+            'context' => '',
+            'context_var' => NULL,
+            'append_to_map' => true,
+            'search_query' => $_POST
+        );
 
+        /** Extract the arguments after they merged with the defaults. */
+        extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+        
         $sort_by_options = array('images' => 'Images','location.address' => 'Address', 'location.locality' => 'City', 'location.region' => 'State', 'location.postal' => 'Zip', 'zoning_types' => 'Zoning', 'purchase_types' => 'Purchase Type', 'listing_types' => 'Listing Type', 'property_type' => 'Property Type', 'cur_data.beds' => 'Beds', 'cur_data.baths' => 'Baths', 'cur_data.price' => 'Price', 'cur_data.sqft' => 'Square Feet', 'cur_data.avail_on' => 'Date Available');;
 
         // /** Filter the "Sort by" options. */
@@ -74,7 +86,9 @@ class PLS_Partials_Get_Listings_Ajax {
 
             <!-- Datatable -->
             <div class="clear"></div>
+
             <div id="container" style="width: 99%">
+              <div id="context" class="<?php echo $context ?>"></div>
               <table id="placester_listings_list" class="widefat post fixed placester_properties" cellspacing="0">
                 <thead>
                   <tr>
@@ -93,7 +107,8 @@ class PLS_Partials_Get_Listings_Ajax {
         echo ob_get_clean();
     }
 
-	function get ($args = array()) {	
+	function get ($args = array()) {
+	
         /** Display a placeholder if the plugin is not active or there is no API key. */
         if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
             return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
@@ -113,7 +128,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'sort_type' => 'desc',
             'crop_description' => 0,
             'listings_per_page' => get_option( 'posts_per_page' ),
-            'context' => '',
+            'context' => $_POST['context'],
             'context_var' => NULL,
             'append_to_map' => true,
             'search_query' => $_POST
@@ -125,10 +140,7 @@ class PLS_Partials_Get_Listings_Ajax {
         /** Get the listings list markup and javascript. */
         $api_response = PLS_Plugin_API::get_listings_list($search_query);
         
-
         $response = array();        
-
-       
         
         // build response for datatables.js
         $listings = array();
@@ -139,9 +151,10 @@ class PLS_Partials_Get_Listings_Ajax {
             ob_start();
             // pls_dump($listing);
             ?>
+
             <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
                 <header class="grid_8 alpha">
-                    <h3><a href="<?php echo $listing['cur_data']['url']; ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a></h2>
+                    <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a></h2>
                 </header>
                 <div class="listing-item-content grid_8 alpha">
                     <div class="grid_8 alpha">
@@ -164,14 +177,14 @@ class PLS_Partials_Get_Listings_Ajax {
                             <?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
                         </div>
                         <div class="actions">
-                            <a class="more-link" href="<?php echo $listing['cur_data']['url']; ?>">View Property Details</a>
+                            <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
                         </div>
                     </div>
                 </div>
             </div>
             <?php
             $item_html = ob_get_clean();
-            $listings[$key][] = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $item_html ), $context_var );
+            $listings[$key][] = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $item_html ), $listing, $context_var);
             $listings[$key][] = $listing;
         }
 

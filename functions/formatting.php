@@ -242,9 +242,23 @@ class PLS_Format {
 		}
 
 		return $new_phone;
-
 	}
 
-
+	function amenities_but($listing_data, $amenities_to_remove) {
+		$amenities = array();
+		foreach ($listing_data['cur_data'] as $amenity => $value) {
+			if (in_array($amenity, $amenities_to_remove)) { continue; }
+			if (is_int(strrpos((string)$amenity, 'ngb'))) {
+				$amenities['ngb'][] = $amenity . ' ' . $value;
+			} else {
+				$amenities['list'][] = $amenity . ' ' .$value;
+			}
+		}
+		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
+			if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
+			$amenities['uncur'][] = $uncur_amenity . ' ' . $uncur_value;
+		}		
+		return $amenities;
+	}
 //end of class
 }

@@ -115,7 +115,7 @@ class PLS_Partial_Get_Listings {
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
-                <h3><a href="<?php echo $listing_data['url']; ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
+                <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
                 <!-- Display Listings -->
                 <?php if (!empty($listing_data['description'])): ?>
                     <ul>
@@ -154,7 +154,7 @@ class PLS_Partial_Get_Listings {
                         </ul>     
                     <?php endif ?>
                     <div class="actions">
-                        <a class="more-link" href="<?php echo $listing_data['url']; ?>">View Property Details</a>
+                        <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
                     </div>
                 </div>
             </div><!-- .entry-summary -->

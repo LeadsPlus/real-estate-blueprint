@@ -446,7 +446,7 @@ class PLS_Plugin_API {
      */
     static function get_listings_list( $args ) {
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions(array("PL_Listing", "get"), $args, true );
+        $return = self::_try_for_exceptions(array("PL_Listing_Helper", "results"), $args, true );
         /** If no exceptions were detected, return the result. */
         if ( $return )  {
             return $return;

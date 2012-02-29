@@ -8,10 +8,14 @@
  * @subpackage Template
  */
 ?>
-
+<style type="text/css">
+	#custom {
+		display:none;
+	}
+</style>
 <section class="complex-search grid_8 alpha">
-    <h3><?php __( 'Search', pls_get_textdomain() ) ?></h3>
-    <?php echo PLS_Partials::get_listings_search_form( 'context=listings&ajax=1&context=listing_search'); ?>
+	<?php PLS_Partials::get_listings_search_form('asdf'); ?>
+	<?php //PL_Form::generate_form(PL_Config::PL_API_LISTINGS('get','args'), array('context' => 'listing_search', 'ajax' => 1)); ?>
 </section>
 
 <div class="grid_8 alpha" id="content" role="main">

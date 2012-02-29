@@ -32,7 +32,6 @@ class PLS_Partials {
     function init () {
         // all the includes
         include_once( trailingslashit(PLS_PAR_DIR) . 'custom-property-details.php');
-        include_once( trailingslashit(PLS_PAR_DIR) . 'custom-listings-widget.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-cities.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-listings-ajax.php');
         include_once( trailingslashit(PLS_PAR_DIR) . 'get-listings-search-form.php');
@@ -40,7 +39,6 @@ class PLS_Partials {
 
         // all the hooks, all partial files can be found in blueprint/partials/{file}.php
         add_filter('the_content', array( __CLASS__ ,'custom_property_details_html_filter'), 11);
-        add_filter( 'pls_listings_list_ajax_item_html_listings_search', array( __CLASS__, 'custom_ajax_listings_html_filter'), 10, 3 );
     }
 
     // wrapper for calling get listings directly. 
@@ -71,10 +69,4 @@ class PLS_Partials {
 //        pls_dump($content);
         echo PLS_Partials_Property_Details::init($content);
     } 
-
-    //wrapper for ajax html filter
-    static function custom_ajax_listings_html_filter ($listing_item_html, $listing, $context_var  ) {
-        
-        return PLS_Partials_Custom_Ajax_Listing_List::init($listing_item_html, $listing, $context_var);
-    }
 }
