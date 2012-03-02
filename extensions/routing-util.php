@@ -178,7 +178,7 @@ class PLS_Route {
 		//
 
         $sidebars = array();
-        foreach (self::$request as $item) {
+        foreach ((array)self::$request as $item) {
             $sidebars[] = 'sidebar-' . $item;
         }
         $sidebars[] = 'sidebar.php';
