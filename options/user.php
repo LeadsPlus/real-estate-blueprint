@@ -27,6 +27,18 @@ PLS_Style::add(array(
 						"id" => "pls-user-phone",
 						"type" => "text"));
 
+				PLS_Style::add(array(
+						"name" => "Your Bio",
+						"desc" => "Add your bio that you want to display on the site.",
+						"id" => "pls-user-description",
+						"type" => "textarea"));
+
+				PLS_Style::add(array(
+						"name" => "Your Headshot",
+						"desc" => "Add your headshot that you want to display on the site.",
+						"id" => "pls-user-image",
+						"type" => "upload"));
+
 		PLS_Style::add(array(
 				"name" => "Company Info",
 				"desc" => "",
