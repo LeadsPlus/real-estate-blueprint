@@ -26,6 +26,9 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         $search_form_filter_string .= 'context=' . apply_filters('pls_widget_quick_search_context', 'quick_search_widget');
 
         $search_form_filter_string .= apply_filters('pls_widget_quick_search_filter_string', '&ajax=0');
+
+        $search_form_filter_string .= '&class=pls_quick_search';
+
            echo $before_widget;
             echo "<h3>" . $title . "</h3>";
             echo PLS_Partials::get_listings_search_form($search_form_filter_string);
