@@ -20,19 +20,21 @@ $(document).ready(function($) {
                         for (var current_marker in markers) {
                           markers[current_marker].setMap(null);
                         }
-                        markers = [];
-                        var bounds = new google.maps.LatLngBounds();
-                        for (var listing in ajax_response['aaData']) {
-                            var listing_json = ajax_response['aaData'][listing][1];
-                            marker = new google.maps.Marker({
-                                position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
-                                map: pls_google_map
-                            });
-                            marker.setMap(pls_google_map);
-                            bounds.extend(marker.getPosition());
-                            markers.push(marker);
+                        if (typeof window['google'] != 'undefined') {
+                          markers = [];
+                          var bounds = new google.maps.LatLngBounds();
+                          for (var listing in ajax_response['aaData']) {
+                              var listing_json = ajax_response['aaData'][listing][1];
+                              marker = new google.maps.Marker({
+                                  position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
+                                  map: pls_google_map
+                              });
+                              marker.setMap(pls_google_map);
+                              bounds.extend(marker.getPosition());
+                              markers.push(marker);
+                          }
+                          pls_google_map.fitBounds(bounds);
                         }
-                        pls_google_map.fitBounds(bounds);
                     };
 
                     //required to load the datatable
