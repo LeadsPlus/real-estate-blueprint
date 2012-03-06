@@ -123,9 +123,9 @@ class PLS_Slideshow {
                 ob_start();
                 ?>
                  <div id="caption-<?php echo $index ?>" class="orbit-caption">
-                    <p><a href="<?php echo $listing_url ?>"><?php echo $listing['location']['address'] ?></a></p>
+                    <p><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
                     <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
-                    <a class="button details" href="<?php echo $listing_url ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
+                    <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
                 </div>
                 <?php 
                 $data['captions'][] = trim( ob_get_clean() );
@@ -157,7 +157,7 @@ class PLS_Slideshow {
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
-                $slide = pls_h_a( $data['links'][$index], $slide, array('data-caption' => "#caption-{$index}") );
+                $slide = pls_h_a( $listing['cur_data']['url'], $slide, array('data-caption' => "#caption-{$index}") );
 
             $html['slides'] .= $slide;
 

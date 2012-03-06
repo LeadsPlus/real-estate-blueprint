@@ -1,6 +1,5 @@
 <?php
 /**
- * Template Name: Blog Posts
  *
  * This is the template for the blog page
  *
@@ -9,9 +8,9 @@
  */
 ?>
 
-<?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
+<?php PLS_Route::get_template_part('loop-meta'); // Loads the loop-meta.php template. ?>
 
-<?php PLS_Route::get_template_part( 'loop-meta'); // Loads the loop-meta.php template. ?>
+<?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
 
 <?php query_posts( 'post_type=post&paged=' . $paged ); // Get the blog posts ?>
 
