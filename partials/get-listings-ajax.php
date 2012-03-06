@@ -178,6 +178,7 @@ class PLS_Partials_Get_Listings_Ajax {
                         </div>
                         <div class="actions">
                             <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
+                            <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
                         </div>
                     </div>
                 </div>

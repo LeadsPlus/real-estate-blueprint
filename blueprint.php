@@ -407,9 +407,11 @@ class Placester_Blueprint {
 
             $page_list[] = array( 'title' => 'Blog', 'template' => 'page-template-blog.php' );
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
+            $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
 
-            if (function_exists('placester_create_pages'))
-                placester_create_pages( $page_list ); 
+            if (method_exists('PL_Pages', 'create_once')) {
+                PL_Pages::create_once( $page_list, $force = true ); 
+            }
         } 
     }
 }

@@ -63,12 +63,11 @@
                     <?php endif ?>
                     
                 </hgroup>
-
+                <div style="float: right"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
                 <?php pls_do_atomic( 'header' ); ?>    
             </div>
 
             <?php pls_do_atomic( 'close_header' ); ?>
         </header>
-
     <?php pls_do_atomic( 'after_header' ); ?>
     <?php PLS_Route::get_template_part( 'menu', 'primary' ); // Loads the menu-primary.php template. ?>
