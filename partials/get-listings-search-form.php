@@ -58,9 +58,18 @@ class PLS_Partials_Listing_Search_Form {
      */
 	function init ($args = '') {
 		
-		/** Define the default argument array. */
+        /** Display a placeholder if there is a plugin error. */
+        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
+            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
+
+        /** Return nothing when plugin error and user is not admin. */
+        if ( pls_has_plugin_error() )
+            return NULL;
+
+        /** Define the default argument array. */
         $defaults = array(
             'ajax' => false,
+            'class' => 'pls_search_form_listings',
             'results_page_id' => get_page_by_title( 'listings' )->ID,
             'context' => '',
             'context_var' => null,
@@ -78,7 +87,6 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 1,
             'min_price' => 1,
             'max_price' => 1
-
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -133,33 +141,15 @@ class PLS_Partials_Listing_Search_Form {
         /** Prepend the default empty valued element. */
         $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
 
-        /** Get the location list from the plugin. */
-        $locations = PLS_Plugin_API::get_location_list();
-
-        /** Display a placeholder if there is a plugin error. */
-        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
-            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-
-        /** Return nothing when plugin error and user is not admin. */
-        if ( pls_has_plugin_error() )
-            return NULL;
-
-        /** Sort the states. */
-        sort( $locations->city );
-
         /** Prepend the default empty valued element. */
-        $form_options['cities'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + $locations->city;
-        /** Sort the states. */
-        sort( $locations->state );
+        $form_options['cities'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('locality'));
+        unset($form_options['cities']['false']);
 
-        /** Prepend the default empty valued element. */
-        $form_options['states'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + $locations->state;
+        $form_options['states'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('region'));
+        unset($form_options['states']['false']);
 
-        /** Sort the zip codes. */
-        sort( $locations->zip );
-
-        /** Prepend the default empty valued element. */
-        $form_options['zips'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + $locations->zip;
+        $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
+        unset($form_options['zips']['false']);
 
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
@@ -171,16 +161,16 @@ class PLS_Partials_Listing_Search_Form {
             '3000' => '3,000',
             '4000' => '4,000',
             '5000' => '5,000',
-						'6000' => '6,000',
-						'7000' => '7,000',
-						'8000' => '8,000',
-						'9000' => '9,000',
-						'10000' => '10,000',
-						'11000' => '11,000',
-						'12000' => '12,000',
-						'13000' => '13,000',
-						'14000' => '14,000',
-						'15000' => '15,000',
+			'6000' => '6,000',
+			'7000' => '7,000',
+			'8000' => '8,000',
+			'9000' => '9,000',
+			'10000' => '10,000',
+			'11000' => '11,000',
+			'12000' => '12,000',
+			'13000' => '13,000',
+			'14000' => '14,000',
+			'15000' => '15,000',
         );
 
         /** Set the maximum price options array. */
@@ -194,26 +184,20 @@ class PLS_Partials_Listing_Search_Form {
         foreach( $form_options as $option_name => &$opt_array ) {
 
             /** Filter each of the fields options arrays. */
-            $opt_array = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_{$option_name}_array", $context ), '_', 'pre', false )
-, $opt_array, $context_var );
-            
-            /**
-             * Select fields attributes.
-             */
+            $opt_array = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_{$option_name}_array", $context ), '_', 'pre', false ), $opt_array, $context_var );
 
             /** Form options array. */
-            $form_opt_attr[$option_name] = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_{$option_name}_attributes", $context ), '_', 'pre', false )
-, array(), $context_var );
+            $form_opt_attr[$option_name] = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_{$option_name}_attributes", $context ), '_', 'pre', false ), array(), $context_var );
 
             /** Make sure it is an array. */
-            if ( ! is_array( $form_opt_attr[$option_name] ) ) 
-                $form_opt_attr[$option_name] = array();
+            if ( ! is_array( $form_opt_attr[$option_name] ) ) {
+                $form_opt_attr[$option_name] = array();    
+            }          
 
             /** Append the data-placeholder attribute. */
             if ( isset( $opt_array['pls_empty_value'] ) ) {
                 $form_opt_attr[$option_name] = $form_opt_attr[$option_name] + array( 'data-placeholder' => $opt_array['pls_empty_value'] );
             }
-
         }
 
         /**
@@ -224,9 +208,9 @@ class PLS_Partials_Listing_Search_Form {
         if ($bedrooms == 1) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
-                array( 'name' => 'bedrooms') + $form_opt_attr['bedrooms'],
+                array( 'name' => 'metadata[beds]') + $form_opt_attr['bedrooms'],
                     /** Get the list of options with the empty valued element selected. */
-                    pls_h_options( $form_options['bedrooms'], "" )
+                    pls_h_options( $form_options['bedrooms'], @$_POST['metadata']['beds']  )
                 );
         }
         
@@ -235,9 +219,9 @@ class PLS_Partials_Listing_Search_Form {
         if ($bathrooms == 1) {
             $form_html['bathrooms'] = pls_h( 
                 'select',
-                array( 'name' => 'bathrooms' ) + $form_opt_attr['bathrooms'],
+                array( 'name' => 'metadata[baths]' ) + $form_opt_attr['bathrooms'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['bathrooms'], "" )
+                pls_h_options( $form_options['bathrooms'], @$_POST['metadata']['baths'] )
             );            
         }
 
@@ -245,9 +229,9 @@ class PLS_Partials_Listing_Search_Form {
         if ($half_baths == 1) {
             $form_html['half_baths'] = pls_h( 
                 'select',
-                array( 'name' => 'half_baths' ) + $form_opt_attr['half_baths'],
+                array( 'name' => 'metadata[half_baths]' ) + $form_opt_attr['half_baths'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['half_baths'], "" )
+                pls_h_options( $form_options['half_baths'], @$_POST['metadata']['half_baths'] )
             );
         }
         
@@ -258,7 +242,7 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['property_type'], "" )
+                pls_h_options( $form_options['property_type'], @$_POST['property_type'] )
             );
         }
 
@@ -266,9 +250,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($listing_types == 1) {
             $form_html['listing_types'] = pls_h(
                 'select',
-                array( 'name' => 'listing_types', 'multiple' => true ) + $form_opt_attr['listing_types'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['listing_types'], "" )
+                array( 'name' => 'listing_types') + $form_opt_attr['listing_types'],
+                pls_h_options( $form_options['listing_types'], @$_POST['listing_types'] )
             );
         }
         
@@ -276,44 +259,35 @@ class PLS_Partials_Listing_Search_Form {
         if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
-                array( 'name' => 'zoning_types[zoning_type]'  ) + $form_opt_attr['zoning_types'],
-                // array( 'name' => 'zoning_types[zoning_type]', 'multiple' => true  ) + $form_opt_attr['zoning_types'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['zoning_types'], "" )
+                array( 'name' => 'zoning_types'  ) + $form_opt_attr['zoning_types'],
+                pls_h_options( $form_options['zoning_types'], @$_POST['zoning_types'] )
             );
         }
-        
 
         /** Add the purchase type select element. */
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types[purchase_type]' ) + $form_opt_attr['purchase_types'],
-                // array( 'name' => 'purchase_types[purchase_type]', 'multiple' => true  ) + $form_opt_attr['purchase_types'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['purchase_types'], "" )
+                array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
+                pls_h_options( $form_options['purchase_types'], @$_POST['purchase_types'] )
             );
         }
         
-
         /** Add the availability select element. */
         if ($available_on == 1) {
             $form_html['available_on'] = pls_h(
                 'select',
-                array( 'name' => 'available_on' ) + $form_opt_attr['available_on'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['available_on'], "" )
+                array( 'name' => 'metadata[avail_on]' ) + $form_opt_attr['available_on'],
+                pls_h_options( $form_options['available_on'], @$_POST['metadata']['avail_on'] )
             );
         }
-        
-                                    
+                                   
         /** Add the cities select element. */
         if ($cities == 1) {
             $form_html['cities'] = pls_h(
                 'select',
-                array( 'name' => 'location[city]' ) + $form_opt_attr['cities'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['cities'], "", true )
+                array( 'name' => 'location[locality]' ) + $form_opt_attr['cities'],
+                pls_h_options( $form_options['cities'], @$_POST['location']['locality'], true )
             );
         }
         
@@ -321,46 +295,39 @@ class PLS_Partials_Listing_Search_Form {
         if ($states == 1) {
                 $form_html['states'] = pls_h(
                 'select',
-                array( 'name' => 'location[state]' ) + $form_opt_attr['states'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['states'], "", true )
+                array( 'name' => 'location[region]' ) + $form_opt_attr['states'],
+                pls_h_options( $form_options['states'], @$_POST['location']['region'], true )
             );
         }
-        
 
         /** Add the cities select element. */
         if ($zips == 1) {
             $form_html['zips'] = pls_h(
                 'select',
-                array( 'name' => 'location[zip]' ) + $form_opt_attr['zips'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['zips'], "", true )
+                array( 'name' => 'location[postal]' ) + $form_opt_attr['zips'],
+                pls_h_options( $form_options['zips'], @$_POST['location']['postal'], true )
             );
         }
-        
 
         /** Add the minimum price select element. */
         if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
                 'select',
-                array( 'name' => 'min_price' ) + $form_opt_attr['min_price'],
-                /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['min_price'] )
+                array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
+                pls_h_options( $form_options['min_price'], @$_POST['metadata']['min_price'] )
             );
         }
         
-
         /** Add the maximum price select element. */
         if ($max_price == 1) {
             $form_html['max_price'] = pls_h(
                 'select',
-                array( 'name' => 'max_price' ) + $form_opt_attr['max_price'],
+                array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['max_price'] )
+                pls_h_options( $form_options['max_price'], @$_POST['metadata']['max_price'] )
             );
         }
         
-
         $section_title = array(
             'bedrooms' => __( 'Beds', pls_get_textdomain() ),
             'bathrooms' => __( 'Baths', pls_get_textdomain() ),
@@ -410,18 +377,13 @@ class PLS_Partials_Listing_Search_Form {
 
         $form = pls_h(
             'form',
-            array( 'action' => $form_data->action, 'method' => 'get', 'id' => $form_id ),
+            array( 'action' => $form_data->action, 'method' => 'post', 'id' => $form_id, 'class' => $class ),
             $form_data->hidden_field . apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_inner", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $context_var )
         );
 
         /** Filter the form. */
         $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
-
-        /** Add the JS that makes this work ajaxomagically. */
-        if ( $ajax ) 
-            $return .= PLS_Plugin_API::get_filter_form_extra( $form_id );
-        // placester_register_filter_form
-        /**  */
+            
 
         return $return;
 

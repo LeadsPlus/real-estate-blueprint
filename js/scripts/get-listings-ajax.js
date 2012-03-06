@@ -42,15 +42,18 @@ $(document).ready(function($) {
         } 
     });
 
+    //save as a reference.
+    window.my_listings_datatable = my_listings_datatable;
+
     // prevents default on search button
-    $('#pls_search_form, #sort_by, #sort_dir').live('change', function(event) {
+    $('.pls_search_form_listings, #sort_by, #sort_dir').live('change submit', function(event) {
         event.preventDefault();
         my_listings_datatable.fnDraw();
     });
 
     // parses search form and adds parameters to aoData
     function my_listings_search_params (aoData) {
-        $.each($('#pls_search_form:visible, .sort_wrapper').serializeArray(), function(i, field) {
+        $.each($('.pls_search_form_listings, .sort_wrapper').serializeArray(), function(i, field) {
             aoData.push({"name" : field.name, "value" : field.value});
         });
         aoData.push({"name": "context", "value" : $('#context').attr('class')});

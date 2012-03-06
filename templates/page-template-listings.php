@@ -14,7 +14,7 @@
 	}
 </style>
 <section class="complex-search grid_8 alpha">
-	<?php PLS_Partials::get_listings_search_form('asdf'); ?>
+	<?php echo PLS_Partials::get_listings_search_form('context=listings&ajax=1'); ?>
 	<?php //PL_Form::generate_form(PL_Config::PL_API_LISTINGS('get','args'), array('context' => 'listing_search', 'ajax' => 1)); ?>
 </section>
 
