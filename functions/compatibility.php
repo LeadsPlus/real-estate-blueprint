@@ -357,10 +357,10 @@ class PLS_Plugin_API {
      * has a API key, FALSE otherwise.
      * @since 0.0.1
      */
-    static function get_location_list() {
+    static function get_location_list($return_only) {
 
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions( 'placester_location_list' );
+        $return = self::_try_for_exceptions( array('PL_Listing_Helper','locations_for_options'), $return_only);
 
         /** If no exceptions were detected, return the result. */
         if ( $return ) 
