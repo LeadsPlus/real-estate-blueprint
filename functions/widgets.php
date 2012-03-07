@@ -52,4 +52,6 @@ function pls_register_widgets() {
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Listings' );
 
+	/* Register each of the widgets. */
+	register_widget( 'Placester_Contact_Widget' );
 }
