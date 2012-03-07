@@ -42,22 +42,23 @@
 	</div>
 	<div>
 		<h1>About You: <a style="float: right;" id="edit_profile_button">Edit Profile</a></h1>
-		<?php if (@$cur_data['name']): ?>
-			<li><span>Name:</span><?php echo @$cur_data['name'] ?></li>	
-		<?php endif ?>
-		<?php if (@$cur_data['company']): ?>
-			<li><span>Company:</span><?php echo @$cur_data['company'] ?></li>	
-		<?php endif ?>
-		<?php if (@$cur_data['email']): ?>
-			<li><span>Email:</span><?php echo @$cur_data['email'] ?></li>	
-		<?php endif ?>
-		<?php if (@$cur_data['phone']): ?>
-			<li><span>Phone:</span><?php echo @$cur_data['phone'] ?></li>	
-		<?php endif ?>
-		<?php if (@$cur_data['address']): ?>
-			<li><span>Address:</span><?php echo @$location['address'] ?><br><?php echo @$location['locality'] . ', ' . @$location['region'] . ' ' . @$location['postal'] ?> <br> <?php echo @$location['country'] ?></li>	
-		<?php endif ?>
-		
+		<ul style="font-size: 16px">
+			<?php if (@$cur_data['name']): ?>
+				<li><span>Name: </span><?php echo @$cur_data['name'] ?></li>	
+			<?php endif ?>
+			<?php if (@$cur_data['company']): ?>
+				<li><span>Company: </span><?php echo @$cur_data['company'] ?></li>	
+			<?php endif ?>
+			<?php if (@$cur_data['email']): ?>
+				<li><span>Email: </span><?php echo @$cur_data['email'] ?></li>	
+			<?php endif ?>
+			<?php if (@$cur_data['phone']): ?>
+				<li><span>Phone: </span><?php echo @$cur_data['phone'] ?></li>	
+			<?php endif ?>
+			<?php if (@$cur_data['address']): ?>
+				<li><span>Address: </span><?php echo @$location['address'] ?><br><?php echo @$location['locality'] . ', ' . @$location['region'] . ' ' . @$location['postal'] ?> <br> <?php echo @$location['country'] ?></li>	
+			<?php endif ?>
+		</ul>
 	</div>
 	<div>
 		<h1>Ask a Question</h1>
@@ -65,4 +66,13 @@
 
 <?php else: ?>
 <h1>You need to Login or Sign Up</h1>
+<?php 
+
+	$instance = array("title" => "Have an questions?", "number" => 9);
+	$args = array();
+	$sb = new Placester_Contact_Widget();
+	$sb->number = $instance['number'];
+	$sb->widget($args,$instance);
+
+ ?>
 <?php endif ?>
