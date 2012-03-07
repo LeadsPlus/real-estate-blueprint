@@ -86,7 +86,8 @@ class PLS_Partials_Listing_Search_Form {
             'states' => 1,
             'zips' => 1,
             'min_price' => 1,
-            'max_price' => 1
+            'max_price' => 1,
+            'include_submit' => true
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -363,14 +364,18 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the filtered submit button. */
-        $form_html['submit'] = apply_filters( 
-            pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
-            pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
-            $context_var
-        );
+        if ($include_submit) {
+            $form_html['submit'] = apply_filters( 
+                pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
+                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
+                $context_var
+            );
+            /** Append the form submit. */
+            $form .= $form_html['submit'];
+        }
+        
 
-        /** Append the form submit. */
-        $form .= $form_html['submit'];
+        
 
         /** Wrap the combined form content in the form element and filter it. */
         $form_id = pls_get_merged_strings( array( 'pls-listings-search-form', $context ), '-', 'pre', false );

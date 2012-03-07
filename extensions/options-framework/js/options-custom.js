@@ -97,5 +97,23 @@ jQuery(document).ready(function($) {
 	$('.of-radio-img-label').hide();
 	$('.of-radio-img-img').show();
 	$('.of-radio-img-radio').hide();
+
+
+	$('.pls_search_form select').live('change', function(event) {
+		event.preventDefault();
+		load_listings();
+	});
+
+	function load_listings() {
+		var data = {};
+		data['action'] = 'pls_listings_for_options';
+		$.each($('.controls').serializeArray(), function(i, field) {
+			console.log(field);
+            // aoData.push({"name" : field.name, "value" : field.value});
+        });
+		$.post(ajaxurl, data, function(data) {
+		  
+		});
+	}
 		 		
 });	

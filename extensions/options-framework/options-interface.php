@@ -380,7 +380,7 @@ function optionsframework_fields() {
 		break;
 
 		// Featured Listing Selection
-		case "featured-lidsting":
+		case "featured-listing":
 
 			ob_start();
 			?>
@@ -388,8 +388,6 @@ function optionsframework_fields() {
 				<?php echo PLS_Partials::get_listings_search_form(
 					array(
 						'ajax' => 1,
-						// 'results_page_id' => get_page_by_title( 'listings' )->ID,
-						'context' => 'featuredsearch',
 						'bedrooms' => 1,
 						'bathrooms' => 0,
 						'price' => 0,
@@ -403,24 +401,22 @@ function optionsframework_fields() {
 						'states' => 0,
 						'zips' => 1,
 						'min_price' => 1,
-						'max_price' => 1));
+						'max_price' => 1,
+						'include_submit' => false));
 				?>
 
 				<!-- REPLACE ALL ID NUMBERS WITH THE ID FROM THE OPTION -->
 			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
 
-				<?php echo PLS_Partials::get_listings_list_ajax('context=featured'); ?>
-
 
 				<div class="fls-address">
 					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address">
-
 						<option value="">147 Beacon Street, Boston, MA</option>
 						<option value="">247 Beacon Street, Boston, MA</option>
 						<option value="">347 Beacon Street, Boston, MA</option>
 						<option value="">447 Beacon Street, Boston, MA</option>
 					</select>
-					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing" id="add-listing-<?php echo $value['id']; ?>">
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">
 				</div>
 
 				<div id="here"></div>
@@ -434,9 +430,6 @@ function optionsframework_fields() {
 							<!-- <li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete" id="delete-547BeaconStreetBostonMA">Remove</a></li> -->
 						</ul>
 					</div>
-
-					<div class="explain"><?php echo wp_kses( $explain_value, $allowedtags); ?></div>
-
 					<div class="clear"></div>
 
 				</div>

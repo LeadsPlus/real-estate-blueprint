@@ -334,6 +334,9 @@ class Placester_Blueprint {
         /** Load the compatibility class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'compatibility.php' );
 
+        /** Load the compatibility class. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'listings.php' );
+
         /** Load the formatting class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'formatting.php' );
 
