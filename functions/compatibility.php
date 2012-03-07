@@ -486,6 +486,18 @@ class PLS_Plugin_API {
         return false;
     }
 
+
+    static function create_person($person_details) {
+        $return = self::_try_for_exceptions(array("PL_People_Helper", "add_person"), $person_details, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+
+    
+
     /**
      * Returns object containing user details.
      *
@@ -496,7 +508,7 @@ class PLS_Plugin_API {
     static function get_user_details() {
 
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions( 'placester_get_user_details' );
+        $return = self::_try_for_exceptions( array('PL_Helper_User', 'whoami'));
 
         /** If no exceptions were detected, return the result. */
         if ( $return ) 

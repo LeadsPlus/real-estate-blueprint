@@ -23,6 +23,9 @@ function pls_register_widgets() {
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/agent.php' );
 
 	/** Load the Placester Agent widget. */
+	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/contact.php' );
+	
+	/** Load the Placester Agent widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/floating-map.php' );
 
 	/** Load the Placester Recent Posts widget. */

@@ -28,6 +28,8 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
             wp_enqueue_style( 'pls-plugin-nags', trailingslashit( PLS_CSS_URL ) . 'styles/plugin-nags.css' );
         }
 
+        wp_enqueue_style('contact-widget', trailingslashit(PLS_CSS_URL) . 'styles/contact.widget.ajax.css');
+
         if ( get_theme_support( 'pls-default-normalize' ) ) {
             wp_enqueue_style( 'normalize', trailingslashit( PLS_CSS_URL ) . 'styles/normalize.css' );
         }

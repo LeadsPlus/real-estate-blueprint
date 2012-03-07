@@ -12,4 +12,8 @@ class PLS_Membership {
 		echo json_encode(PLS_Plugin_API::update_person_details($person_details));
 		die();
 	}
+
+	public function create_person ($args) {
+		return PLS_Plugin_API::create_person($args);
+	}
 }
