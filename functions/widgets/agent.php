@@ -55,10 +55,11 @@ class PLS_Widget_Agent extends WP_Widget {
 		extract( $args, EXTR_SKIP );
 
         /** Get the agent information from the plugin. */
-        $agent_obj = PLS_Plugin_API::get_user_details();
+        $agent = PLS_Plugin_API::get_user_details();
         
+        // pls_dump($agent);
         /** If the plugin is active, and has an API key set... */
-        if ( $agent_obj ) {
+        if ( $agent ) {
 
             /* Output the theme's $before_widget wrapper. */
             echo $before_widget;
@@ -73,24 +74,24 @@ class PLS_Widget_Agent extends WP_Widget {
             unset( $agent_html['title'], $agent_html['width'], $agent_html['height'] );
 
             /** Add the photo. */
-            if ( ! empty( $instance['photo'] ) && ! empty( $agent_obj->logo_url ) )
-                $agent_html['photo'] = pls_h_img( $agent_obj->logo_url, trim( $agent_obj->first_name . ' ' . $agent_obj->last_name ), array( 'class' => 'photo' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
+            if ( ! empty( $instance['photo'] ) && ! empty( $agent['logo'] ) )
+                $agent_html['photo'] = pls_h_img( $agent['logo'], trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'photo' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
 
             /** Add the name. */
-            if ( ! empty( $instance['name'] ) && ( ! empty( $agent_obj->first_name ) || ! empty( $agent_obj->last_name ) ) )
-                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn' ), trim( $agent_obj->first_name . ' ' . $agent_obj->last_name ) );
+            if ( ! empty( $instance['name'] ) && ( ! empty( $agent['user']['first_name'] ) || ! empty( $agent['user']['last_name'] ) ) )
+                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn' ), trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ) );
 
             /** Add the email address. */
-            if ( ! empty( $instance['email'] ) && ! empty( $agent_obj->email ) )
-                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email' ), pls_h_a( "mailto:{$agent_obj->email}", $agent_obj->email ) );
+            if ( ! empty( $instance['email'] ) && ! empty( $agent['user']['email'] ) )
+                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email' ), pls_h_a( "mailto:{$agent['user']['email']}", $agent['user']['email'] ) );
 
             /** Add the phone number. */
-            if ( ! empty( $instance['phone'] ) && ! empty( $agent_obj->phone ) )
-                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone' ), PLS_Format::phone($agent_obj->phone) );
+            if ( ! empty( $instance['phone'] ) && ! empty( $agent['user']['phone'] ) )
+                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone' ), PLS_Format::phone($agent['user']['phone']) );
 
             /** Add the description. */
-            if ( ! empty( $instance['description'] ) && ! empty( $agent_obj->description ) ) {
-                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent_obj->description );
+            if ( ! empty( $instance['description']) && !empty($agent['slogan'] ) ) {
+                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent['slogan'] );
             } else {
                 $agent_html['description'] = '';
             }
@@ -105,10 +106,10 @@ class PLS_Widget_Agent extends WP_Widget {
                 pls_get_if_not_empty( $agent_html['phone'] ); 
 
             /** Wrap the agent information in a section element. */
-            $widget_body = apply_filters( 'pls_widget_agent_inner', $widget_body, $agent_html, $agent_obj, $instance, $widget_id );
+            $widget_body = apply_filters( 'pls_widget_agent_inner', $widget_body, $agent_html, $agent, $instance, $widget_id );
 
             /** Apply a filter on the whole widget */
-            echo apply_filters( 'pls_widget_agent', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $agent_html, $agent_obj,  $instance, $widget_id );
+            echo apply_filters( 'pls_widget_agent', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $agent_html, $agent,  $instance, $widget_id );
 
             /* Close the theme's widget wrapper. */
             echo '<div class="clearfix"></div>';
