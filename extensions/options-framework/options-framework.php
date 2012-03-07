@@ -182,6 +182,7 @@ function optionsframework_load_scripts() {
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('color-picker', OPTIONS_FRAMEWORK_DIRECTORY.'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('options-custom', OPTIONS_FRAMEWORK_DIRECTORY.'js/options-custom.js', array('jquery'));
+	wp_enqueue_script( 'featured-listings', trailingslashit( PLS_JS_URL ) . 'scripts/featured-listing.js' , array( 'jquery') );
 }
 
 function of_admin_head() {
