@@ -25,11 +25,7 @@ $(document).ready(function($) {
                           var bounds = new google.maps.LatLngBounds();
                           for (var listing in ajax_response['aaData']) {
                               var listing_json = ajax_response['aaData'][listing][1];
-                              marker = new google.maps.Marker({
-                                  position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
-                                  map: pls_google_map
-                              });
-                              marker.setMap(pls_google_map);
+                              var marker = create_marker(listing_json, pls_google_map);
                               bounds.extend(marker.getPosition());
                               markers.push(marker);
                           }
@@ -43,6 +39,55 @@ $(document).ready(function($) {
             });
         } 
     });
+
+    function create_marker (listing_json, map) {
+
+      //create marker
+      var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
+          map: map
+      });
+
+      console.log(listing_json);
+
+      if (listing_json['images'][0]['url']) {
+        var image_url = listing_json['images'][0]['url'];
+      };
+
+      //create click content
+      var content = '<div id="content">'+
+                        '<div id="siteNotice">'+'</div>'+
+                          '<h2 id="firstHeading" class="firstHeading">'+ listing_json['location']['full_address'] +'</h2>'+
+                          '<div id="bodyContent">'+
+                            '<img width="80px" height="80px" style="float: left" src="'+image_url+'" />' +
+                            '<ul style="float: right; width: 130px">' +
+                              '<li> Beds: '+ listing_json['cur_data']['beds'] +'</li>' +
+                              '<li> Baths: '+ listing_json['cur_data']['baths'] +'</li>' +
+                              '<li> Available: '+ listing_json['cur_data']['avail_on'] +'</li>' +
+                              '<li> Price: '+ listing_json['cur_data']['price'] +'</li>' +
+                            '</ul>' +
+                          '</div>' +
+                          '<div style="margin: 15px 70px; float: left; font-size: 16px; font-weight: bold;"><a href="'+listing_json['cur_data']['url']+'">View Details</a></div>' +
+                          '<div class="clear"></div>' +
+                        '</div>'+
+                      '</div>';
+
+
+      //create info window
+      infowindow = new google.maps.InfoWindow({
+          content: content
+
+      });
+
+      //set on click
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+      //
+      marker.setMap(map);
+
+      return marker;
+    }
 
     //save as a reference.
     window.my_listings_datatable = my_listings_datatable;
