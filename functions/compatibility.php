@@ -454,6 +454,38 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function get_listings_details_list( $args ) {
+        $return = self::_try_for_exceptions(array("PL_Listing_Helper", "many_details"), $args, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+    static function get_listings_fav_ids() {
+        $return = self::_try_for_exceptions(array("PL_Membership", "get_favorite_ids"), '', true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+    static function get_person_details() {
+        $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+    static function update_person_details($person_details) {
+        $return = self::_try_for_exceptions(array("PL_People_Helper", "update_person_details"), $person_details, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
     /**
      * Returns object containing user details.
      *

@@ -253,6 +253,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-slideshow', array( 'script', 'style' ) );
         add_theme_support( 'pls-maps-util');
         add_theme_support( 'pls-debug');
+        add_theme_support( 'pls-membership');
 
         //style options, need to be set in style-util.php
         add_theme_support( 'pls-typography-options');
@@ -389,6 +390,9 @@ class Placester_Blueprint {
 
         /** Load the Maps Util extension if supported. */
         require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps-util.php' );
+
+        /** Load the Maps Util extension if supported. */
+        require_if_theme_supports( 'pls-membership', trailingslashit ( PLS_EXT_DIR ) . 'membership.php' );
 
                 /** Load fallbacks last. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'fallback.php' );

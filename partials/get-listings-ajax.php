@@ -37,6 +37,14 @@ class PLS_Partials_Get_Listings_Ajax {
         // Hook the callback for ajax requests
         add_action('wp_ajax_pls_listings_ajax', array(__CLASS__, 'get' ) );
         add_action('wp_ajax_nopriv_pls_listings_ajax', array(__CLASS__, 'get' ) );
+
+        add_action( 'wp_ajax_pls_listings_fav_ajax', array(__CLASS__,'get_favorites'));
+        add_action( 'wp_ajax_nopriv_pls_listings_fav_ajax', array(__CLASS__,'get_favorites'));
+    }
+
+    function get_favorites () {
+      $favorite_ids = PLS_Plugin_API::get_listings_fav_ids();
+      self::get(array('property_ids' => $favorite_ids));
     }
 
     function load($args = array()) {    
@@ -51,7 +59,9 @@ class PLS_Partials_Get_Listings_Ajax {
             'context' => '',
             'context_var' => NULL,
             'append_to_map' => true,
-            'search_query' => $_POST
+            'search_query' => $_POST,
+            'table_id' => 'placester_listings_list',
+            'show_sort' => true
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -65,31 +75,33 @@ class PLS_Partials_Get_Listings_Ajax {
         ob_start();
         ?>
             <!-- Sort Dropdown -->
-
-            <form class="sort_wrapper">
-                <div class="sort_item">
-                  <label for="sort_by">Sort By</label>
-                  <select name="sort_by" id="sort_by">
-                      <?php foreach ($sort_by_options as $key => $value): ?>
-                          <option value="<?php echo $key ?>"><?php echo $value ?></option>
-                      <?php endforeach ?>
-                  </select>
-                </div>
-                <div class="sort_item">
-                  <label for="sort_by">Sort Direction</label>
-                  <select name="sort_type" id="sort_dir">
-                      <option value="asc">Ascending</option>
-                      <option value="asc">Descending</option>
-                  </select>
-                </div>
-            </form>
+            <?php if ($show_sort): ?>
+              <form class="sort_wrapper">
+                  <div class="sort_item">
+                    <label for="sort_by">Sort By</label>
+                    <select name="sort_by" id="sort_by">
+                        <?php foreach ($sort_by_options as $key => $value): ?>
+                            <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                        <?php endforeach ?>
+                    </select>
+                  </div>
+                  <div class="sort_item">
+                    <label for="sort_by">Sort Direction</label>
+                    <select name="sort_type" id="sort_dir">
+                        <option value="asc">Ascending</option>
+                        <option value="asc">Descending</option>
+                    </select>
+                  </div>
+              </form>  
+            <?php endif ?>
+            
 
             <!-- Datatable -->
             <div class="clear"></div>
 
             <div id="container" style="width: 99%">
               <div id="context" class="<?php echo $context ?>"></div>
-              <table id="placester_listings_list" class="widefat post fixed placester_properties" cellspacing="0">
+              <table id="<?php echo $table_id ?>" class="widefat post fixed placester_properties" cellspacing="0">
                 <thead>
                   <tr>
                     <th><span></span></th>
@@ -131,14 +143,19 @@ class PLS_Partials_Get_Listings_Ajax {
             'context' => $_POST['context'],
             'context_var' => NULL,
             'append_to_map' => true,
-            'search_query' => $_POST
+            'search_query' => $_POST,
+            'property_ids' => array()
         );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
         /** Get the listings list markup and javascript. */
-        $api_response = PLS_Plugin_API::get_listings_list($search_query);
+        if (!empty($property_ids)) {
+          $api_response = PLS_Plugin_API::get_listings_details_list($property_ids);
+        } else {
+          $api_response = PLS_Plugin_API::get_listings_list($search_query);
+        }
         
         $response = array();        
         
