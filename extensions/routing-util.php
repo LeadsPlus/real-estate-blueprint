@@ -190,7 +190,7 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
         $sidebars = array();
-        foreach (self::$request as $item) {
+        foreach ( (array) self::$request as $item) {
             $sidebars[] = 'default-sidebar-' . $item;
         }
         $sidebars[] = 'default-sidebar.php';
