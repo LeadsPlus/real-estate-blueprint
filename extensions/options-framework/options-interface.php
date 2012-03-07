@@ -380,37 +380,105 @@ function optionsframework_fields() {
 		break;
 
 		// Featured Listing Selection
-		case "featured-lidsting":
+		case "featured-listing":
 
 			ob_start();
 			?>
 
-				<?php echo PLS_Partials::get_listings_search_form(
-					array(
-						'ajax' => 1,
-						// 'results_page_id' => get_page_by_title( 'listings' )->ID,
-						'context' => 'featuredsearch',
-						'bedrooms' => 1,
-						'bathrooms' => 0,
-						'price' => 0,
-						'half_baths' => 0,
-						'property_type' => 0,
-						'listing_types'=> 0,
-						'zoning_types' => 0,
-						'purchase_types' => 0,
-						'available_on' => 0,
-						'cities' => 1,
-						'states' => 0,
-						'zips' => 1,
-						'min_price' => 1,
-						'max_price' => 1));
-				?>
+				<div class="featured-listing-form-city">
+					<label>City</label>
+					<select name="metadata[locality]">
+						<?php $cities = PLS_Plugin_API::get_location_list('locality');
+							foreach ($cities as $key => $v) {
+								echo '<option value="' . $key . '">' . $v . '</option>';
+							} 
+						?>
+					</select>
+				</div>
 
-				<!-- REPLACE ALL ID NUMBERS WITH THE ID FROM THE OPTION -->
+				<div class="featured-listing-form-zip">
+					<label>Zip Code</label>
+					<select name="metadata[postal]">
+						<?php $zip = PLS_Plugin_API::get_location_list('postal');
+							foreach ($zip as $key => $v) {
+								echo '<option value="' . $key . '">' . $v . '</option>';
+							} 
+						?>
+					</select>
+				</div>
+
+				<div class="featured-listing-form-beds">
+					<label>Beds</label>
+					<select name="metadata[beds]">
+						<?php $beds = range(0, 16);
+							foreach ($beds as $key => $v) {
+								echo '<option value="' . $key . '">' . $v . '</option>';
+							} 
+						?>
+					</select>
+				</div>
+
+				<div class="featured-listing-form-min-price">
+					<label>Min Price</label>
+					<select name="metadata[min_price]">
+						<?php $min_price = array(
+									'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+									'200' => '200',
+									'500' => '500',
+									'1000' => '1,000',
+									'2000' => '2,000',
+									'3000' => '3,000',
+									'4000' => '4,000',
+									'5000' => '5,000',
+									'6000' => '6,000',
+									'7000' => '7,000',
+									'8000' => '8,000',
+									'9000' => '9,000',
+									'10000' => '10,000',
+									'11000' => '11,000',
+									'12000' => '12,000',
+									'13000' => '13,000',
+									'14000' => '14,000',
+									'15000' => '15,000',
+									);
+							foreach ($min_price as $key => $v) {
+								echo '<option value="' . $key . '">' . $v . '</option>';
+							} 
+						?>
+					</select>
+				</div>
+
+				<div class="featured-listing-form-max-price">
+					<label>Max Price</label>
+					<select name="metadata[max_price]">
+						<?php $max_price = array(
+									'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+									'200' => '200',
+									'500' => '500',
+									'1000' => '1,000',
+									'2000' => '2,000',
+									'3000' => '3,000',
+									'4000' => '4,000',
+									'5000' => '5,000',
+									'6000' => '6,000',
+									'7000' => '7,000',
+									'8000' => '8,000',
+									'9000' => '9,000',
+									'10000' => '10,000',
+									'11000' => '11,000',
+									'12000' => '12,000',
+									'13000' => '13,000',
+									'14000' => '14,000',
+									'15000' => '15,000',
+									);
+							foreach ($max_price as $key => $v) {
+								echo '<option value="' . $key . '">' . $v . '</option>';
+							} 
+						?>
+					</select>
+				</div>
+
 			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
-
-				<?php echo PLS_Partials::get_listings_list_ajax('context=featured'); ?>
-
 
 				<div class="fls-address">
 					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address">
@@ -423,8 +491,6 @@ function optionsframework_fields() {
 					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing" id="add-listing-<?php echo $value['id']; ?>">
 				</div>
 
-				<div id="here"></div>
-
 				<h4 class="heading">Featured Listings</h4>
 
 				<div class="fls-option">
@@ -434,6 +500,9 @@ function optionsframework_fields() {
 							<!-- <li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete" id="delete-547BeaconStreetBostonMA">Remove</a></li> -->
 						</ul>
 					</div>
+
+					<!-- This is to be display:hidden, but for saving the options. -->
+					<select class="hidden-featured-listings"></select>
 
 					<div class="explain"><?php echo wp_kses( $explain_value, $allowedtags); ?></div>
 
