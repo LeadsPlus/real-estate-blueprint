@@ -307,3 +307,9 @@ hr {
     width: 250px !important;
     float: left;
     margin-right: 10px; }
+
+.multicheck-list {
+  width: 430px; }
+  .multicheck-list li {
+    float: left;
+    width: 210px; }

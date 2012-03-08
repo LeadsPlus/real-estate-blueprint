@@ -156,6 +156,7 @@ function optionsframework_fields() {
 		
 		// Multicheck
 		case "multicheck":
+			$output .= '<ul class="multicheck-list">';
 			foreach ($value['options'] as $key => $option) {
 				$checked = '';
 				$label = $option;
@@ -167,9 +168,12 @@ function optionsframework_fields() {
 			    if ( isset($val[$option]) ) {
 					$checked = checked($val[$option], 1, false);
 				}
-
+				$output .= '<li>';
 				$output .= '<input id="' . esc_attr( $id ) . '" class="checkbox of-input" type="checkbox" name="' . esc_attr( $name ) . '" ' . $checked . ' /><label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>';
+				$output .= '</li>';
 			}
+			$output .= '</ul>';
+
 		break;
 		
 		// Color picker
