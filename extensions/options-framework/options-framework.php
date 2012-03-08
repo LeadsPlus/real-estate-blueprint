@@ -291,7 +291,9 @@ function optionsframework_validate( $input ) {
 
 			// For a value to be submitted to database it must pass through a sanitization filter
 			if ( has_filter( 'of_sanitize_' . $option['type'] ) ) {
-				$clean[$id] = apply_filters( 'of_sanitize_' . $option['type'], $input[$id], $option );
+				if (isset($input[$id])) {
+					$clean[$id] = apply_filters( 'of_sanitize_' . $option['type'], $input[$id], $option );
+				}
 			}
 		}
 
