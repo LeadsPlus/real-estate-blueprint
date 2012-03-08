@@ -98,22 +98,50 @@ jQuery(document).ready(function($) {
 	$('.of-radio-img-img').show();
 	$('.of-radio-img-radio').hide();
 
-
-	$('.pls_search_form select').live('change', function(event) {
+	$.each($('.featured_listings_options'), function(index, val) {
+		load_listings(this);  
+	});
+	
+	$('#featured_listings_options').live('change', function(event) {
 		event.preventDefault();
-		load_listings();
+		var that = this;
+		load_listings(that);
 	});
 
-	function load_listings() {
+	$('.fls-add-listing').live('click', function (event) {
+		event.preventDefault();
+		var key = $(this).parent().children('select').val();
+		var text = $(this).parent().find('option:selected').text();
+		$(this).parent().find('option:selected').remove();
+		var option_name = $(this).parent().find('#option-name').val();
+		var listing_box = $(this).parent().parent().find('.fls-option');
+		var html = "<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'>" + text + "</div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='" +option_name+ "["+key+"]=' value='"+text+"' /></li>";
+		listing_box.append(html);
+	});
+
+	$('#pls-option-remove-listing').live('click', function(event) {
+		event.preventDefault();
+		var key = $(this).parent().children('input').val();
+		var text = $(this).parent().children('#pls-featured-text').text();
+		var select = $(this).parent().parent().parent().find('select').prepend('<option value="'+key+'">'+text+'</option>');
+		$(this).parent().remove();
+
+	});
+
+	function load_listings(that) {
 		var data = {};
+		var parent = $(that).parent();
+		parent.find('#search_message').show();
 		data['action'] = 'pls_listings_for_options';
-		$.each($('.controls').serializeArray(), function(i, field) {
-			console.log(field);
-            // aoData.push({"name" : field.name, "value" : field.value});
-        });
-		$.post(ajaxurl, data, function(data) {
-		  
+		$.each(parent.find('#featured_listings_options select'), function(i, field) {
+		 	data[field.name] = field.value;
 		});
+		$.post(ajaxurl, data, function(data) {
+			if (data) {
+				parent.find('#fls-select-address').html(data);	
+				parent.find('#search_message').hide();
+			};
+		}, 'json');
 	}
 		 		
 });	

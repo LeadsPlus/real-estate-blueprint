@@ -5,7 +5,6 @@
  */
 
 function optionsframework_fields() {
-
 	global $allowedtags;
 	$optionsframework_settings = get_option('optionsframework');
 	
@@ -22,6 +21,8 @@ function optionsframework_fields() {
 	};
 
 	$settings = get_option($option_name);
+	// pls_dump($option_name);
+	// pls_dump($settings);
     $options = optionsframework_options();
         
     $counter = 0;
@@ -380,130 +381,126 @@ function optionsframework_fields() {
 		break;
 
 		// Featured Listing Selection
-		case "featured-listing":
+		case "featured_listing":
 
 			ob_start();
 			?>
+				<div class="featured_listings_options">
+					<div class="featured-listing-form-city">
+						<label>City</label>
+						<select name="location[locality]">
+							<?php $cities = PLS_Plugin_API::get_location_list('locality');
+								foreach ($cities as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
 
-				<div class="featured-listing-form-city">
-					<label>City</label>
-					<select name="metadata[locality]">
-						<?php $cities = PLS_Plugin_API::get_location_list('locality');
-							foreach ($cities as $key => $v) {
-								echo '<option value="' . $key . '">' . $v . '</option>';
-							} 
-						?>
-					</select>
+					<div class="featured-listing-form-zip">
+						<label>Zip Code</label>
+						<select name="location[postal]">
+							<?php $zip = PLS_Plugin_API::get_location_list('postal');
+								foreach ($zip as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-beds">
+						<label>Beds</label>
+						<select name="metadata[beds]">
+							<?php $beds = range(0, 16);
+								echo '<option value="false">Any</option>';
+								foreach ($beds as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-min-price">
+						<label>Min Price</label>
+						<select name="metadata[min_price]">
+							<?php $min_price = array(
+										'false' => 'Any',
+										'200' => '200',
+										'500' => '500',
+										'1000' => '1,000',
+										'2000' => '2,000',
+										'3000' => '3,000',
+										'4000' => '4,000',
+										'5000' => '5,000',
+										'6000' => '6,000',
+										'7000' => '7,000',
+										'8000' => '8,000',
+										'9000' => '9,000',
+										'10000' => '10,000',
+										'11000' => '11,000',
+										'12000' => '12,000',
+										'13000' => '13,000',
+										'14000' => '14,000',
+										'15000' => '15,000',
+										);
+								foreach ($min_price as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-max-price">
+						<label>Max Price</label>
+						<select name="metadata[max_price]">
+							<?php $max_price = array(
+										'false' => 'Any',
+										'200' => '200',
+										'500' => '500',
+										'1000' => '1,000',
+										'2000' => '2,000',
+										'3000' => '3,000',
+										'4000' => '4,000',
+										'5000' => '5,000',
+										'6000' => '6,000',
+										'7000' => '7,000',
+										'8000' => '8,000',
+										'9000' => '9,000',
+										'10000' => '10,000',
+										'11000' => '11,000',
+										'12000' => '12,000',
+										'13000' => '13,000',
+										'14000' => '14,000',
+										'15000' => '15,000',
+										);
+								foreach ($max_price as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
 				</div>
-
-				<div class="featured-listing-form-zip">
-					<label>Zip Code</label>
-					<select name="metadata[postal]">
-						<?php $zip = PLS_Plugin_API::get_location_list('postal');
-							foreach ($zip as $key => $v) {
-								echo '<option value="' . $key . '">' . $v . '</option>';
-							} 
-						?>
-					</select>
-				</div>
-
-				<div class="featured-listing-form-beds">
-					<label>Beds</label>
-					<select name="metadata[beds]">
-						<?php $beds = range(0, 16);
-							foreach ($beds as $key => $v) {
-								echo '<option value="' . $key . '">' . $v . '</option>';
-							} 
-						?>
-					</select>
-				</div>
-
-				<div class="featured-listing-form-min-price">
-					<label>Min Price</label>
-					<select name="metadata[min_price]">
-						<?php $min_price = array(
-									'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
-									'200' => '200',
-									'500' => '500',
-									'1000' => '1,000',
-									'2000' => '2,000',
-									'3000' => '3,000',
-									'4000' => '4,000',
-									'5000' => '5,000',
-									'6000' => '6,000',
-									'7000' => '7,000',
-									'8000' => '8,000',
-									'9000' => '9,000',
-									'10000' => '10,000',
-									'11000' => '11,000',
-									'12000' => '12,000',
-									'13000' => '13,000',
-									'14000' => '14,000',
-									'15000' => '15,000',
-									);
-							foreach ($min_price as $key => $v) {
-								echo '<option value="' . $key . '">' . $v . '</option>';
-							} 
-						?>
-					</select>
-				</div>
-
-				<div class="featured-listing-form-max-price">
-					<label>Max Price</label>
-					<select name="metadata[max_price]">
-						<?php $max_price = array(
-									'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
-									'200' => '200',
-									'500' => '500',
-									'1000' => '1,000',
-									'2000' => '2,000',
-									'3000' => '3,000',
-									'4000' => '4,000',
-									'5000' => '5,000',
-									'6000' => '6,000',
-									'7000' => '7,000',
-									'8000' => '8,000',
-									'9000' => '9,000',
-									'10000' => '10,000',
-									'11000' => '11,000',
-									'12000' => '12,000',
-									'13000' => '13,000',
-									'14000' => '14,000',
-									'15000' => '15,000',
-									);
-							foreach ($max_price as $key => $v) {
-								echo '<option value="' . $key . '">' . $v . '</option>';
-							} 
-						?>
-					</select>
-				</div>
-
+				
 			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
-
-
 				<div class="fls-address">
-					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address">
-						<option value="">147 Beacon Street, Boston, MA</option>
-						<option value="">247 Beacon Street, Boston, MA</option>
-						<option value="">347 Beacon Street, Boston, MA</option>
-						<option value="">447 Beacon Street, Boston, MA</option>
-					</select>
-					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">
+					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address"></select><div id="search_message" style="display:none; margin-top: 23px; font-weight: bold;">Searching...</div>
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
+					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
 				</div>
 
 				<h4 class="heading">Featured Listings</h4>
-
 				<div class="fls-option">
 					<div class="controls">
 						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
-							<!-- Dynamically load already featured listings here with following HTML -->
-							<!-- <li>547 Beacon Street, Boston, MA &nbsp; &nbsp;<a href="#" class="delete" id="delete-547BeaconStreetBostonMA">Remove</a></li> -->
+							<?php if (isset($settings[$value['id']])): ?>
+								<?php foreach ($settings[$value['id']] as $key => $text): ?>
+									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
+								<?php endforeach ?>
+							<?php endif ?>
 						</ul>
 					</div>
 					<div class="clear"></div>
-
 				</div>
-
 			</div>
 
 

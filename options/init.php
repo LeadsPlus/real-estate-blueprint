@@ -30,7 +30,13 @@ PLS_Style::add(array(
 				"name" => "Slideshow Listings",
 				"desc" => "Use the thing on the left to add properties to be displayed",
 				"id" => "slideshow-featured-listings",
-				"type" => "featured-listing"));
+				"type" => "featured_listing"));
+
+		PLS_Style::add(array( 
+				"name" => "Slideshow Listings 2",
+				"desc" => "Use the thing on the left to add properties to be displayed",
+				"id" => "slideshow-featured-listings-2",
+				"type" => "featured_listing"));
 
 		PLS_Style::add(array( 
 				"name" => "Google Analytics Tracking Code",
