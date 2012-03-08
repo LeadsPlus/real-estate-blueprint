@@ -298,7 +298,7 @@ class PLS_Widget_Listings extends WP_Widget {
             'before_widget' => '<section id="pls-listings-3" class="widget pls-listings widget-pls-listings">',
             'after_widget' => '</section>',
             'widget_id' => '',
-            'featured_option_id' => false
+            'featured_option_id' => 'featured-listings-sidebar'
         );
 
         /** Merge the arguments with the defaults. */
