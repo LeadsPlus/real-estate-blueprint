@@ -64,17 +64,20 @@ PLS_Style::add(array(
 		"name" => "Min Search Price",
 		"desc" => "",
 		"id" => "pls-option-price-min",
+		"std" => "0",
 		"type" => "text"));
 
 	PLS_Style::add(array(
 		"name" => "Max Search Price",
 		"desc" => "",
 		"id" => "pls-option-price-max",
+		"std" => "1000000",
 		"type" => "text"));
 
 	PLS_Style::add(array(
 		"name" => "Price Increment",
 		"desc" => "",
+		"std" => "50000",
 		"id" => "pls-option-price-inc",
 		"type" => "text"));
 	
@@ -88,12 +91,14 @@ PLS_Style::add(array(
 		"name" => "Bedroom Options Start",
 		"desc" => "",
 		"id" => "pls-option-bed-min",
+		"std" => "0",
 		"type" => "text"));
 
 	PLS_Style::add(array(
 		"name" => "Bedroom Options End",
 		"desc" => "",
 		"id" => "pls-option-bed-max",
+		"std" => "15",
 		"type" => "text"));
 
 	//baths
@@ -106,12 +111,14 @@ PLS_Style::add(array(
 		"name" => "Bathroom Options Start",
 		"desc" => "",
 		"id" => "pls-option-bath-min",
+		"std" => "0",
 		"type" => "text"));
 
 	PLS_Style::add(array(
 		"name" => "Bathroom Options End",
 		"desc" => "",
 		"id" => "pls-option-bath-max",
+		"std" => "10",
 		"type" => "text"));
 
 	//half-baths
@@ -124,10 +131,12 @@ PLS_Style::add(array(
 		"name" => "Half Bath Options Start",
 		"desc" => "",
 		"id" => "pls-option-half-bath-min",
+		"std" => "0",
 		"type" => "text"));
 
 	PLS_Style::add(array(
 		"name" => "Half Bath Options End",
 		"desc" => "",
 		"id" => "pls-option-half-bath-max",
+		"std" => "5",
 		"type" => "text"));

@@ -33,12 +33,6 @@ PLS_Style::add(array(
 				"type" => "featured_listing"));
 
 		PLS_Style::add(array( 
-				"name" => "Slideshow Listings 2",
-				"desc" => "Use the thing on the left to add properties to be displayed",
-				"id" => "slideshow-featured-listings-2",
-				"type" => "featured_listing"));
-
-		PLS_Style::add(array( 
 				"name" => "Google Analytics Tracking Code",
 				"desc" => "Add your google analytics tracking code here. It will be loaded just before the </body> tag in your site. Copy and paste your Google Analytics code, including the script tags.",
 				"id" => "pls-google-analytics",
