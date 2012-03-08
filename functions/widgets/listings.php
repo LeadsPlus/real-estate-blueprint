@@ -51,7 +51,6 @@ class PLS_Widget_Listings extends WP_Widget {
 	 * @since 0.0.1
 	 */
 	function widget( $args, $instance ) {
-
         list($args, $instance) = self::process_defaults($args, $instance);
 
         /** Extract the arguments into separate variables. */
@@ -65,7 +64,7 @@ class PLS_Widget_Listings extends WP_Widget {
         if ( !empty( $instance['title'] ) && ! pls_has_plugin_error() ) {
             $widget_title = $before_title . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . $after_title;
         }
-            
+
         /** Get the list of listings using the partial. */
         $listings_args = array(
             'limit' => $instance['number'],
@@ -74,7 +73,8 @@ class PLS_Widget_Listings extends WP_Widget {
             'placeholder_img' => $instance['placeholder'],
             'crop_description' => 1,
             'context' => 'widget',
-            'context_var' => $widget_id 
+            'context_var' => $widget_id,
+            'featured_option_id' => $featured_option_id
         );
 
         /** If field is empty, remove it so that the function's defaults can be used. */
@@ -297,7 +297,8 @@ class PLS_Widget_Listings extends WP_Widget {
             'after_title' => '</h3>',
             'before_widget' => '<section id="pls-listings-3" class="widget pls-listings widget-pls-listings">',
             'after_widget' => '</section>',
-            'widget_id' => ''
+            'widget_id' => '',
+            'featured_option_id' => false
         );
 
         /** Merge the arguments with the defaults. */

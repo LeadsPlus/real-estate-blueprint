@@ -24,7 +24,7 @@
 
 	// Recent Lisitngs Widget
 	$instance = array("title" => "Recent Listings", "number" => 9);
-	$args = array();
+	$args = array('featured_option_id' => 'featured-sidebar');
 	$sb = new PLS_Widget_Listings();
 	$sb->number = $instance['number'];
 	$sb->widget($args,$instance);

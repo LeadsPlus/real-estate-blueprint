@@ -23,4 +23,16 @@ class PLS_Listing_Helper {
 		echo json_encode($formatted_listings);
 		die();
 	}
+
+	function get_featured ($featured_option_id) {
+		$option_ids = pls_get_option($featured_option_id);
+		if (!empty( $option_ids ) ) {
+			$property_ids = array_keys($option_ids);
+			$api_response = PLS_Plugin_API::get_listings_details_list($property_ids);
+			return $api_response;	
+		} else {
+			return array('listings' => array());
+		}
+		
+	}
 }
