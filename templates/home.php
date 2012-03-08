@@ -26,12 +26,12 @@
 						'width' => 620, 
 						'height' => 300, 
 						'context' => 'home',
-						'featured_option_id' => 'slideshow-featured-listings-2', 
+						'featured_option_id' => 'slideshow-featured-listings', 
 						'listings' => array('limit' => 5, 'sort_by' => 'price')
 					)
 			); 
 		?>
 </div>
 <div id="listing" class="grid_8 alpha">
-    <?php echo pls_get_listings( "limit=5&featured_option_id=slideshow-featured-listings&context=home" ) ?>
+    <?php echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
 </div>
