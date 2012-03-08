@@ -22,7 +22,7 @@ class PLS_Partials_Property_Details {
 
 					<h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
 
-					<span class="listing_type"> <?php echo $listing_data['zoning_types'][0] . ' ' . $listing_data['purchase_types'][0] ?></span>
+					<span class="listing_type"> <?php echo @$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0] ?></span>
 
 					<div class="clearfix"></div>
 
@@ -71,12 +71,37 @@ class PLS_Partials_Property_Details {
                     </ul>
                 </div>
 
-                <div class="amenities grid_8 alpha">
-                    <h3>Amenities</h3>
-                        <?php foreach ($listing_data['cur_data'] as $amenity => $value): ?>
-                            <li><span><?php echo $amenity; ?></span> <?php echo $value ?></li>
-                        <?php endforeach ?>
-                </div>
+                <?php $amenities = PLS_Format::amenities_but(&$listing_data, array('half_baths', 'beds', 'baths', 'url', 'sqft', 'avail_on', 'price')); ?>
+               
+                <?php if (isset($amenities['list'])): ?>
+	                <div class="amenities grid_8 alpha">
+	                    <h3>Listing Amenities</h3>
+	                	<?php PLS_Format::translate_amenities(&$amenities['list']); ?>
+	                    <?php foreach ($amenities['list'] as $amenity => $value): ?>
+	                        <li><span><?php echo $amenity; ?></span> <?php echo $value ?></li>
+	                    <?php endforeach ?>
+	                </div>	
+                <?php endif ?>
+                
+                <?php if (isset($amenities['ngb'])): ?>
+	                <div class="amenities grid_8 alpha">
+	                    <h3>Local Amenities</h3>
+	                	<?php PLS_Format::translate_amenities(&$amenities['ngb']); ?>
+	                    <?php foreach ($amenities['ngb'] as $amenity => $value): ?>
+	                        <li><span><?php echo $amenity; ?></span> <?php echo $value ?></li>
+	                    <?php endforeach ?>
+	                </div>	
+                <?php endif ?>
+                
+				<?php if (isset($amenities['uncur'])): ?>
+	                <div class="amenities grid_8 alpha">
+	                    <h3>Local Amenities</h3>
+	                	<?php PLS_Format::translate_amenities(&$amenities['uncur']); ?>
+	                    <?php foreach ($amenities['uncur'] as $amenity => $value): ?>
+	                        <li><span><?php echo $amenity; ?></span> <?php echo $value ?></li>
+	                    <?php endforeach ?>
+	                </div>	
+                <?php endif ?>
 
 	            <div class="map-wrapper grid_8 alpha">
 	                <h3>Property Map</h3>

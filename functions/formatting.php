@@ -249,9 +249,9 @@ class PLS_Format {
 		foreach ($listing_data['cur_data'] as $amenity => $value) {
 			if (in_array($amenity, $amenities_to_remove)) { continue; }
 			if (is_int(strrpos((string)$amenity, 'ngb'))) {
-				$amenities['ngb'][] = $amenity . ' ' . $value;
+				$amenities['ngb'][$amenity] = ' ' . $value;
 			} else {
-				$amenities['list'][] = $amenity . ' ' .$value;
+				$amenities['list'][$amenity] =  ' ' .$value;
 			}
 		}
 		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
@@ -260,5 +260,50 @@ class PLS_Format {
 		}		
 		return $amenities;
 	}
+
+	function translate_amenities ($amenities) {
+		global $traslation;
+		if (!isset($translation) && empty($translation)) {
+			$translation = array(
+				'half_baths' => 'Half Baths',
+				'price' => 'Price',
+				'sqft' => 'Square Feet',
+				'baths' => 'Baths',
+				'avail_on' => 'Available On',
+				'beds' => 'Beds',
+				'url' => 'Link',
+				'desc' => 'Description',
+				'lt_sz' => 'Lot Size',
+				'ngb_shop' => 'Local Shopping',
+				'ngb_hgwy' => 'Local Highway Access',
+				'grnt_tops' => 'Granite Counter Tops',
+				'ngb_med' => 'Local Medical Facilities',
+				'ngb_trails' => 'Local Walk/Jog Trails',
+				'cent_ht' => 'Central Heat',
+				'pk_spce' => 'Parking Spaces Included',
+				'air_cond' => 'Air Conditioning',
+				'price_unit' => 'Unit Price',
+				'lt_sz_unit' => 'Unit Lot Size',
+				'lse_trms' => 'Lease Terms',
+				'ngb_trans' => 'Local Public Transportation',
+				'off_den' => 'Office / Den',
+				'frnshed' => 'Furnished',
+				'refrig' => 'Refrigerator',
+				'deposit' => 'Deposit',
+				'ngb_pubsch' => 'Local Public Schools',
+				'beds_avail' => 'Beds Available',
+			);
+		}
+		
+		foreach ($amenities as $key => $value) {
+			if (isset($translation[$key])) {
+				unset($amenities[$key]);
+				$amenities[$translation[$key]] = $value;
+			}
+		}
+		return $amenities;
+	}
+
+
 //end of class
 }

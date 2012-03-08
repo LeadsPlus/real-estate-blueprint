@@ -134,6 +134,14 @@ class PLS_Plugin_API {
         return false;
     }
 
+
+    static function get_property_config() {
+        if ( pls_has_plugin_error() )  {
+            return false;
+        }
+        return PL_Config::PL_API_LISTINGS('get', 'args');
+    }
+
     /**
      * Return an object containing a list of properties.
      * 
