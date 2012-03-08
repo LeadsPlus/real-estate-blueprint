@@ -72,6 +72,7 @@ class PLS_Partials_Listing_Search_Form {
             'class' => 'pls_search_form_listings',
             'results_page_id' => get_page_by_title( 'listings' )->ID,
             'context' => '',
+            'theme_option_id' => '',
             'context_var' => null,
             'bedrooms' => 1,
             'bathrooms' => 1,
@@ -92,14 +93,10 @@ class PLS_Partials_Listing_Search_Form {
 
         $args = wp_parse_args( $args, $defaults );
         //apply user
-        $args = wp_parse_args( pls_get_option('available_filters'), $defaults );
-
-        // pls_dump($args);
+        $args = wp_parse_args( pls_get_option($args['theme_option_id']), $args );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
-
-        // pls_dump(pls_get_option('available_filters'));
 
         global $wp_rewrite;
         $search_page_id = $results_page_id;

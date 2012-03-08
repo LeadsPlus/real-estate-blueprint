@@ -10,7 +10,7 @@ PLS_Style::add(array(
 	PLS_Style::add(array( 
 			"name" =>  "Visible Filters on Search Page",
 			"desc" => "Use the checkboxes to indicate which filters are visible to searchers. Note that if you choose too many it might be overwhelming!",
-			"id" => "available_filters",
+			"id" => "listing-search-page",
 			"selector" => "body",
 			"options" => array(
 				'half_baths' => 'Half Baths',
