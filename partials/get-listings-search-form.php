@@ -214,7 +214,6 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Set the maximum price options array. */
         $form_options['max_price'] = $form_options['min_price'];
-        array_shift( $form_options['max_price'] );
 
         /** Define an array for extra attributes. */
         $form_opt_attr = array();
@@ -379,8 +378,8 @@ class PLS_Partials_Listing_Search_Form {
             'cities' => __( 'Near', pls_get_textdomain() ),
             'states' => __( 'State', pls_get_textdomain() ),
             'zips' => __( 'Zip Code', pls_get_textdomain() ),
-            'min_price' => __( 'Price from', pls_get_textdomain() ),
-            'max_price' => __( 'Price to', pls_get_textdomain() ),
+            'min_price' => __( 'Min Price', pls_get_textdomain() ),
+            'max_price' => __( 'Max Price', pls_get_textdomain() ),
         );
 
         // In case user somehow disables all filters.
