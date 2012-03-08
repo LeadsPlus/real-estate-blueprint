@@ -86,11 +86,20 @@ class PLS_Partials_Listing_Search_Form {
             'states' => 1,
             'zips' => 1,
             'min_price' => 1,
-            'max_price' => 1
+            'max_price' => 1,
+            'include_submit' => true
         );
+
+        $args = wp_parse_args( $args, $defaults );
+        //apply user
+        $args = wp_parse_args( pls_get_option('available_filters'), $defaults );
+
+        // pls_dump($args);
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+
+        // pls_dump(pls_get_option('available_filters'));
 
         global $wp_rewrite;
         $search_page_id = $results_page_id;
@@ -108,13 +117,32 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Prepend the default empty valued element. */
-        $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );
-        
+        $user_beds_start = pls_get_option('pls-option-bed-min');
+        $user_beds_end = pls_get_option('pls-option-bed-max');
+        if (is_int($user_beds_start) && is_int($user_beds_end) ) {
+            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_beds_start, $user_beds_end );
+        } else {
+            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );    
+        }
+                
         /** Prepend the default empty valued element. */
-        $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+        $user_baths_start = pls_get_option('pls-option-bath-min');
+        $user_baths_end = pls_get_option('pls-option-bath-max');
+        if (is_int($user_baths_start) && is_int($user_baths_end) ) {
+            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_baths_start, $user_baths_end );
+        } else {
+            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+        }
 
         /** Prepend the default empty valued element. */
-        $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+        $user_half_baths_start = pls_get_option('pls-option-half-bath-min');
+        $user_half_baths_end = pls_get_option('pls-option-half-bath-max');
+        if (is_int($user_half_baths_start) && is_int($user_half_baths_end) ) {
+            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_half_baths_start, $user_half_baths_end );
+        } else {
+            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+        }
+        
 
         /** Generate an array with the next 12 months. */
         $current_month = (int) date('m');
@@ -154,28 +182,42 @@ class PLS_Partials_Listing_Search_Form {
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
             'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
-            '200' => '200',
-            '500' => '500',
-            '1000' => '1,000',
-            '2000' => '2,000',
-            '3000' => '3,000',
-            '4000' => '4,000',
-            '5000' => '5,000',
-			'6000' => '6,000',
-			'7000' => '7,000',
-			'8000' => '8,000',
-			'9000' => '9,000',
-			'10000' => '10,000',
-			'11000' => '11,000',
-			'12000' => '12,000',
-			'13000' => '13,000',
-			'14000' => '14,000',
-			'15000' => '15,000',
+            '200' => '$200',
+            '500' => '$500',
+            '1000' => '$1,000',
+            '2000' => '$2,000',
+            '3000' => '$3,000',
+            '4000' => '$4,000',
+            '5000' => '$5,000',
+			'50000' => '$50,000',
+			'100000' => '$100,000',
+			'200000' => '$200,000',
+			'350000' => '$350,000',
+			'400000' => '$400,000',
+			'450000' => '$450,000',
+			'500000' => '$500,000',
+			'600000' => '$600,000',
+			'700000' => '$700,000',
+            '800000' => '$800,000',
+            '900000' => '$900,000',
+			'1000000' => '$1,000,000',
         );
+
+        $user_price_start = pls_get_option('pls-option-price-min');
+        $user_price_end = pls_get_option('pls-option-price-max');
+        $user_price_inc = pls_get_option('pls-option-price-inc');
+
+        if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
+            $range = range($user_price_start, $user_price_end, $user_price_inc);    
+            $form_options['min_price'] = array();
+            foreach ($range as $price_value) {
+                $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+            }
+        }   
 
         /** Set the maximum price options array. */
         $form_options['max_price'] = $form_options['min_price'];
-        unset( $form_options['max_price'][200] );
+        array_shift( $form_options['max_price'] );
 
         /** Define an array for extra attributes. */
         $form_opt_attr = array();
@@ -344,6 +386,11 @@ class PLS_Partials_Listing_Search_Form {
             'max_price' => __( 'Price to', pls_get_textdomain() ),
         );
 
+        // In case user somehow disables all filters.
+        if (empty($form_html)) {
+            return '';
+        }
+
         /** Apply filters on all the form elements html. */
         foreach( $form_html as $option_name => &$opt_html ) {
 
@@ -353,6 +400,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Combine the form elements. */
         $form = '';
+        
         foreach ( $form_html as $label => $select ) {
             $form .= pls_h(
                 'section',
@@ -363,14 +411,18 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the filtered submit button. */
-        $form_html['submit'] = apply_filters( 
-            pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
-            pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
-            $context_var
-        );
+        if ($include_submit) {
+            $form_html['submit'] = apply_filters( 
+                pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
+                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
+                $context_var
+            );
+            /** Append the form submit. */
+            $form .= $form_html['submit'];
+        }
+        
 
-        /** Append the form submit. */
-        $form .= $form_html['submit'];
+        
 
         /** Wrap the combined form content in the form element and filter it. */
         $form_id = pls_get_merged_strings( array( 'pls-listings-search-form', $context ), '-', 'pre', false );

@@ -236,6 +236,11 @@ function of_sanitize_border_size( $value ) {
 add_filter( 'of_border_size', 'of_sanitize_border_size' );
 
 
+function of_sanitize_featured_listing($value) {
+	return $value;
+}
+add_filter( 'of_sanitize_featured_listing', 'of_sanitize_featured_listing' );
+
 function of_sanitize_border_style( $value ) {
 	$recognized = of_recognized_border_styles();
 	if ( array_key_exists( $value, $recognized ) ) {

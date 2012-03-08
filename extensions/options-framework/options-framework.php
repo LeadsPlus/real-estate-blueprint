@@ -1,15 +1,5 @@
 <?php
 /*
-Plugin Name: Options Framework
-Plugin URI: http://www.wptheming.com
-Description: A framework for building theme options.
-Version: 0.8
-Author: Devin Price
-Author URI: http://www.wptheming.com
-License: GPLv2
-*/
-
-/*
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -182,7 +172,6 @@ function optionsframework_load_scripts() {
 	wp_enqueue_script('jquery-ui-core');
 	wp_enqueue_script('color-picker', OPTIONS_FRAMEWORK_DIRECTORY.'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('options-custom', OPTIONS_FRAMEWORK_DIRECTORY.'js/options-custom.js', array('jquery'));
-	wp_enqueue_script( 'featured-listings', trailingslashit( PLS_JS_URL ) . 'scripts/featured-listing.js' , array( 'jquery') );
 }
 
 function of_admin_head() {
@@ -210,8 +199,6 @@ function optionsframework_page() {
 	?>
     
 	<div class="wrap">
-    <?php //screen_icon( 'themes' ); ?>
-    <?php /* <h2 class="nav-tab-wrapper"><?php //echo $return[1]; ?></h2> */ ?>
     
     <div class="metabox-holder">
 	<div class="blueprint-header">

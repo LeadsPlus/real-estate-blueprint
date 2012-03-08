@@ -81,6 +81,7 @@ class PLS_Slideshow {
 					'height' => 300,
 					'context' => '',
 					'context_var' => false,
+                    'featured_option_id' => false,
 					'listings' => 'limit=5&sort_by=price',
 					'data' => false,
         );
@@ -101,7 +102,11 @@ class PLS_Slideshow {
             }
 
             /** Request the list of properties. */
-            $api_response = PLS_Plugin_API::get_property_list( $listings );                
+            if ($featured_option_id) {
+                $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
+            } else {
+                $api_response = PLS_Plugin_API::get_property_list($listings);    
+            }                
             $listings = $api_response['listings'];
 
             /** Data assumed to take this form. */

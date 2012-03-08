@@ -263,6 +263,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-post-options');
         add_theme_support( 'pls-widget-options');
         add_theme_support( 'pls-css-options');
+        add_theme_support( 'pls-search-options');
         add_theme_support( 'pls-color-options');
         add_theme_support( 'pls-user-options');
 
@@ -333,6 +334,9 @@ class Placester_Blueprint {
 
         /** Load the compatibility class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'compatibility.php' );
+
+        /** Load the compatibility class. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'listings.php' );
 
         /** Load the formatting class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'formatting.php' );

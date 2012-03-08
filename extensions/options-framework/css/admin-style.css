@@ -270,17 +270,17 @@ h3#optionsframework-submit-top .button-primary {
   .section-featured-listing .section-info h4 {
     font-size: 16px;
     border-bottom: none !important; }
-.section-featured-listing section {
+.section-featured-listing div {
   float: left;
   margin-right: 10px; }
-  .section-featured-listing section.bedrooms {
+  .section-featured-listing div.featured-listing-form-beds {
     width: 70px; }
-  .section-featured-listing section.cities {
+  .section-featured-listing div.featured-listing-form-city {
     width: 180px; }
-  .section-featured-listing section.zips {
+  .section-featured-listing div.featured-listing-form-zip {
     width: 100px; }
-  .section-featured-listing section.min_price, .section-featured-listing section.max_price {
-    width: 140px; }
+  .section-featured-listing div.featured-listing-form-min-price, .section-featured-listing div.featured-listing-form-max-price {
+    width: 160px; }
 .section-featured-listing input.pls_search_button {
   float: left;
   width: 110px !important;
@@ -290,3 +290,26 @@ h3#optionsframework-submit-top .button-primary {
   padding-bottom: 30px; }
 .section-featured-listing .sort_wrapper {
   display: none; }
+
+hr {
+  width: 100%; }
+
+.featured-listing-search {
+  margin-bottom: 30px; }
+  .featured-listing-search .heading {
+    clear: both; }
+  .featured-listing-search .fls-add-listing {
+    width: 120px !important;
+    float: left;
+    margin-top: 20px; }
+  .featured-listing-search .fls-address-select {
+    margin-top: 20px;
+    width: 250px !important;
+    float: left;
+    margin-right: 10px; }
+
+.multicheck-list {
+  width: 430px; }
+  .multicheck-list li {
+    float: left;
+    width: 210px; }
