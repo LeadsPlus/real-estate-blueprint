@@ -262,9 +262,7 @@ class PLS_Format {
 	}
 
 	function translate_amenities ($amenities) {
-		global $traslation;
-		if (!isset($translation) && empty($translation)) {
-			$translation = array(
+		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
 				'price' => 'Price',
 				'sqft' => 'Square Feet',
@@ -292,13 +290,26 @@ class PLS_Format {
 				'deposit' => 'Deposit',
 				'ngb_pubsch' => 'Local Public Schools',
 				'beds_avail' => 'Beds Available',
+				'hoa_fee' => 'Home Owners Assocation Fee',
+				'floors' => 'Floors',
+				'bns_rec_rm' => 'Basement Rec Room',
+				'fm_lv_rm' => 'Family Rec Room',
+				'yard' => 'Has Yard',
+				'hdwdflr' => 'Hardwood Floors',
+				'sauna' => 'Sauna',
+				'year_blt' => 'Year Build'
 			);
+
+		global $pls_custom_amenity_dictionary;
+
+		if (isset($pls_custom_amenity_dictionary) && !empty($pls_custom_amenity_dictionary)) {
+			$local_dictionary = wp_parse_args($pls_custom_amenity_dictionary, $local_dictionary);
 		}
 		
 		foreach ($amenities as $key => $value) {
-			if (isset($translation[$key])) {
+			if (isset($local_dictionary[$key])) {
 				unset($amenities[$key]);
-				$amenities[$translation[$key]] = $value;
+				$amenities[$local_dictionary[$key]] = $value;
 			}
 		}
 		return $amenities;
