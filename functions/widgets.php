@@ -23,6 +23,9 @@ function pls_register_widgets() {
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/agent.php' );
 
 	/** Load the Placester Agent widget. */
+	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/office.php' );
+
+	/** Load the Placester Agent widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/contact.php' );
 	
 	/** Load the Placester Agent widget. */
@@ -39,6 +42,9 @@ function pls_register_widgets() {
 
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Agent' );
+
+	/* Register each of the widgets. */
+	register_widget( 'PLS_Widget_Office' );
 
 	/* Register each of the widgets. */	
 	register_widget( 'PLS_Floating_Map' );
