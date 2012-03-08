@@ -17,6 +17,7 @@ $(document).ready(function($) {
                 "data" : aoData,
                 "success" : function(ajax_response) {
                     if (ajax_response && ajax_response['aaData']) {
+                        custom_total_results(ajax_response);
                         for (var current_marker in markers) {
                           markers[current_marker].setMap(null);
                         }
@@ -47,8 +48,6 @@ $(document).ready(function($) {
           position: new google.maps.LatLng(listing_json['location']['coords'][0], listing_json['location']['coords'][1]),
           map: map
       });
-
-      console.log(listing_json);
 
       if (listing_json['images'][0]['url']) {
         var image_url = listing_json['images'][0]['url'];
@@ -106,6 +105,13 @@ $(document).ready(function($) {
         aoData.push({"name": "context", "value" : $('#context').attr('class')});
         return aoData;
     }
+
+    if (typeof custom_total_results == 'function') {
+      function custom_total_results (ajax_response) {
+        $('#pls_listings_search_results #pls_num_results').html(ajax_response.iTotalDisplayRecords);
+      }  
+    };
+    
 
     //datepicker
     $("input#metadata-max_avail_on_picker, #metadata-min_avail_on_picker").datepicker({
