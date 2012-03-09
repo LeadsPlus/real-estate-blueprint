@@ -213,7 +213,7 @@ class PLS_Slideshow {
 						captions: <?php echo $captions ?>, 																			// do you want captions?
 						captionAnimation: '<?php echo $captionAnimation ?>',										// fade, slideOpen, none
 						captionAnimationSpeed: <?php echo $captionAnimationSpeed ?>, 						// if so how quickly should they animate in
-						// bullets: <?php echo $bullets ?>,			 // true or false to activate the bullet navigation
+						bullets: <?php echo $bullets ?>,			 // true or false to activate the bullet navigation
 						// bulletThumbs: false,		 // thumbnails for the bullets
 						// bulletThumbLocation: '',		 // location from this file where thumbs will be
 				    
