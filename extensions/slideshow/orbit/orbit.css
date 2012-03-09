@@ -175,9 +175,6 @@ div.slider-nav span.left {
     position: absolute;
     z-index: 1000;
     list-style: none;
-    bottom: -50px;
-    left: 50%;
-	  margin-left: -50px;
     padding: 0; }
 
 .orbit-bullets li {
@@ -186,9 +183,9 @@ div.slider-nav span.left {
     cursor: pointer;
     color: #999;
     text-indent: -9999px;
-    background: url(orbit/bullets.jpg) no-repeat 4px 0;
+    background: url(orbit/bullets.png) no-repeat 4px 0;
     width: 13px;
-    height: 12px;
+    height: 13px;
     overflow: hidden; }
 
 .orbit-bullets li.active {
