@@ -44,7 +44,7 @@ class PLS_Partial_Get_Listings {
         $defaults = array(
             'width' => 100,
             'height' => 0,
-            'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
+            'placeholder_img' => PLS_IMG_URL . "/null/listing-300x180.jpg",
             'context' => '',
             'context_var' => false,
             'featured_option_id' => false,

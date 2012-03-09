@@ -50,7 +50,7 @@ class PLS_Partials_Get_Listings_Ajax {
     function load($args = array()) {    
         // * Set the options for the "Sort by" select. 
         $defaults = array(
-            'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
+            'placeholder_img' => PLS_IMG_URL . "/null/listing-300x180.jpg",
             'loading_img' => admin_url( 'images/wpspin_light.gif' ),
             'image_width' => 100,
             'sort_type' => 'desc',
@@ -134,7 +134,7 @@ class PLS_Partials_Get_Listings_Ajax {
 
         /** Define the default argument array. */
         $defaults = array(
-            'placeholder_img' => PLS_IMG_URL . "/null/listing-100x100.png",
+            'placeholder_img' => PLS_IMG_URL . "/null/listing-300x180.jpg",
             'loading_img' => admin_url( 'images/wpspin_light.gif' ),
             'image_width' => 100,
             'sort_type' => 'desc',

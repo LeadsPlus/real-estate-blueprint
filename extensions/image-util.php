@@ -82,7 +82,7 @@ class PLS_Image {
 
 		// use standard default image
 		if ( $old_image === '' || empty($old_image)) {
-			$old_image = trailingslashit(PLS_EXT_URL) . "image-util/default-images/default.gif";
+			$old_image = PLS_IMG_URL . "/null/listing-1200x720.jpg";
 		}
 
 		if ( $args['fancybox'] || $args['as_html']) {
