@@ -66,6 +66,15 @@ class PLS_Partials_Listing_Search_Form {
         if ( pls_has_plugin_error() )
             return NULL;
 
+        $listing_page = get_page_by_title( 'listings' );
+        if ($listing_page) {
+            $listing_page = 'listings';
+        } else {
+            
+        }
+        // var_dump($listing_page);
+        
+
         /** Define the default argument array. */
         $defaults = array(
             'ajax' => false,
