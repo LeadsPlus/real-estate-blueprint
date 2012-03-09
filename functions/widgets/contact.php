@@ -44,7 +44,7 @@ class Placester_Contact_Widget extends WP_Widget {
     // if(isset($post->post_type) && $post->post_type == 'property') {
         // $data = placester_property_get($post->post_name);
         if (!empty($post)) {
-          $listing_data = json_decode(stripslashes($post->post_content), true);
+          $listing_data = unserialize($post->post_content);
         } else {
           $listing_data = array();
         }

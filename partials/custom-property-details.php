@@ -10,13 +10,15 @@ class PLS_Partials_Property_Details {
 
 	        $content = get_option('placester_listing_layout');
 
+
 	        if(isset($content) && $content != '') {
 	               return $content;
 	        }
+
             $html = '';
-	        $listing_data = json_decode(stripslashes($post->post_content), true);
+	        $listing_data = unserialize($post->post_content);
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
-	        
+
 	        ob_start();
 	        ?>
 
