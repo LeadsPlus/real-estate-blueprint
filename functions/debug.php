@@ -37,6 +37,7 @@ class PLS_Debug {
         
         $show_debug = pls_get_option('display-debug-messages');
         // optionally show debug messages.  
+        // if (true) {
         if ($show_debug == 1) {
             self::assemble_messages();
             ?>
