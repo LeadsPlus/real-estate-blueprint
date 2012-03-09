@@ -110,6 +110,7 @@ class Placester_Contact_Widget extends WP_Widget {
 
 // Ajax function
 add_action( 'wp_ajax_placester_contact', 'ajax_placester_contact' );
+add_action( 'wp_ajax_nopriv_placester_contact', 'ajax_placester_contact' );
 function ajax_placester_contact() {
     
     if( !empty($_POST) ) {
