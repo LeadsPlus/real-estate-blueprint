@@ -23,21 +23,14 @@ class PLS_Debug {
     static $debug_messages = array();
     static $message_text = '';
 
-    
-
     static function init() {
-
         add_action('wp_footer', array(__CLASS__, 'show_window' ) );
-
     }
-
-
 
     static function show_window () {
         
         $show_debug = pls_get_option('display-debug-messages');
         // optionally show debug messages.  
-        // if (true) {
         if ($show_debug == 1) {
             self::assemble_messages();
             ?>
@@ -47,13 +40,12 @@ class PLS_Debug {
             </div>
             <?php
         }   
-
     }
+
     // adds routing messages for easy debugging.
     // TODO: Move this to a global class so devs
     // turn it on easily and see what's going on. 
-    static function add_msg ($new_message)
-    {
+    static function add_msg ($new_message) {
         self::$debug_messages[] = $new_message;
         
     }
