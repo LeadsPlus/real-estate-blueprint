@@ -91,8 +91,6 @@ class Placester_Blueprint {
         /* Load the framework extensions. */
 		add_action( 'after_setup_theme', array( &$this, 'extensions' ), 13 );
 
-        /** Create the listings and blog pages. */
-        $this->create_pages();
 	}
 
     private function _has_plugin_error() {
@@ -332,6 +330,9 @@ class Placester_Blueprint {
         /** Load the utility functions. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'util.php' );
 
+        /** Load the utility functions. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'pages.php' );
+
         /** Load the compatibility class. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'compatibility.php' );
 
@@ -364,6 +365,9 @@ class Placester_Blueprint {
 
         /** Load the debug functionality if supported. */
         require_if_theme_supports( 'pls-debug', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'debug.php' );
+
+        /** Create the listings and blog pages. */
+        $this->create_pages();
 	}
 
 	/**
@@ -409,18 +413,12 @@ class Placester_Blueprint {
      * @since 0.0.1
      */
     function create_pages() {
-
        global $pagenow;
-
        if ( is_admin() && isset($_GET['activated'] ) && $pagenow == 'themes.php' ) {
-
             $page_list[] = array( 'title' => 'Blog', 'template' => 'page-template-blog.php' );
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
             $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
-
-            if (method_exists('PL_Pages', 'create_once')) {
-                PL_Pages::create_once( $page_list, $force = true ); 
-            }
+            PLS_Plugin_API::create_page($page_list);            
         } 
     }
 }

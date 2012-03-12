@@ -76,7 +76,9 @@ class PLS_Partial_Get_Listings {
         /** Request the list of properties. */
         if ($featured_option_id) {
             $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
-        } else {
+        }
+
+        if (!$featured_option_id || empty($listings_raw['listings'])) {
             $listings_raw = PLS_Plugin_API::get_property_list($request_params);    
         }
         

@@ -503,8 +503,13 @@ class PLS_Plugin_API {
         return false;
     }
 
-
-    
+    static function create_page($page_list) {
+        $return = self::_try_for_exceptions(array('PL_Pages', 'create_once'), $page_list, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }    
 
     /**
      * Returns object containing user details.
@@ -561,26 +566,20 @@ class PLS_Plugin_API {
 
 	// set options using the plugin's theme option setter. 
     static function set_option( $options ) {
-
         if ( ! pls_has_plugin_error() ) {
-
-            placester_option_setter( $options );
-             
+            placester_option_setter( $options );   
             return;
         } 
-
         return false;
     }
 
 	// get plugin options directly from the DB
     static function get_plugin_option( $options ) {
-
         if ( ! pls_has_plugin_error() ) {
-	
             return get_option( $options );
         } 
-
         return false;
     }
+
 }
 

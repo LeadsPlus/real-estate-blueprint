@@ -104,9 +104,12 @@ class PLS_Slideshow {
             /** Request the list of properties. */
             if ($featured_option_id) {
                 $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
-            } else {
+            } 
+
+            if (!$featured_option_id || empty($api_response['listings'])) {
                 $api_response = PLS_Plugin_API::get_property_list($listings);    
-            }                
+            }
+
             $listings = $api_response['listings'];
 
             /** Data assumed to take this form. */
@@ -213,7 +216,7 @@ class PLS_Slideshow {
 						captions: <?php echo $captions ?>, 																			// do you want captions?
 						captionAnimation: '<?php echo $captionAnimation ?>',										// fade, slideOpen, none
 						captionAnimationSpeed: <?php echo $captionAnimationSpeed ?>, 						// if so how quickly should they animate in
-						bullets: <?php echo $bullets ?>,			 // true or false to activate the bullet navigation
+						bullets: <?php echo $bullets ? 'true' : 'false' ?>,			 // true or false to activate the bullet navigation
 						// bulletThumbs: false,		 // thumbnails for the bullets
 						// bulletThumbLocation: '',		 // location from this file where thumbs will be
 				    
