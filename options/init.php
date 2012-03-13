@@ -34,7 +34,7 @@ PLS_Style::add(array(
 
 		PLS_Style::add(array( 
 				"name" => "Featured Listings",
-				"desc" => "",
+				"desc" => "Select your featured listings here that will display in your sidebar listings widget as well as on the home page's featured list.",
 				"id" => "custom-featured-listings",
 				"type" => "featured_listing"));
 
