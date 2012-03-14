@@ -1,7 +1,7 @@
 <?php 
 
     // Lead Caputure Form
-	$instance = array("title" => "Have an questions?", "number" => 9);
+	$instance = array("title" => "Have a question?", "number" => 9);
 	$args = array();
 	$sb = new Placester_Contact_Widget();
 	$sb->number = $instance['number'];
