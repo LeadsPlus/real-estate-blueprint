@@ -14,11 +14,23 @@ PLS_Style::add(array(
 		"name" => "General",
 		"type" => "heading"));
 
-		PLS_Style::add(array( 
-				"name" => "Site Logo",
-				"desc" => "Upload your logo here. It will appear in the header.",
-				"id" => "pls-site-logo",
-				"type" => "upload"));
+	PLS_Style::add(array(
+			"name" => "Site Title",
+			"desc" => "Site title in header.",
+			"id" => "pls-site-title",
+			"type" => "text"));
+
+	PLS_Style::add(array(
+			"name" => "Site Subtitle",
+			"desc" => "Site subtitle in header.",
+			"id" => "pls-site-subtitle",
+			"type" => "text"));
+
+	PLS_Style::add(array(
+			"name" => "Site Logo",
+			"desc" => "Upload your logo here. It will appear in the header and will override the title you've provided above.",
+			"id" => "pls-site-logo",
+			"type" => "upload"));
 
 		PLS_Style::add(array( 
 				"name" => "Site Favicon",
@@ -34,7 +46,7 @@ PLS_Style::add(array(
 
 		PLS_Style::add(array( 
 				"name" => "Featured Listings",
-				"desc" => "",
+				"desc" => "Select your featured listings here that will display in your sidebar listings widget as well as on the home page's featured list.",
 				"id" => "custom-featured-listings",
 				"type" => "featured_listing"));
 
