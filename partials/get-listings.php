@@ -122,16 +122,6 @@ class PLS_Partial_Get_Listings {
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
                 <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
-                <!-- Display Listings -->
-                <?php if (!empty($listing_data['description'])): ?>
-                    <ul>
-                        <li>Beds: <?php echo @$listing_data['cur_data']['beds']; ?>, </li>
-                        <li>Baths: <?php echo @$listing_data['cur_data']['baths']; ?>, </li>
-                        <li>Half Baths: <?php echo @$listing_data['cur_data']['half_baths']; ?>, </li>
-                        <li>Price: <?php echo @$listing_data['cur_data']['price']; ?>, </li>
-                        <li>Available On: <?php echo @$listing_data['cur_data']['avail_on']; ?>, </li>
-                    </ul>     
-                <?php endif ?>
             </header>
             <div class="listing-item-content grid_8 alpha">
                 <div class="grid_8 alpha">
@@ -144,23 +134,21 @@ class PLS_Partial_Get_Listings {
                         </div>
                     <?php endif ?>
 
-                    <!-- if we don't have a description, display property details -->
+                            <p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
+                            <p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
+                            <p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
+                            <p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
+                            <p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
 
-                    <?php if (!empty($listing_data['description'])): ?>
-                        <div id="listing-description" class="grid_8 omega">
-                            <?php echo substr($listing_data['description'], 0, 300); ?>
+                    <?php if (!empty($listing_data['cur_data']['desc'])): ?>
+                        <div class="listing-description" class="grid_8 omega">
+                            <?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
                         </div>
-                    <?php else: ?>
-                        <ul>
-                            <li>Beds: <?php echo @$listing_data['cur_data']['beds']; ?>, </li>
-                            <li>Baths: <?php echo @$listing_data['cur_data']['baths']; ?>, </li>
-                            <li>Half Baths: <?php echo @$listing_data['cur_data']['half_baths']; ?>, </li>
-                            <li>Price: <?php echo @$listing_data['cur_data']['price']; ?>, </li>
-                            <li>Available On: <?php echo @$listing_data['cur_data']['avail_on']; ?>, </li>
-                        </ul>     
-                    <?php endif ?>
+                    <?php endif; ?>
+
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
+												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
                     </div>
                 </div>
             </div><!-- .entry-summary -->

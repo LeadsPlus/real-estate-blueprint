@@ -34,8 +34,11 @@
 
 <?php pls_do_atomic( 'close_body' ); ?>
 
-<?php echo pls_get_option('pls-google-analytics'); ?>
-
+<?php if (pls_get_option('pls-google-analytics')): ?>
+	<script type="text/javascript">
+		<?php echo pls_get_option('pls-google-analytics'); ?>
+	</script>
+<?php endif; ?>
 </body>
 
 </html>
