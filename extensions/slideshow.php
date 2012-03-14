@@ -131,8 +131,8 @@ class PLS_Slideshow {
                 ob_start();
                 ?>
                  <div id="caption-<?php echo $index ?>" class="orbit-caption">
-                    <p><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
-                    <p><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
+                    <p class="caption-title"><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
+                    <p class="caption-subtitle"><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
                     <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
                 </div>
                 <?php 

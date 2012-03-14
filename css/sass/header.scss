@@ -21,6 +21,11 @@ ul {
 }
 #branding {
 	margin-top: 50px;
+	#logo {
+	  float: left;
+	  margin-right: 10px;
+	  min-height: 50px;
+	}
 	h1 {
 		margin-bottom: 0px; /* improper reset */
 		padding: 0px;		/* improper reset */
