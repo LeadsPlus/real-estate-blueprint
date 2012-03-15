@@ -4,6 +4,7 @@ $(document).ready(function($) {
         "bFilter": false,
         "bProcessing": true,
         "bServerSide": true,
+        'sPaginationType': 'full_numbers',
         "sServerMethod": "POST",
         "sAjaxSource": info.ajaxurl, //wordpress url thing
         "fnServerData": function ( sSource, aoData, fnCallback ) {
