@@ -44,7 +44,7 @@ class PLS_Partials_Get_Listings_Ajax {
 
     function get_favorites () {
       $favorite_ids = PLS_Plugin_API::get_listings_fav_ids();
-      self::get(array('property_ids' => $favorite_ids));
+      self::get(array('property_ids' => $favorite_ids, 'allow_id_empty' => true));
     }
 
     function load($args = array()) {    
@@ -144,14 +144,15 @@ class PLS_Partials_Get_Listings_Ajax {
             'context_var' => NULL,
             'append_to_map' => true,
             'search_query' => $_POST,
-            'property_ids' => array()
+            'property_ids' => array(),
+            'allow_id_empty' => false
         );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
         /** Get the listings list markup and javascript. */
-        if (!empty($property_ids)) {
+        if (!empty($property_ids) || $allow_id_empty) {
           $api_response = PLS_Plugin_API::get_listings_details_list($property_ids);
         } else {
           $api_response = PLS_Plugin_API::get_listings_list($search_query);
