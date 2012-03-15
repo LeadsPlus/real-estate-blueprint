@@ -89,7 +89,7 @@
 
 <?php else: ?>
 
-	<aside>
+	<aside class="grid_4 omega sidebar">
 
 		<?php if ( is_active_sidebar( 'primary' ) ) : ?>
 
