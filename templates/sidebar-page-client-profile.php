@@ -2,7 +2,7 @@
 	<?php extract(PLS_Plugin_API::get_person_details()); ?>
 	<?php //pls_dump(PLS_Plugin_API::get_person_details()); ?>
 
-<aside>
+<aside class="grid_4 omega sidebar">
 
 	<section class="widget widget-pls-recent-posts">
 
