@@ -87,4 +87,21 @@
 
 </aside>
 
-<?php endif ?>
+<?php else: ?>
+
+	<aside>
+
+		<?php if ( is_active_sidebar( 'primary' ) ) : ?>
+
+			<?php dynamic_sidebar( 'primary' ); ?>
+
+		<?php else: ?>
+
+			<?php PLS_Route::handle_default_sidebar(); ?>
+
+		<?php endif; ?>
+
+	</aside>
+
+<?php endif; ?>
+
