@@ -2,7 +2,7 @@
 	<?php extract(PLS_Plugin_API::get_person_details()); ?>
 	<?php //pls_dump(PLS_Plugin_API::get_person_details()); ?>
 
-<aside>
+<aside class="grid_4 omega sidebar">
 
 	<section class="widget widget-pls-recent-posts">
 
@@ -51,21 +51,24 @@
 					<div style="float: left; margin: 60px 30px; font-size: 16px">No contact info, add some <a style="float: none; margin: 0px; postion: none; color: #8B6D3E" id="edit_profile_button">here</a></div>
 					<div class="clear"></div>
 				<?php else: ?>
-					<?php if (@$cur_data['name']): ?>
-						<li><span>Name: </span><?php echo @$cur_data['name'] ?></li>	
-					<?php endif ?>
-					<?php if (@$cur_data['company']): ?>
-						<li><span>Company: </span><?php echo @$cur_data['company'] ?></li>	
-					<?php endif ?>
-					<?php if (@$cur_data['email']): ?>
-						<li><span>Email: </span><?php echo @$cur_data['email'] ?></li>	
-					<?php endif ?>
-					<?php if (@$cur_data['phone']): ?>
-						<li><span>Phone: </span><?php echo @$cur_data['phone'] ?></li>	
-					<?php endif ?>
-					<?php if (@$cur_data['address']): ?>
-						<li><span>Address: </span><?php echo @$location['address'] ?><br><?php echo @$location['locality'] . ', ' . @$location['region'] . ' ' . @$location['postal'] ?> <br> <?php echo @$location['country'] ?></li>	
-					<?php endif ?>
+
+					<ul>
+						<?php if (@$cur_data['name']): ?>
+							<li><span>Name: </span><?php echo @$cur_data['name'] ?></li>	
+						<?php endif ?>
+						<?php if (@$cur_data['company']): ?>
+							<li><span>Company: </span><?php echo @$cur_data['company'] ?></li>	
+						<?php endif ?>
+						<?php if (@$cur_data['email']): ?>
+							<li><span>Email: </span><?php echo @$cur_data['email'] ?></li>	
+						<?php endif ?>
+						<?php if (@$cur_data['phone']): ?>
+							<li><span>Phone: </span><?php echo @$cur_data['phone'] ?></li>	
+						<?php endif ?>
+						<?php if (@$cur_data['address']): ?>
+							<li><span>Address: </span><?php echo @$location['address'] ?><br><?php echo @$location['locality'] . ', ' . @$location['region'] . ' ' . @$location['postal'] ?> <br> <?php echo @$location['country'] ?></li>	
+						<?php endif ?>
+					</ul>
 				<?php endif ?>
 		</div>
 
@@ -84,4 +87,21 @@
 
 </aside>
 
-<?php endif ?>
+<?php else: ?>
+
+	<aside>
+
+		<?php if ( is_active_sidebar( 'primary' ) ) : ?>
+
+			<?php dynamic_sidebar( 'primary' ); ?>
+
+		<?php else: ?>
+
+			<?php PLS_Route::handle_default_sidebar(); ?>
+
+		<?php endif; ?>
+
+	</aside>
+
+<?php endif; ?>
+
