@@ -136,17 +136,31 @@ class PLS_Partial_Get_Listings {
                         </div>
                     <?php endif ?>
 
-                            <p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
-                            <p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
-                            <p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
-                            <p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
-                            <p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
+										<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
+											<p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
+										<?php } ?>
 
-                    <?php if (!empty($listing_data['cur_data']['desc'])): ?>
-                        <div class="listing-description" class="grid_8 omega">
-                            <?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
-                        </div>
-                    <?php endif; ?>
+										<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
+											<p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
+											<p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['price'])) { ?>
+											<p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
+											<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['desc'])): ?>
+											<p class="listing-description" class="grid_8 omega">
+												<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
+											</p>
+										<?php endif; ?>
 
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>

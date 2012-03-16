@@ -185,11 +185,26 @@ class PLS_Partials_Get_Listings_Ajax {
                             </div>
 
                         <div class="basic-details">
-                            <p>Beds: <?php echo @$listing['cur_data']['beds']; ?></p>
-                            <p>Baths: <?php echo @$listing['cur_data']['baths']; ?></p>
-                            <p>Half Baths: <?php echo @$listing['cur_data']['half_baths']; ?></p>
-                            <p>Price: <?php echo @$listing['cur_data']['price']; ?></p>
-                            <p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
+													<?php if (!empty($listing['cur_data']['beds'])) { ?>
+														<p>Beds: <?php echo @$listing['cur_data']['beds']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['baths'])) { ?>
+														<p>Baths: <?php echo @$listing['cur_data']['baths']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['half_baths'])) { ?>
+														<p>Half Baths: <?php echo @$listing['cur_data']['half_baths']; ?></p>
+													<?php } ?>
+                            
+													<?php if (!empty($listing['cur_data']['price'])) { ?>
+														<p>Price: <?php echo @$listing['cur_data']['price']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['avail_on'])) { ?>
+														<p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
+													<?php } ?>
+
                         </div>
 
                         <div class="listing-description">

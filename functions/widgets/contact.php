@@ -75,9 +75,9 @@ class Placester_Contact_Widget extends WP_Widget {
                   <?php
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email"/>
                     <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName"/>
                     <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" type="text" name="lastName"/>
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email"/>
                     <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
