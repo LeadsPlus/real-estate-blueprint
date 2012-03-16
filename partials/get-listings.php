@@ -123,17 +123,17 @@ class PLS_Partial_Get_Listings {
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
-                <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
+                <p><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></p>
             </header>
             <div class="listing-item-content grid_8 alpha">
                 <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
                     <?php if (is_array($listing_data['images'])): ?>
-                        <div id="listing-thumbnail" class="listing-thumbnail">
+                        <p class="listing-thumbnail">
                             <div class="outline">
                                 <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
                             </div>
-                        </div>
+                        </p>
                     <?php endif ?>
 
 										<?php if (!empty($listing_data['cur_data']['beds'])) { ?>

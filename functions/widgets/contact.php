@@ -75,21 +75,21 @@ class Placester_Contact_Widget extends WP_Widget {
                   <?php
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
-                    <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName"/>
-                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" type="text" name="lastName"/>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email"/>
-                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question"></textarea>
+                    <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName" tabindex="1" />
+                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" type="text" name="lastName" tabindex="2" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email" tabindex="3" />
+                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="4"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                   <?php } else { ?>
-                    <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email"/>
-                    <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName"/>
-                    <input class="required" placeholder="<?php echo $lname_label; ?>" type="text" name="lastName"/>
-                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question"></textarea>
+                    <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
+                    <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName" tabindex="2" />
+                    <input class="required" placeholder="<?php echo $lname_label; ?>" type="text" name="lastName" tabindex="3" />
+                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="4"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                   <?php } ?>
-                    <input type="submit" value="<?php echo $submit_value; ?>" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" tabindex="5" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  
