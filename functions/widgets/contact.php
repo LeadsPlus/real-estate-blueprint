@@ -51,37 +51,45 @@ class Placester_Contact_Widget extends WP_Widget {
         }
         extract($args);
 
-        $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
+				$title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
+				$submit_value = apply_filters('button', empty($instance['button']) ? 'Send' : $instance['button']);
+				$email_label = apply_filters('email_label', empty($instance['email_label']) ? 'Email Address (required)' : $instance['email_label']);
+				$fname_label = apply_filters('fname_label', empty($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
+				$lname_label = apply_filters('lname_label', empty($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
+				$question_label = apply_filters('question_label', empty($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
+				$container_class = apply_filters('container_class', empty($instance['container_class']) ? '' : $instance['container_class']);
+				$inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
+
         $modern = @$instance['modern'] ? 1 : 0;
         $template_url = get_bloginfo('template_url');
 
     
-        echo '<section class="side-ctnr placester_contact">' . "\n";
+        echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
           echo '<h3>' . $title . '</h3>';
         } 
           ?>
-              <section class="common-side-cont clearfix">
+              <section class="<?php echo $inner_class; ?> common-side-cont clearfix">
                   <div class="msg">Thank you for the email, we\'ll get back to you shortly</div>
                   <form name="widget_contact" action="" method="post">
                   <?php
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
-                    <label class="required" for="email">Email Address (required)</label><input class="required" type="email" name="email"/>
-                    <label class="required" for="firstName">First Name (required)</label><input class="required" type="text" name="firstName"/>
-                    <label class="required" for="lastName">Last Name (required)</label><input class="required" type="text" name="lastName"/>
-                    <label for="question">Any questions for us?</label><textarea rows="5" name="question"></textarea>
+                    <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName" tabindex="1" />
+                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" type="text" name="lastName" tabindex="2" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email" tabindex="3" />
+                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="4"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                   <?php } else { ?>
-                    <input class="required" placeholder="Email Address (required)" type="email" name="email"/>
-                    <input class="required" placeholder="First Name (required)" type="text" name="firstName"/>
-                    <input class="required" placeholder="Last Name (required)" type="text" name="lastName"/>
-                    <textarea rows="5" placeholder="Any questions for us?" name="question"></textarea>
+                    <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
+                    <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName" tabindex="2" />
+                    <input class="required" placeholder="<?php echo $lname_label; ?>" type="text" name="lastName" tabindex="3" />
+                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="4"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                   <?php } ?>
-                    <input type="submit" value="Send it" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" tabindex="5" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  

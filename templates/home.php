@@ -24,7 +24,8 @@
 						'captionAnimationSpeed' => 800, 				// if so how quickly should they animate in
 						'afterSlideChange' => 'function(){}',		// empty function
 						'width' => 620, 
-						'height' => 300, 
+						'height' => 300,
+						'bullets' => true,
 						'context' => 'home',
 						'featured_option_id' => 'slideshow-featured-listings', 
 						'listings' => array('limit' => 5, 'sort_by' => 'price')

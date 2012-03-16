@@ -123,30 +123,44 @@ class PLS_Partial_Get_Listings {
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
             <header class="grid_8 alpha">
-                <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></h2>
+                <p><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></p>
             </header>
             <div class="listing-item-content grid_8 alpha">
                 <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
                     <?php if (is_array($listing_data['images'])): ?>
-                        <div id="listing-thumbnail" class="listing-thumbnail">
+                        <div class="listing-thumbnail">
                             <div class="outline">
-                                <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                <a href="<?php echo @$listing_data['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $full_address))); ?></a>
                             </div>
                         </div>
                     <?php endif ?>
 
-                            <p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
-                            <p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
-                            <p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
-                            <p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
-                            <p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
+										<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
+											<p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
+										<?php } ?>
 
-                    <?php if (!empty($listing_data['cur_data']['desc'])): ?>
-                        <div class="listing-description" class="grid_8 omega">
-                            <?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
-                        </div>
-                    <?php endif; ?>
+										<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
+											<p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
+											<p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['price'])) { ?>
+											<p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
+											<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
+										<?php } ?>
+
+										<?php if (!empty($listing_data['cur_data']['desc'])): ?>
+											<p class="listing-description" class="grid_8 omega">
+												<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
+											</p>
+										<?php endif; ?>
 
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>

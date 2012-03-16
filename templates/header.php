@@ -63,7 +63,7 @@
 									<?php endif; ?>
 
 									<?php if (pls_get_option('pls-site-title')): ?>
-										<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo pls_get_option('pls-site-title'); ?>" rel="home"><?php echo pls_get_option('pls-site-title'); ?></a></span></h1>
+										<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo pls_get_option('pls-site-title'); ?>" rel="home"><?php echo pls_get_option('pls-site-title'); ?></a></h1>
 
 										<?php if (pls_get_option('pls-site-subtitle')): ?>
 											<h2 id="site-description"><?php echo pls_get_option('pls-site-subtitle'); ?></h2>
@@ -71,14 +71,14 @@
 									<?php endif; ?>
 
 									<?php if (!pls_get_option('pls-site-logo') && !pls_get_option('pls-site-title')): ?>
-										<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+										<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 										<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 									<?php endif; ?>
 									
 									
                     
                 </hgroup>
-                <div style="float: right"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
+                <div class="header-membership"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
                 <?php pls_do_atomic( 'header' ); ?>    
             </div>
 

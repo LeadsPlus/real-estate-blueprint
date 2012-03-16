@@ -173,28 +173,42 @@ class PLS_Partials_Get_Listings_Ajax {
 
             <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
                 <header class="grid_8 alpha">
-                    <h3><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a></h2>
+                    <p><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a></p>
                 </header>
                 <div class="listing-item-content grid_8 alpha">
                     <div class="grid_8 alpha">
                         <!-- If we have a picture, show it -->
                             <div class="listing-thumbnail">
                                 <div class="outline">
-                                    <?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                   <a href="<?php echo @$listing['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address']))); ?></a>
                                 </div>
                             </div>
 
                         <div class="basic-details">
-                            <p>Beds: <?php echo @$listing['cur_data']['beds']; ?></p>
-                            <p>Baths: <?php echo @$listing['cur_data']['baths']; ?></p>
-                            <p>Half Baths: <?php echo @$listing['cur_data']['half_baths']; ?></p>
-                            <p>Price: <?php echo @$listing['cur_data']['price']; ?></p>
-                            <p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
+													<?php if (!empty($listing['cur_data']['beds'])) { ?>
+														<p>Beds: <?php echo @$listing['cur_data']['beds']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['baths'])) { ?>
+														<p>Baths: <?php echo @$listing['cur_data']['baths']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['half_baths'])) { ?>
+														<p>Half Baths: <?php echo @$listing['cur_data']['half_baths']; ?></p>
+													<?php } ?>
+                            
+													<?php if (!empty($listing['cur_data']['price'])) { ?>
+														<p>Price: <?php echo @$listing['cur_data']['price']; ?></p>
+													<?php } ?>
+
+													<?php if (!empty($listing['cur_data']['avail_on'])) { ?>
+														<p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
+													<?php } ?>
                         </div>
 
-                        <div class="listing-description">
-                            <?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
-                        </div>
+                        <p class="listing-description">
+                        	<?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
+                        </p>
                         <div class="actions">
                             <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
                             <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
