@@ -147,13 +147,14 @@ class PLS_Partials_Get_Listings_Ajax {
             'property_ids' => array(),
             'allow_id_empty' => false
         );
+        
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
         /** Get the listings list markup and javascript. */
         if (!empty($property_ids) || $allow_id_empty) {
-          $api_response = PLS_Plugin_API::get_listings_details_list($property_ids);
+          $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $property_ids, 'limit' => $_POST['limit'], 'offset' => $_POST['offset']));
         } else {
           $api_response = PLS_Plugin_API::get_listings_list($search_query);
         }
