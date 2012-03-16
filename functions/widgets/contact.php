@@ -57,17 +57,19 @@ class Placester_Contact_Widget extends WP_Widget {
 				$fname_label = apply_filters('fname_label', empty($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
 				$lname_label = apply_filters('lname_label', empty($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
 				$question_label = apply_filters('question_label', empty($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
+				$container_class = apply_filters('container_class', empty($instance['container_class']) ? 'placester_contact' : $instance['container_class']);
+				$inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? 'common-side-cont' : $instance['inner_class']);
 
         $modern = @$instance['modern'] ? 1 : 0;
         $template_url = get_bloginfo('template_url');
 
     
-        echo '<section class="side-ctnr placester_contact">' . "\n";
+        echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
           echo '<h3>' . $title . '</h3>';
         } 
           ?>
-              <section class="common-side-cont clearfix">
+              <section class="<?php echo $inner_class; ?> common-side-cont clearfix">
                   <div class="msg">Thank you for the email, we\'ll get back to you shortly</div>
                   <form name="widget_contact" action="" method="post">
                   <?php
