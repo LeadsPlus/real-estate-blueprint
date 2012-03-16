@@ -131,7 +131,7 @@ class PLS_Partial_Get_Listings {
                     <?php if (is_array($listing_data['images'])): ?>
                         <p class="listing-thumbnail">
                             <div class="outline">
-                                <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $full_address))); ?>
                             </div>
                         </p>
                     <?php endif ?>
