@@ -180,7 +180,7 @@ class PLS_Partials_Get_Listings_Ajax {
                         <!-- If we have a picture, show it -->
                             <div class="listing-thumbnail">
                                 <div class="outline">
-                                    <?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true)); ?>
+                                   <a href="<?php echo @$listing['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address']))); ?></a>
                                 </div>
                             </div>
 

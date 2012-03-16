@@ -129,11 +129,11 @@ class PLS_Partial_Get_Listings {
                 <div class="grid_8 alpha">
                     <!-- If we have a picture, show it -->
                     <?php if (is_array($listing_data['images'])): ?>
-                        <p class="listing-thumbnail">
+                        <div class="listing-thumbnail">
                             <div class="outline">
-                                <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $full_address))); ?>
+                                <a href="<?php echo @$listing_data['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $full_address))); ?></a>
                             </div>
-                        </p>
+                        </div>
                     <?php endif ?>
 
 										<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
