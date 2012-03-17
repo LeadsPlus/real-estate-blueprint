@@ -35,7 +35,7 @@ class PLS_Widget_Agent extends WP_Widget {
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-agent", esc_attr__( 'Placester Agent', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-agent", esc_attr__( 'Placester: Agent Widget', $this->textdomain ), $widget_options );
 	}
 
 	/**

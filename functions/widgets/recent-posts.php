@@ -35,7 +35,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-recent-posts", esc_attr__( 'Placester Recent Posts', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-recent-posts", esc_attr__( 'Placester: Recent Blog Posts', $this->textdomain ), $widget_options );
 
         /** Delete the widget cache if a post is modified, deleted, or a the theme is switched. */
 		add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
@@ -353,7 +353,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
         /** Define the default argument array. */
         $arg_defaults = array(
-            'title' => 'Have any questions?',
+            'title' => 'Latest Blog Posts',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
             'before_widget' => '<section id="pls-recent-posts-3" class="widget pls-recent-posts widget-pls-recent-posts">',

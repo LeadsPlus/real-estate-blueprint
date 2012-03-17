@@ -36,7 +36,7 @@ class PLS_Widget_Listings extends WP_Widget {
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-listings", esc_attr__( 'Placester Listings List', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-listings", esc_attr__( 'Placester: Listings List', $this->textdomain ), $widget_options );
         add_filter( 'pls_listing_get_listings_widget', array(__CLASS__,'custom_widget_html_filter'), 10, 2);
 
 	}

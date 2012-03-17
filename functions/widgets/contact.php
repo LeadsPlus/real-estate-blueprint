@@ -4,7 +4,7 @@ class Placester_Contact_Widget extends WP_Widget {
 
   function Placester_Contact_Widget() {
     $widget_ops = array('classname' => 'Placester_Contact_Widget', 'description' => __( 'Works only on the Property Details Page.') );
-    $this->WP_Widget( 'Placester_Contact_Widget', 'Placester Contact Form', $widget_ops );
+    $this->WP_Widget( 'Placester_Contact_Widget', 'Placester: Contact Form', $widget_ops );
   }
 
   //Front end contact form
