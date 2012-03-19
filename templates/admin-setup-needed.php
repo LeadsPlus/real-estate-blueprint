@@ -17,5 +17,7 @@
 		<h3>Almost Done! One more step....</h3>
 		<p>You are almost done setting up your new real estate website. The theme you downloaded requires a free WordPress plugin which you can download <a href="/wp-admin/plugin-install.php?tab=search&type=term&s=real+estate+website+builder&plugin-search-input=Search+Plugins">here</a>. The plugin is complete free and lets you add and edit listings, optimizes your theme for SEO by automatically creating pages for each of your listing, and much much more.</p>
 		<p><a href="wp-admin/plugin-install.php?tab=search&type=term&s=real+estate+website+builder&plugin-search-input=Search+Plugins" class="button">Download the Real Estate Website Builder Plugin</a></p>
+		<p>... Or, did you already download the Real Estate Website Builder Plugin?</p>
+		<p><a href="wp-admin/plugins.php" class="button">Enable the Real Estate Website Builder Plugin</a></p>
 	</body>
 </html>
