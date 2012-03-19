@@ -63,7 +63,7 @@ class PLS_Slideshow {
 				$defaults = array(
 					'animation' => 'fade', 									// fade, horizontal-slide, vertical-slide, horizontal-push
 						'animationSpeed' => 800, 								// how fast animtions are
-					'timer' => 'false', 											// true or false to have the timer
+					'timer' => true, 											// true or false to have the timer
 					'advanceSpeed' => 4000,									// if timer is enabled, time between transitions 
 					'pauseOnHover' => true,									// if you hover pauses the slider
 						'startClockOnMouseOut' => true,					// if clock should start on MouseOut
