@@ -98,10 +98,7 @@ class Placester_Blueprint {
         $plugin_status = $this->_is_plugin_active();
 
         if ( function_exists( 'placester_get_api_key' ) &&  $plugin_status ) {
-            try {
-                placester_get_api_key();
-            }
-            catch ( PlaceSterNoApiKeyException $e ) {
+            if(!placester_get_api_key()) {
                 return 'no_api_key';
             }
         } else {
