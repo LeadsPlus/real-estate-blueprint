@@ -56,15 +56,15 @@ function pls_register_sidebars() {
     	);
 
 	/** Set up the subsidiary sidebar arguments. */
-	$sidebars[] = array(
-		'id' => 'footer-widgets',
-		'name' => __( 'Footer', $textdomain ),
-		'description' => __( 'A widget area for the footer of the site.', $textdomain ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
-		'after_widget' => '</section>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>'
-	);
+	// $sidebars[] = array(
+	// 	'id' => 'footer-widgets',
+	// 	'name' => __( 'Footer', $textdomain ),
+	// 	'description' => __( 'A widget area for the footer of the site.', $textdomain ),
+	// 	'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
+	// 	'after_widget' => '</section>',
+	// 	'before_title' => '<h3 class="widget-title">',
+	// 	'after_title' => '</h3>'
+	// );
 
 //    pls_dump($sidebar_support);
 

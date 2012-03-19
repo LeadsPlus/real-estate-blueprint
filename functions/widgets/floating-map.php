@@ -35,7 +35,7 @@ class PLS_Floating_Map extends WP_Widget {
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-floating-map", esc_attr__( 'Placester floating Search Map', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-floating-map", esc_attr__( 'Placester: Floating Search Map', $this->textdomain ), $widget_options );
 	}
 
 	/**
