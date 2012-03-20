@@ -44,27 +44,16 @@ function pls_register_sidebars() {
 		'after_title' => '</h3>'
 	);
 
-    /** Set up the primary sidebar arguments. */
-    	$sidebars[] = array(
-    		'id' => 'listings-search',
-    		'name' => __( 'Listings Search Sidebar', $textdomain ),
-    		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
-    		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
-    		'after_widget' => '</section>',
-    		'before_title' => '<h3 class="widget-title">',
-    		'after_title' => '</h3>'
-    	);
-
-	/** Set up the subsidiary sidebar arguments. */
-	// $sidebars[] = array(
-	// 	'id' => 'footer-widgets',
-	// 	'name' => __( 'Footer', $textdomain ),
-	// 	'description' => __( 'A widget area for the footer of the site.', $textdomain ),
-	// 	'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
-	// 	'after_widget' => '</section>',
-	// 	'before_title' => '<h3 class="widget-title">',
-	// 	'after_title' => '</h3>'
-	// );
+/** Set up the primary sidebar arguments. */
+	$sidebars[] = array(
+		'id' => 'listings-search',
+		'name' => __( 'Listings Search Sidebar', $textdomain ),
+		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
+		'after_widget' => '</section>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>'
+	);
 
 //    pls_dump($sidebar_support);
 
