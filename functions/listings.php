@@ -35,4 +35,13 @@ class PLS_Listing_Helper {
 		}
 		
 	}
+
+	function get_compliance ($context) {
+		$message = PLS_Plugin_API::mls_message($context);
+		if ($message && !empty($message)) {
+			$_POST['compliance_message'] = $message;
+			PLS_Route::router(array($context . '-compliance.php'), true, false);
+		}
+		return false;
+	}
 }
