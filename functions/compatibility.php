@@ -530,6 +530,14 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function mls_message($context) {
+        $return = self::_try_for_exceptions( array('PL_Compliance', 'mls_message'), $context);
+        if ( $return ) {
+            return $return;
+        }
+        return false;
+    }
+
     /**
      * Registers filter form on a page which will control 
      * property lists / property maps on this page by importing the needed 
