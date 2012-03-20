@@ -19,7 +19,6 @@
         <?php pls_do_atomic( 'before_entry_content' ); ?>
 
         <?php the_content(); ?>
-        <?php PLS_Listing_Helper::get_compliance('listings'); ?>
         <div class="entry-meta">
         </div>
 

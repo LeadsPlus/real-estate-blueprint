@@ -111,8 +111,9 @@ class PLS_Partials_Property_Details {
                         <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
                     </div>
 	            </div>
+        <?php PLS_Listing_Helper::get_compliance('listings'); ?>
 
-	        <?php
+<?php
 	        $html = ob_get_clean();
 
 	        return apply_filters('property_details_filter',$html, $listing_data);
