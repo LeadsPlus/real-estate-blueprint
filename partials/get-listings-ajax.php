@@ -204,6 +204,10 @@ class PLS_Partials_Get_Listings_Ajax {
 													<?php if (!empty($listing['cur_data']['avail_on'])) { ?>
 														<p>Available On: <?php echo @$listing['cur_data']['avail_on']; ?></p>
 													<?php } ?>
+
+                          <?php if (!empty($listing['rets']['mls_id'])) { ?>
+                            <p>MLS ID: <?php echo @$listing['rets']['mls_id']; ?></p>
+                          <?php } ?>
                         </div>
 
                         <p class="listing-description">
@@ -213,7 +217,7 @@ class PLS_Partials_Get_Listings_Ajax {
                             <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
                             <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
                         </div>
-                        <?php PLS_Listing_Helper::get_compliance('inline_search'); ?>
+                        <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => $listing['rets']['aname'] , 'office_name' => $listing['rets']['oname'])); ?>
                     </div>
                 </div>
             </div>

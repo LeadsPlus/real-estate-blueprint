@@ -35,5 +35,5 @@
 </div>
 <div id="listing" class="grid_8 alpha">
     <?php echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
-    <?php PLS_Listing_Helper::get_compliance('listings'); ?>
+    <?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => false, 'office_name' => false)); ?>
 </div>

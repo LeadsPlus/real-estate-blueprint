@@ -70,6 +70,9 @@ class PLS_Partials_Property_Details {
                         <li><span>Half Baths </span><?php echo $listing_data['cur_data']['half_baths'] ?></li>
                         <li><span>Available </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <li><span>Square Feet </span><?php echo $listing_data['cur_data']['sqft'] ?></li>
+                        <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
+                        	<li><span>MLS Number: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
+                        <?php endif ?>
                     </ul>
                 </div>
 
@@ -111,19 +114,12 @@ class PLS_Partials_Property_Details {
                         <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
                     </div>
 	            </div>
-        <?php PLS_Listing_Helper::get_compliance('listings'); ?>
+        		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => $listing_data['rets']['aname'] , 'office_name' => $listing_data['rets']['oname'])); ?>
 
-<?php
+			<?php
 	        $html = ob_get_clean();
-
 	        return apply_filters('property_details_filter',$html, $listing_data);
-	        
 	    } 
-
-
 	    return $content;
-    
-
 	}
-
 }
