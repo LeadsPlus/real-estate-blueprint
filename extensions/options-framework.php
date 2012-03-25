@@ -62,7 +62,6 @@ class PLS_Options_Framework {
         /** Replace the admin submenu with a page. */
         remove_action( 'admin_menu', 'optionsframework_add_page' );
 
-				// Theme Options Temporarily Turned Off - GALEN
         add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
 
         /** 
@@ -135,7 +134,7 @@ class PLS_Options_Framework {
 
 				// Commented out for WordPress theme submission
         /** Add the menu page. */
-        $of_page = add_menu_page( 
+        $of_page = add_object_page( 
             $page_name, 
             $page_name, 
             'edit_theme_options', 
