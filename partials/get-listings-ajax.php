@@ -121,13 +121,6 @@ class PLS_Partials_Get_Listings_Ajax {
 
 	function get ($args = array()) {
 	
-        /** Display a placeholder if the plugin is not active or there is no API key. */
-        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
-            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-        } elseif ( pls_has_plugin_error() ) {
-            return NULL;
-        }
-        
 		    // Pagination
         $_POST['limit'] = $_POST['iDisplayLength'];
         $_POST['offset'] = $_POST['iDisplayStart'];     
@@ -152,13 +145,22 @@ class PLS_Partials_Get_Listings_Ajax {
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
-        /** Get the listings list markup and javascript. */
-        if (!empty($property_ids) || $allow_id_empty) {
-          $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $property_ids, 'limit' => $_POST['limit'], 'offset' => $_POST['offset']));
+        /** Display a placeholder if the plugin is not active or there is no API key. */
+        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
+            global $PLS_API_DEFAULT_LISTING;
+            $api_response = $PLS_API_DEFAULT_LISTING;
+        } elseif (pls_has_plugin_error()) {
+            global $PLS_API_DEFAULT_LISTING;
+            $api_response = $PLS_API_DEFAULT_LISTING;
         } else {
-          $api_response = PLS_Plugin_API::get_listings_list($search_query);
+            /** Get the listings list markup and javascript. */
+            if (!empty($property_ids) || $allow_id_empty) {
+              $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $property_ids, 'limit' => $_POST['limit'], 'offset' => $_POST['offset']));
+            } else {
+              $api_response = PLS_Plugin_API::get_listings_list($search_query);
+            }
         }
-        
+
         $response = array();        
         
         // build response for datatables.js

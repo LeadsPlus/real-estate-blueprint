@@ -58,15 +58,6 @@ class PLS_Partials_Listing_Search_Form {
      */
 	function init ($args = '') {
 		
-        /** Display a placeholder if there is a plugin error. */
-        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
-            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-
-        /** Return nothing when plugin error and user is not admin. */
-        if ( pls_has_plugin_error() )
-            return NULL;
-
-
         /** Define the default argument array. */
         $defaults = array(
             'ajax' => false,
@@ -91,6 +82,14 @@ class PLS_Partials_Listing_Search_Form {
             'max_price' => 1,
             'include_submit' => true
         );
+
+
+        // * Display a placeholder if there is a plugin error. 
+        // if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
+        //     return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
+        // } elseif ( pls_has_plugin_error() ) {
+        //     return NULL;
+        // }             
 
         $args = wp_parse_args( $args, $defaults );
         //apply user
@@ -168,14 +167,28 @@ class PLS_Partials_Listing_Search_Form {
         $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
 
         /** Prepend the default empty valued element. */
-        $form_options['cities'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('locality'));
-        unset($form_options['cities']['false']);
+        
+        if (!PLS_Plugin_API::get_location_list('locality')) {
+            $form_options['cities'] = array('pls_empty_value' => 'Any');
+        } else {
+            $form_options['cities'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('locality'));
+            unset($form_options['cities']['false']);
+        }
 
-        $form_options['states'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('region'));
-        unset($form_options['states']['false']);
+        if (!PLS_Plugin_API::get_location_list('region')) {
+            $form_options['states'] = array('pls_empty_value' => 'Any');
+        } else {
+            $form_options['states'] = array_merge(array('pls_empty_value' => 'Any'), PLS_Plugin_API::get_location_list('region'));
+            unset($form_options['states']['false']);
+        }
 
-        $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
-        unset($form_options['zips']['false']);
+        if (!PLS_Plugin_API::get_location_list('postal')) {
+            $form_options['zips'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
+            unset($form_options['zips']['false']);    
+        }
+        
 
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(

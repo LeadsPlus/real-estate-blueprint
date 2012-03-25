@@ -74,17 +74,7 @@ class PLS_Route {
 	// direct copy + paste of WP's locate function
 	// modified to alternate searching for the dev's
 	// templates, then look for blueprints.
-	function router ($template_names, $load = false, $require_once = true) 
-	{
-
-		if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
-            include_once(self::locate_blueprint_template('admin-setup-needed.php'));
-            die();
-        } elseif (pls_has_plugin_error()) {
-            include_once(self::locate_blueprint_template('setup-needed.php'));
-            die();
-        }
-
+	function router ($template_names, $load = false, $require_once = true) {
 
 		PLS_Debug::add_msg('[[Hit Router!]] Searching for: ');
 		PLS_Debug::add_msg($template_names);

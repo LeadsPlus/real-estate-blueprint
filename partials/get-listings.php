@@ -32,14 +32,7 @@ class PLS_Partial_Get_Listings {
      * @since 0.0.1
      */
     function init ($args = '') {
-       /** Display a placeholder if the plugin is not active or there is no API key. */
-        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) )
-            return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-
-        /** Return nothing when no plugin and user is not admin. */
-        if ( pls_has_plugin_error() )
-            return NULL;
-
+       
         /** Define the default argument array. */
         $defaults = array(
             'width' => 100,
@@ -73,13 +66,22 @@ class PLS_Partial_Get_Listings {
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
 
-        /** Request the list of properties. */
-        if ($featured_option_id) {
-            $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
-        }
+        /** Display a placeholder if the plugin is not active or there is no API key. */
+        if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
+            global $PLS_API_DEFAULT_LISTING;
+            $listings_raw = $PLS_API_DEFAULT_LISTING;
+        } elseif (pls_has_plugin_error()) {
+            global $PLS_API_DEFAULT_LISTING;
+            $listings_raw = $PLS_API_DEFAULT_LISTING;
+        } else {
+            /** Request the list of properties. */
+            if ($featured_option_id) {
+                $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
+            }
 
-        if (!$featured_option_id || empty($listings_raw['listings'])) {
-            $listings_raw = PLS_Plugin_API::get_property_list($request_params);    
+            if (!$featured_option_id || empty($listings_raw['listings'])) {
+                $listings_raw = PLS_Plugin_API::get_property_list($request_params);    
+            }
         }
         
         // pls_dump($listings_raw);
@@ -135,33 +137,31 @@ class PLS_Partial_Get_Listings {
                             </div>
                         </div>
                     <?php endif ?>
+						<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
+							<p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
+						<?php } ?>
 
-										<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
-											<p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
-										<?php } ?>
+						<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
+							<p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
+						<?php } ?>
 
-										<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
-											<p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
-										<?php } ?>
+						<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
+							<p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
+						<?php } ?>
 
-										<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
-											<p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
-										<?php } ?>
+						<?php if (!empty($listing_data['cur_data']['price'])) { ?>
+							<p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
+						<?php } ?>
 
-										<?php if (!empty($listing_data['cur_data']['price'])) { ?>
-											<p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
-										<?php } ?>
+						<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
+							<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
+						<?php } ?>
 
-										<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
-											<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
-										<?php } ?>
-
-										<?php if (!empty($listing_data['cur_data']['desc'])): ?>
-											<p class="listing-description" class="grid_8 omega">
-												<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
-											</p>
-										<?php endif; ?>
-
+						<?php if (!empty($listing_data['cur_data']['desc'])): ?>
+							<p class="listing-description" class="grid_8 omega">
+								<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
+							</p>
+						<?php endif; ?>
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
 												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>

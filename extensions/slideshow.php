@@ -95,18 +95,20 @@ class PLS_Slideshow {
 
             /** Display a placeholder if the plugin is not active or there is no API key. */
             if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
-                return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
+                global $PLS_API_DEFAULT_LISTING;
+                $api_response = $PLS_API_DEFAULT_LISTING;
             } elseif (pls_has_plugin_error()) {
-                return NULL;
-            }
+                global $PLS_API_DEFAULT_LISTING;
+                $api_response = $PLS_API_DEFAULT_LISTING;
+            } else {
+                /** Request the list of properties. */
+                if ($featured_option_id) {
+                    $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
+                } 
 
-            /** Request the list of properties. */
-            if ($featured_option_id) {
-                $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
-            } 
-
-            if (!$featured_option_id || empty($api_response['listings'])) {
-                $api_response = PLS_Plugin_API::get_property_list($listings);    
+                if (!$featured_option_id || empty($api_response['listings'])) {
+                    $api_response = PLS_Plugin_API::get_property_list($listings);    
+                }
             }
 
             $listings = $api_response['listings'];

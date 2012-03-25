@@ -128,9 +128,9 @@ class PLS_Plugin_API {
         $return = self::_try_for_exceptions( 'placester_get_property_url', $id );
 
         /** If no exceptions were detected, return the result. */
-        if ( $return )
+        if ( $return ) {
             return $return;
-
+        }
         return false;
     }
 
@@ -591,3 +591,64 @@ class PLS_Plugin_API {
 
 }
 
+global $PLS_API_DEFAULT_LISTING;
+$PLS_API_DEFAULT_LISTING = array(
+    'total' => '1',
+    'listings' => array(
+        array(
+        'id' => '1',
+        'property_type' => array('fam_home'),
+        'zoning_types' => array('residential'),
+        'purchase_types' => array('sale'),
+        'listing_types' => array('fam_home'),
+        'building_id' => '1',
+        'cur_data' => array(
+            'half_baths' => '1',
+            'price' => '350000',
+            'sqft' => '2000',
+            'baths' => '2',
+            'avail_on' => '10/16/2015',
+            'beds' => '3',
+            'url' => false,
+            'desc' => 'This is a sample listing. It isn\'t real or available for sale but it\'s a great representation of what you could have on your new real estate website. If you are the owner of this website you need to finish setting it up. Please login and enter an api key.',
+            'lt_sz' => '2',
+            'ngb_shop' => true,
+            'ngb_hgwy' => false,
+            'grnt_tops' => true,
+            'ngb_med' => true,
+            'ngb_trails' => true,
+            'cent_ht' => true,
+            'pk_spce' => '3',
+            'air_cond' => true,
+            'price_unit' => false,
+            'lt_sz_unit' => 'acres',
+            'lse_trms' => false,
+            'ngb_trans' => false,
+            'off_den' => false,
+            'frnshed' => false,
+            'refrig' => false,
+            'deposit' => false,
+            'ngb_pubsch' => false
+        ),
+        'uncur_data' => false,
+        'location' => array(
+            'address' => '123 Fake Street',
+            'locality' => 'Boston',
+            'region' => 'MA',
+            'postal' => '02142',
+            'neighborhood' => 'Back Bay',
+            'country' => 'US',
+            'coords' => array(
+                'latitude' => '42.3596681',
+                'longitude' => '-71.0599325'
+            )
+        ),
+        'contact' => array(
+            'email' => 'test@example.com',
+            'phone' => '+1231231234'
+        ),
+        'images' => false,
+        'tracker_url' => false
+        )
+    )
+);
