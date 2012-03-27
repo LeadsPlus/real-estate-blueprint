@@ -647,8 +647,8 @@ $PLS_API_DEFAULT_LISTING = array(
             'neighborhood' => 'Back Bay',
             'country' => 'US',
             'coords' => array(
-                'latitude' => '42.3596681',
-                'longitude' => '-71.0599325'
+                '42.3596681',
+                '-71.0599325'
             )
         ),
         'contact' => array(
