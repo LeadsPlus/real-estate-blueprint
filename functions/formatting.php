@@ -256,7 +256,7 @@ class PLS_Format {
 		}
 		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
 			if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
-			$amenities['uncur'][] = $uncur_amenity . ' ' . $uncur_value;
+			$amenities['uncur'][$uncur_amenity] = $uncur_value;
 		}		
 		return $amenities;
 	}
