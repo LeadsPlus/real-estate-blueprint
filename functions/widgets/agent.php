@@ -118,7 +118,7 @@ class PLS_Widget_Agent extends WP_Widget {
         } elseif ( current_user_can( 'administrator' ) ) {
 
             /** Display an error message if the user is admin. */
-            echo pls_get_no_plugin_placeholder( $widget_id );
+            // echo pls_get_no_plugin_placeholder( $widget_id );
         }
 	}
 
