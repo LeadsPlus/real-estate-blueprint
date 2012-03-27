@@ -617,7 +617,7 @@ $PLS_API_DEFAULT_LISTING = array(
             'baths' => '2',
             'avail_on' => '10/16/2015',
             'beds' => '3',
-            'url' => false,
+            'url' => PLS_Plugin_API::get_property_url(),
             'desc' => 'This is a sample listing. It isn\'t real or available for sale but it\'s a great representation of what you could have on your new real estate website. If you are the owner of this website you need to finish setting it up. Please login and enter an api key.',
             'lt_sz' => '2',
             'ngb_shop' => true,
@@ -640,6 +640,7 @@ $PLS_API_DEFAULT_LISTING = array(
         ),
         'uncur_data' => false,
         'location' => array(
+            'full_address' => '123 Fake Street, Boston MA 02142',
             'address' => '123 Fake Street',
             'locality' => 'Boston',
             'region' => 'MA',
