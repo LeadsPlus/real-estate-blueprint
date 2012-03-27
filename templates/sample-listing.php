@@ -1,6 +1,8 @@
 <?php 
  global $PLS_API_DEFAULT_LISTING;
-    $listing_data = $PLS_API_DEFAULT_LISTING['listings'][0];
+$listing_data = $PLS_API_DEFAULT_LISTING['listings'][0];
+
+ob_start();
  ?>
 <h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
 
@@ -95,3 +97,7 @@
         </div>
     </div>
 	<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => $listing_data['rets']['aname'] , 'office_name' => $listing_data['rets']['oname'])); ?>
+	
+<?php
+$html = ob_get_clean();
+echo apply_filters('property_details_filter',$html, $listing_data);
