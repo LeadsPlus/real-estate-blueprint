@@ -415,7 +415,8 @@ class Placester_Blueprint {
             $page_list[] = array( 'title' => 'Blog', 'template' => 'page-template-blog.php' );
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
             $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
-            PLS_Plugin_API::create_page($page_list);            
+            $page_list[] = array( 'title' => 'Sample Listing', 'template' => 'sample-listing.php' );
+            PLS_Pages::create_once($page_list);            
         } 
     }
 }

@@ -131,7 +131,15 @@ class PLS_Plugin_API {
         if ( $return ) {
             return $return;
         }
+        if (pls_has_plugin_error()) {
+            $page = get_page_by_title('Sample Listing', 'ARRAY_A');
+            if ($page && isset($page['guid'])) {
+                return $page['guid'];        
+            }
+            return false;
+        }
         return false;
+        
     }
 
 
