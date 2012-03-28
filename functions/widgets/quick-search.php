@@ -32,7 +32,6 @@ class PLS_Quick_Search_Widget extends WP_Widget {
            echo $before_widget;
             echo "<h3>" . $title . "</h3>";
             echo PLS_Partials::get_listings_search_form($search_form_filter_string);
-        echo "<div class='clearfix'></div";
         echo "</section>";
         echo $after_widget;
     }
