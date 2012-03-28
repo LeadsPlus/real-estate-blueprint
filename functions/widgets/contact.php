@@ -59,7 +59,8 @@ class Placester_Contact_Widget extends WP_Widget {
 				$question_label = apply_filters('question_label', empty($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
 				$container_class = apply_filters('container_class', empty($instance['container_class']) ? '' : $instance['container_class']);
 				$inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
-
+        $inner_containers = apply_filters('inner_containers', empty($instance['inner_containers']) ? '' : $instance['inner_containers']);
+        
         $modern = @$instance['modern'] ? 1 : 0;
         $template_url = get_bloginfo('template_url');
 
@@ -75,10 +76,22 @@ class Placester_Contact_Widget extends WP_Widget {
                   <?php
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
-                    <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName" tabindex="1" />
+                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
+                      <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" type="text" name="firstName" tabindex="1" />
+                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
+
+                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
                     <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" type="text" name="lastName" tabindex="2" />
+                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
+
+                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
                     <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" type="email" name="email" tabindex="3" />
+                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
+
+                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
                     <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="4"></textarea>
+                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
+
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                   <?php } else { ?>
