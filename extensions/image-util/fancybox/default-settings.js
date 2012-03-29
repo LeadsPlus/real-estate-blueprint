@@ -6,7 +6,7 @@ jQuery(document).ajaxStop(function() {
 		'transitionOut'	:	'elastic',
 		'speedIn'		:	600, 
 		'speedOut'		:	200, 
-		'overlayShow'	:	false
+		'overlayShow'	:	true
 	});
 	
 });
@@ -18,7 +18,7 @@ jQuery(document).ready(function() {
 		'transitionOut'	:	'elastic',
 		'speedIn'		:	600, 
 		'speedOut'		:	200, 
-		'overlayShow'	:	false
+		'overlayShow'	:	true
 	});
 	
 });
