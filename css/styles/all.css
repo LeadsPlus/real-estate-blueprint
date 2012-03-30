@@ -27,6 +27,7 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited {
     color: #444444; }
 
 .button-primary {
+  padding: 10px 15px;
   border-top: 1px solid #999999;
   border-left: 1px solid #777777;
   border-right: 1px solid #777777;
@@ -55,6 +56,7 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited {
     background: #777777; }
 
 .button-secondary {
+  padding: 10px 15px;
   border-top: 1px solid #64b1ed;
   border-left: 1px solid #2793e5;
   border-right: 1px solid #2793e5;
@@ -83,6 +85,7 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited {
     background: #2793e5; }
 
 .button-tertiary {
+  padding: 10px 15px;
   border-top: 1px solid #36e74e;
   border-left: 1px solid #19d231;
   border-right: 1px solid #19d231;
