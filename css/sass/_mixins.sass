@@ -1,0 +1,192 @@
+/**/
+/* Variables */
+/**/
+
+/*****  SET THESE  *****/
+// Colors
+$white: #fff
+$black: #000
+$black-light: #444 
+$gray: #777
+$gray-light: #999
+$blue: #2793E5
+$red: #D22819
+$green: #19D231
+$yellow: #D2BF19
+
+// Button Colors
+$blue-light: #64B1ED
+$blue-dark: #1674BB
+$green-light: #36E74E
+$green-dark: #14AD29
+
+$color-primary: $black-light
+$color-secondary: $blue
+$color-tertiary: $gray
+$color-accent: $white
+
+/*****  SET THESE  *****/
+// Anchor Colors:
+$anchor-primary: $blue
+$anchor-primary-active: $blue
+$anchor-primary-hover: $black-light
+$anchor-secondary: $green
+$anchor-secondary-active: $black-light
+$anchor-secondary-hover: $black-light
+
+/*****  SET THESE  *****/
+// Font Family
+$font-normal: Helvetica, Arial
+$font-secondary: Arial
+
+// Text Shadows
+$text-shadow-primary: 0 1px 1px $black-light
+$text-shadow-secondary: 0 1px 1px $white
+$text-shadow-tertiary: 0 1px 1px $gray
+
+
+/*****  SET THESE  *****/
+// Misc.
+$radius: 5px
+$ul-list-style-image: none
+
+$border-primary: $gray-light
+$border-secondary: $gray
+
+/*****  SET THESE  *****/
+// Media
+$media-background: #fff
+$media-padding: 5px
+$media-border-color: $gray-light
+$media-border-size: 1px
+
+
+/*****  SET THESE  *****/
+// Backgrounds
+
+// Primary
+$primary-bg-color: $white
+$primary-bg-image: none
+$primary-bg-repeat: none
+// Secondary
+$secondary-bg-color: $white
+$secondary-bg-image: none
+$secondary-bg-repeat: none
+// Accent
+$accent-bg-color: $gray
+$accent-bg-image: none
+$accent-bg-repeat: none
+
+
+
+
+/**/
+/* Mixins */
+/**/
+
+// Anchors
+@mixin anchor
+  color: $anchor-primary
+  text-decoration: none
+  &:active
+    color: $anchor-primary-active
+  &:hover
+    color: $anchor-primary-hover
+
+a, a:link, a:visited
+  @include anchor
+
+@mixin anchor-secondary
+  color: $anchor-secondary
+  text-decoration: none
+  &:active
+    color: $anchor-secondary-active
+  &:hover
+    color: $anchor-secondary-hover
+
+a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
+  @include anchor-secondary
+
+
+// Rounded Corners
+@mixin rounded-corners  
+  border-radius: $radius
+  -moz-border-radius: $radius
+  -webkit-border-radius: $radius
+
+
+// Backgrounds
+@mixin primary-bg
+  background-color: $primary-bg-color
+  background-image: $primary-bg-image
+  background-repeat: $primary-bg-repeat
+
+@mixin secondary-bg
+  background-color: $secondary-bg-color
+  background-image: $secondary-bg-image
+  background-repeat: $secondary-bg-repeat
+
+@mixin accent-bg
+  background-color: $accent-bg-color
+  background-image: $accent-bg-image
+  background-repeat: $accent-bg-repeat
+
+
+// Box Shadow
+@mixin box-shadow-primary
+  box-shadow: 0px 0px 3px $black-light
+  -webkit-box-shadow: 0px 0px 3px $black-light
+  -moz-box-shadow: 0px 0px 3px $black-light
+// @mixin box-shadow-secondary
+
+@mixin image-outline 
+  border: 1px solid #DBDBDB
+  padding: 10px
+
+
+@mixin grey-button 
+  @include rounded-corners
+  background-color: #EEE
+  padding: 10px
+  color: #5e5e5e
+  &:hover
+    background-color: #5e5e5e
+    color: white
+
+@mixin button($button-color-light, $button-color, $button-color-dark, $button-box-shadow, $button-text-shadow)
+  border-top: 1px solid $button-color-light
+  border-left: 1px solid $button-color
+  border-right: 1px solid $button-color
+  border-bottom: 1px solid $button-color
+  background: -webkit-gradient(linear, left top, left bottom, from($button-color-light), to($button-color-dark))
+  background: -moz-linear-gradient(top, $button-color-light, $button-color-dark)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-light', endColorstr='$button-color-dark')
+  border-radius: 5px
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  margin-bottom: 15px
+  color: #fefefe
+  box-shadow: 0 0 0 1px $button-box-shadow
+  -webkit-box-shadow: 0 0 0 1px $button-box-shadow
+  -moz-box-shadow: 0 0 0 1px $button-box-shadow
+  text-shadow: $button-text-shadow
+  font:
+    weight: 600
+    size: 16px
+  margin-left: 8px
+  margin-top: 10px
+  &:hover
+    background: -webkit-gradient(linear, left top, left bottom, from($button-color-dark), to($button-color-light))
+    background: -moz-linear-gradient(top, $button-color-dark, $button-color-light)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-dark', endColorstr='$button-color-light')
+  &:active
+    background: $button-color
+
+.button-primary
+  @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
+.button-secondary
+  @include button($blue-light, $blue, $blue-dark, $gray-light, $text-shadow-tertiary)
+.button-tertiary
+  @include button($green-light, $green, $green-dark, $gray-light, $text-shadow-tertiary)
+
+

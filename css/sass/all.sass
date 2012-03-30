@@ -1,0 +1,226 @@
+// Colors
+// $black: #000
+// $black-light: #444 
+// $gray: #777
+// $gray-light: #999
+// $blue: #2793E5
+// $red: #D22819
+// $green: #19D231
+// $yellow: #D2BF19
+
+
+@import "mixins"
+// @import "header"
+@import "nav"
+// @import "sidebar-widgets"
+// @import "listings-search"
+// @import "listings-detail"
+// @import "blog"
+
+
+body
+  font-family: $font-normal
+  font-size: 15px
+  color: $black-light
+
+  .inner
+    padding: 20px 10px
+    float: left
+
+
+
+
+// Headers
+@mixin header-font-styles
+  color: $black
+  margin: 15px 0
+  font:
+    weight: 400
+    family: Helvetica, Arial
+  a, a:link, a:visited, a:active
+    color: $black
+    &:hover
+      color: $blue
+    
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
+  @include header-font-styles
+  
+h1, .h1
+  font-size: 35px
+h2, .h2
+  font-size: 30px
+h3, .h3
+  font-size: 25px
+h4, .h4
+  font-size: 20px
+h5, .h5
+  font-size: 17px
+h6, .h6
+  font-size: 14px
+
+
+// P Tags
+@mixin p-font-styles
+  color: $black-light
+  margin: 10px 0
+  text-shadow: none
+  text-decoration: none
+  text-transform: none
+  line-height: 20px
+  font:
+    size: 15px
+    weight: 400
+    family: Helvetica, Arial
+
+p, .p1, .p2, .p3, .p4, .p5, .p6
+  @include p-font-styles
+
+p
+  &.p2
+    color: $gray
+  &.p3
+    color: $gray-light
+  &.p4
+    color: $black
+  &.p5
+    color: $red
+  &.p6
+    color: $green
+
+
+// Media
+img, embed, iframe
+  background: $media-background
+  padding: $media-padding
+  border: $media-border-size solid $media-border-color
+  @include box-shadow-primary
+  @include rounded-corners
+
+
+
+// Lists
+ul, ol
+  padding: 0 0 0 30px
+  margin: 20px 0px
+  li
+    padding: 2px 0
+ul
+  li
+    list-style-image: $ul-list-style-image
+
+
+// Misc
+pre, code
+  border-left: 5px solid $color-secondary
+  padding: 10px 20px
+
+blockquote
+  margin: 30px 40px
+  font-style: oblique
+  line-height: 20px
+
+
+// Tables
+table
+  caption
+    @include p-font-styles
+    text-shadow: $text-shadow-tertiary
+  tbody
+    tr
+      th, td
+        padding: 10px 15px
+        border: 1px solid $border-primary
+      th
+        @include accent-bg
+        text-shadow: $text-shadow-primary
+        color: $color-accent
+      td
+
+
+// Forms
+form
+  label, input, textarea, .chzn-container, select
+    float: left
+  label
+    @include p-font-styles
+    width: 100%
+    margin-bottom: 5px
+    color: $gray
+    font-weight: 600
+  input[type="text"], input[type="email"], input[type="password"]
+    border: 1px solid #ccc
+    height: 25px
+    background-color: $white
+    color: $gray
+    padding: 3px 5px
+    box-shadow: inset 0px 11px 9px -12px #cccccc
+    -webkit-box-shadow: inset 0px 11px 9px -12px #cccccc
+    -moz-box-shadow: inset 0px 11px 9px -12px #cccccc
+    font:
+      size: 13px
+
+  textarea
+    @include p-font-styles
+    color: $gray
+    padding: 5px  
+
+  // input[type="submit"]
+  //   @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
+
+  .chzn-container
+    .chzn-search
+      float: none
+      display: none
+  
+
+  ul.chzn-results
+    margin: 0 !important
+    border-radius: 0 !important
+    li
+      color: $gray !important
+      margin: 0 0 0 -4px !important
+      padding-left: 8px !important
+      padding: 5px 7px !important
+      line-height: 18px !important
+    li.highlighted
+      background-color: $gray !important
+      color: $white !important
+
+  .chzn-single
+    height: 31px !important
+    border-radius: 0px !important
+    box-shadow: inset 0px 11px 9px -12px #cccccc !important
+    background: #fff !important
+    span
+      line-height: 31px !important
+      color: $gray
+      font:
+        weight: 600
+  
+    div
+      background: none !important
+      border-left: none !important
+      width: 22px !important
+      b
+        background-position: 0 3px !important
+    &.chzn-single-with-drop
+      div
+        b
+          background-position: -18px 1px !important
+
+
+// Exempt Google Maps from borders/backgrounds/box-shadows
+#simple_map
+  img, embed
+    border: none
+    background: none
+    box-shadow: none
+    -webkit-box-shadow: none
+    -moz-box-shadow: none
+
+footer
+  width: 100%
+  float: left
+#comments-template
+  float: left
+//
