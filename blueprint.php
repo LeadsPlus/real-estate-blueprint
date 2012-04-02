@@ -348,6 +348,9 @@ class Placester_Blueprint {
         /** Load the widgets. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'widgets.php' );
 
+        /** Load the notifications. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
+
         /** Load the styles functions. */
         require_once( trailingslashit ( PLS_CSS_DIR ) . 'styles.php' );
 
@@ -416,7 +419,7 @@ class Placester_Blueprint {
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
             $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
             $page_list[] = array( 'title' => 'Sample Listing', 'template' => 'sample-listing.php' );
-            PLS_Pages::create_once($page_list);            
+            PLS_Pages::create_once($page_list);
         } 
     }
 }
