@@ -71,35 +71,36 @@ class PLS_Widget_Agent extends WP_Widget {
 
             /** This array will hold the html for the agent info sections and will be passed to the filters. */
             $agent_html = $instance;
+
             unset( $agent_html['title'], $agent_html['width'], $agent_html['height'] );
 
             /** Add the photo. */
             if ( ! empty( $instance['photo'] ) && ! empty( $agent['logo'] ) ) {
-                $agent_html['photo'] = pls_h_img( $agent['logo'], trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'photo' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
+                $agent_html['photo'] = pls_h_img( $agent['logo'], trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'photo', 'itemprop' => 'image' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
             } else {
                 $agent_html['photo'] = '';
             }
             /** Add the name. */
             if ( ! empty( $instance['name'] ) && ( ! empty( $agent['user']['first_name'] ) || ! empty( $agent['user']['last_name'] ) ) ) {
-                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn' ), trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ) );
+                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn', 'itemprop' => 'name'  ), trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ) );
             } else {
                 $agent_html['name'] = '';
             }
             /** Add the email address. */
             if ( ! empty( $instance['email'] ) && ! empty( $agent['user']['email'] ) ) {
-                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email' ), pls_h_a( "mailto:{$agent['user']['email']}", $agent['user']['email'], array('itemtype' => 'email') ) );
+                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email', 'itemprop' => 'email'  ), pls_h_a( "mailto:{$agent['user']['email']}", $agent['user']['email'], array('itemtype' => 'email') ) );
             } else {
                 $agent_html['email'] = '';
             }
             /** Add the phone number. */
             if ( ! empty( $instance['phone'] ) && ! empty( $agent['user']['phone'] ) ) {
-                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone', 'itemtype' => 'phone' ), PLS_Format::phone($agent['user']['phone']) );
+                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone', 'itemprop' => 'phone' ), PLS_Format::phone($agent['user']['phone']) );
             } else {
                 $agent_html['phone'] = '';
             }
             /** Add the description. */
             if ( ! empty( $instance['description']) && !empty($agent['slogan'] ) ) {
-                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc' ), $agent['slogan'] );
+                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc', 'itemprop' => 'description'  ), $agent['slogan'] );
             } else {
                 $agent_html['description'] = '';
             }
@@ -323,7 +324,7 @@ class PLS_Widget_Agent extends WP_Widget {
             'title' => 'Have any questions?',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
-            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent">',
+            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent" itemscope itemtype="http://schema.org/Thing">',
             'after_widget' => '</section>',
             'widget_id' => ''
         );
@@ -331,7 +332,6 @@ class PLS_Widget_Agent extends WP_Widget {
 
         /** Merge the arguments with the defaults. */
         $args = wp_parse_args( $args, $arg_defaults );
-
 
         /** Define the default argument array. */
         $instance_defaults = array(
