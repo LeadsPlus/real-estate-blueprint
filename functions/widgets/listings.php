@@ -281,7 +281,6 @@ class PLS_Widget_Listings extends WP_Widget {
                     <?php endif ?>
                 </section>
                 <a class="learn-more" href="<?php echo $listing_data['cur_data']['url'];?>">Learn More</a>
-                <div class="clearfix"></div>
             </section>
          <?php
          $listing_html = ob_get_clean();
