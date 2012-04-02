@@ -12,7 +12,7 @@ class PLS_Pages {
 		}
 	}
 
-	function create_once ($pages_to_create, $force_template) {
+	function create_once ($pages_to_create) {
 		foreach ($pages_to_create as $page_info) {
 			$page = get_page_by_title($page_info['title']);
 			if (!isset($page->ID)) {
