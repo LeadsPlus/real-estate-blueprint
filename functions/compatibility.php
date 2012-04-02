@@ -122,8 +122,11 @@ class PLS_Plugin_API {
      * otherwise.
      * @since 0.0.1
      */
-    static function get_property_url( $id ) {
+    static function get_property_url( $id = false ) {
 
+        if (!$id) {
+            return false;
+        }
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( 'placester_get_property_url', $id );
 
