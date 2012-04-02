@@ -119,7 +119,19 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                     wp_enqueue_style( 'spinner' );
                 }
             }
-        }   
+        }
+        
+        if ( array_key_exists( 'masonry', $js[0] ) ) {
+            /** Register the script and style. */
+            wp_register_script( 'masonry', trailingslashit( PLS_JS_URL ) . 'scripts/masonry.js' , array( 'jquery'), NULL, true );
+
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['masonry'] ) ) {
+                if ( in_array( 'script', $js[0]['masonry'] ) ) {
+                    wp_enqueue_script( 'masonry' );
+                }
+            }
+        }
         
         if ( array_key_exists( 'floating', $js[0] ) ) {
             /** Register the script and style. */

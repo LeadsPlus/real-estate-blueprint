@@ -383,6 +383,25 @@ body.page-template-page-template-listings-php #container, body.page-template-pag
     .widget.widget_calendar table td {
       padding: 10px; }
 
+/* Property Details Page */
+body.single-property .basic-details ul {
+  list-style-type: none;
+  padding-left: 0; }
+  body.single-property .basic-details ul li {
+    float: left;
+    width: 135px;
+    margin: 5px 20px 5px 0; }
+body.single-property .amenities-section ul {
+  padding-left: 0;
+  min-height: 50px;
+  min-width: 600px;
+  list-style-type: none; }
+  body.single-property .amenities-section ul li {
+    padding: 10px 0;
+    width: 180px;
+    float: left;
+    overflow: hidden; }
+
 /* General Blog */
 .comment-list {
   list-style: none;
