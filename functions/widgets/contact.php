@@ -68,7 +68,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $template_url = get_bloginfo('template_url');
 
     
-        echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
+        echo '<section class="widget pls-contact-form side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
           echo '<h3>' . $title . '</h3>';
         } 
@@ -113,7 +113,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                   <?php } ?>
-                    <input type="submit" value="<?php echo $submit_value; ?>" tabindex="5" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" class="button-primary" tabindex="5" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  

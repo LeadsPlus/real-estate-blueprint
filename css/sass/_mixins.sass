@@ -5,6 +5,7 @@
 /*****  SET THESE  *****/
 // Colors
 $white: #fff
+$offwhite: #ddd
 $black: #000
 $black-light: #444 
 $gray: #777
@@ -50,8 +51,8 @@ $text-shadow-tertiary: 0 1px 1px $gray
 $radius: 5px
 $ul-list-style-image: none
 
-$border-primary: $gray-light
-$border-secondary: $gray
+$border-primary: $offwhite
+$border-secondary: $gray-light
 
 /*****  SET THESE  *****/
 // Media
@@ -65,24 +66,48 @@ $media-border-size: 1px
 // Backgrounds
 
 // Primary
-$primary-bg-color: $white
-$primary-bg-image: none
-$primary-bg-repeat: none
+$bg-color-primary: $white
+$bg-image-primary: none
+$bg-repeat-primary: none
 // Secondary
-$secondary-bg-color: $white
-$secondary-bg-image: none
-$secondary-bg-repeat: none
-// Accent
-$accent-bg-color: $gray
-$accent-bg-image: none
-$accent-bg-repeat: none
-
+$bg-color-secondary: $white
+$bg-image-secondary: none
+$bg-repeat-secondary: none
+// Tertiary
+$bg-color-tertiary: $white
+$bg-image-tertiary: none
+$bg-repeat-tertiary: none
+// 4th
+$bg-color-4: $white
+$bg-image-4: none
+$bg-repeat-4: none
+// 5th
+$bg-color-5: $offwhite
+$bg-image-5: none
+$bg-repeat-5: none
+// 6th
+$bg-color-6: $white
+$bg-image-6: none
+$bg-repeat-6: none
 
 
 
 /**/
 /* Mixins */
 /**/
+
+// P Tags
+@mixin p-font-styles
+  color: $black-light
+  margin: 10px 0
+  text-shadow: none
+  text-decoration: none
+  text-transform: none
+  line-height: 20px
+  font:
+    size: 15px
+    weight: 400
+    family: Helvetica, Arial
 
 // Anchors
 @mixin anchor
@@ -116,20 +141,35 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
 
 
 // Backgrounds
-@mixin primary-bg
-  background-color: $primary-bg-color
-  background-image: $primary-bg-image
-  background-repeat: $primary-bg-repeat
+@mixin bg-primary
+  background-color: $bg-color-primary
+  background-image: $bg-image-primary
+  background-repeat: $bg-repeat-primary
 
-@mixin secondary-bg
-  background-color: $secondary-bg-color
-  background-image: $secondary-bg-image
-  background-repeat: $secondary-bg-repeat
+@mixin bg-secondary
+  background-color: $bg-color-secondary
+  background-image: $bg-image-secondary
+  background-repeat: $bg-repeat-secondary
 
-@mixin accent-bg
-  background-color: $accent-bg-color
-  background-image: $accent-bg-image
-  background-repeat: $accent-bg-repeat
+@mixin bg-tertiary
+  background-color: $bg-color-tertiary
+  background-image: $bg-image-tertiary
+  background-repeat: $bg-repeat-tertiary
+
+@mixin bg-4
+  background-color: $bg-color-4
+  background-image: $bg-image-4
+  background-repeat: $bg-repeat-4
+
+@mixin bg-5
+  background-color: $bg-color-5
+  background-image: $bg-image-5
+  background-repeat: $bg-repeat-5
+
+@mixin bg-6
+  background-color: $bg-color-6
+  background-image: $bg-image-6
+  background-repeat: $bg-repeat-6
 
 
 // Box Shadow
@@ -137,22 +177,52 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
   box-shadow: 0px 0px 3px $black-light
   -webkit-box-shadow: 0px 0px 3px $black-light
   -moz-box-shadow: 0px 0px 3px $black-light
-// @mixin box-shadow-secondary
+@mixin box-shadow-secondary
+  box-shadow: 0px 1px 0px 1px #ddd
+  -webkit-box-shadow: 0px 1px 0px 1px #ddd
+  -moz-box-shadow: 0px 1px 0px 1px #ddd
 
-@mixin image-outline 
-  border: 1px solid #DBDBDB
-  padding: 10px
+
+// Containers
+.container_1, .container_2, .container_3, .container_4, .container_5, .container_6
+  float: left
+  
+.container_1
+  @include bg-primary
+
+@mixin container_2
+  @include bg-secondary
+  @include box-shadow-primary
+  padding: 0 10px
+.container_2
+  @include container_2
+
+@mixin container_3
+  @include bg-tertiary
+  @include box-shadow-secondary
+  padding: 0 10px
+.container_3
+  @include container_3
+
+@mixin container_4
+  @include bg-4
+  float: left
+  padding: 0 10px
+  border-bottom: 1px dotted $gray-light
 
 
-@mixin grey-button 
-  @include rounded-corners
-  background-color: #EEE
-  padding: 10px
-  color: #5e5e5e
-  &:hover
-    background-color: #5e5e5e
-    color: white
+.container_5
+  @include bg-5
 
+.container_6
+  @include bg-6
+
+
+// Set Specific Containers
+article.post
+  @include container_4
+
+// Buttons
 @mixin button($button-color-light, $button-color, $button-color-dark, $button-box-shadow, $button-text-shadow)
   padding: 10px 15px
   border-top: 1px solid $button-color-light
@@ -191,3 +261,70 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
   @include button($green-light, $green, $green-dark, $gray-light, $text-shadow-tertiary)
 
 
+/*****  SET THESE  *****/
+// Widgets
+@mixin widget
+  width: 290px
+  float: left
+  padding: 10px
+  margin-bottom: 15px
+  @include bg-secondary
+  @include box-shadow-primary
+  h3
+    margin: 0
+    padding: 10px 0
+  ul
+    list-style-type: none
+
+
+/*****  SET THESE  *****/
+// Fancybox
+#fancybox-content
+  width: 300px
+  h2
+    margin: 10px 10px 0 10px
+  // label
+  //   width: 140px
+  //   float: left
+  //   padding: 11px 15px 0 10px
+  //   font-size: 15px
+  //   cursor: default
+  //   clear: both
+  //   color: black
+  input[type="text"], input[type="password"]
+    float: left
+    width: 225px
+    height: 26px
+    border: 1px solid #3D6995
+    margin: 4px 0px 0 10px
+    background: #fafafa
+  input[type="submit"]
+    padding: 6px 14px 6px 14px
+    margin: 10px 40px 20px 0
+    cursor: pointer
+    float: right
+  .pl_login_alert
+    padding: 15px 10px 0 10px
+    color: #CD0A0A
+  #form_message_box
+    ul
+      list-style-type: none
+      li
+        color: #CD0A0A
+
+  #pl_lead_register_form
+    input[type="text"], input[type="password"]
+      width: 243px
+    input[type="submit"]
+      margin: 15px 40px 10px 0
+
+
+
+
+
+
+
+
+
+
+//

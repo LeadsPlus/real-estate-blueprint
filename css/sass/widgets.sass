@@ -1,0 +1,33 @@
+// Widgets
+.widget
+  @include widget
+  p
+    width: 100%
+    float: left
+  &.pls-agent
+    a
+      word-wrap: break-word
+  &.pls-recent-posts
+    .recent-post-title
+      margin-bottom: 0
+    .meta
+      margin: 0
+    .excerpt
+      margin: 5px 0
+    .read-more
+      margin-top: 0
+  &.pls-listings
+    .listing-item
+      margin-bottom: 20px
+      .listing-item-address
+        margin: 5px 0
+      .details
+        margin-bottom: 5px
+  &.pls-map
+    p.address
+      margin-top: 0
+  &.widget_calendar
+    table
+      margin: 0 auto
+      td
+        padding: 10px

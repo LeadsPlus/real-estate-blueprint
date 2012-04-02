@@ -25,7 +25,9 @@ class PLS_Widget_Office extends WP_Widget {
 			<?php $city_state_zip = empty($instance['city_state_zip']) ? ' ' : apply_filters('city_state_zip', $instance['city_state_zip']); ?>
 			<?php $lat = empty($instance['lat']) ? ' ' : apply_filters('lat', $instance['lat']); ?>
 			<?php $lng = empty($instance['lng']) ? ' ' : apply_filters('lng', $instance['lng']); ?>
-			
+			<?php $width = empty($instance['width']) ? ' ' : apply_filters('width', $instance['width']); ?>
+			<?php $height = empty($instance['height']) ? ' ' : apply_filters('height', $instance['height']); ?>
+
 			<h3><?php echo $title; ?></h3>
 
 			<section id="map-widget">
@@ -52,10 +54,10 @@ class PLS_Widget_Office extends WP_Widget {
 						});
 				</script>
 
-			<div id="simple_map" style="width: 240px; height: 130px;"></div>
+			<div id="simple_map" style="width: <?php echo $width; ?>px; height: <?php echo $height; ?>px;"></div>
 
-				<p class="office"><?php echo $subtitle; ?></p>
-				<p class="address"><?php echo $street_address; ?><br><?php echo $city_state_zip; ?></p>
+				<p class="office p4"><?php echo $subtitle; ?></p>
+				<p class="address h5"><?php echo $street_address; ?><br><?php echo $city_state_zip; ?></p>
 
 			</section><!-- /#map-widget -->
 
@@ -71,18 +73,22 @@ class PLS_Widget_Office extends WP_Widget {
 			$instance['city_state_zip'] = strip_tags($new_instance['city_state_zip']);
 			$instance['lat'] = strip_tags($new_instance['lat']);
 			$instance['lng'] = strip_tags($new_instance['lng']);
+			$instance['width'] = strip_tags($new_instance['width']);
+			$instance['height'] = strip_tags($new_instance['height']);
 
 		return $instance;
 	}
 	function form( $instance ) {
 		// Output admin widget options form
-			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Our Office', 'subtitle' => 'Stop by our office, we would love to see you!', 'street_address' => 'One Broadway', 'city_state_zip' => 'Cambridge, MA, 02142', 'lat' => '42.3630663', 'lng' => '-71.0838938' ) );
+			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Our Office', 'subtitle' => 'Stop by our office, we would love to see you!', 'street_address' => 'One Broadway', 'city_state_zip' => 'Cambridge, MA, 02142', 'lat' => '42.3630663', 'lng' => '-71.0838938', 'width' => '240', 'height' => '130' ) );
 			$title = strip_tags($instance['title']);
 			$subtitle = strip_tags($instance['subtitle']);
 			$street_address = strip_tags($instance['street_address']);
 			$city_state_zip = strip_tags($instance['city_state_zip']);
 			$lat = strip_tags($instance['lat']);
 			$lng = strip_tags($instance['lng']);
+			$width = strip_tags($instance['width']);
+			$height = strip_tags($instance['height']);
 	    ?>
 
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
@@ -91,6 +97,8 @@ class PLS_Widget_Office extends WP_Widget {
 			<p><label for="<?php echo $this->get_field_id('city_state_zip'); ?>"><?php echo __('City, State, Zip'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('city_state_zip'); ?>" name="<?php echo $this->get_field_name('city_state_zip'); ?>" type="text" value="<?php echo esc_attr($city_state_zip); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('lat'); ?>"><?php echo __('Latitude'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('lat'); ?>" name="<?php echo $this->get_field_name('lat'); ?>" type="text" value="<?php echo esc_attr($lat); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('lng'); ?>"><?php echo __('Longitude'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('lng'); ?>" name="<?php echo $this->get_field_name('lng'); ?>" type="text" value="<?php echo esc_attr($lng); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('width'); ?>"><?php echo __('Width'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr($width); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('height'); ?>"><?php echo __('Height'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr($height); ?>" /></label></p>
 
 
 	    <?php

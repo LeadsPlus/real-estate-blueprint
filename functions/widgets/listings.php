@@ -265,18 +265,18 @@ class PLS_Widget_Listings extends WP_Widget {
         ob_start();
         ?>
             <section class="listing-item">
-                <h4>
+                <p class="listing-item-address h4">
                     <a href="<?php echo $listing_data['cur_data']['url']; ?>"><?php echo $listing_data['location']['address'] ?></a>
-                </h4>
+                </p>
                 <section class="details">
                     <span class="bed"><?php echo $listing_data['cur_data']['beds']; ?> Beds</span>
                     <span class="bath"><?php echo $listing_data['cur_data']['baths'] ?> Baths</span>
-                    <span class="area"><?php echo $listing_data['cur_data']['sqft'] ?></span>
+                    <span class="area"><?php echo $listing_data['cur_data']['sqft'] ?> Sqft.</span>
                 </section>
                 <section class="featured-image">
                     <?php if ( is_array($listing_data['images']) ): ?>
                         <a href="<?php echo $listing_data['cur_data']['url'] ?>">
-                        <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 280, 'h' => 170, 'method' => 'crop'), 'fancybox' => true)); ?>
+                        <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 275, 'h' => 170, 'method' => 'crop'), 'fancybox' => true)); ?>
                         </a>
                     <?php endif ?>
                 </section>

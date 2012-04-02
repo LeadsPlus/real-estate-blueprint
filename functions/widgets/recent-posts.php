@@ -96,6 +96,13 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             /** Will hold the combined posts html. */
             $widget_body = '';
 
+            function custom_excerpt($length){
+              global $post;
+              $content = strip_tags($post->post_content);
+              preg_match('/^\s*+(?:\S++\s*+){1,'.$length.'}/', $content, $matches);
+              return $matches[0];
+            }
+            
             /** The loop. */
             while ( $query->have_posts() ) {
 
@@ -108,7 +115,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the post title. */
                 if ( ! empty( $instance['post_title'] ) )
-                    $post_html['post_title'] = pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title') );
+                    $post_html['post_title'] = pls_h_p(pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title')), array('class' => 'recent-post-title h5') );
 
                 /** Add the author. */
                 if ( ! empty( $instance['author'] ) )
@@ -120,23 +127,24 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the excerpt */
                 if ( ! empty( $instance['excerpt'] ) )
-                    $post_html['excerpt'] = pls_h_div( ( has_excerpt() ? get_the_excerpt() : '' ), array( 'class' => 'excerpt' ) );
+                    $post_html['excerpt'] = pls_h_p( ( has_excerpt() ? get_the_excerpt() : custom_excerpt(25) ), array( 'class' => 'excerpt p4' ) );
 
                 /** Add the read more link. */
                 if ( ! empty( $instance['read_more'] ) )
-                    $post_html['read_more'] = pls_h_a( get_permalink(), __( 'Read more', pls_get_textdomain() ), array( 'class' => 'read-more' ) );
+                    $post_html['read_more'] = pls_h_p(pls_h_a( get_permalink(), __( 'Read more', pls_get_textdomain() ) ), array( 'class' => 'read-more' ) );
 
                 /** Combine the post information. */
                 $post_item = pls_get_if_not_empty( $post_html['post_title'] ) . 
                     ( ! empty( $post_html['author'] ) || ! empty( $post_html['date'] ) ? 
-                    pls_h_p( sprintf( 'Posted%1$s%2$s.', pls_get_if_not_empty( $post_html['author'] ), pls_get_if_not_empty( $post_html['date'] ) ), array( 'class' => 'meta' ) ) : 
+                    pls_h_p( sprintf( 'Posted%1$s%2$s.', pls_get_if_not_empty( $post_html['author'] ), pls_get_if_not_empty( $post_html['date'] ) ), array( 'class' => 'meta p3' ) ) : 
                     '' ) .
                     pls_get_if_not_empty( $post_html['excerpt'] ) . 
                     pls_get_if_not_empty( $post_html['read_more'] ); 
 
                 global $post;
+
                 /** Wrap the post in an article element and filter its contents. */
-                $post_item = apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id );
+                $post_item = pls_h('article', array('class' => 'recent-post-single'), apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id ));
                  
                 /** Append the filtered post to the post list. */
                 $widget_body .= apply_filters( 'pls_widget_recent_posts_post_outer', $post_item, $post_html, $instance, $widget_id );
@@ -348,6 +356,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             // ) 
         ); 
 	}
+
 
     function process_defaults ($args, $instance) {
 

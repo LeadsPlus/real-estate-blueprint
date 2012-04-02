@@ -32,7 +32,6 @@ article.property-details {
             list-style-type: none;
             float: left;
             img {
-                @include image-outline;
                 margin: 10px 10px 10px 0;
              }
         }

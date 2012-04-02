@@ -123,53 +123,58 @@ class PLS_Partial_Get_Listings {
              ob_start();
              ?>
 
-        <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
-            <header class="grid_8 alpha">
-                <p><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $full_address ?>"><?php echo $full_address ?></a></p>
-            </header>
-            <div class="listing-item-content grid_8 alpha">
-                <div class="grid_8 alpha">
-                    <!-- If we have a picture, show it -->
-                    <?php if (is_array($listing_data['images'])): ?>
-                        <div class="listing-thumbnail">
-                            <div class="outline">
-                                <a href="<?php echo @$listing_data['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 250, 'h' => 150), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $full_address))); ?></a>
-                            </div>
-                        </div>
-                    <?php endif ?>
-						<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
-							<p><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></p>
-						<?php } ?>
+<div class="listing-item grid_8 alpha">
 
-						<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
-							<p><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></p>
-						<?php } ?>
+ <div class="listing-thumbnail grid_3 alpha">
+        <a href="<?php echo @$listing_data['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing_data['location']['full_address']))); ?></a>
+ </div>
 
-						<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
-							<p><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></p>
-						<?php } ?>
+ <div class="listing-item-details grid_5 omega">
+   <p class="listing-item-address h4"><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $listing_data['location']['address'] ?>"><?php echo $listing_data['location']['address'] . ', ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['postal']  ?></a>
+   </p>
 
-						<?php if (!empty($listing_data['cur_data']['price'])) { ?>
-							<p><span>Price:</span> <?php echo @$listing_data['cur_data']['price']; ?></p>
-						<?php } ?>
+   <div class="basic-details">
+     <ul>
+     	<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
+     		<li class="basic-details-beds p1"><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></li>
+     	<?php } ?>
 
-						<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
-							<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
-						<?php } ?>
+     	<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
+     		<li class="basic-details-baths p1"><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></li>
+     	<?php } ?>
 
-						<?php if (!empty($listing_data['cur_data']['desc'])): ?>
-							<p class="listing-description" class="grid_8 omega">
-								<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
-							</p>
-						<?php endif; ?>
-                    <div class="actions">
-                        <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
-												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
-                    </div>
-                </div>
-            </div><!-- .entry-summary -->
-        </div>
+     	<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
+     		<li class="basic-details-half-baths p1"><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></li>
+     	<?php } ?>
 
+     	<?php if (!empty($listing_data['cur_data']['price'])) { ?>
+     		<li class="basic-details-price p1"><span>Price:</span> <?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
+     	<?php } ?>
+
+     	<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
+     		<li class="basic-details-sqft p1"><span>Sqft:</span> <?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
+     	<?php } ?>
+
+       <?php if (!empty($listing_data['rets']['mls_id'])) { ?>
+         <li class="basic-details-mls p1"><span>MLS ID:</span> <?php echo @$listing_data['rets']['mls_id']; ?></li>
+       <?php } ?>
+     </ul>
+   </div>
+
+   <p class="listing-description p4">
+   	<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
+   </p>
+
+ </div>
+
+ <div class="actions">
+   <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
+   <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+ </div>
+
+ <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => $listing_data['rets']['aname'] , 'office_name' => $listing_data['rets']['oname'])); ?>
+
+</div>
 
              <?php
              $listing_html = ob_get_clean();

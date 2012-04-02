@@ -424,7 +424,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($include_submit) {
             $form_html['submit'] = apply_filters( 
                 pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
-                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
+                pls_h( 'input', array('class' => 'pls_search_button button-primary', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
                 $context_var
             );
             /** Append the form submit. */
