@@ -72,11 +72,13 @@ ul.chzn-results
 
 #placester_listings_list_length
   float: right
-  margin-top: -33px
+  margin-top: -53px
   font:
     size: 10pt
   .chzn-search
     display: none
+  .chzn-results
+    width: 100% !important
     
 .sort_wrapper
   .sort_item
@@ -86,10 +88,22 @@ ul.chzn-results
     font:
       size: 10pt
     .chzn-container
-      width: 100px !important
+      width: 110px !important
     .chzn-search
       display: none
     .chzn-drop
-      width: 98px !important
+      width: 108px !important
+    .chzn-results
+      width: 100% !important
 
+.dataTables_empty
+  color: red
 
+.dataTables_processing
+  position: absolute
+  margin: -100px 0 0 300px
+
+body.page-template-page-template-listings-php, body.page-template-page-template-client-php
+  #container
+    margin-top: 20px
+    

@@ -108,6 +108,19 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             }
         }
 
+        if ( array_key_exists( 'spinner', $js[0] ) ) {
+            /** Register the script and style. */
+            wp_register_script( 'spinner', trailingslashit( PLS_JS_URL ) . 'libs/spinner/spinner.js' , array( 'jquery'), NULL, true );
+            wp_register_style( 'spinner', trailingslashit( PLS_JS_URL ) . 'libs/spinner/spinner.css' );
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['spinner'] ) ) {
+                if ( in_array( 'script', $js[0]['spinner'] ) ) {
+                    wp_enqueue_script( 'spinner' );
+                    wp_enqueue_style( 'spinner' );
+                }
+            }
+        }   
+        
         if ( array_key_exists( 'floating', $js[0] ) ) {
             /** Register the script and style. */
             wp_register_script( 'floating', trailingslashit( PLS_JS_URL ) . 'scripts/floating.js' , array( 'jquery'), NULL, true );

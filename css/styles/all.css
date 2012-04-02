@@ -310,10 +310,12 @@ ul.chzn-results {
 
 #placester_listings_list_length {
   float: right;
-  margin-top: -33px;
+  margin-top: -53px;
   font-size: 10pt; }
   #placester_listings_list_length .chzn-search {
     display: none; }
+  #placester_listings_list_length .chzn-results {
+    width: 100% !important; }
 
 .sort_wrapper .sort_item {
   float: left;
@@ -321,11 +323,23 @@ ul.chzn-results {
   margin: 0;
   font-size: 10pt; }
   .sort_wrapper .sort_item .chzn-container {
-    width: 100px !important; }
+    width: 110px !important; }
   .sort_wrapper .sort_item .chzn-search {
     display: none; }
   .sort_wrapper .sort_item .chzn-drop {
-    width: 98px !important; }
+    width: 108px !important; }
+  .sort_wrapper .sort_item .chzn-results {
+    width: 100% !important; }
+
+.dataTables_empty {
+  color: red; }
+
+.dataTables_processing {
+  position: absolute;
+  margin: -100px 0 0 300px; }
+
+body.page-template-page-template-listings-php #container, body.page-template-page-template-client-php #container {
+  margin-top: 20px; }
 
 .widget {
   width: 290px;
