@@ -75,32 +75,33 @@ class PLS_Widget_Agent extends WP_Widget {
             unset( $agent_html['title'], $agent_html['width'], $agent_html['height'] );
 
             /** Add the photo. */
-            if ( ! empty( $instance['photo'] ) && ! empty( $agent['logo'] ) ) {
-                $agent_html['photo'] = pls_h_img( $agent['logo'], trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'photo', 'itemprop' => 'image' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
+            if ( ! empty( $instance['photo'] ) && ! empty( $agent['user']['headshot'] ) ) {
+                $agent_html['photo'] = pls_h_img( $agent['user']['headshot'], trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'photo', 'itemprop' => 'image' ) + ( ! empty( $instance['width'] ) ? array( 'width' => $instance['width'] ) : array() ) + ( ! empty( $instance['height'] ) ? array( 'height' => $instance['height'] ) : array() ) );
             } else {
                 $agent_html['photo'] = '';
             }
             /** Add the name. */
             if ( ! empty( $instance['name'] ) && ( ! empty( $agent['user']['first_name'] ) || ! empty( $agent['user']['last_name'] ) ) ) {
-                $agent_html['name'] = pls_h( 'h5', array( 'class' => 'fn', 'itemprop' => 'name'  ), trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ) );
+                $agent_html['name'] = pls_h_p(trim( $agent['user']['first_name'] . ' ' . $agent['user']['last_name'] ), array( 'class' => 'fn h5', 'itemprop' => 'name'  ) );
             } else {
                 $agent_html['name'] = '';
             }
             /** Add the email address. */
             if ( ! empty( $instance['email'] ) && ! empty( $agent['user']['email'] ) ) {
-                $agent_html['email'] = pls_h( 'span', array( 'class' => 'email', 'itemprop' => 'email'  ), pls_h_a( "mailto:{$agent['user']['email']}", $agent['user']['email'], array('itemtype' => 'email') ) );
+                $agent_html['email'] = pls_h_p(pls_h_a( "mailto:{$agent['user']['email']}", $agent['user']['email'] ), array( 'class' => 'email', 'itemprop' => 'email' ) );
             } else {
                 $agent_html['email'] = '';
             }
             /** Add the phone number. */
             if ( ! empty( $instance['phone'] ) && ! empty( $agent['user']['phone'] ) ) {
-                $agent_html['phone'] = pls_h( 'span', array( 'class' => 'phone', 'itemprop' => 'phone' ), PLS_Format::phone($agent['user']['phone']) );
+                $agent_html['phone'] = pls_h_p(PLS_Format::phone($agent['user']['phone']), array( 'class' => 'phone', 'itemprop' => 'phone' ) );
             } else {
                 $agent_html['phone'] = '';
             }
             /** Add the description. */
-            if ( ! empty( $instance['description']) && !empty($agent['slogan'] ) ) {
-                $agent_html['description'] = pls_h( 'p', array( 'class' => 'desc', 'itemprop' => 'description'  ), $agent['slogan'] );
+            if ( ! empty( $instance['description']) && pls_get_option('pls-user-description') ) {
+              $agent_bio = pls_get_option('pls-user-description');
+                $agent_html['description'] = pls_h_p($agent_bio, array( 'class' => 'desc p4', 'itemprop' => 'description' ) );
             } else {
                 $agent_html['description'] = '';
             }
@@ -108,7 +109,7 @@ class PLS_Widget_Agent extends WP_Widget {
 
 
             /** Combine the agent information. */
-            $widget_body = $agent_html['photo'] . $agent_html['name'] . $agent_html['description'] . $agent_html['email'] . $agent_html['phone']; 
+            $widget_body = $agent_html['photo'] . $agent_html['name'] . $agent_html['email'] . $agent_html['phone'] . $agent_html['description']; 
 
             /** Wrap the agent information in a section element. */
             $widget_body = apply_filters( 'pls_widget_agent_inner', $widget_body, $agent_html, $agent, $instance, $widget_id );
@@ -324,7 +325,7 @@ class PLS_Widget_Agent extends WP_Widget {
             'title' => 'Have any questions?',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
-            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent" itemscope itemtype="http://schema.org/RealEstateAgent">',
+            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent" itemscope="" itemtype="http://schema.org/RealEstateAgent">',
             'after_widget' => '</section>',
             'widget_id' => ''
         );

@@ -360,6 +360,15 @@ body.page-template-page-template-listings-php #container, body.page-template-pag
   .widget p {
     width: 100%;
     float: left; }
+  .widget.pls-agent img {
+    margin: 0 10px 0 5px;
+    float: left; }
+  .widget.pls-agent p {
+    width: 160px; }
+    .widget.pls-agent p.fn, .widget.pls-agent p.email, .widget.pls-agent p.phone, .widget.pls-agent p.desc {
+      margin: 0 0 5px 0; }
+    .widget.pls-agent p.desc {
+      line-height: 17px; }
   .widget.pls-agent a {
     word-wrap: break-word; }
   .widget.pls-recent-posts .recent-post-title {

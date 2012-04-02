@@ -173,14 +173,14 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha">
+<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
 
   <div class="listing-thumbnail grid_3 alpha">
-         <a href="<?php echo @$listing['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address']))); ?></a>
+         <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>
   </div>
 
   <div class="listing-item-details grid_5 omega">
-    <p class="listing-item-address h4"><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a>
+    <p class="listing-item-address h4" itemprop="name"><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>" itemprop="url"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a>
     </p>
 
     <div class="basic-details">
@@ -198,7 +198,7 @@ class PLS_Partials_Get_Listings_Ajax {
       	<?php } ?>
 
       	<?php if (!empty($listing['cur_data']['price'])) { ?>
-      		<li class="basic-details-price p1"><span>Price:</span> <?php echo PLS_Format::number($listing['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
+      		<li class="basic-details-price p1" itemprop="price"><span>Price:</span> <?php echo PLS_Format::number($listing['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
       	<?php } ?>
 
       	<?php if (!empty($listing['cur_data']['avail_on'])) { ?>
@@ -211,14 +211,14 @@ class PLS_Partials_Get_Listings_Ajax {
       </ul>
     </div>
 
-    <p class="listing-description p4">
+    <p class="listing-description p4" itemprop="description">
     	<?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
     </p>
 
   </div>
 
   <div class="actions">
-    <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
+    <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" itemprop="url">View Property Details</a>
     <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
   </div>
     

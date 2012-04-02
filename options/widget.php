@@ -14,14 +14,6 @@ PLS_Style::add(array(
 				"selector" => "aside h3",
 				"type" => "typography"));
 
-		// PLS_Style::add(array(
-		// 		"name" => "Widget Title Border",
-		// 		"desc" => "",
-		// 		"selector" => "aside h3",
-		// 		"id" => "widget_title_border",
-		// 		"type" => "border"));
-
-
 		PLS_Style::add(array(
 				"name" => "Search Widget",
 				"desc" => "These options will customize the sidebar search widget.",
@@ -33,13 +25,6 @@ PLS_Style::add(array(
 						"id" => "widget_search_label_typography",
 						"selector" => "aside .pls-quick-search label",
 						"type" => "typography"));
-
-				// PLS_Style::add(array(
-				// 		"name" => "Quick Search Widget - Search Button Rounded Edges",
-				// 		"desc" => "",
-				// 		"id" => "widget_search_button_radius",
-				// 		"selector" => ".pls-quick-search input.pls_search_button",
-				// 		"type" => "radius"));
 
 		PLS_Style::add(array(
 				"name" => "Agent Widget",

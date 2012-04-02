@@ -22,7 +22,7 @@ class PLS_Partials_Property_Details {
 	        ob_start();
 	        ?>
 
-					<h2 itemprop="name"><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
+					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span></h2>
 
 					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
@@ -30,7 +30,7 @@ class PLS_Partials_Property_Details {
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
-								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'photos'))) ?>
+								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'image'))); ?>
 								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
 							</div>
 
@@ -40,7 +40,7 @@ class PLS_Partials_Property_Details {
 									<div class="grid_8 alpha">
 										<ul class="property-image-gallery grid_8 alpha">
 											<?php foreach ($listing_data['images'] as $images): ?>
-												<li><?php echo PLS_Image::load($images['url'], array('resize' => array('w' => 100, 'h' => 75), 'fancybox' => true)) ?></li>
+												<li><?php echo PLS_Image::load($images['url'], array('resize' => array('w' => 100, 'h' => 75), 'fancybox' => true, 'as_html' => true, 'html' => array('itemprop' => 'image'))); ?></li>
 											<?php endforeach ?>
 										</ul>
 									</div>
@@ -123,7 +123,7 @@ class PLS_Partials_Property_Details {
                         <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
                     </div>
 	            </div>
-        		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => $listing_data['rets']['aname'] , 'office_name' => $listing_data['rets']['oname'])); ?>
+        		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
 
 			<?php
 	        $html = ob_get_clean();
