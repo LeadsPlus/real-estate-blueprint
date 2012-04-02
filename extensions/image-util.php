@@ -124,7 +124,7 @@ class PLS_Image {
 		} else {
 			ob_start();
 			?>
-			<img class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="<?php echo @$html['alt']; ?>" title="<?php echo $html['title'] ?>" />
+			<img class="<?php echo @$html['img_classes']; ?>" style="width: <?php echo @$resize['w']; ?>px; height: <?php echo @$resize['h']; ?>px; overflow: hidden;" src="<?php echo $new_image ? $new_image : $old_image; ?>" alt="<?php echo @$html['alt']; ?>" title="<?php echo $html['title'] ?>" itemprop="image" />
 			<?php
 		
 			return trim(ob_get_clean());

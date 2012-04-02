@@ -22,9 +22,9 @@ class PLS_Partials_Property_Details {
 	        ob_start();
 	        ?>
 
-					<h2 itemprop="address"><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
+					<h2 itemprop="name"><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
 
-					<p class="listing_type"> <?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
+					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
 					<div class="clearfix"></div>
 
@@ -38,7 +38,7 @@ class PLS_Partials_Property_Details {
 
 								<div id="slideshow" class="clearfix theme-default left bottomborder">
 									<div class="grid_8 alpha">
-										<ul class='property-image-gallery grid_8 alpha'>
+										<ul class="property-image-gallery grid_8 alpha">
 											<?php foreach ($listing_data['images'] as $images): ?>
 												<li><?php echo PLS_Image::load($images['url'], array('resize' => array('w' => 100, 'h' => 75), 'fancybox' => true)) ?></li>
 											<?php endforeach ?>
@@ -57,10 +57,10 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['half_baths']) && ($listing_data['cur_data']['half_baths'] != null)): ?>
                           <li><span>Half Baths: </span><?php echo $listing_data['cur_data']['half_baths'] ?></li>
                         <?php endif; ?>
-                        <li><span>Price: </span><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
+                        <li itemprop="price"><span>Price: </span><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
                         <li><span>Square Feet: </span><?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
-                          <li><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
+                          <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <?php endif; ?>
                         <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
                         	<li><span>MLS #: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
