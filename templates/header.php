@@ -50,7 +50,7 @@
     <div class="container_12 clearfix">
 
     	<?php pls_do_atomic( 'before_header' ); ?>
-        <header id="branding" role="banner">
+        <header id="branding" role="banner" itemscope itemtype="http://schema.org/Organization">
 
             <?php pls_do_atomic( 'open_header' ); ?>
             <div class="wrapper">
@@ -58,21 +58,21 @@
 
 									<?php if (pls_get_option('pls-site-logo')): ?>
 										<div id="logo">
-											<img src="<?php echo pls_get_option('pls-site-logo') ?>" alt="<?php bloginfo( 'name' ); ?>">
+											<img src="<?php echo pls_get_option('pls-site-logo') ?>" alt="<?php bloginfo( 'name' ); ?>" itemprop="image">
 										</div>
 									<?php endif; ?>
 
 									<?php if (pls_get_option('pls-site-title')): ?>
-										<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo pls_get_option('pls-site-title'); ?>" rel="home"><?php echo pls_get_option('pls-site-title'); ?></a></h1>
+										<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo pls_get_option('pls-site-title'); ?>" rel="home" itemprop="url"><?php echo pls_get_option('pls-site-title'); ?></a></h1>
 
 										<?php if (pls_get_option('pls-site-subtitle')): ?>
-											<h2 id="site-description"><?php echo pls_get_option('pls-site-subtitle'); ?></h2>
+											<h2 id="site-description" itemprop="description"><?php echo pls_get_option('pls-site-subtitle'); ?></h2>
 										<?php endif ?>
 									<?php endif; ?>
 
 									<?php if (!pls_get_option('pls-site-logo') && !pls_get_option('pls-site-title')): ?>
-										<h1 id="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-										<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
+										<h1 id="site-title" itemprop="name"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home" itemprop="url"><?php bloginfo( 'name' ); ?></a></h1>
+										<h2 id="site-description" itemprop="description"><?php bloginfo( 'description' ); ?></h2>
 									<?php endif; ?>
 									
 									

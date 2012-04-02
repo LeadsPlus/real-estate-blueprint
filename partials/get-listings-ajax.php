@@ -222,7 +222,7 @@ class PLS_Partials_Get_Listings_Ajax {
     <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
   </div>
     
-  <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => $listing['rets']['aname'] , 'office_name' => $listing['rets']['oname'])); ?>
+  <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => @$listing['rets']['aname'] , 'office_name' => @$listing['rets']['oname'])); ?>
 
 </div>
             <?php

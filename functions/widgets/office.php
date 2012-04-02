@@ -20,7 +20,7 @@ class PLS_Widget_Office extends WP_Widget {
 
     <?php $agent = PLS_Plugin_API::get_user_details(); ?>
     
-		<section class="widget pls-map widget-pls-map" itemscope itemtype="http://schema.org/Organization">
+		<section class="widget pls-map widget-pls-map" itemscope itemtype="http://schema.org/LocalBusiness">
 			<?php $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']); ?>
 			<?php $subtitle = empty($instance['subtitle']) ? ' ' : apply_filters('subtitle', $instance['subtitle']); ?>
 			<?php $street_address = empty($instance['street_address']) ? ' ' : apply_filters('street_address', $instance['street_address']); ?>

@@ -13,7 +13,7 @@
 
     <?php pls_do_atomic( 'before_entry' ); ?>
     
-    <article class="grid_8 alpha property-details" <?php post_class() ?> id="post-<?php the_ID(); ?>">
+    <article class="grid_8 alpha property-details" <?php post_class() ?> id="post-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Residence">
         <?php pls_do_atomic( 'open_entry' ); ?>
 
         <?php pls_do_atomic( 'before_entry_content' ); ?>

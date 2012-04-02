@@ -115,23 +115,23 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the post title. */
                 if ( ! empty( $instance['post_title'] ) )
-                    $post_html['post_title'] = pls_h_p(pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title')), array('class' => 'recent-post-title h5') );
+                    $post_html['post_title'] = pls_h_p(pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title', 'itemprop' => 'url')), array('class' => 'recent-post-title h5', 'itemprop' => 'name') );
 
                 /** Add the author. */
                 if ( ! empty( $instance['author'] ) )
-                    $post_html['author'] = sprintf( ' ' . __( 'by <span class="author">%1$s</span>', pls_get_textdomain() ), get_the_author() );
+                    $post_html['author'] = sprintf( ' ' . __( 'by <span class="author" itemprop="author">%1$s</span>', pls_get_textdomain() ), get_the_author() );
 
                 /** Add the date. */
                 if ( ! empty( $instance['date'] ) )
-                    $post_html['date'] = sprintf( ' ' . __( 'on <time datetime="%1$s">%2$s</time>', pls_get_textdomain() ), get_the_date( 'Y-m-d' ), get_the_date() );
+                    $post_html['date'] = sprintf( ' ' . __( 'on <time datetime="%1$s" itemprop="datePublished">%2$s</time>', pls_get_textdomain() ), get_the_date( 'Y-m-d' ), get_the_date() );
 
                 /** Add the excerpt */
                 if ( ! empty( $instance['excerpt'] ) )
-                    $post_html['excerpt'] = pls_h_p( ( has_excerpt() ? get_the_excerpt() : custom_excerpt(25) ), array( 'class' => 'excerpt p4' ) );
+                    $post_html['excerpt'] = pls_h_p( ( has_excerpt() ? get_the_excerpt() : custom_excerpt(25) ), array( 'class' => 'excerpt p4', 'itemprop' => 'description' ) );
 
                 /** Add the read more link. */
                 if ( ! empty( $instance['read_more'] ) )
-                    $post_html['read_more'] = pls_h_p(pls_h_a( get_permalink(), __( 'Read more', pls_get_textdomain() ) ), array( 'class' => 'read-more' ) );
+                    $post_html['read_more'] = pls_h_p(pls_h_a( get_permalink(), __( 'Read more', pls_get_textdomain() ) ), array( 'class' => 'read-more', 'itemprop' => 'url' ) );
 
                 /** Combine the post information. */
                 $post_item = pls_get_if_not_empty( $post_html['post_title'] ) . 
@@ -144,7 +144,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                 global $post;
 
                 /** Wrap the post in an article element and filter its contents. */
-                $post_item = pls_h('article', array('class' => 'recent-post-single'), apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id ));
+                $post_item = pls_h('article', array('class' => 'recent-post-single', 'itemscope' => '', 'itemtype' => "http://schema.org/BlogPosting"), apply_filters( 'pls_widget_recent_posts_post_inner', $post_item, $post_html, $instance, $widget_id ));
                  
                 /** Append the filtered post to the post list. */
                 $widget_body .= apply_filters( 'pls_widget_recent_posts_post_outer', $post_item, $post_html, $instance, $widget_id );
@@ -154,7 +154,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             /** Wrap the widget body in a section element. */
             $widget_body = pls_h(
                 'section',
-                array( 'class' => 'widget-inner' ),
+                array( 'class' => 'widget-inner', 'itemscope' => '', 'itemtype' => 'http://schema.org/Blog' ),
                 /** Apply a filter on the combined list of posts. */
                 apply_filters( 'pls_widget_recent_posts_inner', $widget_body, $instance, $widget_id )
             );
@@ -365,7 +365,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             'title' => 'Latest Blog Posts',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
-            'before_widget' => '<section id="pls-recent-posts-3" class="widget pls-recent-posts widget-pls-recent-posts">',
+            'before_widget' => '<section id="pls-recent-posts-3" class="widget pls-recent-posts widget-pls-recent-posts" itemscope itemtype="http://schema.org/Blog">',
             'after_widget' => '</section>',
             'widget_id' => ''
         );

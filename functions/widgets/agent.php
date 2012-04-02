@@ -324,7 +324,7 @@ class PLS_Widget_Agent extends WP_Widget {
             'title' => 'Have any questions?',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
-            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent" itemscope itemtype="http://schema.org/Thing">',
+            'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent" itemscope itemtype="http://schema.org/RealEstateAgent">',
             'after_widget' => '</section>',
             'widget_id' => ''
         );

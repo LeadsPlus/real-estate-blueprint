@@ -22,22 +22,21 @@ class PLS_Partials_Property_Details {
 	        ob_start();
 	        ?>
 
-					<h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
+					<h2 itemprop="address"><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
 
-					<span class="listing_type"> <?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></span>
+					<p class="listing_type"> <?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
 					<div class="clearfix"></div>
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
-								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
+								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'photos'))) ?>
 								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">
 
 								<div id="slideshow" class="clearfix theme-default left bottomborder">
-									<h3>Image Gallery</h3>
 									<div class="grid_8 alpha">
 										<ul class='property-image-gallery grid_8 alpha'>
 											<?php foreach ($listing_data['images'] as $images): ?>
@@ -72,7 +71,7 @@ class PLS_Partials_Property_Details {
                 <div class="details-wrapper grid_8 alpha">
                     <h3>Property Description</h3>
                     <?php if (!empty($listing_data['cur_data']['desc'])): ?>
-                        <p> <?php echo $listing_data['cur_data']['desc']; ?> </p>
+                        <p itemprop="description"><?php echo $listing_data['cur_data']['desc']; ?></p>
                     <?php else: ?>
                         <p> No description available </p>
                     <?php endif ?>
