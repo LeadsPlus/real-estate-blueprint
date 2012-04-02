@@ -273,5 +273,39 @@ footer
       text-align: right
       
       
-      
+// Client Profile
+body.page-template-page-template-client-php
+  #edit_profile
+    form#edit_profile_form
+      div
+        float: left
+        width: 290px
+        margin: 0 20px 10px 0
+        label
+          font:
+            size: 15px
+        input[type="text"]
+          width: 270px
+  .ui-dialog
+    top: 25% !important
+    left: 25% !important
+  .ui-dialog-buttonset
+    button
+      @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
+  .placester_contact
+    margin: 0 0 50px 0
+    float: left
+  #client-details
+    float: right
+    width: 288px
+    li
+      list-style-type: none
+      line-height: 20px
+      margin-left: 15px
+      &:first-child
+        margin-top: 10px
+      &:last-child
+        margin-bottom: 10px
+    a, a:visited
+      padding-right: 10px
 //

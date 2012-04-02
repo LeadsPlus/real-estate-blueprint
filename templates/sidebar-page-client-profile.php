@@ -48,7 +48,7 @@
 			<h3>About You:</h3>
 			<a style="float: right;" class="edit_profile_button" id="edit_profile_button">Edit Profile</a>
 				<?php if (empty($cur_data)): ?>
-					<div style="float: left; margin: 60px 30px; font-size: 16px">No contact info, add some <a style="float: none; margin: 0px; postion: none; color: #8B6D3E" id="edit_profile_button">here</a></div>
+					<div style="float: left; margin: 60px 30px;">No contact info, add some <a style="float: none; margin: 0px;" id="edit_profile_button">here</a></div>
 					<div class="clear"></div>
 				<?php else: ?>
 
