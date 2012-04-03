@@ -6,10 +6,7 @@
  
  .side-ctnr.placester_contact input[type="text"], .side-ctnr.placester_contact input[type="email"], .side-ctnr.placester_contact textarea {
     width: 200px;
-    padding: 5px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
-    color: #444;
 }       
  
  .side-ctnr.placester_contact input[type="submit"]{

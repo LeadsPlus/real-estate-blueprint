@@ -232,7 +232,7 @@ form, fieldset, .placester_listings_list_length {
   form input[type="text"], form input[type="email"], form input[type="password"], form textarea, fieldset input[type="text"], fieldset input[type="email"], fieldset input[type="password"], fieldset textarea, .placester_listings_list_length input[type="text"], .placester_listings_list_length input[type="email"], .placester_listings_list_length input[type="password"], .placester_listings_list_length textarea {
     border: 1px solid #cccccc;
     background-color: white;
-    color: #777777;
+    color: #999999;
     box-shadow: inset 0px 11px 9px -12px #cccccc;
     -webkit-box-shadow: inset 0px 11px 9px -12px #cccccc;
     -moz-box-shadow: inset 0px 11px 9px -12px #cccccc;
@@ -313,31 +313,6 @@ body.page-template-page-template-listings-php #container, body.page-template-pag
   margin-top: 20px; }
 
 /****  SET THESE  **** */
-#fancybox-content {
-  width: 300px; }
-  #fancybox-content h2 {
-    margin: 10px 10px 0 10px; }
-  #fancybox-content input[type="text"], #fancybox-content input[type="password"] {
-    float: left;
-    width: 225px;
-    height: 26px;
-    margin: 4px 0px 0 10px; }
-  #fancybox-content input[type="submit"] {
-    padding: 6px 14px 6px 14px;
-    margin: 10px 40px 20px 0;
-    cursor: pointer;
-    float: right; }
-  #fancybox-content .pl_login_alert {
-    padding: 15px 10px 0 10px; }
-  #fancybox-content #form_message_box ul {
-    list-style-type: none; }
-    #fancybox-content #form_message_box ul li {
-      color: #cd0a0a; }
-  #fancybox-content #pl_lead_register_form input[type="text"], #fancybox-content #pl_lead_register_form input[type="password"] {
-    width: 243px; }
-  #fancybox-content #pl_lead_register_form input[type="submit"] {
-    margin: 15px 40px 10px 0; }
-
 .widget {
   width: 290px;
   float: left;
@@ -420,6 +395,11 @@ body.single-property article #slideshow ul.property-image-gallery {
     margin-right: 10px; }
 
 /* General Blog */
+#main_content article header h3 {
+  margin-bottom: 0; }
+#main_content article header .p5 {
+  margin: 0; }
+
 .comment-list {
   list-style: none;
   margin: 10px 0 20px 0;
@@ -580,9 +560,8 @@ p {
   font-size: 12px; }
 
 .p5 {
-  color: #444444;
-  font-size: 13px;
-  text-shadow: 0 1px 1px #999999; }
+  color: #999999;
+  font-size: 14px; }
 
 .p6 {
   color: black;
@@ -692,10 +671,9 @@ table tbody tr th {
   margin-top: 20px;
   padding-top: 20px; }
 
-table#placester_listings_list tr {
-  float: left;
-  margin-bottom: 1px solid #cccccc; }
-  table#placester_listings_list tr td {
+table#placester_listings_list tr, table#placester_fav_list tr {
+  float: left; }
+  table#placester_listings_list tr td, table#placester_fav_list tr td {
     padding: 0;
     border: none; }
 
@@ -742,6 +720,9 @@ table#placester_listings_list tr {
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none; }
+
+.pl_spinner {
+  border: none; }
 
 footer {
   width: 100%;
@@ -817,13 +798,70 @@ body.page-template-page-template-client-php .placester_contact {
 body.page-template-page-template-client-php #client-details {
   float: right;
   width: 288px; }
-  body.page-template-page-template-client-php #client-details li {
-    list-style-type: none;
-    line-height: 20px;
-    margin-left: 15px; }
-    body.page-template-page-template-client-php #client-details li:first-child {
+  body.page-template-page-template-client-php #client-details ul {
+    padding-left: 0; }
+    body.page-template-page-template-client-php #client-details ul li {
+      list-style-type: none;
+      line-height: 20px;
+      margin-left: 0px; }
+      body.page-template-page-template-client-php #client-details ul li:first-child {
+        margin-top: 10px; }
+      body.page-template-page-template-client-php #client-details ul li:last-child {
+        margin-bottom: 10px; }
+    body.page-template-page-template-client-php #client-details ul a, body.page-template-page-template-client-php #client-details ul a:visited {
+      padding-right: 10px; }
+
+#fancybox-wrap {
+  width: 290px !important; }
+  #fancybox-wrap #fancybox-content {
+    width: 270px !important; }
+    #fancybox-wrap #fancybox-content label {
+      width: 200px; }
+    #fancybox-wrap #fancybox-content h2 {
+      margin: 10px 10px 0 10px; }
+    #fancybox-wrap #fancybox-content input[type="text"], #fancybox-wrap #fancybox-content input[type="password"] {
+      float: left;
+      width: 225px;
+      height: 26px;
+      margin: 4px 0px 0 10px; }
+    #fancybox-wrap #fancybox-content input[type="submit"] {
+      padding: 6px 14px 6px 14px;
+      margin: 10px 40px 20px 0;
+      cursor: pointer;
+      float: right; }
+    #fancybox-wrap #fancybox-content .login-remember {
+      padding: 0 20px; }
+      #fancybox-wrap #fancybox-content .login-remember input[type="checkbox"] {
+        margin-right: 10px; }
+    #fancybox-wrap #fancybox-content input#pl_register {
+      padding: 10px 15px;
+      border-top: 1px solid #999999;
+      border-left: 1px solid #777777;
+      border-right: 1px solid #777777;
+      border-bottom: 1px solid #777777;
+      background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#444444));
+      background: -moz-linear-gradient(top, #999999, #444444);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-light', endColorstr='$button-color-dark');
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      margin-bottom: 15px;
+      color: #fefefe;
+      box-shadow: 0 0 0 1px #999999;
+      -webkit-box-shadow: 0 0 0 1px #999999;
+      -moz-box-shadow: 0 0 0 1px #999999;
+      text-shadow: 0 1px 1px #777777;
+      font-weight: 600;
+      font-size: 16px;
+      margin-left: 8px;
       margin-top: 10px; }
-    body.page-template-page-template-client-php #client-details li:last-child {
-      margin-bottom: 10px; }
-  body.page-template-page-template-client-php #client-details a, body.page-template-page-template-client-php #client-details a:visited {
-    padding-right: 10px; }
+      #fancybox-wrap #fancybox-content input#pl_register:hover {
+        background: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+        background: -moz-linear-gradient(top, #444444, #999999);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-dark', endColorstr='$button-color-light'); }
+      #fancybox-wrap #fancybox-content input#pl_register:active {
+        background: #777777; }
+    #fancybox-wrap #fancybox-content #form_message_box ul {
+      list-style-type: none; }
+      #fancybox-wrap #fancybox-content #form_message_box ul li {
+        color: red; }

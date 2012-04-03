@@ -3,7 +3,6 @@
 @import "nav"
 @import "forms"
 @import "widgets"
-// @import "listings-search"
 @import "listings-detail"
 @import "blog"
 
@@ -73,9 +72,8 @@ p
   font:
     size: 12px
 .p5
-  color: $black-light
-  font-size: 13px
-  text-shadow: 0 1px 1px $gray-light
+  color: $gray-light
+  font-size: 14px
 .p6
   color: $black
   font-size: 13px
@@ -189,10 +187,9 @@ table
     padding-top: 20px
 
 
-table#placester_listings_list
+table#placester_listings_list, table#placester_fav_list
   tr
     float: left
-    margin-bottom: 1px solid #ccc
     td
       padding: 0
       border: none
@@ -233,7 +230,7 @@ table#placester_listings_list
 
 
 
-// Exempt Google Maps from borders/backgrounds/box-shadows
+// Exempt Google Maps, spinner from borders/backgrounds/box-shadows
 #simple_map
   img, embed
     border: none
@@ -241,6 +238,8 @@ table#placester_listings_list
     box-shadow: none
     -webkit-box-shadow: none
     -moz-box-shadow: none
+.pl_spinner
+  border: none
 
 footer
   width: 100%
@@ -298,14 +297,51 @@ body.page-template-page-template-client-php
   #client-details
     float: right
     width: 288px
-    li
-      list-style-type: none
-      line-height: 20px
-      margin-left: 15px
-      &:first-child
-        margin-top: 10px
-      &:last-child
-        margin-bottom: 10px
-    a, a:visited
-      padding-right: 10px
+    ul
+      padding-left: 0
+      li
+        list-style-type: none
+        line-height: 20px
+        margin-left: 0px
+        &:first-child
+          margin-top: 10px
+        &:last-child
+          margin-bottom: 10px
+      a, a:visited
+        padding-right: 10px
+
+
+
+// Fancybox
+#fancybox-wrap
+  width: 290px !important
+  #fancybox-content
+    width: 270px !important
+    label
+      width: 200px
+    h2
+      margin: 10px 10px 0 10px
+    input[type="text"], input[type="password"]
+      float: left
+      width: 225px
+      height: 26px
+      margin: 4px 0px 0 10px
+    input[type="submit"]
+      padding: 6px 14px 6px 14px
+      margin: 10px 40px 20px 0
+      cursor: pointer
+      float: right
+    .login-remember
+      padding: 0 20px
+      input[type="checkbox"]
+        margin-right: 10px
+    input#pl_register
+      @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
+    #form_message_box
+      ul
+        list-style-type: none
+        li
+          color: red
+
+
 //

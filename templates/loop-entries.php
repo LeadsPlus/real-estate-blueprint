@@ -18,24 +18,24 @@
 
             <?php pls_do_atomic( 'open_entry' ); ?>
 
-            <section class="main-post-section">
+            <section class="main-post-section" itemscope itemtype="http://schema.org/BlogPosting">
 
               <header>
 
-                  <h4><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf( 'Permalink to %1$s', the_title_attribute( 'echo=false' ) ) ?>"><?php the_title(); ?></a></h4>
-                  <time datetime="<?php the_time('Y-m-d')?>"><?php the_time('F jS, Y') ?></time>
-                  <span class="author"><?php printf( 'by %1$s', get_the_author()) ?></span>
+                  <h3 itemprop="name"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf( 'Permalink to %1$s', the_title_attribute( 'echo=false' ) ) ?>" itemprop="url"><?php the_title(); ?></a></h3>
+                  <p class="p5"><time datetime="<?php the_time('Y-m-d')?>" itemprop="datePublished"><?php the_time('F jS, Y') ?></time>
+                  <span class="author" itemprop="author"><?php printf( 'by %1$s', get_the_author()) ?></span></p>
 
               </header>
 
               <?php pls_do_atomic( 'before_entry_content' ); ?>
 
-              <div class="entry-summary">
+              <div class="entry-summary" itemprop="description">
                   <?php the_excerpt(); ?>
               </div><!-- .entry-summary -->
 
               <div class="entry-meta">
-                  <a class="more-link" href="<?php the_permalink() ?>"> <?php _e( 'Continue reading <span class="meta-nav">&rarr;</span>', pls_get_textdomain() ) ?></a>
+                  <a class="more-link" href="<?php the_permalink() ?>" itemprop="url"> <?php _e( 'Continue reading <span class="meta-nav">&rarr;</span>', pls_get_textdomain() ) ?></a>
               </div><!-- .entry-meta -->
 
               <?php pls_do_atomic( 'after_entry_content' ); ?>
