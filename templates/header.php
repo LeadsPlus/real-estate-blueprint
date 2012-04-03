@@ -10,7 +10,7 @@
  * @subpackage Template
  */
 ?>
-<!doctype html>
+<!doctype html itemscope itemtype="http://schema.org/LocalBusiness">
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 7]> <html class="no-js ie7 oldie" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8]> <html class="no-js ie8 oldie" <?php language_attributes(); ?>> <![endif]-->
@@ -43,10 +43,16 @@
   	<!-- SEO Tags -->
   	<meta name="description" content="<?php echo get_bloginfo( 'description' ); ?>">
   	<meta name="author" content="<?php echo @PLS_Plugin_API::get_user_details()->first_name . ' ' . @PLS_Plugin_API::get_user_details()->last_name; ?>">
+
   	<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ) ?>" />
   	<meta property="og:title" content="<?php pls_document_title(); ?>" />
   	<meta property="og:url" content="<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>" />
-  	<meta itemprop="name" content="<?php echo get_bloginfo( 'name' ) ?>">
+
+    <meta itemprop="name" content="<?php echo @pls_get_option('pls-company-name') ?>">
+    <meta itemprop="email" content="<?php echo @pls_get_option('pls-company-email') ?>">
+    <meta itemprop="address" content="<?php echo @pls_get_option('pls-company-street') ?><?php echo @pls_get_option('pls-company-locality') ?><?php echo @pls_get_option('pls-company-region') ?>">
+    <meta itemprop="description" content="<?php echo @pls_get_option('pls-company-description') ?>">
+    <meta itemprop="url" content="<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
 
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
