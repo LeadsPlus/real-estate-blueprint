@@ -205,6 +205,28 @@ nav {
           -webkit-border-radius: 5px;
           background-color: #EEE; }
 
+.page-template-page-template-listings-php form .pls_search_form {
+  float: left;
+  width: 200px;
+  margin-bottom: 10px; }
+  .page-template-page-template-listings-php form .pls_search_form .chzn-container {
+    width: 150px !important; }
+  .page-template-page-template-listings-php form .pls_search_form .chzn-drop, .page-template-page-template-listings-php form .pls_search_form .chzn-results {
+    width: 148px !important; }
+.page-template-page-template-listings-php #content {
+  border-top: 1px solid #dbdbdb;
+  margin-top: 20px;
+  padding-top: 20px; }
+
+.pls-quick-search form .pls_search_form {
+  float: left;
+  width: 140px;
+  margin-bottom: 10px; }
+  .pls-quick-search form .pls_search_form .chzn-container {
+    width: 120px !important; }
+  .pls-quick-search form .pls_search_form .chzn-drop, .pls-quick-search form .pls_search_form .chzn-results {
+    width: 118px !important; }
+
 form, fieldset, .placester_listings_list_length {
   float: left; }
   form label, form input, form textarea, form .chzn-container, form select, fieldset label, fieldset input, fieldset textarea, fieldset .chzn-container, fieldset select, .placester_listings_list_length label, .placester_listings_list_length input, .placester_listings_list_length textarea, .placester_listings_list_length .chzn-container, .placester_listings_list_length select {
@@ -657,19 +679,6 @@ table tbody tr th {
 
 #slideshow {
   margin-bottom: 20px; }
-
-.page-template-page-template-listings-php form .pls_search_form {
-  float: left;
-  width: 200px;
-  margin-bottom: 10px; }
-  .page-template-page-template-listings-php form .pls_search_form .chzn-container {
-    width: 150px !important; }
-  .page-template-page-template-listings-php form .pls_search_form .chzn-drop, .page-template-page-template-listings-php form .pls_search_form .chzn-results {
-    width: 148px !important; }
-.page-template-page-template-listings-php #content {
-  border-top: 1px solid #dbdbdb;
-  margin-top: 20px;
-  padding-top: 20px; }
 
 table#placester_listings_list tr, table#placester_fav_list tr {
   float: left; }

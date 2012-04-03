@@ -57,7 +57,7 @@ class PLS_Quick_Search_Widget extends WP_Widget {
 
         /** Define the default argument array. */
         $arg_defaults = array(
-            'title' => 'Have any questions?',
+            'title' => 'Quick Search',
             'before_title' => '<h3>',
             'after_title' => '</h3>',
             'before_widget' => '<section id="pls-quick-search-3" class="widget pls-quick-search widget-pls-quick-search">',

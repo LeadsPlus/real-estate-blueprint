@@ -39,6 +39,15 @@
 		if ( is_singular() ) wp_enqueue_script( "comment-reply" ); ?>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="all" />
+
+  	<!-- SEO Tags -->
+  	<meta name="description" content="<?php echo get_bloginfo( 'description' ); ?>">
+  	<meta name="author" content="<?php echo @PLS_Plugin_API::get_user_details()->first_name . ' ' . @PLS_Plugin_API::get_user_details()->last_name; ?>">
+  	<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ) ?>" />
+  	<meta property="og:title" content="<?php pls_document_title(); ?>" />
+  	<meta property="og:url" content="<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>" />
+  	<meta itemprop="name" content="<?php echo get_bloginfo( 'name' ) ?>">
+
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
     <?php wp_head(); ?>
