@@ -168,6 +168,15 @@ table
 // Slideshow
 #slideshow
   margin-bottom: 20px
+  #slider
+    a
+      img
+        border: none
+        padding: 0
+
+.orbit-wrapper
+  .timer
+    display: none
 
 
 table#placester_listings_list, table#placester_fav_list
@@ -181,6 +190,16 @@ table#placester_listings_list, table#placester_fav_list
   @include container_4
   padding: 0 0 20px 0
   margin-bottom: 20px
+  p
+    margin: 0
+    line-height: 20px
+  .actions
+    width: 100%
+    clear: both
+    .more-link
+      float: right
+    a.pl_prop_fav_link
+      float: left
   .listing-item-details
     float: left
     .basic-details
@@ -198,7 +217,9 @@ table#placester_listings_list, table#placester_fav_list
   .actions
     margin: 15px 0
     float: left
-    
+
+
+
 .compliance-wrapper
   float: left
   p.search-compliance, img, p.search-compliance-disclaimer, p.property-details-compliance-disclaimer
@@ -326,6 +347,16 @@ body.page-template-page-template-client-php
         li
           color: red
 
+// Client Login
+#client-details
+  li
+    list-style-type: none
+    font:
+      weight: 600
+    span
+      font:
+        weight: 400
+
 
 
 // Mixins that can't be in external SASS files
@@ -391,7 +422,7 @@ ul.chzn-results
       color: $white !important
     &.group-result
       color: $gray-light !important
-.chzn-container-multi
+
 .chzn-single
   span
     color: $gray

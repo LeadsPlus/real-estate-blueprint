@@ -108,4 +108,38 @@ ul.chzn-results {
 body.page-template-page-template-listings-php #container, body.page-template-page-template-client-php #container {
   margin-top: 20px; }
 
-/****  SET THESE  **** */
+.dataTables_info {
+  color: #5e5e5e;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #dbdbdb; }
+
+.dataTables_paginate {
+  margin-top: 20px;
+  text-align: center; }
+  .dataTables_paginate a, .dataTables_paginate a:visited {
+    font-size: 11pt;
+    font-family: Helvetica;
+    color: #555555;
+    padding: 6px 8px;
+    text-decoration: none;
+    cursor: pointer; }
+    .dataTables_paginate a:hover, .dataTables_paginate a:visited:hover {
+      color: #1982d1; }
+    .dataTables_paginate a.first, .dataTables_paginate a:visited.first {
+      float: left;
+      margin-top: -6px; }
+    .dataTables_paginate a.last, .dataTables_paginate a:visited.last {
+      float: right;
+      margin-top: -6px; }
+    .dataTables_paginate a.paginate_active, .dataTables_paginate a:visited.paginate_active {
+      font-weight: 600; }
+    .dataTables_paginate a.previous, .dataTables_paginate a:visited.previous {
+      padding-right: 30px;
+      margin-top: -8px; }
+    .dataTables_paginate a.next, .dataTables_paginate a:visited.next {
+      padding-left: 30px;
+      margin-top: -8px; }
+
+.complex-search #pls_listings_search_results {
+  margin-top: 30px; }

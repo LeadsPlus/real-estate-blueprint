@@ -175,6 +175,11 @@ article.post {
   .widget ul {
     list-style-type: none; }
 
+header hgroup {
+  float: left; }
+header .header-membership {
+  float: right; }
+
 ul {
   padding: 0 0 0 20px;
   margin: 10px 0px; }
@@ -326,7 +331,42 @@ ul.chzn-results {
 body.page-template-page-template-listings-php #container, body.page-template-page-template-client-php #container {
   margin-top: 20px; }
 
-/****  SET THESE  **** */
+.dataTables_info {
+  color: #5e5e5e;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #dbdbdb; }
+
+.dataTables_paginate {
+  margin-top: 20px;
+  text-align: center; }
+  .dataTables_paginate a, .dataTables_paginate a:visited {
+    font-size: 11pt;
+    font-family: Helvetica;
+    color: #555555;
+    padding: 6px 8px;
+    text-decoration: none;
+    cursor: pointer; }
+    .dataTables_paginate a:hover, .dataTables_paginate a:visited:hover {
+      color: #1982d1; }
+    .dataTables_paginate a.first, .dataTables_paginate a:visited.first {
+      float: left;
+      margin-top: -6px; }
+    .dataTables_paginate a.last, .dataTables_paginate a:visited.last {
+      float: right;
+      margin-top: -6px; }
+    .dataTables_paginate a.paginate_active, .dataTables_paginate a:visited.paginate_active {
+      font-weight: 600; }
+    .dataTables_paginate a.previous, .dataTables_paginate a:visited.previous {
+      padding-right: 30px;
+      margin-top: -8px; }
+    .dataTables_paginate a.next, .dataTables_paginate a:visited.next {
+      padding-left: 30px;
+      margin-top: -8px; }
+
+.complex-search #pls_listings_search_results {
+  margin-top: 30px; }
+
 .widget p {
   width: 100%;
   float: left; }
@@ -446,6 +486,10 @@ body.single-property article #slideshow ul.property-image-gallery {
     width: 95%; }
     #respond .form-submit input {
       float: right; }
+
+article.post nav {
+  padding: 0;
+  margin-bottom: 20px; }
 
 body {
   font-family: Helvetica, Arial;
@@ -614,6 +658,12 @@ table tbody tr th {
 
 #slideshow {
   margin-bottom: 20px; }
+  #slideshow #slider a img {
+    border: none;
+    padding: 0; }
+
+.orbit-wrapper .timer {
+  display: none; }
 
 table#placester_listings_list tr, table#placester_fav_list tr {
   float: left; }
@@ -630,6 +680,16 @@ table#placester_listings_list tr, table#placester_fav_list tr {
   border-bottom: 1px dotted #999999;
   padding: 0 0 20px 0;
   margin-bottom: 20px; }
+  .listing-item p {
+    margin: 0;
+    line-height: 20px; }
+  .listing-item .actions {
+    width: 100%;
+    clear: both; }
+    .listing-item .actions .more-link {
+      float: right; }
+    .listing-item .actions a.pl_prop_fav_link {
+      float: left; }
   .listing-item .listing-item-details {
     float: left; }
     .listing-item .listing-item-details .basic-details ul {
@@ -809,6 +869,12 @@ body.page-template-page-template-client-php #client-details {
       list-style-type: none; }
       #fancybox-wrap #fancybox-content #form_message_box ul li {
         color: red; }
+
+#client-details li {
+  list-style-type: none;
+  font-weight: 600; }
+  #client-details li span {
+    font-weight: 400; }
 
 .comment-list {
   background-color: white;

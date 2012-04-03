@@ -124,6 +124,40 @@ body.page-template-page-template-listings-php, body.page-template-page-template-
   #container
     margin-top: 20px
     
+.dataTables_info
+  color: #5e5e5e
+  margin-top: 20px
+  padding-top: 10px
+  border-top: 1px solid #DBDBDB
+.dataTables_paginate
+  margin-top: 20px
+  text-align: center
+  a, a:visited
+    font:
+      size: 11pt
+      family: Helvetica
+    color: #555
+    padding: 6px 8px
+    text-decoration: none
+    cursor: pointer
+    &:hover
+      color: #1982D1
+    &.first
+      float: left
+      margin-top: -6px
+    &.last
+      float: right
+      margin-top: -6px
+    &.paginate_active
+      font-weight: 600
+    &.previous
+      padding-right: 30px
+      margin-top: -8px
+    &.next
+      padding-left: 30px
+      margin-top: -8px
 
-/*****  SET THESE  *****/
-
+// All Submit buttons styled the same
+.complex-search
+  #pls_listings_search_results
+    margin-top: 30px
