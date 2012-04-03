@@ -181,8 +181,8 @@ ul {
 
 nav {
   margin: 15px 0 0 0;
-  border-top: 1px solid #DBDBDB;
-  border-bottom: 1px solid #DBDBDB;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
   padding: 0 10px; }
   nav ul {
     padding-left: 0;
@@ -198,12 +198,12 @@ nav {
         display: block;
         padding: 5px 10px;
         font-size: 15px;
-        color: #555; }
+        color: #555555; }
         nav ul li a:hover {
           border-radius: 5px;
           -moz-border-radius: 5px;
           -webkit-border-radius: 5px;
-          background-color: #EEE; }
+          background-color: #eeeeee; }
 
 .page-template-page-template-listings-php form .pls_search_form {
   float: left;
