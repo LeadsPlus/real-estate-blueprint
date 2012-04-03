@@ -327,4 +327,74 @@ body.page-template-page-template-client-php
           color: red
 
 
+
+// Mixins that can't be in external SASS files
+.comment-list
+  @include container_3
+#respond
+  @include container_2
+  .form-submit
+    input
+      @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
+
+nav
+  ul
+    li
+      @include rounded-corners
+      a 
+        &:hover
+          @include rounded-corners
+
+          // Search Page
+          .page-template-page-template-listings-php
+            form
+              .pls_search_form
+                float: left
+                width: 200px
+                margin-bottom: 10px
+                .chzn-container
+                  width: 150px !important
+                .chzn-drop, .chzn-results
+                  width: 148px !important
+            #content
+              border-top: 1px solid #DBDBDB
+              margin-top: 20px
+              padding-top: 20px
+
+          .pls-quick-search
+            form
+              .pls_search_form
+                float: left
+                width: 140px
+                margin-bottom: 10px
+                .chzn-container
+                  width: 120px !important
+                .chzn-drop, .chzn-results
+                  width: 118px !important
+
+
+// Forms
+form, fieldset, .placester_listings_list_length
+  label, p
+    color: $gray
+  p
+    @include p-font-styles
+  input[type="text"], input[type="email"], input[type="password"], textarea
+    background-color: $white
+    color: $gray-light
+
+ul.chzn-results
+  li
+    color: $gray !important
+    &.highlighted
+      background-color: $gray !important
+      color: $white !important
+    &.group-result
+      color: $gray-light !important
+.chzn-container-multi
+.chzn-single
+  span
+    color: $gray
+
+
 //

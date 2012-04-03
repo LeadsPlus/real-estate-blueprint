@@ -1,0 +1,19 @@
+nav {
+  margin: 15px 0 0 0;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 0 10px; }
+  nav ul {
+    padding-left: 0;
+    float: left; }
+    nav ul li {
+      float: left;
+      width: auto; }
+      nav ul li a {
+        position: relative;
+        display: block;
+        padding: 5px 10px;
+        font-size: 15px;
+        color: #555555; }
+        nav ul li a:hover {
+          background-color: #eeeeee; }

@@ -48,11 +48,11 @@ if ( !defined( 'PLS_LOAD_STYLES' ) || ( defined( 'PLS_LOAD_STYLES' ) && ( PLS_LO
             if ( get_theme_support( 'pls-default-css-nav' ) ) {
                 wp_enqueue_style( 'pls-default-css-nav', trailingslashit( PLS_CSS_URL ) . 'styles/nav.css' );
             }   
-            if ( get_theme_support( 'pls-default-css-sidebar-widgets' ) ) {
-                wp_enqueue_style( 'pls-default-css-sidebar-widgets', trailingslashit( PLS_CSS_URL ) . 'styles/sidebar-widgets.css' );
+            if ( get_theme_support( 'pls-default-css-widgets' ) ) {
+                wp_enqueue_style( 'pls-default-css-widgets', trailingslashit( PLS_CSS_URL ) . 'styles/widgets.css' );
             }   
-            if ( get_theme_support( 'pls-default-css-listings-search' ) ) {
-                wp_enqueue_style( 'pls-default-css-listings-search', trailingslashit( PLS_CSS_URL ) . 'styles/listings-search.css' );
+            if ( get_theme_support( 'pls-default-css-forms' ) ) {
+                wp_enqueue_style( 'pls-default-css-forms', trailingslashit( PLS_CSS_URL ) . 'styles/forms.css' );
             }   
             if ( get_theme_support( 'pls-default-css-listings-detail' ) ) {
                 wp_enqueue_style( 'pls-default-css-listings-detail', trailingslashit( PLS_CSS_URL ) . 'styles/css-listings-detail.css' );
