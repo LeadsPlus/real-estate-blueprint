@@ -16,7 +16,7 @@
 
     <div class="wrapper">
 
-        <?php get_template_part( 'menu', 'subsidiary' ); ?>
+        <?php PLS_Route::get_template_part( 'menu', 'subsidiary' ); ?>
 
         <?php pls_do_atomic( 'footer' ); ?>
 

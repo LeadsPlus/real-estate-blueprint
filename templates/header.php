@@ -65,7 +65,7 @@
     <div class="container_12 clearfix">
 
     	<?php pls_do_atomic( 'before_header' ); ?>
-        <header id="branding" role="banner" itemscope itemtype="http://schema.org/Organization">
+        <header id="branding" role="banner" class="grid_12" itemscope itemtype="http://schema.org/Organization">
 
             <?php pls_do_atomic( 'open_header' ); ?>
             <div class="wrapper">
@@ -89,15 +89,18 @@
 										<h1 id="site-title" itemprop="name"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home" itemprop="url"><?php bloginfo( 'name' ); ?></a></h1>
 										<h2 id="site-description" itemprop="description"><?php bloginfo( 'description' ); ?></h2>
 									<?php endif; ?>
-									
-									
-                    
+
                 </hgroup>
+
+                <?php pls_do_atomic( 'header' ); ?>
+
                 <div class="header-membership"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
-                <?php pls_do_atomic( 'header' ); ?>    
+
             </div>
+            <?php pls_do_atomic( 'before_nav'); ?>
+
+            <?php PLS_Route::get_template_part( 'menu', 'primary' ); // Loads the menu-primary.php template. ?>
 
             <?php pls_do_atomic( 'close_header' ); ?>
         </header>
     <?php pls_do_atomic( 'after_header' ); ?>
-    <?php PLS_Route::get_template_part( 'menu', 'primary' ); // Loads the menu-primary.php template. ?>

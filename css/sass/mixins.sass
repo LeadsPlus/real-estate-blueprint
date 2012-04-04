@@ -37,7 +37,7 @@ $anchor-secondary-hover: $black-light
 
 /*****  SET THESE  *****/
 // Font Family
-$font-normal: Helvetica, Arial
+$font-primary: Helvetica, Arial
 $font-secondary: Arial
 
 // Text Shadows
@@ -184,43 +184,43 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
 
 
 // Containers
-.container_1, .container_2, .container_3, .container_4, .container_5, .container_6
+.section_1, .section_2, .section_3, .section_4, .section_5, .section_6
   float: left
   
-.container_1
+.section_1
   @include bg-primary
 
-@mixin container_2
+@mixin section_2
   @include bg-secondary
   @include box-shadow-primary
   padding: 0 10px
-.container_2
-  @include container_2
+.section_2
+  @include section_2
 
-@mixin container_3
+@mixin section_3
   @include bg-tertiary
   @include box-shadow-secondary
   padding: 0 10px
-.container_3
-  @include container_3
+.section_3
+  @include section_3
 
-@mixin container_4
+@mixin section_4
   @include bg-4
   float: left
   padding: 0 10px
   border-bottom: 1px dotted $gray-light
 
 
-.container_5
+.section_5
   @include bg-5
 
-.container_6
+.section_6
   @include bg-6
 
 
 // Set Specific Containers
 article.post
-  @include container_4
+  @include section_4
 
 // Buttons
 @mixin button($button-color-light, $button-color, $button-color-dark, $button-box-shadow, $button-text-shadow)
