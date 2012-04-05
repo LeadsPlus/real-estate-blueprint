@@ -13,7 +13,7 @@
 
     <?php pls_do_atomic( 'before_entry' ); ?>
     
-    <article <?php post_class() ?> id="post-<?php the_ID(); ?>" class="grid_8 alpha">
+    <article <?php post_class() ?> id="post-<?php the_ID(); ?>" class="grid_8 alpha" itemscope itemtype="BlogPosting">
 
         <?php pls_do_atomic( 'open_entry' ); ?>
 

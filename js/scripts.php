@@ -168,6 +168,15 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             }
         }
 
+        if ( array_key_exists( 'jquery-tools', $js[0] ) ) {
+            wp_register_script( 'jquery-tools', trailingslashit( PLS_JS_URL ) . 'libs/jquery-tools/jquery.tools.min.js' , array( 'jquery'), NULL, true );
+            if ( is_array( $js[0]['jquery-ui'] ) ) {
+                if ( in_array( 'script', $js[0]['jquery-tools'] ) ) {
+                    wp_enqueue_script( 'jquery-tools' );
+                }
+            }
+        }
+
     }
 
 
