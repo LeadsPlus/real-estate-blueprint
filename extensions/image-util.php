@@ -23,15 +23,11 @@ a link back to my site would be nice too.
 // Include the GD image manipulation library. 
 include(trailingslashit ( PLS_EXT_DIR ) . 'image-util/image-resize-writer.php');
 
-
+PLS_Image::init();
 class PLS_Image {
 	
 	static function init() {
-		if (!is_admin()) {
-			self::enqueue();
-		}
 		add_action('wp_head', array(__CLASS__,'enqueue'));
-
 	}
 
     static function enqueue() {
@@ -164,6 +160,4 @@ class PLS_Image {
 				
 	}
 }// end class 
-
-PLS_Image::init();
 ?>
