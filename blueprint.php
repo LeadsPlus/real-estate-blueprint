@@ -59,7 +59,12 @@ class Placester_Blueprint {
 	 *
 	 * @since 0.0.1
 	 */
-	function __construct() {
+	function __construct($version = '0.0') {
+
+        $version_locked = '1.0';
+        if ($version != $version_locked) {
+            die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
+        }
 
         /** Let the world know that this is a Placester theme. */
         global $i_am_a_placester_theme;
