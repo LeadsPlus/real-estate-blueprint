@@ -660,7 +660,11 @@ $PLS_API_DEFAULT_LISTING = array(
             'phone' => '+1231231234'
         ),
         'images' => false,
-        'tracker_url' => false
+        'tracker_url' => false,
+        'rets' => array(
+            'aname' => 'John Smith',
+            'oname' => 'Smith Realty Group'
+        )
         )
     )
 );
