@@ -117,16 +117,18 @@ class PLS_Partials_Listing_Search_Form {
         $user_beds_start = pls_get_option('pls-option-bed-min');
         $user_beds_end = pls_get_option('pls-option-bed-max');
         if (is_numeric($user_beds_start) && is_numeric($user_beds_end) ) {
-            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_beds_start, $user_beds_end );
+          $beds_range = range( $user_beds_start, $user_beds_end );
+            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $beds_range, $beds_range );
         } else {
             $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );    
         }
-                
+
         /** Prepend the default empty valued element. */
         $user_baths_start = pls_get_option('pls-option-bath-min');
         $user_baths_end = pls_get_option('pls-option-bath-max');
         if (is_numeric($user_baths_start) && is_numeric($user_baths_end) ) {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_baths_start, $user_baths_end );
+          $baths_range =  range( $user_baths_start, $user_baths_end );
+            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $baths_range, $baths_range );
         } else {
             $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
         }
@@ -135,7 +137,8 @@ class PLS_Partials_Listing_Search_Form {
         $user_half_baths_start = pls_get_option('pls-option-half-bath-min');
         $user_half_baths_end = pls_get_option('pls-option-half-bath-max');
         if (is_numeric($user_half_baths_start) && is_numeric($user_half_baths_end) ) {
-            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_half_baths_start, $user_half_baths_end );
+          $half_bath_range = range( $user_half_baths_start, $user_half_baths_end );
+            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $half_bath_range, $half_bath_range );
         } else {
             $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
         }
