@@ -91,9 +91,11 @@ class PLS_Partials_Listing_Search_Form {
           return '';
         }
         $not_empty_flag = false;
-        foreach ($user_search_params as $key => $value) {
-          if ($value != '0') {
-            $not_empty_flag = true;
+        if (is_array($user_search_params)) {
+          foreach ($user_search_params as $key => $value) {
+            if ($value != '0') {
+              $not_empty_flag = true;
+            }
           }
         }
         if ($not_empty_flag) {
