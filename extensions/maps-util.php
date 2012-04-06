@@ -90,7 +90,7 @@ class PLS_Map {
 		  
 		  var <?php echo $map_js_var; ?>;
 
-		  $(function() { 
+		  jQuery(function() { 
 
 		  	var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
 		    var myOptions = {

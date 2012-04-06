@@ -29,7 +29,7 @@ class PLS_Slideshow {
 
         $slideshow_support = get_theme_support( 'pls-slideshow' );
 
-        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, true );
+        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, false );
         wp_register_style( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/orbit.css' );
 
         if ( is_array( $slideshow_support ) ) {
@@ -203,8 +203,8 @@ class PLS_Slideshow {
 		        ob_start();
 		?>
 		<script type="text/javascript">
-		$(window).load(function() {
-		    $('#slider').orbit({
+		jQuery(window).load(function($) {
+		    jQuery('#slider').orbit({
 						animation: '<?php echo $animation ?>', 																	// fade, horizontal-slide, vertical-slide, horizontal-push
 						animationSpeed: <?php echo $animationSpeed ?>, 													// how fast animtions are
 						timer: <?php echo $timer ?>, 																						// true or false to have the timer

@@ -33,12 +33,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         /** Register Modernizr. Will be enqueued using 'wp_print_scripts'. */
         wp_register_script( 'modernizr', trailingslashit( PLS_JS_URL ) . 'libs/modernizr/modernizr.min.js' , array(), '2.0.6' );
 
-        /**
-         *  Reregister the latest jQuery from the Google CDN. Will be enqueued 
-         *  using 'wp_print_scripts' along with its fallback.
-         */
-        wp_deregister_script( 'jquery' );
-        wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', array(), NULL );
         // declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
         wp_localize_script( 'jquery', 'info', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
         
@@ -47,7 +41,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          *  notification about needing the plugin. Localize the notification 
          *  message. Accompanied by plugin-nags.css.
          */
-
         wp_register_script( 'get-listings-ajax', trailingslashit( PLS_JS_URL ) . 'scripts/get-listings-ajax.js' , NULL, NULL, true );
         wp_enqueue_script('get-listings-ajax');
 

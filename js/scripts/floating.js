@@ -1,5 +1,4 @@
-
-$(document).ready(function($) {
+jQuery(document).ready(function($) {
 	
 //this is the floating content
   var $floatingbox = $('#pls-floating-map-widget');
