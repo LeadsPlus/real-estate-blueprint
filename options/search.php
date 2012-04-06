@@ -49,6 +49,7 @@ PLS_Style::add(array(
 				'deposit' => 'Deposit',
 				'ngb_pubsch' => 'Local Public Schools',
 				'beds_avail' => 'Beds Available',
+				'hide_all' => 'Hide All',
 			),
 			"type" => "multicheck"));
 
