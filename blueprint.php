@@ -61,7 +61,7 @@ class Placester_Blueprint {
 	 */
 	function __construct($version = '0.0') {
 
-        $version_locked = '1.1';
+        $version_locked = '1.2';
         if ($version != $version_locked) {
             die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
