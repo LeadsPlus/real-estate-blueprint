@@ -112,7 +112,10 @@ class PLS_Widget_Agent extends WP_Widget {
             echo apply_filters( 'pls_widget_agent', $widget_title . $widget_body, $widget_title, $before_title, $after_title, $widget_body, $agent_html, $agent,  $instance, $widget_id );
 
             /* Close the theme's widget wrapper. */
-            echo '<div class="clearfix"></div>';
+            if ($args['clearfix']) {
+                echo '<div class="clearfix"></div>';
+            }
+            
             echo $after_widget;
 
         } elseif ( current_user_can( 'administrator' ) ) {
@@ -321,7 +324,8 @@ class PLS_Widget_Agent extends WP_Widget {
             'after_title' => '</h3>',
             'before_widget' => '<section id="pls-agent-3" class="widget pls-agent widget-pls-agent">',
             'after_widget' => '</section>',
-            'widget_id' => ''
+            'widget_id' => '',
+            'clearfix' => true
         );
 
 
