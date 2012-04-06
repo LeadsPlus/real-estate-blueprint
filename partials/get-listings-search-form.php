@@ -257,7 +257,7 @@ class PLS_Partials_Listing_Search_Form {
          */
 
         /** Add the bedrooms select element. */
-        if ($bedrooms == 1 && isset($_POST['metadata']) ) {
+        if ($bedrooms == 1 ) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'metadata[beds]') + $form_opt_attr['bedrooms'],
@@ -268,7 +268,7 @@ class PLS_Partials_Listing_Search_Form {
         
 
         /** Add the bathroms select element. */
-        if ($bathrooms == 1 && isset($_POST['metadata'])) {
+        if ($bathrooms == 1) {
             $form_html['bathrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'metadata[baths]' ) + $form_opt_attr['bathrooms'],
@@ -278,7 +278,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the bathroms select element. */
-        if ($half_baths == 1 && isset($_POST['metadata'])) {
+        if ($half_baths == 1) {
             $form_html['half_baths'] = pls_h( 
                 'select',
                 array( 'name' => 'metadata[half_baths]' ) + $form_opt_attr['half_baths'],
@@ -289,7 +289,7 @@ class PLS_Partials_Listing_Search_Form {
         
 
         /** Add the property type select element. */
-        if ($property_type == 1 && isset($_POST['metadata'])) {
+        if ($property_type == 1) {
             $form_html['property_type'] = pls_h(
                 'select',
                 array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
@@ -299,7 +299,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the listing type select element. */
-        if ($listing_types == 1 && isset($_POST['metadata'])) {
+        if ($listing_types == 1) {
             $form_html['listing_types'] = pls_h(
                 'select',
                 array( 'name' => 'listing_types') + $form_opt_attr['listing_types'],
@@ -308,7 +308,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the zoning type select element. */
-        if ($zoning_types == 1 && isset($_POST['metadata'])) {
+        if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
                 array( 'name' => 'zoning_types'  ) + $form_opt_attr['zoning_types'],
@@ -317,7 +317,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the purchase type select element. */
-        if ($purchase_types == 1 && isset($_POST['metadata'])) {
+        if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
                 array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
@@ -326,7 +326,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the availability select element. */
-        if ($available_on == 1 && isset($_POST['metadata'])) {
+        if ($available_on == 1) {
             $form_html['available_on'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[avail_on]' ) + $form_opt_attr['available_on'],
@@ -335,7 +335,7 @@ class PLS_Partials_Listing_Search_Form {
         }
                                    
         /** Add the cities select element. */
-        if ($cities == 1 && isset($_POST['metadata'])) {
+        if ($cities == 1) {
             $form_html['cities'] = pls_h(
                 'select',
                 array( 'name' => 'location[locality]' ) + $form_opt_attr['cities'],
@@ -344,7 +344,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the cities select element. */
-        if ($states == 1 && isset($_POST['metadata'])) {
+        if ($states == 1) {
                 $form_html['states'] = pls_h(
                 'select',
                 array( 'name' => 'location[region]' ) + $form_opt_attr['states'],
@@ -353,7 +353,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the cities select element. */
-        if ($zips == 1 && isset($_POST['metadata'])) {
+        if ($zips == 1) {
             $form_html['zips'] = pls_h(
                 'select',
                 array( 'name' => 'location[postal]' ) + $form_opt_attr['zips'],
@@ -362,7 +362,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the minimum price select element. */
-        if ($min_price == 1 && isset($_POST['metadata'])) {
+        if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
@@ -371,7 +371,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the maximum price select element. */
-        if ($max_price == 1 && isset($_POST['metadata'])) {
+        if ($max_price == 1) {
             $form_html['max_price'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
