@@ -346,7 +346,15 @@ class PLS_Format {
 				"historic" => "Historic",
 				"blc_deck_pt" => "Balcony/Deck/Patio",
 				"dryer" => "Dryer",
-				"washer" => "Washer"
+				"washer" => "Washer",
+				"tax_amount" => "Tax Amount",
+				"assessed_value" => "Assessed Value",
+				"rooms" => "Rooms",
+				"master_bath" => "Master Bath",
+				"park_type" => "Parking Type",
+				"basemnt" => "Basement",
+				"lender_owned" => "Lender Owned",
+				"area" => "Area"
 			);
 
 		global $pls_custom_amenity_dictionary;
