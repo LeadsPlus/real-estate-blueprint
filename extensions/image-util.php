@@ -147,7 +147,8 @@ class PLS_Image {
 			'as_html' => false,
 			'as_url' => true,
 			'fancybox' => array(
-			'trigger_class' => 'pls_use_fancy'
+			'trigger_class' => 'pls_use_fancy',
+			'classes' => false
 			),
 		);
 
