@@ -347,8 +347,8 @@ class PLS_Plugin_API {
                 'commercial' => __( 'Commercial', pls_get_textdomain() ),
             ), 
             'purchase' => array(
-                'rental' => __( 'Rental', pls_get_textdomain() ),
-                'sale' => __( 'Sale', pls_get_textdomain() ),
+                'rental' => __( 'Rent', pls_get_textdomain() ),
+                'sale' => __( 'Buy', pls_get_textdomain() ),
             )
         );
 
