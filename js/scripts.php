@@ -22,7 +22,7 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
      *
      * @since 0.0.1
      */
-    add_action( 'template_redirect', 'pls_scripts' );
+    add_action( 'init', 'pls_scripts' );
     function pls_scripts() {
 
         

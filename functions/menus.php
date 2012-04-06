@@ -36,4 +36,3 @@ function pls_register_menus() {
     if ( in_array( 'subsidiary', $menus[0] ) )
 		register_nav_menu( 'subsidiary', __( 'Subsidiary Menu', pls_get_textdomain() ) );
 }
-

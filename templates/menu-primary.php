@@ -14,7 +14,7 @@
 
         <?php pls_do_atomic( 'open_menu_primary' ); ?>
 
-        <?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'menu_class' => '', 'link_after' => '<span></span>' ) ); ?>
+        <?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'primary', 'link_after' => '<span></span>' ) ); ?>
 
         <?php pls_do_atomic( 'close_menu_primary' ); ?>
 
