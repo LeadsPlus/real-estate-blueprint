@@ -45,9 +45,9 @@ class Placester_Contact_Widget extends WP_Widget {
       // if(isset($post->post_type) && $post->post_type == 'property') {
         // $data = placester_property_get($post->post_name);
         if (!empty($post) && isset($post->post_type) && $post->post_type == 'property') {
-          $listing_data = unserialize($post->post_content);
+          $data = unserialize($post->post_content);
         } else {
-          $listing_data = array();
+          $data = array();
         }
         extract($args);
         
@@ -64,7 +64,7 @@ class Placester_Contact_Widget extends WP_Widget {
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
         
-        $modern = @$instance['modern'] ? 1 : 0;
+        $modern = isset($instance['modern']) ? 1 : 0;
         $template_url = get_bloginfo('template_url');
 
     
