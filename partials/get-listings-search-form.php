@@ -135,7 +135,7 @@ class PLS_Partials_Listing_Search_Form {
         $user_half_baths_start = pls_get_option('pls-option-half-bath-min');
         $user_half_baths_end = pls_get_option('pls-option-half-bath-max');
         if (is_numeric($user_half_baths_start) && is_numeric($user_half_baths_end) ) {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_half_baths_start, $user_half_baths_end );
+            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_half_baths_start, $user_half_baths_end );
         } else {
             $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
         }
