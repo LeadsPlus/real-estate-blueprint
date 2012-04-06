@@ -59,7 +59,7 @@ class Placester_Blueprint {
 	 *
 	 * @since 0.0.1
 	 */
-	function __construct($version = '1.0') {
+	function __construct($version = '0.0') {
 
         $version_locked = '1.0';
         if ($version != $version_locked) {
