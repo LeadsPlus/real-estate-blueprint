@@ -65,7 +65,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
         
         $modern = @$instance['modern'] ? 1 : 0;
-        $template_url = get_bloginfo('template_url');
+        $template_url = get_template_directory_uri();
 
     
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
@@ -204,9 +204,9 @@ function ajax_placester_contact() {
       $api_whoami = PLS_Plugin_API::get_user_details();
 
       if (trim($_POST['email_confirmation']) == true) {
-        wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . get_bloginfo('url'), $message);
+        wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);
       } elseif ($api_whoami['email']) {
-        $placester_Mail = wp_mail($api_whoami['email'], 'Prospective client from ' . get_bloginfo('url'), $message);
+        $placester_Mail = wp_mail($api_whoami['email'], 'Prospective client from ' . home_url(), $message);
       }
       
       $name = $_POST['firstName'] . ' ' . $_POST['lastName'];
