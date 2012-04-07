@@ -22,7 +22,9 @@ class PLS_Slideshow {
     static function init() {
     
 		// For Wordpress 3.3.0
-		add_action('init', array(__CLASS__,'enqueue'));
+        if (!is_admin()) {
+            add_action('init', array(__CLASS__,'enqueue'));
+        }
     }
 
     static function enqueue() {

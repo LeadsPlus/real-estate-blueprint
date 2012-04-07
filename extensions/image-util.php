@@ -27,7 +27,9 @@ PLS_Image::init();
 class PLS_Image {
 	
 	static function init() {
-		add_action('init', array(__CLASS__,'enqueue'));
+		if (!is_admin()) {
+			add_action('init', array(__CLASS__,'enqueue'));
+		}
 	}
 
     static function enqueue() {
