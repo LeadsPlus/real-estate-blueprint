@@ -262,17 +262,20 @@ class PLS_Partials_Listing_Search_Form {
             }
         }
 
+        if (!isset($_POST['metadata'])) {
+          $_POST['metadata'] = array();
+        }
+
         /**
          * Elements HTML.
          */
-
         /** Add the bedrooms select element. */
-        if ($bedrooms == 1 ) {
+        if ($bedrooms == 1) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'metadata[beds]') + $form_opt_attr['bedrooms'],
                     /** Get the list of options with the empty valued element selected. */
-                    pls_h_options( $form_options['bedrooms'], @$_POST['metadata']['beds']  )
+                    pls_h_options( $form_options['bedrooms'], wp_kses_post(@$_POST['metadata']['beds'])  )
                 );
         }
         
@@ -283,7 +286,7 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'metadata[baths]' ) + $form_opt_attr['bathrooms'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['bathrooms'], @$_POST['metadata']['baths'] )
+                pls_h_options( $form_options['bathrooms'], wp_kses_post(@$_POST['metadata']['baths'] ) )
             );            
         }
 
