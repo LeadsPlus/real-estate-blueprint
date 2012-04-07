@@ -85,8 +85,8 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          */
         if ( array_key_exists( 'chosen', $js[0] ) ) {
             /** Register the script and style. */
-            wp_register_script( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.jquery.min.js' , array( 'jquery' ), NULL, true );
-            wp_register_script( 'chosen-custom', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen-custom.js' , array( 'jquery' ), NULL, true );
+            wp_register_script( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.jquery.min.js' , array( 'jquery' ), NULL, false );
+            wp_register_script( 'chosen-custom', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen-custom.js' , array( 'jquery' ), NULL, false );
             wp_register_style( 'chosen', trailingslashit( PLS_JS_URL ) . 'libs/chosen/chosen.css' );
             /** Enqueue scrip and styles only if supported. */
             if ( is_array( $js[0]['chosen'] ) ) {
@@ -123,7 +123,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             }
         }
 
-wp_enqueue_script('jquery-ui');
         if ( array_key_exists( 'jquery-ui', $js[0] ) ) {            
             wp_register_style( 'jquery-ui', trailingslashit( PLS_JS_URL ) . 'libs//jquery-ui/css/smoothness/jquery-ui-1.8.17.custom.css' );
             if ( is_array( $js[0]['jquery-ui'] ) ) {
