@@ -333,8 +333,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
-                pls_h_options( $form_options['purchase_types'], wp_kses_post( @$_POST['purchase_types'] ) )
+                array( 'name' => 'purchase_types[]' ) + $form_opt_attr['purchase_types'],
+                pls_h_options( $form_options['purchase_types'], wp_kses_post( @$_POST['purchase_types']) 
             );
         }
         
