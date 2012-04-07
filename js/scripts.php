@@ -123,12 +123,13 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             }
         }
 
-        if ( array_key_exists( 'jquery-ui', $js[0] ) ) {
-            wp_register_script( 'jquery-ui', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery-ui-1.8.17.custom.min.js' , array( 'jquery'), NULL, true );
+wp_enqueue_script('jquery-ui');
+        if ( array_key_exists( 'jquery-ui', $js[0] ) ) {            
             wp_register_style( 'jquery-ui', trailingslashit( PLS_JS_URL ) . 'libs//jquery-ui/css/smoothness/jquery-ui-1.8.17.custom.css' );
             if ( is_array( $js[0]['jquery-ui'] ) ) {
                 if ( in_array( 'script', $js[0]['jquery-ui'] ) ) {
-                    wp_enqueue_script( 'jquery-ui' );
+                    wp_enqueue_script( 'jquery-ui-core' );
+                    wp_enqueue_script( 'jquery-ui-datepicker' );
                 }
                 if ( in_array( 'style', $js[0]['jquery-ui'] ) ) {
                     wp_enqueue_style( 'jquery-ui' );
