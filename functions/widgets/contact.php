@@ -3,7 +3,7 @@
 class Placester_Contact_Widget extends WP_Widget {
 
   function Placester_Contact_Widget() {
-    $widget_ops = array('classname' => 'Placester_Contact_Widget', 'description' => __( 'Works only on the Property Details Page.') );
+    $widget_ops = array('classname' => 'Placester_Contact_Widget', 'description' => 'Works only on the Property Details Page.' );
     $this->WP_Widget( 'Placester_Contact_Widget', 'Placester: Contact Form', $widget_ops );
   }
 
@@ -19,9 +19,9 @@ class Placester_Contact_Widget extends WP_Widget {
     $checked = $instance['modern'] == 1 ? 'checked' : '';
 
     // Output the options
-    echo '<p><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
+    echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
 
-    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '">' . __('Use placeholders instead of labels') . '</label></p>';
+    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
     
     ?>
      <p style="font-size: 0.9em;">

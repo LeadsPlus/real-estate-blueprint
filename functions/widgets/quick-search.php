@@ -51,7 +51,7 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         $title = htmlspecialchars($instance['title']);
 
         // Output the options
-        echo '<p><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
+        echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
     }
 
     function process_defaults ($args, $instance) {

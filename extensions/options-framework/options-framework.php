@@ -222,7 +222,7 @@ function optionsframework_page() {
         
         <div id="optionsframework-submit">
 			<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options' ); ?>" />
-            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults' ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!' ) ); ?>' );" />
+            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults' ); ?>" onclick="return confirm( '<?php print esc_js( 'Click OK to reset. Any theme settings will be lost!' ); ?>' );" />
             <div class="clear"></div>
 		</div>
 	</form>
@@ -355,7 +355,7 @@ function optionsframework_adminbar() {
 	$wp_admin_bar->add_menu( array(
 		'parent' => 'appearance',
 		'id' => 'of_theme_options',
-		'title' => __( 'Theme Options' ),
+		'title' =>  'Theme Options',
 		'href' => admin_url( 'themes.php?page=options-framework' )
   ));
 }
