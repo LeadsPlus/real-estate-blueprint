@@ -641,7 +641,7 @@ $PLS_API_DEFAULT_LISTING = array(
             'deposit' => false,
             'ngb_pubsch' => false
         ),
-        'uncur_data' => false,
+        'uncur_data' => array(),
         'location' => array(
             'full_address' => '123 Fake Street, Boston MA 02142',
             'address' => '123 Fake Street',
