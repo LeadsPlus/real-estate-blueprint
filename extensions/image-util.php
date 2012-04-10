@@ -25,8 +25,13 @@ include(trailingslashit ( PLS_EXT_DIR ) . 'image-util/image-resize-writer.php');
 
 PLS_Image::init();
 class PLS_Image {
-	
+
 	static function init() {
+
+	  if (!is_admin()) { // This broke the site when taken out.
+      self::enqueue();
+    }
+
 		add_action('wp_head', array(__CLASS__,'enqueue'));
 	}
 

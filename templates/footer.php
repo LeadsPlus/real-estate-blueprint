@@ -10,7 +10,7 @@
 
 <?php pls_do_atomic( 'before_footer' ); ?>
 
-<footer>
+<footer class="grid_12">
 
     <?php pls_do_atomic( 'open_footer' ); ?>
 

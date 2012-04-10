@@ -73,7 +73,9 @@
 
 									<?php if (pls_get_option('pls-site-logo')): ?>
 										<div id="logo">
+                      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo pls_get_option('pls-site-title'); ?>" rel="home" itemprop="url">
 											<img src="<?php echo pls_get_option('pls-site-logo') ?>" alt="<?php bloginfo( 'name' ); ?>" itemprop="image">
+											</a>
 										</div>
 									<?php endif; ?>
 

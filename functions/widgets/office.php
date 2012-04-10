@@ -58,7 +58,7 @@ class PLS_Widget_Office extends WP_Widget {
 
 			<div id="simple_map" style="width: <?php echo $width; ?>px; height: <?php echo $height; ?>px;"></div>
 
-        <span itemprop="name" display="none"><?php echo $agent['provider']['name'];  ?></span>
+        <span itemprop="name" style="display:none;"><?php echo $agent['provider']['name'];  ?></span>
 				<p class="office p4" itemprop="description"><?php echo $subtitle; ?></p>
 				<p class="address h5" itemprop="address"><?php echo $street_address; ?><br><?php echo $city_state_zip; ?></p>
 
