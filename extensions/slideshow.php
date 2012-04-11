@@ -79,7 +79,7 @@ class PLS_Slideshow {
 						'bulletThumbLocation' => '',						// location from this file where thumbs will be
 					'width' => 620,
 					'height' => 300,
-					'container_height' => 300,
+					'container_height' => false,
 					'context' => '',
 					'context_var' => false,
 					'featured_option_id' => false,
@@ -181,6 +181,10 @@ class PLS_Slideshow {
         
         /** Filter the html array. */
         $html = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_html', $context ), '_', 'pre', false ), $html, $data, $context, $context_var, $args );
+
+        if (!$container_height) {
+          $container_height = $height;
+        }
 
         /** The javascript needed for orbit. */
         ob_start();
