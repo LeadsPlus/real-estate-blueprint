@@ -661,7 +661,8 @@ table tbody tr th {
 
 .orbit-wrapper .timer {
   display: none; }
-.orbit-wrapper .orbit-caption {
+
+.orbit-caption {
   display: none;
   font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
   background: black;
@@ -675,15 +676,15 @@ table tbody tr th {
   bottom: 0;
   padding-left: 20px;
   width: 100%; }
-  .orbit-wrapper .orbit-caption .details {
+  .orbit-caption .details {
     margin-left: 10px;
     float: right;
     margin-right: 50px; }
-  .orbit-wrapper .orbit-caption .caption-title {
+  .orbit-caption .caption-title {
     font-size: 16pt;
     font-weight: 600;
     margin: 0px 0 0 10px; }
-  .orbit-wrapper .orbit-caption .caption-subtitle {
+  .orbit-caption .caption-subtitle {
     font-size: 12pt;
     color: white;
     margin: 0px 0 5px 10px; }
