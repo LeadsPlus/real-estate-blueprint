@@ -661,6 +661,32 @@ table tbody tr th {
 
 .orbit-wrapper .timer {
   display: none; }
+.orbit-wrapper .orbit-caption {
+  display: none;
+  font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
+  background: black;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  color: white;
+  padding: 7px 0;
+  font-size: 13px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-left: 20px;
+  width: 100%; }
+  .orbit-wrapper .orbit-caption .details {
+    margin-left: 10px;
+    float: right;
+    margin-right: 50px; }
+  .orbit-wrapper .orbit-caption .caption-title {
+    font-size: 16pt;
+    font-weight: 600;
+    margin: 0px 0 0 10px; }
+  .orbit-wrapper .orbit-caption .caption-subtitle {
+    font-size: 12pt;
+    color: white;
+    margin: 0px 0 5px 10px; }
 
 table#placester_listings_list tr, table#placester_fav_list tr {
   float: left; }
