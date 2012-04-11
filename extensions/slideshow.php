@@ -79,6 +79,7 @@ class PLS_Slideshow {
 						'bulletThumbLocation' => '',						// location from this file where thumbs will be
 					'width' => 620,
 					'height' => 300,
+					'container_height' => 300,
 					'context' => '',
 					'context_var' => false,
 					'featured_option_id' => false,
@@ -187,7 +188,7 @@ class PLS_Slideshow {
 		<style type="text/css">
 			.orbit-wrapper {
 				width:<?php echo $width; ?>px !important;
-				height:<?php echo $height; ?>px !important;
+				height:<?php echo $container_height; ?>px !important;
 				overflow: hidden;
 			}
 			#slider, #slider img {
