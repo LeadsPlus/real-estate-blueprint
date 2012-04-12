@@ -26,7 +26,7 @@ if ( post_password_required() || ( ! have_comments() && ! comments_open() && ! p
 
 			<?php if ( have_comments() ) : ?>
 
-				<h3 id="comments-number" class="comments-header"><?php comments_number( 'No Responses', 'One Response' ), '% Responses' ); ?></h3>
+				<h3 id="comments-number" class="comments-header"><?php comments_number( 'No Responses', 'One Response', '% Responses' ); ?></h3>
 				
 				<?php pls_do_atomic( 'before_comment_list' ); ?>
 
