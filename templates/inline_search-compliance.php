@@ -6,12 +6,12 @@
 		<p>Listing Agent: <?php echo $compliance_message['agent_name'] ?></p>	
 	<?php endif ?>
 	<?php if ($compliance_message['office_name']): ?>
-		<p>Coutesy of: <?php echo $compliance_message['office_name'] ?></p>	
+		<p>Courtesy of: <?php echo $compliance_message['office_name'] ?></p>	
 	<?php endif ?>
 	<?php if ($compliance_message['img']): ?>
 		<img src="<?php echo $compliance_message['img'] ?>" alt="">	
 	<?php endif ?>
 	<?php if ($compliance_message['disclaimer']): ?>
-		<p><?php echo $compliance_message['disclaimer'] ?></p>	
+		<p><?php echo $compliance_message['disclaimer'] ?></p>
 	<?php endif ?>
 </div>

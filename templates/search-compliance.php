@@ -12,6 +12,9 @@
 		<img src="<?php echo $compliance_message['img'] ?>" alt="">	
 	<?php endif ?>
 	<?php if ($compliance_message['disclaimer']): ?>
+		<?php if ($compliance_message['last_import']): ?>
+			<p>Updated: <?php echo $compliance_message['last_import'] ?></p>
+		<?php endif ?>
 		<p><?php echo $compliance_message['disclaimer'] ?></p>	
 	<?php endif ?>
 </div>
