@@ -149,7 +149,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
 
         /** Load Google CDN jQuery and its fallback before everything else */
         wp_enqueue_scripts( 'jquery' );
-        echo '<script type="text/javascript">window.jQuery || document.write(\'<script src="/wp-includes/js/jquery/jquery.js"><\/script>\')</script>' . "\n";
 
         /** Load Modernizr */
         wp_enqueue_scripts( 'modernizr' );

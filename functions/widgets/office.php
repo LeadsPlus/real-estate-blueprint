@@ -30,7 +30,7 @@ class PLS_Widget_Office extends WP_Widget {
 
 			<section id="map-widget">
 
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+				<?php wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false'); ?>
 
 				<script type="text/javascript">
 					$(document).ready(function () {
