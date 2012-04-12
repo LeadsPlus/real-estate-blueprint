@@ -65,9 +65,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             /** Localize the script. Send the correct notification. */
             $l10n = array();
             if ( pls_has_plugin_error() == 'no_api_key' ) 
-                $l10n['no_api_key'] = __( 'You need to add a valid API Key to the <a href="' . admin_url( 'admin.php?page=placester_settings' ) . '">Placester Real Estate Pro plugin settings page</a>.', pls_get_textdomain() );
+                $l10n['no_api_key'] = 'You need to add a valid API Key to the <a href="' . admin_url( 'admin.php?page=placester_settings' ) . '">Placester Real Estate Pro plugin settings page</a>.';
             elseif ( pls_has_plugin_error() == 'no_plugin' )
-                $l10n['no_plugin'] = __( 'This theme needs the <a href="http://wordpress.org/extend/plugins/placester/" target="_blank">Placester Real Estate Pro plugin</a> to work.', pls_get_textdomain() );
+                $l10n['no_plugin'] = 'This theme needs the <a href="http://wordpress.org/extend/plugins/placester/" target="_blank">Placester Real Estate Pro plugin</a> to work.';
             wp_localize_script( 'pls-plugin-nags', 'messages', $l10n );
         } 
 

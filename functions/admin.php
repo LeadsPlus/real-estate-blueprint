@@ -23,7 +23,7 @@ function pls_no_plugin_notice() {
             array( 'class' => 'error' ),
             pls_h( 
                 'p',
-                __( 'You are currently running a Placester enabled theme without the Placester plugin active. This will not work. Please download and install the plugin. <a class="button" style="color: #000" href="' . admin_url( 'plugin-install.php?tab=search&type=term&s=placester&plugin-search-input=Search+Plugins' ) . '">Download Placester Plugin</a>', pls_get_textdomain() )
+                'You are currently running a Placester enabled theme without the Placester plugin active. This will not work. Please download and install the plugin. <a class="button" style="color: #000" href="' . admin_url( 'plugin-install.php?tab=search&type=term&s=placester&plugin-search-input=Search+Plugins' ) . '">Download Placester Plugin</a>'
             )
         );
     }

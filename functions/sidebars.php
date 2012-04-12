@@ -30,14 +30,11 @@ function pls_register_sidebars() {
     if ( ! is_array( $sidebar_support[0] ) )
         return;
 
-	/** Get the theme textdomain. */
-	$textdomain = pls_get_textdomain();
-
 	/** Set up the primary sidebar arguments. */
 	$sidebars[] = array(
 		'id' => 'primary',
-		'name' => __( 'Main Sidebar', $textdomain ),
-		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
+		'name' =>  'Main Sidebar',
+		'description' => 'The main (primary) widget area, most often used as a sidebar.',
 		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
 		'after_widget' => '</section>',
 		'before_title' => '<h3 class="widget-title">',
@@ -47,8 +44,8 @@ function pls_register_sidebars() {
 /** Set up the primary sidebar arguments. */
 	$sidebars[] = array(
 		'id' => 'listings-search',
-		'name' => __( 'Listings Search Sidebar', $textdomain ),
-		'description' => __( 'The main (primary) widget area, most often used as a sidebar.', $textdomain ),
+		'name' => 'Listings Search Sidebar',
+		'description' => 'The main (primary) widget area, most often used as a sidebar.',
 		'before_widget' => '<section id="%1$s" class="widget %2$s widget-%2$s">',
 		'after_widget' => '</section>',
 		'before_title' => '<h3 class="widget-title">',

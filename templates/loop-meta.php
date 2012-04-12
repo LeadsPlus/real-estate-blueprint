@@ -40,11 +40,11 @@
 
 	<?php elseif ( is_search() ) : ?>
 
-        <h2><?php printf( __( 'Search results for "%s"', pls_get_textdomain() ), esc_attr( get_search_query() ) ); ?></h2>
+        <h2><?php printf( 'Search results for "%s"', esc_attr( get_search_query() ) ); ?></h2>
 
 	<?php elseif ( is_date() ) : ?>
 
-        <h2><?php _e( 'Blog archives by date', pls_get_textdomain() ); ?></h2>
+        <h2><?php 'Blog archives by date'; ?></h2>
 
 	<?php elseif ( function_exists( 'is_post_type_archive' ) && is_post_type_archive() ) : ?>
 
@@ -52,7 +52,7 @@
 
 	<?php elseif ( is_archive() ) : ?>
 
-        <h2><?php _e( 'Archives', pls_get_textdomain() ); ?></h2>
+        <h2><?php 'Archives'; ?></h2>
 
 	<?php elseif ( is_single() ) : ?>
 

@@ -30,9 +30,9 @@ function pls_register_menus() {
 
 	/** Register the 'primary' menu. */
     if ( in_array( 'primary', $menus[0] ) )
-		register_nav_menu( 'primary', __( 'Primary Menu', pls_get_textdomain() ) );
+		register_nav_menu( 'primary', 'Primary Menu');
 
 	/** Register the 'subsidiary' menu. */
     if ( in_array( 'subsidiary', $menus[0] ) )
-		register_nav_menu( 'subsidiary', __( 'Subsidiary Menu', pls_get_textdomain() ) );
+		register_nav_menu( 'subsidiary', 'Subsidiary Menu' );
 }

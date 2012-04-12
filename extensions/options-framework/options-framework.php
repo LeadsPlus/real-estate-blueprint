@@ -254,7 +254,7 @@ function optionsframework_validate( $input ) {
 	 */
 	 
 	if ( isset( $_POST['reset'] ) ) {
-		add_settings_error( 'options-framework', 'restore_defaults', __( 'Default options restored.', 'optionsframework' ), 'updated fade' );
+		add_settings_error( 'options-framework', 'restore_defaults', 'Default options restored.', 'updated fade' );
 		return of_get_default_values();
 	}
 
@@ -297,7 +297,7 @@ function optionsframework_validate( $input ) {
 			}
 		}
 
-		add_settings_error( 'options-framework', 'save_options', __( 'Options saved.', 'optionsframework' ), 'updated fade' );
+		add_settings_error( 'options-framework', 'save_options', 'Options saved.', 'updated fade' );
 		return $clean;
 	}
 

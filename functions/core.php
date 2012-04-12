@@ -150,12 +150,12 @@ function pls_get_no_plugin_placeholder( $context = '' ) {
     if ( $plugin_error ) {
 
         $messages = array(
-            'no_api_key' => __( 'You must add a valid API key to the Placester plugin to use this feature.', pls_get_textdomain() ),
-            'no_plugin' => __( 'You must activate the Placester plugin to use this feature.', pls_get_textdomain() ),
-            'timeout' => __( 'The Placester API connection timed out.', pls_get_textdomain() ) 
+            'no_api_key' => 'You must add a valid API key to the Placester plugin to use this feature.',
+            'no_plugin' => 'You must activate the Placester plugin to use this feature.',
+            'timeout' => 'The Placester API connection timed out.' 
         );
 
-        $context = empty( $context ) ? __( 'ERROR', pls_get_textdomain() ) : $context;
+        $context = empty( $context ) ? 'ERROR' : $context;
 
         $css_class = str_replace( '_', '-', $plugin_error );
 
@@ -217,5 +217,5 @@ function pls_document_title( $echo = true ) {
 
     // Add a page number if necessary:
     if ( $paged >= 2 || $page >= 2 )
-        echo ' | ' . sprintf( __( 'Page %s', 'Real Estate Blueprint' ), max( $paged, $page ) );
+        echo ' | ' . sprintf( 'Page %s', max( $paged, $page ) );
 }

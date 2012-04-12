@@ -125,9 +125,9 @@ class PLS_Partials_Listing_Search_Form {
         $user_beds_end = pls_get_option('pls-option-bed-max');
         if (is_numeric($user_beds_start) && is_numeric($user_beds_end) ) {
           $beds_range = range( $user_beds_start, $user_beds_end );
-            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $beds_range, $beds_range );
+            $form_options['bedrooms'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $beds_range, $beds_range );
         } else {
-            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );    
+            $form_options['bedrooms'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 16 );    
         }
 
         /** Prepend the default empty valued element. */
@@ -135,9 +135,9 @@ class PLS_Partials_Listing_Search_Form {
         $user_baths_end = pls_get_option('pls-option-bath-max');
         if (is_numeric($user_baths_start) && is_numeric($user_baths_end) ) {
           $baths_range =  range( $user_baths_start, $user_baths_end );
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $baths_range, $baths_range );
+            $form_options['bathrooms'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $baths_range, $baths_range );
         } else {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+            $form_options['bathrooms'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 10 );
         }
 
         /** Prepend the default empty valued element. */
@@ -145,9 +145,9 @@ class PLS_Partials_Listing_Search_Form {
         $user_half_baths_end = pls_get_option('pls-option-half-bath-max');
         if (is_numeric($user_half_baths_start) && is_numeric($user_half_baths_end) ) {
           $half_bath_range = range( $user_half_baths_start, $user_half_baths_end );
-            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + array_combine( $half_bath_range, $half_bath_range );
+            $form_options['half_baths'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $half_bath_range, $half_bath_range );
         } else {
-            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+            $form_options['half_baths'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 10 );
         }
         
 
@@ -158,23 +158,23 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Get the property type options. */
-        $form_options['property_type'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'property' );
+        $form_options['property_type'] = array( 'pls_empty_value' => 'Any' ) + PLS_Plugin_API::get_type_values( 'property' );
 
         /** Get the listing type options. */
-        $form_options['listing_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'listing' );
+        $form_options['listing_types'] = array( 'pls_empty_value' => 'All' ) + PLS_Plugin_API::get_type_values( 'listing' );
 
         /** Get the zoning type options. */
-        $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+        $form_options['zoning_types'] = array( 'pls_empty_value' => 'All') + PLS_Plugin_API::get_type_values( 'zoning' );
 				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
         // $form_options['zoning_types'] = PLS_Plugin_API::get_type_values( 'zoning' ); // for Multiple, not for single, see below
 
         /** Get the purchase type options. */
-        $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
+        $form_options['purchase_types'] = array( 'pls_empty_value' => 'All' ) + PLS_Plugin_API::get_type_values( 'purchase' );
 				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
 				// $form_options['purchase_types'] = PLS_Plugin_API::get_type_values( 'purchase' );
 				
         /** Prepend the default empty valued element. */
-        $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
+        $form_options['available_on'] = array( 'pls_empty_value' => 'Anytime' ) + $form_options['available_on'];
 
         /** Prepend the default empty valued element. */
         
@@ -202,7 +202,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
-            'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+            'pls_empty_value' => 'Any',
             '200' => '$200',
             '500' => '$500',
             '1000' => '$1,000',
@@ -394,19 +394,19 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         $section_title = array(
-            'bedrooms' => __( 'Beds', pls_get_textdomain() ),
-            'bathrooms' => __( 'Baths', pls_get_textdomain() ),
-            'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
-            'property_type' => __( 'Property Type', pls_get_textdomain() ),
-            'zoning_types' => __( 'Zoning Type', pls_get_textdomain() ),
-            'listing_types' => __( 'Listing Type', pls_get_textdomain() ),
-            'purchase_types' => __( 'Purchase Type', pls_get_textdomain() ),
-            'available_on' => __( 'Available', pls_get_textdomain() ),
-            'cities' => __( 'Near', pls_get_textdomain() ),
-            'states' => __( 'State', pls_get_textdomain() ),
-            'zips' => __( 'Zip Code', pls_get_textdomain() ),
-            'min_price' => __( 'Min Price', pls_get_textdomain() ),
-            'max_price' => __( 'Max Price', pls_get_textdomain() ),
+            'bedrooms' => 'Beds',
+            'bathrooms' => 'Baths',
+            'half_baths' => 'Half Baths',
+            'property_type' => 'Property Type',
+            'zoning_types' => 'Zoning Type',
+            'listing_types' => 'Listing Type',
+            'purchase_types' => 'Purchase Type',
+            'available_on' => 'Available',
+            'cities' => 'Near',
+            'states' => 'State',
+            'zips' => 'Zip Code',
+            'min_price' => 'Min Price',
+            'max_price' => 'Max Price',
         );
 
         // In case user somehow disables all filters.
@@ -437,7 +437,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($include_submit) {
             $form_html['submit'] = apply_filters( 
                 pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
-                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
+                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => 'Search' ) ),  
                 $context_var
             );
             /** Append the form submit. */

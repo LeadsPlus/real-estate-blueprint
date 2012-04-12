@@ -37,7 +37,7 @@
                 <div class="entry-meta">
                     <time datetime="<?php the_time('Y-m-d')?>"><?php the_time('F jS, Y') ?></time> &mdash; 
                     <a href="<?php the_permalink() ?>"><?php the_permalink() ?></a>
-                    <?php edit_post_link(' | ' . __( 'Edit', pls_get_textdomain() ), '', ''); ?>
+                    <?php edit_post_link(' | ' . 'Edit', '', ''); ?>
                 </div>
 
                 <?php pls_do_atomic( 'close_entry' ); ?>

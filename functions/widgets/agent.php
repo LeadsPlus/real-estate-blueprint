@@ -31,11 +31,11 @@ class PLS_Widget_Agent extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname' => 'pls-agent',
-			'description' => esc_html__( 'A widget that displays information about the agent.', $this->textdomain )
+			'description' => 'A widget that displays information about the agent.'
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-agent", esc_attr__( 'Placester: Agent Widget', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-agent", 'Placester: Agent Widget', $widget_options );
 	}
 
 	/**
@@ -156,7 +156,7 @@ class PLS_Widget_Agent extends WP_Widget {
 
 		/** Set up the default form values. */
 		$defaults = array(
-			'title' => esc_attr__( 'Agent', $this->textdomain ),
+			'title' => 'Agent',
             'name' => true,
             'email' => true,
             'photo' => true,
@@ -175,7 +175,7 @@ class PLS_Widget_Agent extends WP_Widget {
             /** Print the Title input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Title', pls_get_textdomain() ) . ':' .
+                    'Title' . ':' .
                     pls_h( 
                         'input',
                         array(
@@ -199,7 +199,7 @@ class PLS_Widget_Agent extends WP_Widget {
                             'name' => $this->get_field_name( 'name' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Name', pls_get_textdomain() ), 
+                    ' ' . 'Name', 
                     $this->get_field_id( 'name' ) 
                 ) 
             ) . 
@@ -213,7 +213,7 @@ class PLS_Widget_Agent extends WP_Widget {
                             'name' => $this->get_field_name( 'description' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Description', pls_get_textdomain() ), 
+                    ' ' . 'Description', 
                     $this->get_field_id( 'description' ) 
                 ) 
             ) . 
@@ -227,7 +227,7 @@ class PLS_Widget_Agent extends WP_Widget {
                             'name' => $this->get_field_name( 'email' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Email', pls_get_textdomain() ), 
+                    ' ' . 'Email', 
                     $this->get_field_id( 'email' ) 
                 ) 
             ) . 
@@ -241,7 +241,7 @@ class PLS_Widget_Agent extends WP_Widget {
                             'name' => $this->get_field_name( 'phone' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Phone Number', pls_get_textdomain() ), 
+                    ' ' . 'Phone Number', 
                     $this->get_field_id( 'phone' ) 
                 ) 
             ) .
@@ -255,14 +255,14 @@ class PLS_Widget_Agent extends WP_Widget {
                             'name' => $this->get_field_name( 'photo' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Photo', pls_get_textdomain() ), 
+                    ' ' . 'Photo', 
                     $this->get_field_id( 'photo' ) 
                 ) 
             ) . 
             /** Print the Width text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Photo width', pls_get_textdomain() ) . ': ' .
+                    'Photo width' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -279,7 +279,7 @@ class PLS_Widget_Agent extends WP_Widget {
             /** Print the Height text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Photo height', pls_get_textdomain() ) . ': ' .
+                    'Photo height' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -296,7 +296,7 @@ class PLS_Widget_Agent extends WP_Widget {
             /** Print the Extra HTML textarea */
             // pls_h_p( 
                 // pls_h_label( 
-                    // __( 'Extra HTML', pls_get_textdomain() ) . ":" .
+                    // 'Extra HTML' . ":" .
                     // pls_h( 
                         // 'textarea',
                         // array(
