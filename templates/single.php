@@ -38,10 +38,10 @@
             <?php printf( 'This entry was posted by %1$s, on <time datetime="%2$s">%3$s</time> at <time>%4$s</time> and is filed under %5$s.', get_the_author(), get_the_time( 'Y-m-d' ), get_the_time( 'l, F jS, Y' ), get_the_time(), get_the_category_list( ', ' ) ); ?> 
 
                 <?php if ( comments_open() ) {
-                    'You can <a href="#respond">skip to the end</a> and leave a response.';
+                    echo 'You can <a href="#respond">skip to the end</a> and leave a response.';
 
                 } else {
-                    'Comments are currently closed.');
+                    echo 'Comments are currently closed.';
 
                 } edit_post_link( 'Edit this entry', ' ', '.' ); ?>
             </p>
