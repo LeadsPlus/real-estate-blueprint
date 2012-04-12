@@ -198,24 +198,26 @@ function pls_site_description( $echo = true ) {
  * @returns string The description html.
  * @since 0.0.1
  */
-function pls_document_title( $echo = true ) {
-
+add_filter('wp_title', 'pls_document_title');
+function pls_document_title() {
+    $title = get_the_title();
     /*
      * Print the <title> tag based on what is being viewed.
      */
     global $page, $paged;
 
-    wp_title( '|', true, 'right' );
-
-    // Add the blog name.
-    bloginfo( 'name' );
+    if (empty($title)) {
+        $title = get_bloginfo( 'name' );
+    }
 
     // Add the blog description for the home/front page.
     $site_description = get_bloginfo( 'description', 'display' );
     if ( $site_description && ( is_home() || is_front_page() ) )
-        echo " | $site_description";
+        $title .= " | $site_description";
 
     // Add a page number if necessary:
     if ( $paged >= 2 || $page >= 2 )
-        echo ' | ' . sprintf( 'Page %s', max( $paged, $page ) );
+        $title .= ' | ' . sprintf( 'Page %s', max( $paged, $page ) );
+
+    echo $title;
 }

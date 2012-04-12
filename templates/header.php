@@ -25,7 +25,7 @@
     <!-- Mobile viewport optimized: j.mp/bplateviewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php pls_document_title(); ?></title>
+    <title><?php wp_title(); ?></title>
 
 		<?php if ( pls_get_option('pls-site-favicon') ) { ?>
 		<link href="<?php echo pls_get_option('pls-site-favicon'); ?>" rel="shortcut icon" type="image/x-icon" />
