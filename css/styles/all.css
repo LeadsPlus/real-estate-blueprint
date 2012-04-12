@@ -1,4 +1,5 @@
 /* Mixins */
+/* Mixins */
 body {
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -45,6 +46,7 @@ ul {
     color: #7A7A7A;
     font-weight: normal; }
 
+/* Mixins */
 nav {
   margin: 15px 0 0 0;
   border-top: 1px solid #DBDBDB;
@@ -121,6 +123,7 @@ nav {
           nav ul li ul.children li:hover {
             display: block; }
 
+/* Mixins */
 aside {
   margin-top: -15px;
   font-size: 12px; }
@@ -223,6 +226,7 @@ aside {
     color: white; }
 
 /* search */
+/* Mixins */
 .complex-search .pls_search_form {
   float: left;
   width: 290px;
@@ -332,6 +336,7 @@ aside {
   clear: both; }
 
 /* Property Details Page */
+/* Mixins */
 article.property-details {
   border-bottom: none !important; }
   article.property-details h2 {
@@ -372,6 +377,7 @@ article.property-details {
         background: none; }
 
 /* General Blog */
+/* Mixins */
 #main_content h2 {
   font-size: 30px;
   margin: 0px;
