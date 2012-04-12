@@ -9,7 +9,7 @@ function optionsframework_fields() {
 	$optionsframework_settings = get_option('optionsframework');
 	
 	// Get the theme name so we can display it up top
-	$themename = get_theme_data(STYLESHEETPATH . '/style.css');
+	$themename = get_theme_data(get_stylesheet_directory() . '/style.css');
 	$themename = $themename['Name'];
 
 	// Gets the unique option id

@@ -214,7 +214,7 @@ function ajax_placester_contact() {
       if (trim($_POST['email_confirmation']) == true) {
 
         ob_start();
-          include(TEMPLATEPATH . '/custom/contact-form-email.php');
+          include(get_template_directory() . '/custom/contact-form-email.php');
           $message_to_submitter = ob_get_contents();
         ob_end_clean();
               

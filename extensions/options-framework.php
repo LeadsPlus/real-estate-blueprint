@@ -13,7 +13,7 @@ if ( ! function_exists( 'optionsframework_option_name' ) ) {
     function optionsframework_option_name() {
 
         /** Get the theme name from the stylesheet (lowercase and without spaces). */
-        $options_id = get_theme_data( STYLESHEETPATH . '/style.css' );
+        $options_id = get_theme_data( get_stylesheet_directory() . '/style.css' );
         $options_id = $options_id['Name'];
         $options_id = preg_replace( "/\W/", "", strtolower( $options_id ) );
 

@@ -101,8 +101,8 @@ class PLS_Route {
 		foreach ( (array) $template_names as $template_name ) {
 			if ( !$template_name )
 				continue;
-			if ( file_exists(STYLESHEETPATH . '/' . $template_name)) {
-				$located = STYLESHEETPATH . '/' . $template_name;
+			if ( file_exists(get_stylesheet_directory() . '/' . $template_name)) {
+				$located = get_stylesheet_directory() . '/' . $template_name;
 				break;
 			} else if ( file_exists(PLS_TPL_DIR . '/' . $template_name) ) {
 				$located = PLS_TPL_DIR . '/' . $template_name;
@@ -121,8 +121,8 @@ class PLS_Route {
 		foreach ( (array) $template_names as $template_name ) {
 			if ( !$template_name )
 				continue;
-			if ( file_exists(trailingslashit(STYLESHEETPATH) . 'options/' . $template_name)) {
-				$located = trailingslashit(STYLESHEETPATH) . 'options/' . $template_name;
+			if ( file_exists(trailingslashit(get_stylesheet_directory()) . 'options/' . $template_name)) {
+				$located = trailingslashit(get_stylesheet_directory()) . 'options/' . $template_name;
 				break;
 			} else if ( file_exists(trailingslashit( PLS_OP_DIR ) . $template_name) ) {
 				$located = trailingslashit( PLS_OP_DIR ) . $template_name;
