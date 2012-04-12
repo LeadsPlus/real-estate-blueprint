@@ -32,7 +32,7 @@
  * Big thanks to Justin Tadlock for inspiration with his HybridCore Framework.
  *
  * @package PlacesterBlueprint
- * @version 1.0.2
+ * @version 1.0.3
  * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com/themes/blueprint/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -61,7 +61,7 @@ class Placester_Blueprint {
 	 */
 	function __construct($version = '0.0') {
 
-        $version_locked = '1.2';
+        $version_locked = '1.3';
         if ($version != $version_locked) {
             die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
