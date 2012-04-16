@@ -45,6 +45,12 @@ jQuery(document).ready(function($) {
       this.value = '';
     }
   });
+  $('.side-ctnr.placester_contact form input#phone').focusout( function() {
+    if(this.value == '') {
+      this.value = 'Phone Number';
+    }
+  });
+
 
    var widget = jQuery('.side-ctnr.placester_contact');
 	jQuery('.side-ctnr.placester_contact form').submit(function(e) {
