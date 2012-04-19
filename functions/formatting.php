@@ -261,6 +261,26 @@ class PLS_Format {
 		return $amenities;
 	}
 
+  function translate_lease_terms ($listing) {
+    $lease_terms = array(
+      'per_yr' => 'per year',
+      'per_wk' => 'per week',
+      'per_mnt' => 'per month',
+      'per_ngt' => 'per night'
+    );
+
+    $translate_this = $listing['cur_data']['lse_trms'];
+
+    if ($translate_this != null) {
+		  foreach ($lease_terms as $key => $value) {
+        if ($key == $translate_this) {
+          $translated = $value;
+        }
+			}
+		  return $translated;
+		}
+  }
+
 	function translate_amenities ($amenities) {
 		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
@@ -415,7 +435,68 @@ class PLS_Format {
       	"association_fee" => "Association Fee",
       	"exterior" => "Exterior",
       	"interior" => "Interior",
-        "water_amenities" => "Water Amenities"
+        "water_amenities" => "Water Amenities",
+        "acres" => "Acres",
+        "move_in" => "Move In",
+        "bld_name" => "Building Name",
+        "tl_earn" => "Total Earned",
+        "style" => "Style",
+        "company" => "Company",
+        "landing_select" => "Advertising Style",
+        "bld_suit" => "Build to Suit",
+        "cent_ac" => "Central A/C",
+        "frplce" => "Fireplace",
+        "hv_ceil" => "High/Vaulted Ceiling",
+        "wlk_clst" => "Walk-In Closet",
+        "tle_flr" => "Tile Floor",
+        "lft_lyout" => "Loft Layout",
+        "off_den" => "Office/Den",
+        "dng_rm" => "Dining Room",
+        "brkfst_nk" => "Breakfast Nook",
+        "dshwsher" => "Dishwasher",
+        "refrig" => "Refrigerator",
+        "stve_ovn" => "Stove/Oven",
+        "stnstl_app" => "Stainless Steel Appliances",
+        "attic" => "Attic",
+        "basemnt" => "Basement",
+        "washer" => "Washer",
+        "dryer" => "Dryer",
+        "lndry_in" => "Laundry Area - Inside",
+        "lndry_gar" => "Laundry Area - Garage",
+        "blc_deck_pt" => "Balcony/Deck/Patio",
+        "yard" => "Yard",
+        "swm_pool" => "Swimming Pool",
+        "jacuzzi" => "Jacuzzi/Whirlpool",
+        "sauna" => "Sauna",
+        "cble_rdy" => "Cable-ready",
+        "hghspd_net" => "High-speed Internet",
+        "lt_sz" => "Lot Size",
+        "lt_sz_unit" => "Lot Unit Type",
+        "accoms" => "Accommodates",
+        "avail_info" => "Availability",
+        "hoa_mand" => "HOA Mandatory",
+        "hoa_fee" => "HOA Fee",
+        "lndr_own" => "Lender Owned",
+        "ngb_trans" => "Public Transportation",
+        "ngb_shop" => "Shopping",
+        "ngb_pool" => "Swimming Pool",
+        "ngb_court" => "Tennis Court",
+        "ngb_park" => "Park",
+        "ngb_trails" => "Walk/Jog Trails",
+        "ngb_stbles" => "Stables",
+        "ngb_golf" => "Golf Courses",
+        "ngb_med" => "Medical Facilities",
+        "ngb_bike" => "Bike Path",
+        "ngb_cons" => "Conservation Area",
+        "ngb_hgwy" => "Highway Access",
+        "ngb_mar" => "Marina",
+        "ngb_pvtsch" => "Private School",
+        "ngb_pubsch" => "Public School",
+        "ngb_uni" => "University",
+        "cats" => "Cats",
+        "dogs" => "Dogs",
+        "pk_lease" => "Parking Lease",
+        "lease_type" => "Lease Type"
 			);
 
 		global $pls_custom_amenity_dictionary;
