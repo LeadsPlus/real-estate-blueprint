@@ -491,10 +491,10 @@ class PLS_Plugin_API {
 
     static function get_person_details() {
         $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
-        if ( isset($return) )  {
+        if ( isset($return) && $return )  {
             return $return;
         }
-        return false;
+        return array();
     }
 
     static function update_person_details($person_details) {
