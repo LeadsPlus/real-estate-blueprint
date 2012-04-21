@@ -33,7 +33,7 @@
             </div><!-- .entry-summary -->
 
             <div class="entry-meta">
-                <a class="more-link" href="<?php the_permalink() ?>"> <?php 'Continue reading <span class="meta-nav">&rarr;</span>' ) ?></a>
+                <a class="more-link" href="<?php the_permalink() ?>"> <?php 'Continue reading <span class="meta-nav">&rarr;</span>' ?></a>
             </div><!-- .entry-meta -->
 
             <?php pls_do_atomic( 'after_entry_content' ); ?>
@@ -54,8 +54,8 @@
     <?php endwhile; ?>
 
     <nav class="posts">
-        <div class="prev"><?php next_posts_link( '&laquo; Older Entries', ) ?></div>
-        <div class="next"><?php previous_posts_link( 'Newer Entries &raquo;' ) ?></div>
+        <div class="prev"><?php next_posts_link( '&laquo; Older Entries', 0 ) ?></div>
+        <div class="next"><?php previous_posts_link( 'Newer Entries &raquo;', 0) ?></div>
     </nav>
     
 <?php else : ?>
