@@ -262,6 +262,7 @@ class PLS_Format {
 	}
 
 	function translate_amenities ($amenities) {
+		$api_dictionary = PLS_Plugin_API::get_translations();
 		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
 				'price' => 'Price',
@@ -356,6 +357,8 @@ class PLS_Format {
 				"lender_owned" => "Lender Owned",
 				"area" => "Area"
 			);
+	
+		$local_dictionary = array_merge($local_dictionary, $api_dictionary);
 
 		global $pls_custom_amenity_dictionary;
 

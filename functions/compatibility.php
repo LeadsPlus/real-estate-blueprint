@@ -489,6 +489,14 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function get_translations() {
+        $return = self::_try_for_exceptions(array("PL_Custom_Attribute_Helper", "get_translations"), '', true );
+        if ( $return )  {
+            return $return;
+        }
+        return array();
+    }
+
     static function get_person_details() {
         $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
         if ( isset($return) && $return )  {
