@@ -33,7 +33,7 @@
             </div><!-- .entry-summary -->
 
             <div class="entry-meta">
-                <a class="more-link" href="<?php the_permalink() ?>"> <?php 'Continue reading <span class="meta-nav">&rarr;</span>' ) ?></a>
+                <a class="more-link" href="<?php the_permalink() ?>"> Continue reading <span class="meta-nav">&rarr;</span></a>
             </div><!-- .entry-meta -->
 
             <?php pls_do_atomic( 'after_entry_content' ); ?>
