@@ -157,6 +157,10 @@ class PLS_Partial_Get_Listings {
 							<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
 						<?php } ?>
 
+          	<?php if (!empty($listing_data['rets']['mls_id'])) { ?>
+          		<p class="mls"><span>MLS #:</span> <?php echo @$listing_data['rets']['mls_id'] ?></p>
+          	<?php } ?>
+
 						<?php if (!empty($listing_data['cur_data']['desc'])): ?>
 							<p class="listing-description" class="grid_8 omega">
 								<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
@@ -198,4 +202,3 @@ class PLS_Partial_Get_Listings {
 
 
 }
-        
