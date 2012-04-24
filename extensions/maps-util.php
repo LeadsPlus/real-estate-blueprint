@@ -82,9 +82,11 @@ class PLS_Map {
 
 		// make id available to everyone
 		self::$map_js_var = $map_js_var;
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
+		
 		ob_start();
 		?>
+		
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript" charset="utf-8"></script>
 		
 		<script type="text/javascript">
 		  
