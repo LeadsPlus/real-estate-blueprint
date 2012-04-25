@@ -451,7 +451,8 @@ class PLS_Format {
         "type" => "Type",
         "lower_level_rooms" => "Lower Level Rooms",
         "lot_description" => "Lot Description",
-        
+        "pk_lease" => "Parking Lease",
+        "lse_type" => "Lease Type",
 			);
 
 		global $pls_custom_amenity_dictionary;
