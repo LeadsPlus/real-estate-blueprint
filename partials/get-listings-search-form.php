@@ -87,7 +87,7 @@ class PLS_Partials_Listing_Search_Form {
         
         //respect user settings, unless they are all empty. 
         $user_search_params = pls_get_option($args['theme_option_id']);
-        if ($user_search_params['hide_all']) {
+        if (isset($user_search_params['hide_all'])) {
           return '';
         }
         $not_empty_flag = false;
