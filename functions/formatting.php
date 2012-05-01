@@ -453,6 +453,16 @@ class PLS_Format {
         "lot_description" => "Lot Description",
         "pk_lease" => "Parking Lease",
         "lse_type" => "Lease Type",
+        "total_rooms" => "Total Rooms",
+        "total_fireplaces" => "Total Fireplaces",
+        "total_closets" => "Total Closets",
+        "foundation" => "Foundation",
+        "fencing" => "Fencing",
+        "construction" => "Construction",
+        "age_years" => "Age in Years",
+        "total_photos" => "Total Photos",
+        "photos_mod" => "Photos Modified",
+        "handicap_access" => "Handicap Access",
 			);
 
 		global $pls_custom_amenity_dictionary;
