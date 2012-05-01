@@ -261,6 +261,26 @@ class PLS_Format {
 		return $amenities;
 	}
 
+	function translate_lease_terms ($listing) {
+    $lease_terms = array(
+      'per_yr' => 'per year',
+      'per_wk' => 'per week',
+      'per_mnt' => 'per month',
+      'per_ngt' => 'per night'
+    );
+
+    $translate_this = $listing['cur_data']['lse_trms'];
+
+    if ($translate_this != null) {
+		  foreach ($lease_terms as $key => $value) {
+        if ($key == $translate_this) {
+          $translated = $value;
+        }
+			}
+		  return $translated;
+		}
+  }
+
 	function translate_amenities ($amenities) {
 		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
@@ -463,6 +483,7 @@ class PLS_Format {
         "total_photos" => "Total Photos",
         "photos_mod" => "Photos Modified",
         "handicap_access" => "Handicap Access",
+        "parking_type" => "Parking Type",
 			);
 
 		global $pls_custom_amenity_dictionary;

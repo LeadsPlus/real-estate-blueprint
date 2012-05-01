@@ -67,6 +67,8 @@ class PLS_Partials_Listing_Search_Form {
             'theme_option_id' => '',
             'context_var' => null,
             'bedrooms' => 1,
+            'min_beds' => 1,
+            'max_beds' => 1,
             'bathrooms' => 1,
             'price' => 1,
             'half_baths' => 1,
@@ -170,6 +172,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Get the purchase type options. */
         $form_options['purchase_types'] = array( 'pls_empty_value' => 'All' ) + PLS_Plugin_API::get_type_values( 'purchase' );
+
 				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
 				// $form_options['purchase_types'] = PLS_Plugin_API::get_type_values( 'purchase' );
 				
@@ -199,45 +202,157 @@ class PLS_Partials_Listing_Search_Form {
             unset($form_options['zips']['false']);    
         }
         
-
+    // Price for Sales 
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
-            'pls_empty_value' => 'Any',
-            '200' => '$200',
-            '500' => '$500',
-            '1000' => '$1,000',
-            '2000' => '$2,000',
-            '3000' => '$3,000',
-            '4000' => '$4,000',
-            '5000' => '$5,000',
-			'50000' => '$50,000',
-			'100000' => '$100,000',
-			'200000' => '$200,000',
-			'350000' => '$350,000',
-			'400000' => '$400,000',
-			'450000' => '$450,000',
-			'500000' => '$500,000',
-			'600000' => '$600,000',
-			'700000' => '$700,000',
-            '800000' => '$800,000',
-            '900000' => '$900,000',
-			'1000000' => '$1,000,000',
+              'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+              '0' => '$0',
+              '$400' => '$400',
+              '500' => '$5,000',
+              '2000' => '$2,000',
+              '3000' => '$3,000',
+              '4000' => '$4,000',
+              '5000' => '$5,000',
+              '50000' => '$50,000',
+              '100000' => '$100,000',
+              '200000' => '$200,000',
+              '350000' => '$350,000',
+              '400000' => '$400,000',
+              '450000' => '$450,000',
+              '500000' => '$500,000',
+              '600000' => '$600,000',
+              '700000' => '$700,000',
+              '800000' => '$800,000',
+              '900000' => '$900,000',
+              '1000000' => '$1,000,000',
         );
 
-        $user_price_start = pls_get_option('pls-option-price-min');
-        $user_price_end = pls_get_option('pls-option-price-max');
-        $user_price_inc = pls_get_option('pls-option-price-inc');
+          $user_price_start = pls_get_option('pls-option-price-min');
+          $user_price_end = pls_get_option('pls-option-price-max');
+          $user_price_inc = pls_get_option('pls-option-price-inc');
 
-        if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
-            $range = range($user_price_start, $user_price_end, $user_price_inc);    
+          if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
+              $range = range($user_price_start, $user_price_end, $user_price_inc);    
+              $form_options['min_price'] = array();
+              foreach ($range as $price_value) {
+                  $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+              }
+          }   
+
+          /** Set the maximum price options array. */
+          $form_options['max_price'] = $form_options['min_price'];
+
+
+      // Price for Rentals 
+          /** Define the minimum price options array. */
+          $form_options['min_price_rental'] = array(
+                'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+                '200' => '$200',
+                '400' => '$400',
+                '600' => '$600',
+                '800' => '$800',
+                '1000' => '$1,000',
+                '1100' => '$1,100',
+                '1200' => '$1,200',
+                '1300' => '$1,300',
+                '1400' => '$1,400',
+                '1500' => '$1,500',
+                '1600' => '$1,600',
+                '1700' => '$1,700',
+                '1800' => '$1,800',
+                '1900' => '$1,900',
+                '2000' => '$2,000',
+                '2100' => '$2,100',
+                '2200' => '$2,200',
+                '2300' => '$2,300',
+                '2400' => '$2,400',
+                '2500' => '$2,500',
+                '2600' => '$2,600',
+                '2700' => '$2,700',
+                '2800' => '$2,800',
+                '2900' => '$2,900',
+                '3000' => '$3,000',
+                '3500' => '$3,500',
+                '4000' => '$4,000',
+                '4500' => '$4,500',
+                '5000' => '$5,000',
+                '6000' => '$6,000',
+                '7000' => '$7,000',
+                '8000' => '$8,000',
+
+                // '200' => '$200',
+                // '400' => '$400',
+                // '600' => '$600',
+                // '800' => '$800',
+                // '1000' => '$1,000',
+                // '1200' => '$1,200',
+                // '1400' => '$1,400',
+                // '1600' => '$1,600',
+                // '1800' => '$1,800',
+                // '2000' => '$2,000',
+                // '2200' => '$2,200',
+                // '2400' => '$2,400',
+                // '2600' => '$2,600',
+                // '28000' => '$2,800',
+                // '3000' => '$3,000',
+                // '3500' => '$3,500',
+                // '4000' => '$4,000',
+                // '4500' => '$4,500',
+                // '5000' => '$5,000',
+                // '6000' => '$6,000',
+                // '7000' => '$7,000',
+                // '8000' => '$8,000',
+          );
+
+            $user_price_start_rental = '';
+            $user_price_end_rental = '';
+            $user_price_inc_rental = '';
+
+            if (is_numeric($user_price_start_rental) && is_numeric($user_price_end_rental) && is_numeric($user_price_inc_rental)) {
+                $range = range($user_price_start_rental, $user_price_end_rental, $user_price_inc_rental);    
+                $form_options['min_price_rental'] = array();
+                foreach ($range as $price_value) {
+                    $form_options['min_price_rental'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+                }
+            }   
+
+            /** Set the maximum price options array. */
+            $form_options['max_price_rental'] = $form_options['min_price_rental'];
+
+      $form_options['min_beds'] = array(
+            'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5',
+            '6' => '6',
+            '7' => '7',
+            '8' => '8',
+            '9' => '9',
+            '10' => '10',
+            '11' => '11',
+            '12' => '12',
+            '13' => '13',
+            '14' => '14',
+            '15' => '15',
+      );
+
+        $user_bed_start = pls_get_option('pls-option-bed-min');
+        $user_bed_end = pls_get_option('pls-option-bed-max');
+        $user_bed_inc = pls_get_option('pls-option-bed-inc');
+
+        if (is_numeric($user_bed_start) && is_numeric($user_bed_end) && is_numeric($user_bed_inc)) {
+            $range = range($user_bed_start, $user_bed_end, $user_bed_inc);
             $form_options['min_price'] = array();
-            foreach ($range as $price_value) {
-                $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+            foreach ($range as $bed_value) {
+                $form_options['min_beds'][$bed_value] = $bed_value;
             }
-        }   
+        }
 
         /** Set the maximum price options array. */
-        $form_options['max_price'] = $form_options['min_price'];
+        $form_options['max_beds'] = $form_options['min_beds'];
 
         /** Define an array for extra attributes. */
         $form_opt_attr = array();
@@ -279,6 +394,26 @@ class PLS_Partials_Listing_Search_Form {
                 );
         }
         
+        
+        /** Add the bedrooms select element. */
+        if ($min_beds == 1) {
+            $form_html['min_beds'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[min_beds]') + $form_opt_attr['min_beds'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['min_beds'], @$_POST['metadata']['min_beds']  )
+                );
+        }
+        
+        /** Add the bedrooms select element. */
+        if ($max_beds == 1) {
+            $form_html['max_beds'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[max_beds]') + $form_opt_attr['max_beds'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['max_beds'], @$_POST['metadata']['max_beds']  )
+                );
+        }
 
         /** Add the bathroms select element. */
         if ($bathrooms == 1) {
@@ -392,21 +527,44 @@ class PLS_Partials_Listing_Search_Form {
                 pls_h_options( $form_options['max_price'], wp_kses_post(@$_POST['metadata']['max_price'] ) )
             );
         }
+
+        /** Add the minimum price select element. */
+        if ($min_price == 1) {
+            $form_html['min_price_rental'] = pls_h(
+                'select',
+                array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
+                pls_h_options( $form_options['min_price_rental'], @$_POST['metadata']['min_price'] )
+            );
+        }
         
+        /** Add the maximum price select element. */
+        if ($max_price == 1) {
+            $form_html['max_price_rental'] = pls_h(
+                'select',
+                array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['max_price_rental'], @$_POST['metadata']['max_price'] )
+            );
+        }
+
         $section_title = array(
-            'bedrooms' => 'Beds',
-            'bathrooms' => 'Baths',
-            'half_baths' => 'Half Baths',
-            'property_type' => 'Property Type',
-            'zoning_types' => 'Zoning Type',
-            'listing_types' => 'Listing Type',
-            'purchase_types' => 'Purchase Type',
-            'available_on' => 'Available',
-            'cities' => 'Near',
-            'states' => 'State',
-            'zips' => 'Zip Code',
-            'min_price' => 'Min Price',
-            'max_price' => 'Max Price',
+            'bedrooms' => __( 'Beds', pls_get_textdomain() ),
+            'min_beds' => __( 'Min Beds', pls_get_textdomain() ),
+            'max_beds' => __( 'Max Beds', pls_get_textdomain() ),
+            'bathrooms' => __( 'Baths', pls_get_textdomain() ),
+            'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
+            'property_type' => __( 'Property Type', pls_get_textdomain() ),
+            'zoning_types' => __( 'Zoning Type', pls_get_textdomain() ),
+            'listing_types' => __( 'Listing Type', pls_get_textdomain() ),
+            'purchase_types' => __( 'Purchase Type', pls_get_textdomain() ),
+            'available_on' => __( 'Available', pls_get_textdomain() ),
+            'cities' => __( 'Near', pls_get_textdomain() ),
+            'states' => __( 'State', pls_get_textdomain() ),
+            'zips' => __( 'Zip Code', pls_get_textdomain() ),
+            'min_price' => __( 'Min Price', pls_get_textdomain() ),
+            'max_price' => __( 'Max Price', pls_get_textdomain() ),
+            'min_price_rental' => __( 'Min Price Rental', pls_get_textdomain() ),
+            'max_price_rental' => __( 'Max Price Rental', pls_get_textdomain() ),
         );
 
         // In case user somehow disables all filters.
