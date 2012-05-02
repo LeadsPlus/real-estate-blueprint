@@ -82,8 +82,10 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 1,
             'min_price' => 1,
             'max_price' => 1,
+            'min_price_rental' => 1,
+            'max_price_rental' => 1,
             'include_submit' => true
-        ); 
+        );
 
         $args = wp_parse_args( $args, $defaults );
         
@@ -529,7 +531,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the minimum price select element. */
-        if ($min_price == 1) {
+        if ($min_price_rental == 1) {
             $form_html['min_price_rental'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
@@ -538,7 +540,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the maximum price select element. */
-        if ($max_price == 1) {
+        if ($max_price_rental == 1) {
             $form_html['max_price_rental'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
