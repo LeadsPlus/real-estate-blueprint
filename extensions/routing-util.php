@@ -28,15 +28,15 @@ class PLS_Route {
 		add_action( 'front_page_template', array( __CLASS__, 'handle_front_page'  ));	
 		add_action( 'paged_template', array( __CLASS__, 'handle_paged'  ));	
 		add_action( 'attachment_template', array( __CLASS__, 'handle_attachment'  ));	
-		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ));	
 		add_action( 'taxonomy_template', array( __CLASS__, 'handle_taxonomy'  ));	
+		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ));	
 		add_action( 'date_template', array( __CLASS__, 'handle_date'  ));	
 		add_action( 'tag_template', array( __CLASS__, 'handle_tag'  ));	
 		add_action( 'single_template', array( __CLASS__, 'handle_single'  ));	
 		add_action( 'page_template', array( __CLASS__, 'handle_page'  ));	
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ));	
 		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ));	
-		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ));	
+		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ));
 	}
 
 	function routing_logic ($template)
@@ -224,7 +224,7 @@ class PLS_Route {
 		
 		// sets the request for the standard 404
 		// template
-		self::$request = '404.php';
+		self::$request += '404.php';
 	}
 
 	// hooked to search
@@ -232,27 +232,27 @@ class PLS_Route {
 		
 		// sets the request for the standard search
 		// template
-		self::$request = 'search.php';
+		self::$request += 'search.php';
 	}
 
 	// hooked to home + index
 	function handle_home() {
 
 		//check for index.php, same hook as home.
-		self::$request = array( 'home.php', 'index.php' );		
+		self::$request += array( 'home.php', 'index.php' );		
 	}
 
 	// hooked to front-page.php
 	function handle_front_page () {
-		self::$request = 'front-page.php';
+		self::$request += 'front-page.php';
 	}
 
 	function handle_paged() {
-		self::$request = 'paged.php';
+		self::$request += 'paged.php';
 	}
 
 	function handle_date() {
-		self::$request = 'date.php';
+		self::$request += 'date.php';
 	}
 
 	// needs additional logic to handle different types of 
@@ -269,7 +269,7 @@ class PLS_Route {
 			
 		$templates[] = 'archive.php';
 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 
@@ -283,7 +283,7 @@ class PLS_Route {
 		$templates[] = "author-{$author->ID}.php";
 		$templates[] = 'author.php';
 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 
@@ -297,7 +297,7 @@ class PLS_Route {
 		$templates[] = "category-{$category->term_id}.php";
 		$templates[] = 'category.php';
 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 
@@ -312,7 +312,7 @@ class PLS_Route {
 		$templates[] = "tag-{$tag->term_id}.php";
 		$templates[] = 'tag.php';
 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 	// attachment pages, not sure what to do with this.
@@ -331,7 +331,7 @@ class PLS_Route {
 			return $template;
 		else
 
-		self::$request = $template;
+		self::$request += $template;
 	}
 
 	// hooked to handle single templates
@@ -344,8 +344,7 @@ class PLS_Route {
 		$templates[] = "single-{$object->post_type}.php";
 		$templates[] = "single.php";
 		
-		self::$request = $templates;
-		// return self::router('single.php');
+		self::$request += $templates;
 	}
 
 	// hooked to handle page templates
@@ -384,10 +383,11 @@ class PLS_Route {
 		// request var so router can use them later
 		// when the filter is called to decide
 		// which pages to look for. 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 	function handle_taxonomy() {
+		// pls_dump('bingo!@!!!');
 		$term = get_queried_object();
 		$taxonomy = $term->taxonomy;
 
@@ -397,7 +397,7 @@ class PLS_Route {
 		$templates[] = "taxonomy-$taxonomy.php";
 		$templates[] = 'taxonomy.php';
 
-		self::$request = $templates;
+		self::$request += $templates;
 	}
 
 
@@ -433,7 +433,7 @@ class PLS_Route {
 			$templates[] = sprintf( 'wrapper-%s', $variation );
 		}
 		
-		$templates[] ='wrapper.php';
+		$templates[] = 'wrapper.php';
 		
 		// if wrapper is being used, it will load attempt
 		// to load the various wrapper iterations.
