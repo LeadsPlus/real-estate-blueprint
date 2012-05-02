@@ -24,10 +24,8 @@ class Placester_Contact_Widget extends WP_Widget {
     echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
     
     ?>
-     <p style="font-size: 0.9em;">
-        Warning: This widget is designed to be used to send queries about a certain listing and therefore only works on the Property Details Page.
-    </p>     
-    <?php 
+
+<?php 
   }
   
   // Update settings

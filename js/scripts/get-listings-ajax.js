@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
                         '<div id="siteNotice">'+'</div>'+
                           '<h2 id="firstHeading" class="firstHeading">'+ listing_json['location']['full_address'] +'</h2>'+
                           '<div id="bodyContent">'+
-                            '<img width="80px" height="80px" style="float: left" src="'+image_url+'" />' +
+                            '<img width="80px" height="50px" style="float: left" src="'+image_url+'" />' +
                             '<ul style="float: right; width: 130px">' +
                               '<li> Beds: '+ listing_json['cur_data']['beds'] +'</li>' +
                               '<li> Baths: '+ listing_json['cur_data']['baths'] +'</li>' +
@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
                               '<li> Price: '+ listing_json['cur_data']['price'] +'</li>' +
                             '</ul>' +
                           '</div>' +
-                          '<div style="margin: 15px 70px; float: left; font-size: 16px; font-weight: bold;"><a href="'+listing_json['cur_data']['url']+'">View Details</a></div>' +
+                          '<div class="view-details"><a href="'+listing_json['cur_data']['url']+'">View Details</a></div>' +
                           '<div class="clear"></div>' +
                         '</div>'+
                       '</div>';

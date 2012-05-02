@@ -80,11 +80,19 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 1,
             'min_price' => 1,
             'max_price' => 1,
+            'neighborhood' => 1,
             'include_submit' => true
         ); 
 
         $args = wp_parse_args( $args, $defaults );
         
+        $form_options = array();
+        $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
+        $form_options['location']['region'] = pls_get_option('form_default_options_region');
+        $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
+        $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
+        $_POST = wp_parse_args($_POST, $form_options);
+               
         //respect user settings, unless they are all empty. 
         $user_search_params = pls_get_option($args['theme_option_id']);
         if (isset($user_search_params['hide_all'])) {
@@ -198,7 +206,13 @@ class PLS_Partials_Listing_Search_Form {
             $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
             unset($form_options['zips']['false']);    
         }
-        
+
+        if (!PLS_Plugin_API::get_location_list('neighborhood')) {
+            $form_options['neighborhood'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('neighborhood')); 
+            unset($form_options['neighborhood']['false']);    
+        }
 
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
@@ -374,6 +388,15 @@ class PLS_Partials_Listing_Search_Form {
             );
         }
 
+        /** Add the cities select element. */
+        if ($neighborhood == 1) {
+            $form_html['neighborhood'] = pls_h(
+                'select',
+                array( 'name' => 'location[neighborhood]' ) + $form_opt_attr['neighborhood'],
+                pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )
+            );
+        }
+
         /** Add the minimum price select element. */
         if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
@@ -407,6 +430,7 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 'Zip Code',
             'min_price' => 'Min Price',
             'max_price' => 'Max Price',
+            'neighborhood' => "Neighborhood",
         );
 
         // In case user somehow disables all filters.
