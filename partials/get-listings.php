@@ -168,7 +168,7 @@ class PLS_Partial_Get_Listings {
 						<?php endif; ?>
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
-												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+												<?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
                     </div>
                 </div>
             </div><!-- .entry-summary -->

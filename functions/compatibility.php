@@ -489,6 +489,22 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function placester_lead_control_panel( $args ) {
+        $return = self::_try_for_exceptions(array("PL_Membership", "placester_lead_control_panel"), $args, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+    static function placester_favorite_link_toggle( $args ) {
+        $return = self::_try_for_exceptions(array("PL_Membership", "placester_favorite_link_toggle"), $args, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
     static function get_person_details() {
         $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
         if ( isset($return) )  {
