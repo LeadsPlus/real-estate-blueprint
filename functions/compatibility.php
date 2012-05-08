@@ -99,9 +99,17 @@ class PLS_Plugin_API {
      * @since 0.0.1
      */
     static function get_company_details() {
+        $return = self::_try_for_exceptions( 'get_company_details' );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
+    static function get_taxonomies_by_type($params) {
 
         /** Test the function for any exceptions. */
-        $return = self::_try_for_exceptions( 'get_company_details' );
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygons_by_type'), $params );
 
         /** If no exceptions were detected, return the result. */
         if ( $return )
