@@ -44,7 +44,7 @@ class PLS_Partial_Get_Listings {
             /** Placester API arguments. */
             'limit' => 5,
             'sort_type' => 'asc',
-            'request_params' => array()
+            'request_params' => ''
         );
 
         /** Merge the arguments with the defaults. */
