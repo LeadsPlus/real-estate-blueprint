@@ -74,7 +74,7 @@ class PLS_Route {
 	// direct copy + paste of WP's locate function
 	// modified to alternate searching for the dev's
 	// templates, then look for blueprints.
-	function router ($template_names, $load = false, $require_once = true) {
+	function router ($template_names, $load = false, $require_once = true, $include_vars = false) {
 
 		PLS_Debug::add_msg('[[Hit Router!]] Searching for: ');
 		PLS_Debug::add_msg($template_names);
@@ -86,6 +86,11 @@ class PLS_Route {
 		if ( $load && '' != $located  ) {
 			PLS_Debug::add_msg('[[Load Requested:]] ' . $located);
 			load_template( $located, $require_once);
+		} elseif ($include_vars) {
+			ob_start();
+				extract($include_vars);
+				load_template( $located, $require_once);
+			echo ob_get_clean();
 		}
 			
 		return $located;
@@ -387,15 +392,37 @@ class PLS_Route {
 	}
 
 	function handle_taxonomy() {
-		// pls_dump('bingo!@!!!');
-		$term = get_queried_object();
-		$taxonomy = $term->taxonomy;
+		global $query_string;
+		$args = wp_parse_args($query_string, array('state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false));
+		extract($args);
 
 		$templates = array();
 
-		$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
-		$templates[] = "taxonomy-$taxonomy.php";
-		$templates[] = 'taxonomy.php';
+		if ($state || $city || $zip || $neighborhood || $street) {
+			$templates[] = 'attribute.php';
+			if ($street) {
+				$templates[] = 'attribute-street.php';
+			} elseif ($neighborhood) {
+				$templates[] = 'attribute-neighborhood.php';
+			} elseif ($zip) {
+				$templates[] = 'attribute-zip.php';
+			} elseif ($city) {
+				$templates[] = 'attribute-city.php';
+			} elseif ($state) {
+				$templates[] = 'attribute-state.php';
+			}
+			self::$request += $templates;
+		} else {
+			$term = get_queried_object();
+			$taxonomy = $term->taxonomy;
+
+			
+
+			$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
+			$templates[] = "taxonomy-$taxonomy.php";
+			$templates[] = 'taxonomy.php';
+
+		}
 
 		self::$request += $templates;
 	}
