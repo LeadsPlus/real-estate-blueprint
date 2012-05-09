@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
                 "url" : sSource,
                 "data" : aoData,
                 "success" : function(ajax_response) {
-                    if (ajax_response && ajax_response['aaData']) {
+                    if (ajax_response && ajax_response['aaData'] && typeof pls_google_map !== 'undefined') {
                         custom_total_results(ajax_response);
                         pls_clear_markers(pls_google_map);
                         if (typeof window['google'] != 'undefined') {
