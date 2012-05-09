@@ -47,16 +47,21 @@ class Placester_Contact_Widget extends WP_Widget {
         }
         extract($args);
         
-				$title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
-				$submit_value = apply_filters('button', empty($instance['button']) ? 'Send' : $instance['button']);
-				$email_label = apply_filters('email_label', empty($instance['email_label']) ? 'Email Address (required)' : $instance['email_label']);
-				$phone_label = apply_filters('phone_label', empty($instance['phone_label']) ? 'Phone Number (required)' : $instance['phone_label']);
-				$fname_label = apply_filters('fname_label', empty($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
-				$lname_label = apply_filters('lname_label', empty($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
-				$question_label = apply_filters('question_label', empty($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
-				$container_class = apply_filters('container_class', empty($instance['container_class']) ? '' : $instance['container_class']);
-				$inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
+        $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title']);
+        $submit_value = apply_filters('button', empty($instance['button']) ? 'Send' : $instance['button']);
+        $email_label = apply_filters('email_label', !isset($instance['email_label']) ? 'Email Address (required)' : $instance['email_label']);
+        $email_value = apply_filters('email_value', !isset($instance['email_value']) ? 'Email Address' : $instance['email_value']);
+        $phone_label = apply_filters('phone_label', !isset($instance['phone_label']) ? 'Phone Number (required)' : $instance['phone_label']);
+        $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Numbe' : $instance['phone_value']);
+        $fname_label = apply_filters('fname_label', !isset($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
+        $fname_value = apply_filters('fname_value', !isset($instance['fname_value']) ? 'First Name' : $instance['fname_value']);
+        $lname_label = apply_filters('lname_label', !isset($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
+        $lname_value = apply_filters('lname_value', !isset($instance['lname_value']) ? 'Last Name' : $instance['lname_value']);
+        $question_label = apply_filters('question_label', !isset($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
+        $container_class = apply_filters('container_class', empty($instance['container_class']) ? '' : $instance['container_class']);
+        $inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
         $inner_containers = apply_filters('inner_containers', empty($instance['inner_containers']) ? '' : $instance['inner_containers']);
+        $textarea_container = apply_filters('textarea_container', !isset($instance['textarea_container']) ? $inner_containers : $instance['textarea_container']);
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
         
@@ -76,26 +81,26 @@ class Placester_Contact_Widget extends WP_Widget {
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" id="firstName" value="First Name" type="text" name="firstName" tabindex="1" />
+                      <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" id="firstName" value="<?php echo $fname_value ?>" type="text" name="firstName" tabindex="1" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" id="lastName" value="Last Name" type="text" name="lastName" tabindex="2" />
+                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" id="lastName" value="<?php echo $lname_value ?>" type="text" name="lastName" tabindex="2" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" value="Email Address" type="email" name="email" tabindex="3" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" value="<?php echo $email_value ?>" type="email" name="email" tabindex="3" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php if(isset($instance['phone_number'])) { ?>
                       <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="Phone Number" type="text" name="phone" tabindex="4" />
+                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="<?php echo $phone_value ?>" type="text" name="phone" tabindex="4" />
                       <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
                     <?php } ?>
 
-                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
+                    <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
                     <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="5"></textarea>
-                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
+                    <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">

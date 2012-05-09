@@ -147,12 +147,15 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
-		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
-		wp_enqueue_script('text-overlay');
+    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+    // wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
+    // wp_enqueue_script('text-overlay');
 
 		ob_start();
 		?>
+
+
+      		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -161,7 +164,6 @@ class PLS_Map {
 				var other_polygons = [];
 				var other_text = [];
 				var centers = [];
-				
 				jQuery(function($) { 
 					google.maps.event.addDomListener(window, 'load', function() {
 						var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
@@ -416,6 +418,7 @@ class PLS_Map {
 	}
 
 	private static function make_markers($listings, $marker_args, $map_args) {
+    self::$markers = array();
 		if ( isset($listings[0]) ) {
 			foreach ($listings as $listing) {
 				self::make_marker($listing, $marker_args);
