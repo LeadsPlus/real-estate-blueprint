@@ -264,31 +264,31 @@
 h3#optionsframework-submit-top .button-primary {
   margin-left: 25px; }
 
-.section-featured-listing .section-info {
+.featured_listings_options .section-info {
   background-color: #f1f1f1;
   border-bottom: 1px solid #dfdfdf; }
-  .section-featured-listing .section-info h4 {
+  .featured_listings_options .section-info h4 {
     font-size: 16px;
     border-bottom: none !important; }
-.section-featured-listing div {
+.featured_listings_options div {
   float: left;
   margin-right: 10px; }
-  .section-featured-listing div.featured-listing-form-beds {
+  .featured_listings_options div.featured-listing-form-beds {
     width: 70px; }
-  .section-featured-listing div.featured-listing-form-city {
+  .featured_listings_options div.featured-listing-form-city {
     width: 180px; }
-  .section-featured-listing div.featured-listing-form-zip {
+  .featured_listings_options div.featured-listing-form-zip {
     width: 100px; }
-  .section-featured-listing div.featured-listing-form-min-price, .section-featured-listing div.featured-listing-form-max-price {
+  .featured_listings_options div.featured-listing-form-min-price, .featured_listings_options div.featured-listing-form-max-price {
     width: 160px; }
-.section-featured-listing input.pls_search_button {
+.featured_listings_options input.pls_search_button {
   float: left;
   width: 110px !important;
   margin-top: 14px; }
-.section-featured-listing .section-featured-listing .controls {
+.featured_listings_options .section-featured-listing .controls {
   width: 100% !important;
   padding-bottom: 30px; }
-.section-featured-listing .sort_wrapper {
+.featured_listings_options .sort_wrapper {
   display: none; }
 
 hr {

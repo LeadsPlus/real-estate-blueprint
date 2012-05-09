@@ -99,15 +99,19 @@ class PLS_Plugin_API {
      * @since 0.0.1
      */
     static function get_company_details() {
-
-        /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( 'get_company_details' );
-
-        /** If no exceptions were detected, return the result. */
-        if ( $return )
+        if ( $return ) {
             return $return;
+        }
+        return array();
+    }
 
-        return false;
+    static function get_taxonomies_by_type($params) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygons_by_type'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
     }
 
     /**
@@ -489,6 +493,14 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function get_translations() {
+        $return = self::_try_for_exceptions(array("PL_Custom_Attribute_Helper", "get_translations"), '', true );
+        if ( $return )  {
+            return $return;
+        }
+        return array();
+    }
+
     static function placester_lead_control_panel( $args ) {
         $return = self::_try_for_exceptions(array("PL_Membership", "placester_lead_control_panel"), $args, true );
         if ( $return )  {
@@ -507,10 +519,10 @@ class PLS_Plugin_API {
 
     static function get_person_details() {
         $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
-        if ( isset($return) )  {
+        if ( isset($return) && $return )  {
             return $return;
         }
-        return false;
+        return array();
     }
 
     static function update_person_details($person_details) {

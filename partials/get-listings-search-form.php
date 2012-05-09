@@ -98,8 +98,10 @@ class PLS_Partials_Listing_Search_Form {
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 
+
         $user_search_params = pls_get_option($args['theme_option_id']);
         if (isset($user_search_params['hide_all'])) {
+
           return '';
         }
         $not_empty_flag = false;
