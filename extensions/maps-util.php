@@ -456,6 +456,7 @@ class PLS_Map {
 						polygon.setOptions({fillOpacity: "0.9"});
 					}); 
 
+
 					google.maps.event.addListener(polygon,"mouseout",function(){
 						polygon.setOptions({fillOpacity: "0.4"});
 					}); 

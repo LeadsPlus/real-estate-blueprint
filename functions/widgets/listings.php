@@ -271,7 +271,10 @@ class PLS_Widget_Listings extends WP_Widget {
                 <section class="details">
                     <span class="bed"><?php echo $listing_data['cur_data']['beds']; ?> Beds</span>
                     <span class="bath"><?php echo $listing_data['cur_data']['baths'] ?> Baths</span>
-                    <span class="area"><?php echo $listing_data['cur_data']['sqft'] ?></span>
+                    <span class="area"><?php echo $listing_data['cur_data']['sqft'] ?> Sqft.</span>
+                    <?php if (isset($listing_data['rets']['mls_id'])) { ?>
+                      <span class="mls">MLS #: <?php echo $listing_data['rets']['mls_id'] ?></span>
+                    <?php } ?>
                 </section>
                 <section class="featured-image">
                     <?php if ( is_array($listing_data['images']) ): ?>

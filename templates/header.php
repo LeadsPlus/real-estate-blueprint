@@ -78,7 +78,7 @@
 									
                     
                 </hgroup>
-                <div class="header-membership"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
+                <div class="header-membership"><?php echo PLS_Plugin_API::placester_lead_control_panel(array()); ?></div>
                 <?php pls_do_atomic( 'header' ); ?>    
             </div>
 

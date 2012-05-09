@@ -268,6 +268,26 @@ class PLS_Format {
 		return $amenities;
 	}
 
+	function translate_lease_terms ($listing) {
+    $lease_terms = array(
+      'per_yr' => 'per year',
+      'per_wk' => 'per week',
+      'per_mnt' => 'per month',
+      'per_ngt' => 'per night'
+    );
+
+    $translate_this = $listing['cur_data']['lse_trms'];
+
+    if ($translate_this != null) {
+		  foreach ($lease_terms as $key => $value) {
+        if ($key == $translate_this) {
+          $translated = $value;
+        }
+			}
+		  return $translated;
+		}
+  }
+
 	function translate_amenities ($amenities) {
 		
 		$local_dictionary = array(
@@ -363,7 +383,116 @@ class PLS_Format {
 				"park_type" => "Parking Type",
 				"basemnt" => "Basement",
 				"lender_owned" => "Lender Owned",
-				"area" => "Area"
+				"area" => "Area",
+				"acres" => "Acres",
+        "move_in" => "Move In",
+        "bld_name" => "Building Name",
+        "tl_earn" => "Total Earned",
+        "style" => "Style",
+        "company" => "Company",
+        "landing_select" => "Advertising Style",
+        "bld_suit" => "Build to Suit",
+        "cent_ac" => "Central A/C",
+        "frplce" => "Fireplace",
+        "hv_ceil" => "High/Vaulted Ceiling",
+        "wlk_clst" => "Walk-In Closet",
+        "tle_flr" => "Tile Floor",
+        "lft_lyout" => "Loft Layout",
+        "off_den" => "Office/Den",
+        "dng_rm" => "Dining Room",
+        "brkfst_nk" => "Breakfast Nook",
+        "dshwsher" => "Dishwasher",
+        "refrig" => "Refrigerator",
+        "stve_ovn" => "Stove/Oven",
+        "stnstl_app" => "Stainless Steel Appliances",
+        "attic" => "Attic",
+        "basemnt" => "Basement",
+        "washer" => "Washer",
+        "dryer" => "Dryer",
+        "lndry_in" => "Laundry Area - Inside",
+        "lndry_gar" => "Laundry Area - Garage",
+        "blc_deck_pt" => "Balcony/Deck/Patio",
+        "yard" => "Yard",
+        "swm_pool" => "Swimming Pool",
+        "jacuzzi" => "Jacuzzi/Whirlpool",
+        "sauna" => "Sauna",
+        "cble_rdy" => "Cable-ready",
+        "hghspd_net" => "High-speed Internet",
+        "lt_sz" => "Lot Size",
+        "lt_sz_unit" => "Lot Unit Type",
+        "accoms" => "Accommodates",
+        "avail_info" => "Availability",
+        "hoa_mand" => "HOA Mandatory",
+        "hoa_fee" => "HOA Fee",
+        "lndr_own" => "Lender Owned",
+        "ngb_trans" => "Public Transportation",
+        "ngb_shop" => "Shopping",
+        "ngb_pool" => "Swimming Pool",
+        "ngb_court" => "Tennis Court",
+        "ngb_park" => "Park",
+        "ngb_trails" => "Walk/Jog Trails",
+        "ngb_stbles" => "Stables",
+        "ngb_golf" => "Golf Courses",
+        "ngb_med" => "Medical Facilities",
+        "ngb_bike" => "Bike Path",
+        "ngb_cons" => "Conservation Area",
+        "ngb_hgwy" => "Highway Access",
+        "ngb_mar" => "Marina",
+        "ngb_pvtsch" => "Private School",
+        "ngb_pubsch" => "Public School",
+        "ngb_uni" => "University",
+        "cats" => "Cats",
+        "dogs" => "Dogs",
+        "cons_stts" => "Construction Status",
+        "association_fee" => "Association Fee",
+        "appliances" => "Appliances",
+        "building_levels" => "Building Levels",
+        "approx_heat_cost" => "Approximate Heat Cost",
+        "basement" => "Basement",
+        "cooling" => "Cooling",
+        "exterior" => "Exterior",
+        "fireplace" => "Fireplace",
+        "electric" => "Electric",
+        "first_floor_rooms" => "First Floor Rooms",
+        "second_floor_rooms" => "Second Floor Rooms",
+        "third_floor_rooms" => "Third Floor Rooms",
+        "near" => "Near",
+        "short_sale" => "Short Sale",
+        "water_amenities" => "Water Amenities",
+        "interior" => "Interior",
+        "terms_available" => "Terms Available",
+        "handicap_access" => "Handicap Access",
+        "flooring" => "Flooring",
+        "hot_water" => "Hot Water",
+        "heat_system" => "Heat System",
+        "list_of_rooms" => "List of Rooms",
+        "heating_fuel" => "Heating Fuel",
+        "living_room_length" => "Living Room Length",
+        "living_room_width" => "Living Room Width",
+        "lower_level_rooms" => "Lower Level Rooms",
+        "master_bedroom_l" => "Master Bedroom Length",
+        "master_bedroom_w" => "Master Bedroom Width",
+        "number_of_fireplaces" => "Number of Fireplaces",
+        "sewer" => "Sewer",
+        "water_supply" => "Water Supply",
+        "plumbing" => "Plumbing",
+        "wall_description" => "Wall Description",
+        "type" => "Type",
+        "lower_level_rooms" => "Lower Level Rooms",
+        "lot_description" => "Lot Description",
+        "pk_lease" => "Parking Lease",
+        "lse_type" => "Lease Type",
+        "total_rooms" => "Total Rooms",
+        "total_fireplaces" => "Total Fireplaces",
+        "total_closets" => "Total Closets",
+        "foundation" => "Foundation",
+        "fencing" => "Fencing",
+        "construction" => "Construction",
+        "age_years" => "Age in Years",
+        "total_photos" => "Total Photos",
+        "photos_mod" => "Photos Modified",
+        "handicap_access" => "Handicap Access",
+        "parking_type" => "Parking Type",
 			);
 		
 		$api_dictionary = PLS_Plugin_API::get_translations();

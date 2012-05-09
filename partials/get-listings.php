@@ -154,6 +154,10 @@ class PLS_Partial_Get_Listings {
 							<p><span>Available On:</span> <?php echo @$listing_data['cur_data']['avail_on']; ?></p>
 						<?php } ?>
 
+          	<?php if (!empty($listing_data['rets']['mls_id'])) { ?>
+          		<p class="mls"><span>MLS #:</span> <?php echo @$listing_data['rets']['mls_id'] ?></p>
+          	<?php } ?>
+
 						<?php if (!empty($listing_data['cur_data']['desc'])): ?>
 							<p class="listing-description" class="grid_8 omega">
 								<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
@@ -161,7 +165,7 @@ class PLS_Partial_Get_Listings {
 						<?php endif; ?>
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
-												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+												<?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
                     </div>
                 </div>
             </div><!-- .entry-summary -->
@@ -195,4 +199,3 @@ class PLS_Partial_Get_Listings {
 
 
 }
-        
