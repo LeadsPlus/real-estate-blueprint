@@ -176,7 +176,7 @@ class PLS_Map {
 
 						var coords = [];
 						var request = {};
-						search_places();
+						// search_places();
 						
 						function search_places () {
 							get_lifestyle_form(function (new_point, request) {
