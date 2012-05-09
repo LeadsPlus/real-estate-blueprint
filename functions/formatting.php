@@ -246,12 +246,19 @@ class PLS_Format {
 
 	function amenities_but($listing_data, $amenities_to_remove) {
 		$amenities = array();
+		$amenities['ngb'] = array();
+		$amenities['list'] = array();
+
 		foreach ($listing_data['cur_data'] as $amenity => $value) {
 			if (in_array($amenity, $amenities_to_remove)) { continue; }
 			if (is_int(strrpos((string)$amenity, 'ngb'))) {
-				$amenities['ngb'][$amenity] = ' ' . $value;
+				if ($value) {
+					$amenities['ngb'][$amenity] = ' ' . $value;	
+				}
 			} else {
-				$amenities['list'][$amenity] =  ' ' .$value;
+				if ($value) {
+					$amenities['list'][$amenity] =  ' ' .$value;
+				}
 			}
 		}
 		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
@@ -262,13 +269,14 @@ class PLS_Format {
 	}
 
 	function translate_amenities ($amenities) {
-		$api_dictionary = PLS_Plugin_API::get_translations();
+		
 		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
 				'price' => 'Price',
 				'sqft' => 'Square Feet',
 				'baths' => 'Baths',
 				'avail_on' => 'Available On',
+				'cons_stts' => 'Construction Status',
 				'beds' => 'Beds',
 				'url' => 'Link',
 				'desc' => 'Description',
@@ -298,7 +306,7 @@ class PLS_Format {
 				'yard' => 'Has Yard',
 				'hdwdflr' => 'Hardwood Floors',
 				'sauna' => 'Sauna',
-				'year_blt' => 'Year Build',
+				'year_blt' => 'Year Built',
 				"oid" => "Office ID",
 				"aid" => "Agent ID",
 				"mls_id" => "MLS ID",
@@ -357,7 +365,8 @@ class PLS_Format {
 				"lender_owned" => "Lender Owned",
 				"area" => "Area"
 			);
-	
+		
+		$api_dictionary = PLS_Plugin_API::get_translations();
 		$local_dictionary = array_merge($local_dictionary, $api_dictionary);
 
 		global $pls_custom_amenity_dictionary;
