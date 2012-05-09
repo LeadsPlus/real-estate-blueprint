@@ -209,19 +209,16 @@ class PLS_Map {
 									response.types.push(form_values[key]);
 								};
 							};
-							var location_type = $('#lifestyle_form_wrapper select[name="location"]').val();
-							var location_value = $('.location_select_wrapper select#' + location_type).val();
-							if (location_value != 'Any') {
-								pls_geocode(location_value, <?php echo self::$map_js_var ?>, success_callback, failed_callback, response);	
-							} else {
-								failed_callback(null,response);
-							};
+							failed_callback(null,response);
 					      	return response;
 					      }
 					      
 					      $('#lifestyle_form_wrapper form, .location_select_wrapper').live('change', function(event) {
 					      	event.preventDefault();
 					      	pls_clear_markers(<?php echo self::$map_js_var ?>);
+					      	<?php foreach (self::$markers as $marker): ?>
+								<?php echo $marker; ?>
+							<?php endforeach ?>	
 					      	search_places();
 					      });
 					});
