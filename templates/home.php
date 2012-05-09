@@ -34,15 +34,6 @@
 		?>
 </div>
 <div id="listing" class="grid_8 alpha">
-	<?php //echo PLS_Map::polygon(null, array('width' => 590, 'height' => 250, 'zoom' => 16,'map_js_var' => 'test2', 'canvas_id' => 'another2', 'polygon_search' => 'neighborhood')); ?>
-	<p></p>
-	<?php echo PLS_Map::lifestyle_polygon(null, array('width' => 590, 'height' => 250, 'zoom' => 16,'map_js_var' => 'test4', 'canvas_id' => 'another4', 'life_style_search' => 'true','show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'lat' => '41.815594', 'lng' => '-71.413879')); ?>
-	<p></p>
-	<?php //echo PLS_Map::listings(null, array('width' => 590, 'height' => 250, 'zoom' => 16, 'auto_load_listings' => true )); ?>
-	<p></p>
-	<?php //echo PLS_Map::listings(null, array('width' => 590, 'height' => 250, 'zoom' => 16, 'map_js_var' => 'test', 'canvas_id' => 'another')); ?>
-	<p></p>
-	<?php //echo PLS_Partials::get_listings_list_ajax('context=listings_search&table_id=placester_listings_list'); ?>
-    <?php //echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
-    <?php //PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => false, 'office_name' => false)); ?>
+    <?php echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
+    <?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => false, 'office_name' => false)); ?>
 </div>
