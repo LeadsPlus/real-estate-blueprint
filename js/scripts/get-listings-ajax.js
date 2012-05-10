@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+jQuery(document).ready(function($) {
     var markers = [];
     var my_listings_datatable = $('#placester_listings_list').dataTable( {
         "bFilter": false,

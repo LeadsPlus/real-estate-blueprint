@@ -20,18 +20,24 @@ class PLS_Slideshow {
      * Initializes the slideshow.
      */
     static function init() {
-      
-      self::enqueue(); // This broke the site when taken out.
-      
+
+// <<<<<<< HEAD
+      // self::enqueue(); // This broke the site when taken out.
 		// For Wordpress 3.3.0
-		add_action('wp_head', array(__CLASS__,'enqueue'));
+    // add_action('wp_head', array(__CLASS__,'enqueue'));
+// =======
+		// For Wordpress 3.3.0
+        if (!is_admin()) {
+            add_action('init', array(__CLASS__,'enqueue'));
+        }
+// >>>>>>> 1.3
     }
 
     static function enqueue() {
 
         $slideshow_support = get_theme_support( 'pls-slideshow' );
 
-        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, true );
+        wp_register_script( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/jquery.orbit.js' , array( 'jquery' ), NULL, false );
         wp_register_style( 'pls-slideshow-orbit', trailingslashit( PLS_EXT_URL ) . 'slideshow/orbit/orbit.css' );
 
         if ( is_array( $slideshow_support ) ) {
@@ -61,30 +67,30 @@ class PLS_Slideshow {
     static function slideshow( $args = '' ) {
 
         /** Define the default argument array. */
-				$defaults = array(
-					'animation' => 'fade', 									// fade, horizontal-slide, vertical-slide, horizontal-push
-						'animationSpeed' => 800, 								// how fast animtions are
-					'timer' => true, 											// true or false to have the timer
-					'advanceSpeed' => 4000,									// if timer is enabled, time between transitions 
-					'pauseOnHover' => true,									// if you hover pauses the slider
-						'startClockOnMouseOut' => true,					// if clock should start on MouseOut
-						'startClockOnMouseOutAfter' => 500,			// how long after MouseOut should the timer start again
-					'directionalNav' => true, 							// manual advancing directional navs
-					'captions' => true, 										// do you want captions?
-						'captionAnimation' => 'fade', 					// fade, slideOpen, none
-						'captionAnimationSpeed' => 800, 				// if so how quickly should they animate in
-					'afterSlideChange' => 'function(){}',		// empty function
-					'bullets' => 'false',											// true or false to activate the bullet navigation
-						'bulletThumbs' => false,								// thumbnails for the bullets
-						'bulletThumbLocation' => '',						// location from this file where thumbs will be
-					'width' => 620,
-					'height' => 300,
-					'container_height' => false,
-					'context' => '',
-					'context_var' => false,
-					'featured_option_id' => false,
-					'listings' => 'limit=5&sort_by=price',
-					'data' => false,
+        $defaults = array(
+            'animation' => 'fade', 									// fade, horizontal-slide, vertical-slide, horizontal-push
+            'animationSpeed' => 800, 								// how fast animtions are
+            'timer' => true, 											// true or false to have the timer
+            'advanceSpeed' => 4000,									// if timer is enabled, time between transitions 
+            'pauseOnHover' => true,									// if you hover pauses the slider
+            'startClockOnMouseOut' => true,					// if clock should start on MouseOut
+            'startClockOnMouseOutAfter' => 500,			// how long after MouseOut should the timer start again
+            'directionalNav' => true, 							// manual advancing directional navs
+            'captions' => true, 										// do you want captions?
+            'captionAnimation' => 'fade', 					// fade, slideOpen, none
+            'captionAnimationSpeed' => 800, 				// if so how quickly should they animate in
+            'afterSlideChange' => 'function(){}',		// empty function
+            'bullets' => 'false',											// true or false to activate the bullet navigation
+            'bulletThumbs' => false,								// thumbnails for the bullets
+            'bulletThumbLocation' => '',						// location from this file where thumbs will be
+            'width' => 620,
+            'height' => 300,
+            'container_height' => false,
+            'context' => '',
+            'context_var' => false,
+            'featured_option_id' => false,
+            'listings' => 'limit=5&sort_by=price',
+            'data' => false,
         );
 
         /** Merge the arguments with the defaults. */
@@ -135,8 +141,8 @@ class PLS_Slideshow {
                 ?>
                  <div id="caption-<?php echo $index ?>" class="orbit-caption">
                     <p class="caption-title"><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
-                    <p class="caption-subtitle"><?php printf( __( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', pls_get_textdomain() ), $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
-                    <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php _e( 'See Details', pls_get_textdomain() ) ?></span></a>
+                    <p class="caption-subtitle"><?php printf( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
+                    <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php 'See Details' ?></span></a>
                 </div>
                 <?php 
                 $data['captions'][] = trim( ob_get_clean() );
@@ -210,8 +216,8 @@ class PLS_Slideshow {
 		        ob_start();
 		?>
 		<script type="text/javascript">
-		$(window).load(function() {
-		    $('#slider').orbit({
+		jQuery(window).load(function($) {
+		    jQuery('#slider').orbit({
 						animation: '<?php echo $animation ?>', 																	// fade, horizontal-slide, vertical-slide, horizontal-push
 						animationSpeed: <?php echo $animationSpeed ?>, 													// how fast animtions are
 						timer: <?php echo $timer ?>, 																						// true or false to have the timer
@@ -226,7 +232,6 @@ class PLS_Slideshow {
 						bullets: <?php echo $bullets ? 'true' : 'false' ?>,			 // true or false to activate the bullet navigation
 						// bulletThumbs: false,		 // thumbnails for the bullets
 						// bulletThumbLocation: '',		 // location from this file where thumbs will be
-				    
 						width: 620,
 						height: 300,
 						context: '',

@@ -89,7 +89,7 @@ class PLS_Partials_Get_Listings_Ajax {
                     <label for="sort_by">Sort Direction</label>
                     <select name="sort_type" id="sort_dir">
                         <option value="asc">Ascending</option>
-                        <option value="asc">Descending</option>
+                        <option value="desc">Descending</option>
                     </select>
                   </div>
               </form>  

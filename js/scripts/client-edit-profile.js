@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+jQuery(document).ready(function($) {
 
 	$('#edit_profile_button').live('click', function(event) {
 		event.preventDefault();

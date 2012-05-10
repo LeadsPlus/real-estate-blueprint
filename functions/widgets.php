@@ -22,19 +22,16 @@ function pls_register_widgets() {
 	/** Load the Placester Agent widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/agent.php' );
 
-	/** Load the Placester Agent widget. */
+	/** Load the Placester Office widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/office.php' );
 
-	/** Load the Placester Agent widget. */
+	/** Load the Placester Contact widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/contact.php' );
 	
-	/** Load the Placester Agent widget. */
-	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/floating-map.php' );
-
 	/** Load the Placester Recent Posts widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/recent-posts.php' );
 
-	/** Load the Placester Recent Posts widget. */
+	/** Load the Placester Quick Search widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/quick-search.php' );
 
 	/** Load the Placester Listings widget. */
@@ -42,22 +39,9 @@ function pls_register_widgets() {
 
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Agent' );
-
-	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Office' );
-
-	/* Register each of the widgets. */	
-	register_widget( 'PLS_Floating_Map' );
-
-	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Recent_Posts' );
-	
-	/* Register each of the widgets. */
 	register_widget( 'PLS_Quick_Search_Widget' );
-
-	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Listings' );
-
-	/* Register each of the widgets. */
 	register_widget( 'Placester_Contact_Widget' );
 }

@@ -7,10 +7,10 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         /* Set the widget textdomain. */
         $this->textdomain = pls_get_textdomain();
             
-        $widget_options = array( 'classname' => 'pls-quick-search','description' => esc_html__( 'Displays search filters for bedrooms, bathrooms, city, state, zip, minimum price, and maximum price', $this->textdomain ));
+        $widget_options = array( 'classname' => 'pls-quick-search','description' => 'Displays search filters for bedrooms, bathrooms, city, state, zip, minimum price, and maximum price');
 
         /* Create the widget. */
-        parent::__construct( "pls-quick-search", esc_attr__( 'Placester: Listings Quick Search', $this->textdomain ), $widget_options );        
+        parent::__construct( "pls-quick-search", 'Placester: Listings Quick Search', $widget_options );        
     }
 
     function widget($args, $instance) {
@@ -32,6 +32,7 @@ class PLS_Quick_Search_Widget extends WP_Widget {
            echo $before_widget;
             echo "<h3>" . $title . "</h3>";
             echo PLS_Partials::get_listings_search_form($search_form_filter_string);
+        echo "<section class='clear'></section>";
         echo "</section>";
         echo $after_widget;
     }
@@ -50,7 +51,7 @@ class PLS_Quick_Search_Widget extends WP_Widget {
         $title = htmlspecialchars($instance['title']);
 
         // Output the options
-        echo '<p><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
+        echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
     }
 
     function process_defaults ($args, $instance) {

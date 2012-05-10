@@ -1,7 +1,6 @@
-<?php 
+<?php
 
 class PLS_Partials_Listing_Search_Form {
-	
 
 	/**
      * Returns a form that can be used to search for listings.
@@ -89,8 +88,10 @@ class PLS_Partials_Listing_Search_Form {
         );
 
         $args = wp_parse_args( $args, $defaults );
+
         
         $form_options = array();
+        // Set Form Defaults for params onload, set in Theme Options
         $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
         $form_options['location']['region'] = pls_get_option('form_default_options_region');
         $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
@@ -564,24 +565,11 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 'Zip Code',
             'min_price' => 'Min Price',
             'max_price' => 'Max Price',
-            'neighborhood' => "Neighborhood",
-            'bedrooms' => __( 'Beds', pls_get_textdomain() ),
-            'min_beds' => __( 'Min Beds', pls_get_textdomain() ),
-            'max_beds' => __( 'Max Beds', pls_get_textdomain() ),
-            'bathrooms' => __( 'Baths', pls_get_textdomain() ),
-            'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
-            'property_type' => __( 'Property Type', pls_get_textdomain() ),
-            'zoning_types' => __( 'Zoning Type', pls_get_textdomain() ),
-            'listing_types' => __( 'Listing Type', pls_get_textdomain() ),
-            'purchase_types' => __( 'Purchase Type', pls_get_textdomain() ),
-            'available_on' => __( 'Available', pls_get_textdomain() ),
-            'cities' => __( 'Near', pls_get_textdomain() ),
-            'states' => __( 'State', pls_get_textdomain() ),
-            'zips' => __( 'Zip Code', pls_get_textdomain() ),
-            'min_price' => __( 'Min Price', pls_get_textdomain() ),
-            'max_price' => __( 'Max Price', pls_get_textdomain() ),
-            'min_price_rental' => __( 'Min Price Rental', pls_get_textdomain() ),
-            'max_price_rental' => __( 'Max Price Rental', pls_get_textdomain() ),
+            'neighborhood' => 'Neighborhood',
+            'min_beds' => 'Min Beds',
+            'max_beds' => 'Max Beds',
+            'min_price_rental' => 'Min Price Rental',
+            'max_price_rental' => 'Max Price Rental',
         );
 
         // In case user somehow disables all filters.

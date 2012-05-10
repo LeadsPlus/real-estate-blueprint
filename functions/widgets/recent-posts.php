@@ -31,11 +31,11 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname' => 'pls-recent-posts',
-            'description' => esc_html__( 'A more powerful widget that displays the recent blog posts.', $this->textdomain )
+            'description' => 'A more powerful widget that displays the recent blog posts.'
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-recent-posts", esc_attr__( 'Placester: Recent Blog Posts', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-recent-posts", 'Placester: Recent Blog Posts', $widget_options );
 
         /** Delete the widget cache if a post is modified, deleted, or a the theme is switched. */
 		add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
@@ -115,15 +115,16 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the post title. */
                 if ( ! empty( $instance['post_title'] ) )
-                    $post_html['post_title'] = pls_h_p(pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title', 'itemprop' => 'url')), array('class' => 'recent-post-title h5', 'itemprop' => 'name') );
+                    $post_html['post_title'] = pls_h_p(
+                      pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title', 'itemprop' => 'url')), array('class' => 'recent-post-title h5', 'itemprop' => 'name') );
 
                 /** Add the author. */
                 if ( ! empty( $instance['author'] ) )
-                    $post_html['author'] = sprintf( ' ' . __( 'by <span class="author" itemprop="author">%1$s</span>', pls_get_textdomain() ), get_the_author() );
+                    $post_html['author'] = sprintf( ' ' . 'by <span class="author">%1$s</span>', get_the_author() );
 
                 /** Add the date. */
                 if ( ! empty( $instance['date'] ) )
-                    $post_html['date'] = sprintf( ' ' . __( 'on <time datetime="%1$s" itemprop="datePublished">%2$s</time>', pls_get_textdomain() ), get_the_date( 'Y-m-d' ), get_the_date() );
+                    $post_html['date'] = sprintf( ' ' . 'on <time datetime="%1$s">%2$s</time>', get_the_date( 'Y-m-d' ), get_the_date() );
 
                 /** Add the excerpt */
                 if ( ! empty( $instance['excerpt'] ) )
@@ -131,7 +132,8 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
                 /** Add the read more link. */
                 if ( ! empty( $instance['read_more'] ) )
-                    $post_html['read_more'] = pls_h_p(pls_h_a( get_permalink(), __( 'Read more', pls_get_textdomain() ) ), array( 'class' => 'read-more', 'itemprop' => 'url' ) );
+                    $post_html['read_more'] = pls_h_p(
+                        pls_h_a( get_permalink(), 'Read more' ), array( 'class' => 'read-more', 'itemprop' => 'url' ) );
 
                 /** Combine the post information. */
                 $post_item = pls_get_if_not_empty( $post_html['post_title'] ) . 
@@ -217,7 +219,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
 
 		/** Set up the default form values. */
 		$defaults = array(
-			'title' => esc_attr__( 'Latest Blog Posts', $this->textdomain ),
+			'title' => 'Latest Blog Posts',
             'post_title' => true,
             'author' => true,
             'date' => true,
@@ -234,7 +236,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             /** Print the Title input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Title', pls_get_textdomain() ) . ':' .
+                    'Title' . ':' .
                     pls_h( 
                         'input',
                         array(
@@ -258,7 +260,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                             'name' => $this->get_field_name( 'post_title' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Post Title', pls_get_textdomain() ), 
+                    ' ' . 'Post Title', 
                     $this->get_field_id( 'post_title' ) 
                 ) 
             ) . 
@@ -272,7 +274,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                             'name' => $this->get_field_name( 'author' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Author', pls_get_textdomain() ), 
+                    ' ' . 'Author', 
                     $this->get_field_id( 'author' ) 
                 ) 
             ) . 
@@ -286,7 +288,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                             'name' => $this->get_field_name( 'date' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Post Date', pls_get_textdomain() ), 
+                    ' ' . 'Post Date', 
                     $this->get_field_id( 'date' ) 
                 ) 
             ) . 
@@ -300,7 +302,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                             'name' => $this->get_field_name( 'excerpt' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Excerpt', pls_get_textdomain() ), 
+                    ' ' . 'Excerpt', 
                     $this->get_field_id( 'excerpt' ) 
                 ) 
             ) .
@@ -314,14 +316,14 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                             'name' => $this->get_field_name( 'read_more' ),
                         ) 
                     ) . 
-                    ' ' . __( 'Read more link', pls_get_textdomain() ), 
+                    ' ' . 'Read more link', 
                     $this->get_field_id( 'read_more' ) 
                 ) 
             ) . 
             /** Print the Number text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Number of posts', pls_get_textdomain() ) . ': ' .
+                    'Number of posts' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -338,7 +340,7 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
             /** Print the Extra HTML textarea */
             // pls_h_p( 
                 // pls_h_label( 
-                    // __( 'Extra HTML', pls_get_textdomain() ) . ":" .
+                    // 'Extra HTML' . ":" .
                     // pls_h( 
                         // 'textarea',
                         // array(

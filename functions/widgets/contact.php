@@ -3,7 +3,7 @@
 class Placester_Contact_Widget extends WP_Widget {
 
   function Placester_Contact_Widget() {
-    $widget_ops = array('classname' => 'Placester_Contact_Widget', 'description' => __( 'Works only on the Property Details Page.') );
+    $widget_ops = array('classname' => 'Placester_Contact_Widget', 'description' => 'Works only on the Property Details Page.' );
     $this->WP_Widget( 'Placester_Contact_Widget', 'Placester: Contact Form', $widget_ops );
   }
 
@@ -19,9 +19,9 @@ class Placester_Contact_Widget extends WP_Widget {
     $checked = $instance['modern'] == 1 ? 'checked' : '';
 
     // Output the options
-    echo '<p><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
+    echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
 
-    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '">' . __('Use placeholders instead of labels') . '</label></p>';
+    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
     
     ?>
      <p style="font-size: 0.9em;">
@@ -42,12 +42,10 @@ class Placester_Contact_Widget extends WP_Widget {
   function widget($args, $instance) {
       global $post;
         
-      // if(isset($post->post_type) && $post->post_type == 'property') {
-        // $data = placester_property_get($post->post_name);
         if (!empty($post) && isset($post->post_type) && $post->post_type == 'property') {
-          $listing_data = unserialize($post->post_content);
+          $data = unserialize($post->post_content);
         } else {
-          $listing_data = array();
+          $data = array();
         }
         extract($args);
         
@@ -64,8 +62,8 @@ class Placester_Contact_Widget extends WP_Widget {
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
         
-        $modern = @$instance['modern'] ? 1 : 0;
-        $template_url = get_bloginfo('template_url');
+        $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
+        $template_url = get_template_directory_uri();
 
     
         echo '<section class="widget pls-contact-form side-ctnr placester_contact ' . $container_class . '">' . "\n";
@@ -204,9 +202,9 @@ function ajax_placester_contact() {
       $api_whoami = PLS_Plugin_API::get_user_details();
 
       if (trim($_POST['email_confirmation']) == true) {
-        wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . get_bloginfo('url'), $message);
+        wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);
       } elseif ($api_whoami['email']) {
-        $placester_Mail = wp_mail($api_whoami['email'], 'Prospective client from ' . get_bloginfo('url'), $message);
+        $placester_Mail = wp_mail($api_whoami['email'], 'Prospective client from ' . home_url(), $message);
       }
       
       $name = $_POST['firstName'] . ' ' . $_POST['lastName'];
@@ -216,7 +214,7 @@ function ajax_placester_contact() {
       if (trim($_POST['email_confirmation']) == true) {
 
         ob_start();
-          include(TEMPLATEPATH . '/custom/contact-form-email.php');
+          include(get_template_directory() . '/custom/contact-form-email.php');
           $message_to_submitter = ob_get_contents();
         ob_end_clean();
               

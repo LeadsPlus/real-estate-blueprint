@@ -13,7 +13,7 @@ if ( ! function_exists( 'optionsframework_option_name' ) ) {
     function optionsframework_option_name() {
 
         /** Get the theme name from the stylesheet (lowercase and without spaces). */
-        $options_id = get_theme_data( STYLESHEETPATH . '/style.css' );
+        $options_id = get_theme_data( get_stylesheet_directory() . '/style.css' );
         $options_id = $options_id['Name'];
         $options_id = preg_replace( "/\W/", "", strtolower( $options_id ) );
 
@@ -85,13 +85,13 @@ class PLS_Options_Framework {
                 $options = array(); 
 
                 $options[] = array( 
-                    'name' => __( 'Information', pls_get_textdomain() ),
+                    'name' => 'Information',
                     'type' => 'heading'
                 );
 
                 $options[] = array( 
-                    'name' => __( 'Information', pls_get_textdomain() ),
-                    'desc' => __( 'Looks like you activated the theme options. To jump into using them you need to create an <code>options.php</code> file in you theme root directory. That file needs to contain a <code>optionsframework_options()</code> function that returns the option array. Check out our documentation for more information.', pls_get_textdomain() ),
+                    'name' => 'Information',
+                    'desc' => 'Looks like you activated the theme options. To jump into using them you need to create an <code>options.php</code> file in you theme root directory. That file needs to contain a <code>optionsframework_options()</code> function that returns the option array. Check out our documentation for more information.',
                     'type' => 'info'
                 );
 
@@ -112,7 +112,7 @@ class PLS_Options_Framework {
         global $wp_admin_bar;
 
         /** Add filtering for the name of options page. */
-        $page_name = apply_filters( 'pls_admin_bar_menu_page', __( 'Theme Options', pls_get_textdomain() ) );
+        $page_name = apply_filters( 'pls_admin_bar_menu_page', 'Theme Options' );
 
 				// Commented out for WordPress theme submission
         $wp_admin_bar->add_menu( array(
@@ -130,7 +130,7 @@ class PLS_Options_Framework {
     static function add_page() {
 
         /** Add filtering for the name of options page. */
-        $page_name = apply_filters( 'pls_theme_options_menu_page_title', __( 'Theme Options', pls_get_textdomain() ) );
+        $page_name = apply_filters( 'pls_theme_options_menu_page_title', 'Theme Options' );
 
 				// Commented out for WordPress theme submission
         /** Add the menu page. */

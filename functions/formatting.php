@@ -465,7 +465,6 @@ class PLS_Format {
         "stve_ovn" => "Stove/Oven",
         "stnstl_app" => "Stainless Steel Appliances",
         "attic" => "Attic",
-        "basemnt" => "Basement",
         "washer" => "Washer",
         "dryer" => "Dryer",
         "lndry_in" => "Laundry Area - Inside",
@@ -503,8 +502,10 @@ class PLS_Format {
         "cats" => "Cats",
         "dogs" => "Dogs",
         "pk_lease" => "Parking Lease",
-        "lease_type" => "Lease Type"
-			);
+        "lease_type" => "Lease Type",
+        "master_bath" => "Master Bath",
+        "area" => "Area"
+      );
 
 		global $pls_custom_amenity_dictionary;
 
@@ -520,7 +521,6 @@ class PLS_Format {
 		}
 		return $amenities;
 	}
-
 
 //end of class
 }

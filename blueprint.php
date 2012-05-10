@@ -32,7 +32,7 @@
  * Big thanks to Justin Tadlock for inspiration with his HybridCore Framework.
  *
  * @package PlacesterBlueprint
- * @version 2.0
+ * @version 2.1
  * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com/themes/blueprint/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -59,9 +59,10 @@ class Placester_Blueprint {
 	 *
 	 * @since 0.0.1
 	 */
+
     function __construct($version = '0.0') {
 
-        $version_locked = '2.0';
+        $version_locked = '2.1';
         if ($version != $version_locked) {
             die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
@@ -365,6 +366,9 @@ class Placester_Blueprint {
         /** Load the widgets. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'widgets.php' );
 
+        /** Load the notifications. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
+
         /** Load the styles functions. */
         require_once( trailingslashit ( PLS_CSS_DIR ) . 'styles.php' );
 
@@ -432,7 +436,8 @@ class Placester_Blueprint {
             $page_list[] = array( 'title' => 'Blog', 'template' => 'page-template-blog.php' );
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
             $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
-            PLS_Plugin_API::create_page($page_list);            
+            $page_list[] = array( 'title' => 'Sample Listing', 'template' => 'sample-listing.php' );
+            PLS_Pages::create_once($page_list);
         } 
     }
 }
