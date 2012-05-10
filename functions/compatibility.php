@@ -122,8 +122,11 @@ class PLS_Plugin_API {
      * otherwise.
      * @since 0.0.1
      */
-    static function get_property_url( $id ) {
+    static function get_property_url( $id = false ) {
 
+        if (!$id) {
+            return false;
+        }
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( 'placester_get_property_url', $id );
 
@@ -131,7 +134,15 @@ class PLS_Plugin_API {
         if ( $return ) {
             return $return;
         }
+        if (pls_has_plugin_error()) {
+            $page = get_page_by_title('Sample Listing', 'ARRAY_A');
+            if ($page && isset($page['guid'])) {
+                return $page['guid'];        
+            }
+            return false;
+        }
         return false;
+        
     }
 
 
@@ -277,18 +288,18 @@ class PLS_Plugin_API {
             'is_new' => '',
             /** The commented ones are not supported by the list of listings. */
             'sort_by' => array( 
-                'price' => __( 'Price', pls_get_textdomain() ),
-                // 'sqft' => __( 'Square Feet', pls_get_textdomain() ),
-                // 'description' => __( 'Description', pls_get_textdomain() ), 
-                // 'bedrooms' => __( 'Bedroom', pls_get_textdomain() ),
-                // 'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
-                // 'available_on' => __( 'Available On', pls_get_textdomain() ),
-                'location.address' => __( 'Address', pls_get_textdomain() ),
-                'location.city' => __( 'City', pls_get_textdomain() ),
-                'location.state' => __( 'State', pls_get_textdomain() ),
-                'location.zip' => __( 'Zip', pls_get_textdomain() ),
-                // 'location.neighborhood' => __( 'Neighborhood', pls_get_textdomain() ),
-                // 'location.country' => __( 'Country', pls_get_textdomain() ),
+                'price' => 'Price',
+                // 'sqft' => 'Square Feet',
+                // 'description' => 'Description', 
+                // 'bedrooms' => 'Bedroom',
+                // 'half_baths' => 'Half Baths',
+                // 'available_on' => 'Available On',
+                'location.address' => 'Address',
+                'location.city' => 'City',
+                'location.state' => 'State',
+                'location.zip' => 'Zip',
+                // 'location.neighborhood' => 'Neighborhood',
+                // 'location.country' => 'Country',
             ),
             'sort_type' => array( 'asc' => true, 'desc' => true )
         );
@@ -304,40 +315,40 @@ class PLS_Plugin_API {
         /** Define the supported types. */
         $supported_types = array( 
             'property' => array(
-                'apartment' => __( 'Apartment', pls_get_textdomain() ),
-                'penthouse' => __( 'Penthouse', pls_get_textdomain() ),
-                'townhouse' => __( 'Townhouse', pls_get_textdomain() ),
-                // 'brownstone' => __( 'Brownstone', pls_get_textdomain() ),
-                'fam_home' => __( 'Single Family Home', pls_get_textdomain() ),
-                // 'multi_fam_home' => __( 'Multi Family Home', pls_get_textdomain() ),
-                // 'flat' => __( 'Flat', pls_get_textdomain() ),
-                // 'loft' => __( 'Loft', pls_get_textdomain() ),
-                // 'cottage' => __( 'Cottage', pls_get_textdomain() ),
-                // 'villa' => __( 'Villa', pls_get_textdomain() ),
-                // 'mansion' => __( 'Mansion', pls_get_textdomain() ),
-                // 'ranch' => __( 'Ranch', pls_get_textdomain() ),
-                // 'island' => __( 'Island', pls_get_textdomain() ),
-                // 'log_cabin' => __( 'Log Cabin', pls_get_textdomain() ),
-                // 'tent' => __( 'Tent', pls_get_textdomain() ),
-								'duplex' => __( 'Duplex', pls_get_textdomain() ),
-								'condo' => __( 'Condominium', pls_get_textdomain() )
+                'apartment' => 'Apartment',
+                'penthouse' => 'Penthouse',
+                'townhouse' => 'Townhouse',
+                // 'brownstone' => 'Brownstone',
+                'fam_home' => 'Single Family Home',
+                // 'multi_fam_home' => 'Multi Family Home',
+                // 'flat' => 'Flat',
+                // 'loft' => 'Loft',
+                // 'cottage' => 'Cottage',
+                // 'villa' => 'Villa',
+                // 'mansion' => 'Mansion',
+                // 'ranch' => 'Ranch',
+                // 'island' => 'Island',
+                // 'log_cabin' => 'Log Cabin',
+                // 'tent' => 'Tent',
+    				'duplex' => 'Duplex',
+    				'condo' => 'Condominium'
             ), 
             'listing' => array(
-                // 'storage' => __( 'Storage', pls_get_textdomain() ),
-                'housing' => __( 'Housing', pls_get_textdomain() ),
-                'parking' => __( 'Parking', pls_get_textdomain() ),
-                'sublet' => __( 'Sublet', pls_get_textdomain() ),
-                'vacation' => __( 'Vacation', pls_get_textdomain() ),
-                'land' => __( 'Land', pls_get_textdomain() ),
-                // 'other' => __( 'Other', pls_get_textdomain() ),
+                // 'storage' => 'Storage',
+                'housing' => 'Housing',
+                'parking' => 'Parking',
+                'sublet' => 'Sublet',
+                'vacation' => 'Vacation',
+                'land' => 'Land',
+                // 'other' => 'Other',
             ), 
             'zoning' => array(
-                'residential' => __( 'Residential', pls_get_textdomain() ),
-                'commercial' => __( 'Commercial', pls_get_textdomain() ),
+                'residential' => 'Residential',
+                'commercial' => 'Commercial',
             ), 
             'purchase' => array(
-                'rental' => __( 'Rental', pls_get_textdomain() ),
-                'sale' => __( 'Sale', pls_get_textdomain() ),
+                'rental' => 'Rent',
+                'sale' => 'Buy',
             )
         );
 
@@ -478,6 +489,22 @@ class PLS_Plugin_API {
         return false;
     }
 
+    static function placester_lead_control_panel( $args ) {
+        $return = self::_try_for_exceptions(array("PL_Membership", "placester_lead_control_panel"), $args, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
+    static function placester_favorite_link_toggle( $args ) {
+        $return = self::_try_for_exceptions(array("PL_Membership", "placester_favorite_link_toggle"), $args, true );
+        if ( $return )  {
+            return $return;
+        }
+        return false;
+    }
+
     static function get_person_details() {
         $return = self::_try_for_exceptions(array("PL_People_Helper", "person_details"), '', true );
         if ( isset($return) )  {
@@ -609,7 +636,7 @@ $PLS_API_DEFAULT_LISTING = array(
             'baths' => '2',
             'avail_on' => '10/16/2015',
             'beds' => '3',
-            'url' => false,
+            'url' => PLS_Plugin_API::get_property_url(),
             'desc' => 'This is a sample listing. It isn\'t real or available for sale but it\'s a great representation of what you could have on your new real estate website. If you are the owner of this website you need to finish setting it up. Please login and enter an api key.',
             'lt_sz' => '2',
             'ngb_shop' => true,
@@ -630,8 +657,9 @@ $PLS_API_DEFAULT_LISTING = array(
             'deposit' => false,
             'ngb_pubsch' => false
         ),
-        'uncur_data' => false,
+        'uncur_data' => array(),
         'location' => array(
+            'full_address' => '123 Fake Street, Boston MA 02142',
             'address' => '123 Fake Street',
             'locality' => 'Boston',
             'region' => 'MA',
@@ -639,8 +667,8 @@ $PLS_API_DEFAULT_LISTING = array(
             'neighborhood' => 'Back Bay',
             'country' => 'US',
             'coords' => array(
-                'latitude' => '42.3596681',
-                'longitude' => '-71.0599325'
+                '42.3596681',
+                '-71.0599325'
             )
         ),
         'contact' => array(
@@ -648,7 +676,11 @@ $PLS_API_DEFAULT_LISTING = array(
             'phone' => '+1231231234'
         ),
         'images' => false,
-        'tracker_url' => false
+        'tracker_url' => false,
+        'rets' => array(
+            'aname' => 'John Smith',
+            'oname' => 'Smith Realty Group'
+        )
         )
     )
 );

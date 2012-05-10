@@ -57,7 +57,7 @@ class PLS_Partials_Listing_Search_Form {
      * @since 0.0.1
      */
 	function init ($args = '') {
-		
+
         /** Define the default argument array. */
         $defaults = array(
             'ajax' => false,
@@ -67,6 +67,8 @@ class PLS_Partials_Listing_Search_Form {
             'theme_option_id' => '',
             'context_var' => null,
             'bedrooms' => 1,
+            'min_beds' => 1,
+            'max_beds' => 1,
             'bathrooms' => 1,
             'price' => 1,
             'half_baths' => 1,
@@ -80,21 +82,38 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 1,
             'min_price' => 1,
             'max_price' => 1,
+            'neighborhood' => 1,
+            'min_price_rental' => 1,
+            'max_price_rental' => 1,
             'include_submit' => true
         );
 
-
-        // * Display a placeholder if there is a plugin error. 
-        // if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
-        //     return pls_get_no_plugin_placeholder( pls_get_merged_strings( array( $context, __FUNCTION__ ), ' -> ', 'post', false ) );
-        // } elseif ( pls_has_plugin_error() ) {
-        //     return NULL;
-        // }             
-
         $args = wp_parse_args( $args, $defaults );
-        //apply user
-        $args = wp_parse_args( pls_get_option($args['theme_option_id']), $args );
-
+        
+        $form_options = array();
+        $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
+        $form_options['location']['region'] = pls_get_option('form_default_options_region');
+        $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
+        $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
+        $_POST = wp_parse_args($_POST, $form_options);
+               
+        //respect user settings, unless they are all empty. 
+        $user_search_params = pls_get_option($args['theme_option_id']);
+        if (isset($user_search_params['hide_all'])) {
+          return '';
+        }
+        $not_empty_flag = false;
+        if (is_array($user_search_params)) {
+          foreach ($user_search_params as $key => $value) {
+            if ($value != '0') {
+              $not_empty_flag = true;
+            }
+          }
+        }
+        if ($not_empty_flag) {
+          $args = wp_parse_args( pls_get_option($args['theme_option_id']), $args );
+        }
+        
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
@@ -116,28 +135,31 @@ class PLS_Partials_Listing_Search_Form {
         /** Prepend the default empty valued element. */
         $user_beds_start = pls_get_option('pls-option-bed-min');
         $user_beds_end = pls_get_option('pls-option-bed-max');
-        if (is_int($user_beds_start) && is_int($user_beds_end) ) {
-            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_beds_start, $user_beds_end );
+        if (is_numeric($user_beds_start) && is_numeric($user_beds_end) ) {
+          $beds_range = range( $user_beds_start, $user_beds_end );
+            $form_options['bedrooms'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $beds_range, $beds_range );
         } else {
-            $form_options['bedrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 16 );    
+            $form_options['bedrooms'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 16 );    
         }
-                
+
         /** Prepend the default empty valued element. */
         $user_baths_start = pls_get_option('pls-option-bath-min');
         $user_baths_end = pls_get_option('pls-option-bath-max');
-        if (is_int($user_baths_start) && is_int($user_baths_end) ) {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_baths_start, $user_baths_end );
+        if (is_numeric($user_baths_start) && is_numeric($user_baths_end) ) {
+          $baths_range =  range( $user_baths_start, $user_baths_end );
+            $form_options['bathrooms'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $baths_range, $baths_range );
         } else {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+            $form_options['bathrooms'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 10 );
         }
 
         /** Prepend the default empty valued element. */
         $user_half_baths_start = pls_get_option('pls-option-half-bath-min');
         $user_half_baths_end = pls_get_option('pls-option-half-bath-max');
-        if (is_int($user_half_baths_start) && is_int($user_half_baths_end) ) {
-            $form_options['bathrooms'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( $user_half_baths_start, $user_half_baths_end );
+        if (is_numeric($user_half_baths_start) && is_numeric($user_half_baths_end) ) {
+          $half_bath_range = range( $user_half_baths_start, $user_half_baths_end );
+            $form_options['half_baths'] = array( 'pls_empty_value' => 'Any' ) + array_combine( $half_bath_range, $half_bath_range );
         } else {
-            $form_options['half_baths'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + range( 0, 10 );
+            $form_options['half_baths'] = array( 'pls_empty_value' => 'Any' ) + range( 0, 10 );
         }
         
 
@@ -148,23 +170,24 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Get the property type options. */
-        $form_options['property_type'] = array( 'pls_empty_value' => __( 'Any', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'property' );
+        $form_options['property_type'] = array( 'pls_empty_value' => 'Any' ) + PLS_Plugin_API::get_type_values( 'property' );
 
         /** Get the listing type options. */
-        $form_options['listing_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'listing' );
+        $form_options['listing_types'] = array( 'pls_empty_value' => 'All' ) + PLS_Plugin_API::get_type_values( 'listing' );
 
         /** Get the zoning type options. */
-        $form_options['zoning_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'zoning' );
+        $form_options['zoning_types'] = array( 'pls_empty_value' => 'All') + PLS_Plugin_API::get_type_values( 'zoning' );
 				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
         // $form_options['zoning_types'] = PLS_Plugin_API::get_type_values( 'zoning' ); // for Multiple, not for single, see below
 
         /** Get the purchase type options. */
-        $form_options['purchase_types'] = array( 'pls_empty_value' => __( 'All', pls_get_textdomain() ) ) + PLS_Plugin_API::get_type_values( 'purchase' );
+        $form_options['purchase_types'] = array( 'pls_empty_value' => 'All' ) + PLS_Plugin_API::get_type_values( 'purchase' );
+
 				// removed "All" - it's not giving all listings. jquery needs to change to not include "[]"s
 				// $form_options['purchase_types'] = PLS_Plugin_API::get_type_values( 'purchase' );
 				
         /** Prepend the default empty valued element. */
-        $form_options['available_on'] = array( 'pls_empty_value' => __( 'Anytime', pls_get_textdomain() ) ) + $form_options['available_on'];
+        $form_options['available_on'] = array( 'pls_empty_value' => 'Anytime' ) + $form_options['available_on'];
 
         /** Prepend the default empty valued element. */
         
@@ -188,46 +211,142 @@ class PLS_Partials_Listing_Search_Form {
             $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
             unset($form_options['zips']['false']);    
         }
-        
 
+        if (!PLS_Plugin_API::get_location_list('neighborhood')) {
+            $form_options['neighborhood'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('neighborhood')); 
+            unset($form_options['neighborhood']['false']);    
+        }
+        
+    // Price for Sales
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
-            'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
-            '200' => '$200',
-            '500' => '$500',
-            '1000' => '$1,000',
-            '2000' => '$2,000',
-            '3000' => '$3,000',
-            '4000' => '$4,000',
-            '5000' => '$5,000',
-			'50000' => '$50,000',
-			'100000' => '$100,000',
-			'200000' => '$200,000',
-			'350000' => '$350,000',
-			'400000' => '$400,000',
-			'450000' => '$450,000',
-			'500000' => '$500,000',
-			'600000' => '$600,000',
-			'700000' => '$700,000',
-            '800000' => '$800,000',
-            '900000' => '$900,000',
-			'1000000' => '$1,000,000',
+              'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+              '0' => '$0',
+              '$400' => '$400',
+              '500' => '$5,000',
+              '2000' => '$2,000',
+              '3000' => '$3,000',
+              '4000' => '$4,000',
+              '5000' => '$5,000',
+              '50000' => '$50,000',
+              '100000' => '$100,000',
+              '200000' => '$200,000',
+              '350000' => '$350,000',
+              '400000' => '$400,000',
+              '450000' => '$450,000',
+              '500000' => '$500,000',
+              '600000' => '$600,000',
+              '700000' => '$700,000',
+              '800000' => '$800,000',
+              '900000' => '$900,000',
+              '1000000' => '$1,000,000',
         );
 
-        $user_price_start = pls_get_option('pls-option-price-min');
-        $user_price_end = pls_get_option('pls-option-price-max');
-        $user_price_inc = pls_get_option('pls-option-price-inc');
+          $user_price_start = pls_get_option('pls-option-price-min');
+          $user_price_end = pls_get_option('pls-option-price-max');
+          $user_price_inc = pls_get_option('pls-option-price-inc');
 
-        if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
-            $range = range($user_price_start, $user_price_end, $user_price_inc);    
+          if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
+              $range = range($user_price_start, $user_price_end, $user_price_inc);    
+              $form_options['min_price'] = array();
+              foreach ($range as $price_value) {
+                  $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+              }
+          }   
+
+          /** Set the maximum price options array. */
+          $form_options['max_price'] = $form_options['min_price'];
+
+
+      // Price for Rentals 
+          /** Define the minimum price options array. */
+          $form_options['min_price_rental'] = array(
+                'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+                '200' => '$200',
+                '400' => '$400',
+                '600' => '$600',
+                '800' => '$800',
+                '1000' => '$1,000',
+                '1100' => '$1,100',
+                '1200' => '$1,200',
+                '1300' => '$1,300',
+                '1400' => '$1,400',
+                '1500' => '$1,500',
+                '1600' => '$1,600',
+                '1700' => '$1,700',
+                '1800' => '$1,800',
+                '1900' => '$1,900',
+                '2000' => '$2,000',
+                '2100' => '$2,100',
+                '2200' => '$2,200',
+                '2300' => '$2,300',
+                '2400' => '$2,400',
+                '2500' => '$2,500',
+                '2600' => '$2,600',
+                '2700' => '$2,700',
+                '2800' => '$2,800',
+                '2900' => '$2,900',
+                '3000' => '$3,000',
+                '3500' => '$3,500',
+                '4000' => '$4,000',
+                '4500' => '$4,500',
+                '5000' => '$5,000',
+                '6000' => '$6,000',
+                '7000' => '$7,000',
+                '8000' => '$8,000',
+          );
+
+            $user_price_start_rental = '';
+            $user_price_end_rental = '';
+            $user_price_inc_rental = '';
+
+            if (is_numeric($user_price_start_rental) && is_numeric($user_price_end_rental) && is_numeric($user_price_inc_rental)) {
+                $range = range($user_price_start_rental, $user_price_end_rental, $user_price_inc_rental);    
+                $form_options['min_price_rental'] = array();
+                foreach ($range as $price_value) {
+                    $form_options['min_price_rental'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+                }
+            }   
+
+            /** Set the maximum price options array. */
+            $form_options['max_price_rental'] = $form_options['min_price_rental'];
+
+      $form_options['min_beds'] = array(
+            'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5',
+            '6' => '6',
+            '7' => '7',
+            '8' => '8',
+            '9' => '9',
+            '10' => '10',
+            '11' => '11',
+            '12' => '12',
+            '13' => '13',
+            '14' => '14',
+            '15' => '15',
+      );
+
+        $user_bed_start = pls_get_option('pls-option-bed-min');
+        $user_bed_end = pls_get_option('pls-option-bed-max');
+        $user_bed_inc = pls_get_option('pls-option-bed-inc');
+
+        if (is_numeric($user_bed_start) && is_numeric($user_bed_end) && is_numeric($user_bed_inc)) {
+            $range = range($user_bed_start, $user_bed_end, $user_bed_inc);
             $form_options['min_price'] = array();
-            foreach ($range as $price_value) {
-                $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+            foreach ($range as $bed_value) {
+                $form_options['min_beds'][$bed_value] = $bed_value;
             }
-        }   
+        }
 
         /** Set the maximum price options array. */
-        $form_options['max_price'] = $form_options['min_price'];
+        $form_options['max_beds'] = $form_options['min_beds'];
 
         /** Define an array for extra attributes. */
         $form_opt_attr = array();
@@ -252,20 +371,43 @@ class PLS_Partials_Listing_Search_Form {
             }
         }
 
+        if (!isset($_POST['metadata'])) {
+          $_POST['metadata'] = array();
+        }
+
         /**
          * Elements HTML.
          */
-
         /** Add the bedrooms select element. */
         if ($bedrooms == 1) {
             $form_html['bedrooms'] = pls_h( 
                 'select',
                 array( 'name' => 'metadata[beds]') + $form_opt_attr['bedrooms'],
                     /** Get the list of options with the empty valued element selected. */
-                    pls_h_options( $form_options['bedrooms'], @$_POST['metadata']['beds']  )
+                    pls_h_options( $form_options['bedrooms'], wp_kses_post(@$_POST['metadata']['beds'])  )
                 );
         }
         
+        
+        /** Add the bedrooms select element. */
+        if ($min_beds == 1) {
+            $form_html['min_beds'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[min_beds]') + $form_opt_attr['min_beds'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['min_beds'], @$_POST['metadata']['min_beds']  )
+                );
+        }
+        
+        /** Add the bedrooms select element. */
+        if ($max_beds == 1) {
+            $form_html['max_beds'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[max_beds]') + $form_opt_attr['max_beds'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['max_beds'], @$_POST['metadata']['max_beds']  )
+                );
+        }
 
         /** Add the bathroms select element. */
         if ($bathrooms == 1) {
@@ -273,7 +415,7 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'metadata[baths]' ) + $form_opt_attr['bathrooms'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['bathrooms'], @$_POST['metadata']['baths'] )
+                pls_h_options( $form_options['bathrooms'], wp_kses_post(@$_POST['metadata']['baths'] ) )
             );            
         }
 
@@ -283,7 +425,7 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'metadata[half_baths]' ) + $form_opt_attr['half_baths'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['half_baths'], @$_POST['metadata']['half_baths'] )
+                pls_h_options( $form_options['half_baths'], wp_kses_post( @$_POST['metadata']['half_baths'] ) )
             );
         }
         
@@ -294,7 +436,7 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'property_type' ) + $form_opt_attr['property_type'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['property_type'], @$_POST['property_type'] )
+                pls_h_options( $form_options['property_type'], wp_kses_post( @$_POST['property_type'] ) )
             );
         }
 
@@ -303,7 +445,7 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['listing_types'] = pls_h(
                 'select',
                 array( 'name' => 'listing_types') + $form_opt_attr['listing_types'],
-                pls_h_options( $form_options['listing_types'], @$_POST['listing_types'] )
+                pls_h_options( $form_options['listing_types'], wp_kses_post( @$_POST['listing_types'] ) )
             );
         }
         
@@ -312,7 +454,7 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['zoning_types'] = pls_h(
                 'select',
                 array( 'name' => 'zoning_types'  ) + $form_opt_attr['zoning_types'],
-                pls_h_options( $form_options['zoning_types'], @$_POST['zoning_types'] )
+                pls_h_options( $form_options['zoning_types'], wp_kses_post( @$_POST['zoning_types'] ) )
             );
         }
 
@@ -320,8 +462,8 @@ class PLS_Partials_Listing_Search_Form {
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
-                pls_h_options( $form_options['purchase_types'], @$_POST['purchase_types'] )
+                array( 'name' => 'purchase_types[]' ) + $form_opt_attr['purchase_types'],
+                pls_h_options( $form_options['purchase_types'], wp_kses_post(@$_POST['purchase_types']) )
             );
         }
         
@@ -330,7 +472,7 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['available_on'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[avail_on]' ) + $form_opt_attr['available_on'],
-                pls_h_options( $form_options['available_on'], @$_POST['metadata']['avail_on'] )
+                pls_h_options( $form_options['available_on'], wp_kses_post( @$_POST['metadata']['avail_on'] ) )
             );
         }
                                    
@@ -339,7 +481,7 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['cities'] = pls_h(
                 'select',
                 array( 'name' => 'location[locality]' ) + $form_opt_attr['cities'],
-                pls_h_options( $form_options['cities'], @$_POST['location']['locality'], true )
+                pls_h_options( $form_options['cities'], wp_kses_post( @$_POST['location']['locality'] ), true )
             );
         }
         
@@ -348,7 +490,7 @@ class PLS_Partials_Listing_Search_Form {
                 $form_html['states'] = pls_h(
                 'select',
                 array( 'name' => 'location[region]' ) + $form_opt_attr['states'],
-                pls_h_options( $form_options['states'], @$_POST['location']['region'], true )
+                pls_h_options( $form_options['states'], wp_kses_post(@$_POST['location']['region'] ), true )
             );
         }
 
@@ -357,7 +499,16 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['zips'] = pls_h(
                 'select',
                 array( 'name' => 'location[postal]' ) + $form_opt_attr['zips'],
-                pls_h_options( $form_options['zips'], @$_POST['location']['postal'], true )
+                pls_h_options( $form_options['zips'], wp_kses_post(@$_POST['location']['postal'] ), true )
+            );
+        }
+
+        /** Add the cities select element. */
+        if ($neighborhood == 1) {
+            $form_html['neighborhood'] = pls_h(
+                'select',
+                array( 'name' => 'location[neighborhood]' ) + $form_opt_attr['neighborhood'],
+                pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )
             );
         }
 
@@ -366,7 +517,7 @@ class PLS_Partials_Listing_Search_Form {
             $form_html['min_price'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
-                pls_h_options( $form_options['min_price'], @$_POST['metadata']['min_price'] )
+                pls_h_options( $form_options['min_price'], wp_kses_post(@$_POST['metadata']['min_price'] ) )
             );
         }
         
@@ -376,12 +527,47 @@ class PLS_Partials_Listing_Search_Form {
                 'select',
                 array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
                 /** Get the list of options with the empty valued element selected. */
-                pls_h_options( $form_options['max_price'], @$_POST['metadata']['max_price'] )
+                pls_h_options( $form_options['max_price'], wp_kses_post(@$_POST['metadata']['max_price'] ) )
+            );
+        }
+
+        /** Add the minimum price select element. */
+        if ($min_price_rental == 1) {
+            $form_html['min_price_rental'] = pls_h(
+                'select',
+                array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
+                pls_h_options( $form_options['min_price_rental'], @$_POST['metadata']['min_price'] )
             );
         }
         
+        /** Add the maximum price select element. */
+        if ($max_price_rental == 1) {
+            $form_html['max_price_rental'] = pls_h(
+                'select',
+                array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
+                /** Get the list of options with the empty valued element selected. */
+                pls_h_options( $form_options['max_price_rental'], @$_POST['metadata']['max_price'] )
+            );
+        }
+
         $section_title = array(
+            'bedrooms' => 'Beds',
+            'bathrooms' => 'Baths',
+            'half_baths' => 'Half Baths',
+            'property_type' => 'Property Type',
+            'zoning_types' => 'Zoning Type',
+            'listing_types' => 'Listing Type',
+            'purchase_types' => 'Purchase Type',
+            'available_on' => 'Available',
+            'cities' => 'Near',
+            'states' => 'State',
+            'zips' => 'Zip Code',
+            'min_price' => 'Min Price',
+            'max_price' => 'Max Price',
+            'neighborhood' => "Neighborhood",
             'bedrooms' => __( 'Beds', pls_get_textdomain() ),
+            'min_beds' => __( 'Min Beds', pls_get_textdomain() ),
+            'max_beds' => __( 'Max Beds', pls_get_textdomain() ),
             'bathrooms' => __( 'Baths', pls_get_textdomain() ),
             'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
             'property_type' => __( 'Property Type', pls_get_textdomain() ),
@@ -394,6 +580,8 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => __( 'Zip Code', pls_get_textdomain() ),
             'min_price' => __( 'Min Price', pls_get_textdomain() ),
             'max_price' => __( 'Max Price', pls_get_textdomain() ),
+            'min_price_rental' => __( 'Min Price Rental', pls_get_textdomain() ),
+            'max_price_rental' => __( 'Max Price Rental', pls_get_textdomain() ),
         );
 
         // In case user somehow disables all filters.
@@ -424,7 +612,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($include_submit) {
             $form_html['submit'] = apply_filters( 
                 pls_get_merged_strings( array( "pls_listings_search_submit", $context ), '_', 'pre', false ), 
-                pls_h( 'input', array('class' => 'pls_search_button button-primary', 'type' => 'submit', 'value' => __( 'Search', pls_get_textdomain() ) ) ),  
+                pls_h( 'input', array('class' => 'pls_search_button', 'type' => 'submit', 'value' => 'Search' ) ),  
                 $context_var
             );
             /** Append the form submit. */
@@ -446,7 +634,6 @@ class PLS_Partials_Listing_Search_Form {
         /** Filter the form. */
         $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
             
-
         return $return;
 
 	}
