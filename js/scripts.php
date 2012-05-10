@@ -158,6 +158,21 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                 }
             }
         }
+        
+        if ( array_key_exists( 'jquery-tools', $js[0] ) ) {
+            /** Register the script and style. */
+            wp_register_script( 'tabs', trailingslashit( PLS_JS_URL ) . 'libs/jquery-tools/tabs.js' , array( 'jquery'), NULL, true );
+            wp_register_script( 'rangeinput', trailingslashit( PLS_JS_URL ) . 'libs/jquery-tools/rangeinput.js' , array( 'jquery'), NULL, true );
+            wp_register_script( 'tooltip', trailingslashit( PLS_JS_URL ) . 'libs/jquery-tools/tooltip.js' , array( 'jquery'), NULL, true );
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['jquery-tools'] ) ) {
+                if ( in_array( 'script', $js[0]['jquery-tools'] ) ) {
+                    wp_enqueue_script( 'tabs' );
+                    wp_enqueue_script( 'rangeinput' );
+                    wp_enqueue_script( 'tooltip' );
+                }
+            }
+        }
     }
 
 
@@ -171,9 +186,12 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
 
         /** Load Google CDN jQuery and its fallback before everything else */
         wp_enqueue_scripts( 'jquery' );
-
+        // if( !is_admin()){
+        //    wp_deregister_script('jquery');
+        //    wp_register_script('jquery', ("http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"), false, '1');
+        //    wp_enqueue_script('jquery');
+        // } 
         /** Load Modernizr */
         wp_enqueue_scripts( 'modernizr' );
     }
 }
-

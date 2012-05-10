@@ -255,7 +255,7 @@ class Placester_Blueprint {
             'jquery-ui' => array('script' => true, 'style' => true), 
             'spinner' => array( 'script' => true, 'style' => true ), 
             'masonry' => array('script' => true, 'style' => false),
-            'jquery-tools' => array('script' => true, 'style' => false)
+            'jquery-tools' => array('script' => true, 'style' => false),
           ) 
         );
         add_theme_support( 'pls-theme-options' );
