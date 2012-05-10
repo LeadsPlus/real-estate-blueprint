@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
 		load_listings(this);  
 	});
 	
-	$('#featured_listings_options').live('change', function(event) {
+	$('.featured_listings_options').live('change', function(event) {
 		event.preventDefault();
 		var that = this;
 		load_listings(that);
@@ -133,7 +133,7 @@ jQuery(document).ready(function($) {
 		var parent = $(that).parent();
 		parent.find('#search_message').show();
 		data['action'] = 'pls_listings_for_options';
-		$.each(parent.find('#featured_listings_options select'), function(i, field) {
+		$.each(parent.find('.featured_listings_options select'), function(i, field) {
 		 	data[field.name] = field.value;
 		});
 		$.post(ajaxurl, data, function(data) {

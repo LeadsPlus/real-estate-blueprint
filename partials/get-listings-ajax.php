@@ -173,15 +173,20 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
+<div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Offer">
 
   <div class="listing-thumbnail grid_3 alpha">
          <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>
   </div>
 
   <div class="listing-item-details grid_5 omega">
-    <p class="listing-item-address h4" itemprop="name"><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>" itemprop="url"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a>
-    </p>
+    <header>
+      <p class="listing-item-address h4" itemprop="name">
+        <a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>" itemprop="url">
+          <?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?>
+        </a>
+      </p>
+    </header>
 
     <div class="basic-details">
       <ul>
@@ -212,7 +217,7 @@ class PLS_Partials_Get_Listings_Ajax {
     </div>
 
     <p class="listing-description p4" itemprop="description">
-    	<?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
+      <?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
     </p>
 
   </div>

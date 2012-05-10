@@ -3,16 +3,15 @@
 <div class="clear"></div>
 <div class="compliance-wrapper">
 	<?php if ($compliance_message['agent_name']): ?>
-		<p class="search-compliance p4">Listing Agent: <?php echo $compliance_message['agent_name'] ?></p>	
+		<p class="inline-compliance">Listing Agent: <?php echo $compliance_message['agent_name'] ?></p>
 	<?php endif ?>
 	<?php if ($compliance_message['office_name']): ?>
-		<p class="search-compliance p4">Coutesy of: <?php echo $compliance_message['office_name'] ?></p>	
+		<p class="inline-compliance">Courtesy of: <?php echo $compliance_message['office_name'] ?></p>
+	<?php endif ?>
+	<?php if ($compliance_message['img']): ?>
+		<img src="<?php echo $compliance_message['img'] ?>" alt="">
 	<?php endif ?>
 	<?php if ($compliance_message['disclaimer']): ?>
-		<p class="search-compliance-disclaimer p3">
-    <?php if ($compliance_message['img']): ?>
-      <img src="<?php echo $compliance_message['img'] ?>" alt="">	
-    <?php endif ?>
-		<?php echo $compliance_message['disclaimer'] ?></p>	
+		<p class="disclaimer"><?php echo $compliance_message['disclaimer'] ?></p>
 	<?php endif ?>
 </div>

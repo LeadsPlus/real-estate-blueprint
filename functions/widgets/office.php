@@ -34,10 +34,10 @@ class PLS_Widget_Office extends WP_Widget {
 
 			<section id="map-widget">
 
-				<?php wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false'); ?>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
 				<script type="text/javascript">
-					$(document).ready(function () {
+					jQuery(document).ready(function () {
 
 								var myOptions = {
 									center: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>),
