@@ -396,15 +396,6 @@ class PLS_Map {
 	        $form_options['postal'] = array_merge(array('false' => '---'),PLS_Plugin_API::get_location_list('postal')); 
 	        $form_options['neighborhood'] = array_merge(array('false' => '---'),PLS_Plugin_API::get_location_list('neighborhood')); 
 	        
-	        $response['radius'] = '<div class="location_select"><select name="radius" id="radius" style="width: 140px">
-							<option value="200">200 meters</option>
-							<option value="500">500 meters</option>
-							<option value="1000">1000 meters</option>
-							<option value="2000">2000 meters</option>
-							<option value="5000" selected>5000 meters</option>
-							<option value="10000">10000 meters</option>
-							<option value="20000">20000 meters</option>
-						</select></div>';
 	        $response['location'] = '<div class="location_select"><select name="location" id="location" style="width: 140px">
 				<option value="locality">City</option>
 				<option value="region">State</option>
@@ -415,6 +406,15 @@ class PLS_Map {
 	        $response['region'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[region]', 'id' => 'region' ), pls_h_options( $form_options['region'], wp_kses_post(@$_POST['location']['region'] ), true )) . '</div>';
 	        $response['postal'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[postal]', 'id' => 'postal' ), pls_h_options( $form_options['postal'], wp_kses_post(@$_POST['location']['postal'] ), true )) . '</div>';
 	        $response['neighborhood'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[neighborhood]', 'id' => 'neighborhood' ), pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )) . '</div>';
+	        $response['radius'] = '<div class="location_select"><select name="radius" id="radius" style="width: 140px">
+							<option value="200">200 meters</option>
+							<option value="500">500 meters</option>
+							<option value="1000">1000 meters</option>
+							<option value="2000">2000 meters</option>
+							<option value="5000" selected>5000 meters</option>
+							<option value="10000">10000 meters</option>
+							<option value="20000">20000 meters</option>
+						</select></div>';
 	        return $response;
 	}
 
