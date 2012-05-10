@@ -26,50 +26,6 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited {
   a.anchor-secondary:hover, a.anchor-secondary:link:hover, a.anchor-secondary:visited:hover {
     color: #444444; }
 
-.section_1, .section_2, .section_3, .section_4, .section_5, .section_6 {
-  float: left; }
-
-.section_1 {
-  background-color: white;
-  background-image: none;
-  background-repeat: none; }
-
-.section_2 {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  box-shadow: 0px 0px 3px #444444;
-  -webkit-box-shadow: 0px 0px 3px #444444;
-  -moz-box-shadow: 0px 0px 3px #444444;
-  padding: 0 10px; }
-
-.section_3 {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  box-shadow: 0px 1px 0px 1px #dddddd;
-  -webkit-box-shadow: 0px 1px 0px 1px #dddddd;
-  -moz-box-shadow: 0px 1px 0px 1px #dddddd;
-  padding: 0 10px; }
-
-.section_5 {
-  background-color: #dddddd;
-  background-image: none;
-  background-repeat: none; }
-
-.section_6 {
-  background-color: white;
-  background-image: none;
-  background-repeat: none; }
-
-article.post {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  float: left;
-  padding: 0 10px;
-  border-bottom: 1px dotted #999999; }
-
 .button-primary {
   padding: 10px 15px;
   border-top: 1px solid #999999;
@@ -156,24 +112,6 @@ article.post {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-dark', endColorstr='$button-color-light'); }
   .button-tertiary:active {
     background: #19d231; }
-
-/****  SET THESE  **** */
-.widget {
-  width: 290px;
-  float: left;
-  padding: 10px;
-  margin-bottom: 15px;
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  box-shadow: 0px 0px 3px #444444;
-  -webkit-box-shadow: 0px 0px 3px #444444;
-  -moz-box-shadow: 0px 0px 3px #444444; }
-  .widget h3 {
-    margin: 0;
-    padding: 10px 0; }
-  .widget ul {
-    list-style-type: none; }
 
 body {
   font-family: Helvetica, Arial;
@@ -381,12 +319,6 @@ table#placester_listings_list tr, table#placester_fav_list tr {
     border: none; }
 
 .listing-item {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  float: left;
-  padding: 0 10px;
-  border-bottom: 1px dotted #999999;
   padding: 0 0 20px 0;
   margin-bottom: 20px; }
   .listing-item p {
@@ -586,50 +518,36 @@ body.page-template-page-template-client-php #client-details {
     font-weight: 400; }
 
 .comment-list {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  box-shadow: 0px 1px 0px 1px #dddddd;
-  -webkit-box-shadow: 0px 1px 0px 1px #dddddd;
-  -moz-box-shadow: 0px 1px 0px 1px #dddddd;
-  padding: 0 10px; }
+  border: 1px solid #dddddd; }
 
-#respond {
-  background-color: white;
-  background-image: none;
-  background-repeat: none;
-  box-shadow: 0px 0px 3px #444444;
-  -webkit-box-shadow: 0px 0px 3px #444444;
-  -moz-box-shadow: 0px 0px 3px #444444;
-  padding: 0 10px; }
-  #respond .form-submit input {
-    padding: 10px 15px;
-    border-top: 1px solid #999999;
-    border-left: 1px solid #777777;
-    border-right: 1px solid #777777;
-    border-bottom: 1px solid #777777;
-    background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#444444));
-    background: -moz-linear-gradient(top, #999999, #444444);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-light', endColorstr='$button-color-dark');
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    margin-bottom: 15px;
-    color: #fefefe;
-    box-shadow: 0 0 0 1px #999999;
-    -webkit-box-shadow: 0 0 0 1px #999999;
-    -moz-box-shadow: 0 0 0 1px #999999;
-    text-shadow: 0 1px 1px #777777;
-    font-weight: 600;
-    font-size: 16px;
-    margin-left: 8px;
-    margin-top: 10px; }
-    #respond .form-submit input:hover {
-      background: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
-      background: -moz-linear-gradient(top, #444444, #999999);
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-dark', endColorstr='$button-color-light'); }
-    #respond .form-submit input:active {
-      background: #777777; }
+#respond .form-submit input {
+  padding: 10px 15px;
+  border-top: 1px solid #999999;
+  border-left: 1px solid #777777;
+  border-right: 1px solid #777777;
+  border-bottom: 1px solid #777777;
+  background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#444444));
+  background: -moz-linear-gradient(top, #999999, #444444);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-light', endColorstr='$button-color-dark');
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  margin-bottom: 15px;
+  color: #fefefe;
+  box-shadow: 0 0 0 1px #999999;
+  -webkit-box-shadow: 0 0 0 1px #999999;
+  -moz-box-shadow: 0 0 0 1px #999999;
+  text-shadow: 0 1px 1px #777777;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 8px;
+  margin-top: 10px; }
+  #respond .form-submit input:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+    background: -moz-linear-gradient(top, #444444, #999999);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$button-color-dark', endColorstr='$button-color-light'); }
+  #respond .form-submit input:active {
+    background: #777777; }
 
 nav ul li {
   border-radius: 5px;
@@ -639,54 +557,32 @@ nav ul li {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px; }
-    nav ul li a:hover .page-template-page-template-listings-php form .pls_search_form {
-      float: left;
-      width: 200px;
-      margin-bottom: 10px; }
-      nav ul li a:hover .page-template-page-template-listings-php form .pls_search_form .chzn-container {
-        width: 150px !important; }
-      nav ul li a:hover .page-template-page-template-listings-php form .pls_search_form .chzn-drop, nav ul li a:hover .page-template-page-template-listings-php form .pls_search_form .chzn-results {
-        width: 148px !important; }
-    nav ul li a:hover .page-template-page-template-listings-php #content {
-      border-top: 1px solid #dbdbdb;
-      margin-top: 20px;
-      padding-top: 20px; }
-    nav ul li a:hover .pls-quick-search form .pls_search_form {
-      float: left;
-      width: 140px;
-      margin-bottom: 10px; }
-      nav ul li a:hover .pls-quick-search form .pls_search_form .chzn-container {
-        width: 120px !important; }
-      nav ul li a:hover .pls-quick-search form .pls_search_form .chzn-drop, nav ul li a:hover .pls-quick-search form .pls_search_form .chzn-results {
-        width: 118px !important; }
 
-form label, form p, fieldset label, fieldset p, .placester_listings_list_length label, .placester_listings_list_length p {
-  color: #777777; }
-form p, fieldset p, .placester_listings_list_length p {
-  color: #444444;
-  margin: 10px 0;
-  text-shadow: none;
-  text-decoration: none;
-  text-transform: none;
-  line-height: 20px;
-  font-size: 15px;
-  font-weight: 400;
-  font-family: Helvetica, Arial; }
-form input[type="text"], form input[type="email"], form input[type="password"], form textarea, fieldset input[type="text"], fieldset input[type="email"], fieldset input[type="password"], fieldset textarea, .placester_listings_list_length input[type="text"], .placester_listings_list_length input[type="email"], .placester_listings_list_length input[type="password"], .placester_listings_list_length textarea {
-  background-color: white;
-  color: #999999; }
+.page-template-page-template-listings-php form .pls_search_form {
+  float: left;
+  width: 200px;
+  margin-bottom: 10px; }
+  .page-template-page-template-listings-php form .pls_search_form .chzn-container {
+    width: 150px !important; }
+  .page-template-page-template-listings-php form .pls_search_form .chzn-drop, .page-template-page-template-listings-php form .pls_search_form .chzn-results {
+    width: 148px !important; }
+.page-template-page-template-listings-php #content {
+  border-top: 1px solid #dbdbdb;
+  margin-top: 20px;
+  padding-top: 20px; }
 
-ul.chzn-results li {
-  color: #777777 !important; }
-  ul.chzn-results li.highlighted {
-    background-color: #777777 !important;
-    color: white !important; }
-  ul.chzn-results li.group-result {
-    color: #999999 !important; }
+.header-membership a {
+  padding: 0 10px; }
 
-.chzn-single span {
-  color: #777777; }
-
+/* */
+/* Variables */
+/* */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
 header hgroup {
   float: left; }
 header .header-membership {
@@ -713,6 +609,15 @@ ul {
     color: #7a7a7a;
     font-weight: normal; }
 
+/* */
+/* Variables */
+/* */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
 nav {
   margin: 15px 0 0 0;
   border-top: 1px solid #dbdbdb;
@@ -730,63 +635,74 @@ nav {
         padding: 5px 10px;
         font-size: 15px; }
 
-header nav > ul > li {
-  padding: 10px; }
-header nav ul {
-  padding-left: 0;
-  float: left;
-  position: relative;
-  list-style: none;
-  margin: 0;
-  padding-left: 0; }
-  header nav ul li {
-    width: auto;
+header nav {
+  padding: 0; }
+  header nav > ul > li {
+    padding: 10px; }
+  header nav ul {
+    padding-left: 0;
     float: left;
-    position: relative; }
-    header nav ul li:hover > a {
-      color: #2793e5;
-      background: #dddddd; }
-    header nav ul li:hover > ul {
-      display: block; }
-    header nav ul li a:visited, header nav ul li a:link, header nav ul li a {
-      position: relative;
-      display: block;
-      padding: 10px;
-      display: block;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase; }
-      header nav ul li a:visited:hover, header nav ul li a:link:hover, header nav ul li a:hover {
-        color: #2793e5 !important;
-        background: #dddddd;
-        border-radius: 0px;
-        -moz-border-radius: 0px; }
-  header nav ul ul {
-    display: none;
-    float: left;
+    position: relative;
+    list-style: none;
     margin: 0;
-    position: absolute;
-    left: 0;
-    z-index: 99999;
-    background: #bbbbbb; }
-    header nav ul ul li {
-      border-radius: 0px;
-      -moz-border-radius: 0px;
-      border: none;
-      padding: 0; }
-      header nav ul ul li a:visited, header nav ul ul li a:link, header nav ul ul li a {
-        border-left: 1px solid #bbbbbb;
-        height: auto;
-        padding: 10px;
-        width: 168px; }
-    header nav ul ul ul {
-      left: 100%;
-      top: 0; }
-      header nav ul ul ul:hover > a {
+    padding-left: 0; }
+    header nav ul li {
+      width: auto;
+      float: left;
+      position: relative; }
+      header nav ul li:hover > a {
         color: #2793e5;
         background: #dddddd; }
+      header nav ul li:hover > ul {
+        display: block; }
+      header nav ul li a:visited, header nav ul li a:link, header nav ul li a {
+        position: relative;
+        display: block;
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase; }
+        header nav ul li a:visited:hover, header nav ul li a:link:hover, header nav ul li a:hover {
+          color: #2793e5 !important;
+          background: #dddddd;
+          border-radius: 0px;
+          -moz-border-radius: 0px; }
+    header nav ul ul {
+      display: none;
+      float: left;
+      margin: 0;
+      position: absolute;
+      left: 0;
+      z-index: 99999;
+      background: #bbbbbb; }
+      header nav ul ul li {
+        border-radius: 0px;
+        -moz-border-radius: 0px;
+        border: none;
+        padding: 0; }
+        header nav ul ul li a:visited, header nav ul ul li a:link, header nav ul ul li a {
+          border-left: 1px solid #bbbbbb;
+          height: auto;
+          padding: 10px;
+          width: 168px; }
+      header nav ul ul ul {
+        left: 100%;
+        top: 0; }
+        header nav ul ul ul:hover > a {
+          color: #2793e5;
+          background: #dddddd; }
 
+/* */
+/* Variables */
+/* */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
 .page-template-page-template-listings-php form .pls_search_form {
   float: left;
   width: 200px;
@@ -799,15 +715,6 @@ header nav ul {
   border-top: 1px solid #dbdbdb;
   margin-top: 20px;
   padding-top: 20px; }
-
-.pls-quick-search form .pls_search_form {
-  float: left;
-  width: 140px;
-  margin-bottom: 10px; }
-  .pls-quick-search form .pls_search_form .chzn-container {
-    width: 120px !important; }
-  .pls-quick-search form .pls_search_form .chzn-drop, .pls-quick-search form .pls_search_form .chzn-results {
-    width: 118px !important; }
 
 form, fieldset, .placester_listings_list_length {
   float: left; }
@@ -932,41 +839,104 @@ body.page-template-page-template-listings-php #container, body.page-template-pag
 .complex-search #pls_listings_search_results {
   margin-top: 30px; }
 
-.widget p {
-  width: 100%;
-  float: left; }
-.widget.pls-agent img {
-  margin: 0 10px 0 5px;
-  float: left; }
-.widget.pls-agent p {
-  width: 160px; }
-  .widget.pls-agent p.fn, .widget.pls-agent p.email, .widget.pls-agent p.phone, .widget.pls-agent p.desc {
-    margin: 0 0 5px 0; }
-  .widget.pls-agent p.desc {
-    line-height: 17px; }
-.widget.pls-agent a {
-  word-wrap: break-word; }
-.widget.pls-recent-posts .recent-post-title {
-  margin-bottom: 0; }
-.widget.pls-recent-posts .meta {
-  margin: 0; }
-.widget.pls-recent-posts .excerpt {
-  margin: 5px 0; }
-.widget.pls-recent-posts .read-more {
-  margin-top: 0; }
-.widget.pls-listings .listing-item {
-  margin-bottom: 20px; }
-  .widget.pls-listings .listing-item .listing-item-address {
-    margin: 5px 0; }
-  .widget.pls-listings .listing-item .details {
-    margin-bottom: 5px; }
-.widget.pls-map p.address {
-  margin-top: 0; }
-.widget.widget_calendar table {
-  margin: 0 auto; }
-  .widget.widget_calendar table td {
-    padding: 10px; }
+form label, form p, fieldset label, fieldset p, .placester_listings_list_length label, .placester_listings_list_length p {
+  color: #777777; }
+form p, fieldset p, .placester_listings_list_length p {
+  color: #444444;
+  margin: 10px 0;
+  text-shadow: none;
+  text-decoration: none;
+  text-transform: none;
+  line-height: 20px;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: Helvetica, Arial; }
+form input[type="text"], form input[type="email"], form input[type="password"], form textarea, fieldset input[type="text"], fieldset input[type="email"], fieldset input[type="password"], fieldset textarea, .placester_listings_list_length input[type="text"], .placester_listings_list_length input[type="email"], .placester_listings_list_length input[type="password"], .placester_listings_list_length textarea {
+  background-color: white;
+  color: #999999; }
 
+ul.chzn-results li {
+  color: #777777 !important; }
+  ul.chzn-results li.highlighted {
+    background-color: #777777 !important;
+    color: white !important; }
+  ul.chzn-results li.group-result {
+    color: #999999 !important; }
+
+.chzn-single span {
+  color: #777777; }
+
+/* */
+/* Variables */
+/* */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+.widget {
+  width: 290px;
+  float: left;
+  padding: 10px;
+  margin-bottom: 15px; }
+  .widget h3 {
+    margin: 0;
+    padding: 10px 0; }
+  .widget ul {
+    list-style-type: none; }
+  .widget p {
+    width: 100%;
+    float: left; }
+  .widget.pls-quick-search form .pls_search_form {
+    float: left;
+    width: 140px;
+    margin-bottom: 10px; }
+    .widget.pls-quick-search form .pls_search_form .chzn-container {
+      width: 120px !important; }
+    .widget.pls-quick-search form .pls_search_form .chzn-drop, .widget.pls-quick-search form .pls_search_form .chzn-results {
+      width: 118px !important; }
+  .widget.pls-agent img {
+    margin: 0 10px 0 5px;
+    float: left; }
+  .widget.pls-agent p {
+    width: 160px; }
+    .widget.pls-agent p.fn, .widget.pls-agent p.email, .widget.pls-agent p.phone, .widget.pls-agent p.desc {
+      margin: 0 0 5px 0; }
+    .widget.pls-agent p.desc {
+      line-height: 17px; }
+  .widget.pls-agent a {
+    word-wrap: break-word; }
+  .widget.pls-recent-posts .recent-post-title {
+    margin-bottom: 0; }
+  .widget.pls-recent-posts .meta {
+    margin: 0; }
+  .widget.pls-recent-posts .excerpt {
+    margin: 5px 0; }
+  .widget.pls-recent-posts .read-more {
+    margin-top: 0; }
+  .widget.pls-listings .listing-item {
+    margin-bottom: 20px; }
+    .widget.pls-listings .listing-item .listing-item-address {
+      margin: 5px 0; }
+    .widget.pls-listings .listing-item .details {
+      margin-bottom: 5px; }
+  .widget.pls-map p.address {
+    margin-top: 0; }
+  .widget.widget_calendar table {
+    margin: 0 auto; }
+    .widget.widget_calendar table td {
+      padding: 10px; }
+
+/* */
+/* Variables */
+/* */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
+/****  SET THESE  **** */
 /* Property Details Page */
 body.single-property article h2 {
   margin-bottom: 0px; }

@@ -219,7 +219,6 @@ table#placester_listings_list, table#placester_fav_list
       border: none
   
 .listing-item
-  @include section_4
   padding: 0 0 20px 0
   margin-bottom: 20px
   p
@@ -306,8 +305,8 @@ footer
     .next
       float: right
       text-align: right
-      
-      
+
+
 // Client Profile
 body.page-template-page-template-client-php
   #edit_profile
@@ -393,9 +392,8 @@ body.page-template-page-template-client-php
 
 // Mixins that can't be in external SASS files
 .comment-list
-  @include section_3
+  border: 1px solid #ddd
 #respond
-  @include section_2
   .form-submit
     input
       @include button($gray-light, $gray, $black-light, $gray-light, $text-shadow-tertiary)
@@ -408,57 +406,25 @@ nav
         &:hover
           @include rounded-corners
 
-          // Search Page
-          .page-template-page-template-listings-php
-            form
-              .pls_search_form
-                float: left
-                width: 200px
-                margin-bottom: 10px
-                .chzn-container
-                  width: 150px !important
-                .chzn-drop, .chzn-results
-                  width: 148px !important
-            #content
-              border-top: 1px solid #DBDBDB
-              margin-top: 20px
-              padding-top: 20px
+// Search Page
+.page-template-page-template-listings-php
+  form
+    .pls_search_form
+      float: left
+      width: 200px
+      margin-bottom: 10px
+      .chzn-container
+        width: 150px !important
+      .chzn-drop, .chzn-results
+        width: 148px !important
+  #content
+    border-top: 1px solid #DBDBDB
+    margin-top: 20px
+    padding-top: 20px
 
-          .pls-quick-search
-            form
-              .pls_search_form
-                float: left
-                width: 140px
-                margin-bottom: 10px
-                .chzn-container
-                  width: 120px !important
-                .chzn-drop, .chzn-results
-                  width: 118px !important
-
-
-// Forms
-form, fieldset, .placester_listings_list_length
-  label, p
-    color: $gray
-  p
-    @include p-font-styles
-  input[type="text"], input[type="email"], input[type="password"], textarea
-    background-color: $white
-    color: $gray-light
-
-ul.chzn-results
-  li
-    color: $gray !important
-    &.highlighted
-      background-color: $gray !important
-      color: $white !important
-    &.group-result
-      color: $gray-light !important
-
-.chzn-single
-  span
-    color: $gray
-
+.header-membership
+  a
+    padding: 0 10px
 
 
 @import "header"

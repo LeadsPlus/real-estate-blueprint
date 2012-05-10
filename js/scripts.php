@@ -50,8 +50,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         wp_register_script( 'contact-widget', trailingslashit( PLS_JS_URL ) . 'scripts/contact.widget.ajax.js' , NULL, NULL, true );
         wp_enqueue_script('contact-widget');
 
-
-
         wp_register_script( 'client-edit-profile', trailingslashit( PLS_JS_URL ) . 'scripts/client-edit-profile.js' , NULL, NULL, true );
         wp_enqueue_script('client-edit-profile');
 
@@ -125,17 +123,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                 }
             }
         }
-        
-        if ( array_key_exists( 'floating', $js[0] ) ) {
-            /** Register the script and style. */
-            wp_register_script( 'floating', trailingslashit( PLS_JS_URL ) . 'scripts/floating.js' , array( 'jquery'), NULL, true );
-            /** Enqueue scrip and styles only if supported. */
-            if ( is_array( $js[0]['floating'] ) ) {
-                if ( in_array( 'script', $js[0]['floating'] ) ) {
-                    wp_enqueue_script( 'floating' );
-                }
-            }
-        }   
 
         if ( array_key_exists( 'datatable', $js[0] ) ) {
             /** Register the script and style. */
@@ -153,23 +140,24 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
             if ( is_array( $js[0]['jquery-ui'] ) ) {
                 if ( in_array( 'script', $js[0]['jquery-ui'] ) ) {
                     wp_enqueue_script( 'jquery-ui-core' );
-                    wp_enqueue_script( 'jquery-ui-datepicker' );
+                    if (isset( $GLOBALS['wp_scripts']->registered['jquery-ui-datepicker']) )  {
+                      wp_enqueue_script( 'jquery-ui-datepicker' );
+                    } else {
+                      wp_register_script( 'jquery-ui-datepicker', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery.ui.datepicker.js' , array( 'jquery'), NULL, true );
+                      wp_enqueue_script( 'jquery-ui-datepicker' );
+                    }
+                    if (isset( $GLOBALS['wp_scripts']->registered['jquery-ui-dialog']) )  {
+                      wp_enqueue_script( 'jquery-ui-dialog' );
+                    } else {
+                      // wp_register_script( 'jquery-ui-dialog', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery.ui.dialog.js' , array( 'jquery'), NULL, true );
+                      // wp_enqueue_script( 'jquery-ui-dialog' );
+                    }
                 }
                 if ( in_array( 'style', $js[0]['jquery-ui'] ) ) {
                     wp_enqueue_style( 'jquery-ui' );
                 }
             }
         }
-
-        if ( array_key_exists( 'jquery-tools', $js[0] ) ) {
-            wp_register_script( 'jquery-tools', trailingslashit( PLS_JS_URL ) . 'libs/jquery-tools/jquery.tools.min.js' , array( 'jquery'), NULL, true );
-            if ( is_array( $js[0]['jquery-ui'] ) ) {
-                if ( in_array( 'script', $js[0]['jquery-tools'] ) ) {
-                    wp_enqueue_script( 'jquery-tools' );
-                }
-            }
-        }
-
     }
 
 

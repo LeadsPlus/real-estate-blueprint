@@ -1,96 +1,4 @@
-/**/
-/* Variables */
-/**/
-
-/*****  SET THESE  *****/
-// Colors
-$white: #fff
-$offwhite: #ddd
-$black: #000
-$black-light: #444 
-$gray: #777
-$gray-light: #999
-$blue: #2793E5
-$red: #D22819
-$green: #19D231
-$yellow: #D2BF19
-
-// Button Colors
-$blue-light: #64B1ED
-$blue-dark: #1674BB
-$green-light: #36E74E
-$green-dark: #14AD29
-
-$color-primary: $black-light
-$color-secondary: $blue
-$color-tertiary: $gray
-$color-accent: $white
-
-/*****  SET THESE  *****/
-// Anchor Colors:
-$anchor-primary: $blue
-$anchor-primary-active: $blue
-$anchor-primary-hover: $black-light
-$anchor-secondary: $green
-$anchor-secondary-active: $black-light
-$anchor-secondary-hover: $black-light
-
-/*****  SET THESE  *****/
-// Font Family
-$font-primary: Helvetica, Arial
-$font-secondary: Arial
-
-// Text Shadows
-$text-shadow-primary: 0 1px 1px $black-light
-$text-shadow-secondary: 0 1px 1px $white
-$text-shadow-tertiary: 0 1px 1px $gray
-
-
-/*****  SET THESE  *****/
-// Misc.
-$radius: 5px
-$ul-list-style-image: none
-
-$border-primary: $offwhite
-$border-secondary: $gray-light
-
-/*****  SET THESE  *****/
-// Media
-$media-background: #fff
-$media-padding: 5px
-$media-border-color: $gray-light
-$media-border-size: 1px
-
-
-/*****  SET THESE  *****/
-// Backgrounds
-
-// Primary
-$bg-color-primary: $white
-$bg-image-primary: none
-$bg-repeat-primary: none
-// Secondary
-$bg-color-secondary: $white
-$bg-image-secondary: none
-$bg-repeat-secondary: none
-// Tertiary
-$bg-color-tertiary: $white
-$bg-image-tertiary: none
-$bg-repeat-tertiary: none
-// 4th
-$bg-color-4: $white
-$bg-image-4: none
-$bg-repeat-4: none
-// 5th
-$bg-color-5: $offwhite
-$bg-image-5: none
-$bg-repeat-5: none
-// 6th
-$bg-color-6: $white
-$bg-image-6: none
-$bg-repeat-6: none
-
-
+@import "variables"
 
 /**/
 /* Mixins */
@@ -183,45 +91,6 @@ a.anchor-secondary, a.anchor-secondary:link, a.anchor-secondary:visited
   -moz-box-shadow: 0px 1px 0px 1px #ddd
 
 
-// Containers
-.section_1, .section_2, .section_3, .section_4, .section_5, .section_6
-  float: left
-  
-.section_1
-  @include bg-primary
-
-@mixin section_2
-  @include bg-secondary
-  @include box-shadow-primary
-  padding: 0 10px
-.section_2
-  @include section_2
-
-@mixin section_3
-  @include bg-tertiary
-  @include box-shadow-secondary
-  padding: 0 10px
-.section_3
-  @include section_3
-
-@mixin section_4
-  @include bg-4
-  float: left
-  padding: 0 10px
-  border-bottom: 1px dotted $gray-light
-
-
-.section_5
-  @include bg-5
-
-.section_6
-  @include bg-6
-
-
-// Set Specific Containers
-article.post
-  @include section_4
-
 // Buttons
 @mixin button($button-color-light, $button-color, $button-color-dark, $button-box-shadow, $button-text-shadow)
   padding: 10px 15px
@@ -260,22 +129,5 @@ article.post
 .button-tertiary
   @include button($green-light, $green, $green-dark, $gray-light, $text-shadow-tertiary)
 
-
-/*****  SET THESE  *****/
-// Widgets
-@mixin widget
-  width: 290px
-  float: left
-  padding: 10px
-  margin-bottom: 15px
-  @include bg-secondary
-  @include box-shadow-primary
-  h3
-    margin: 0
-    padding: 10px 0
-  ul
-    list-style-type: none
-.widget
-  @include widget
 
 //

@@ -56,7 +56,7 @@
     <?php endwhile; ?>
 
     <nav class="posts">
-        <div class="prev"><?php next_posts_link( '&laquo; Older Entries', ) ?></div>
+        <div class="prev"><?php next_posts_link( '&laquo; Older Entries' ) ?></div>
         <div class="next"><?php previous_posts_link( 'Newer Entries &raquo;' ) ?></div>
     </nav>
     
