@@ -487,10 +487,10 @@ class PLS_Map {
 				function pls_create_listing_marker (listing, map_js_var) {
 					var marker_details = {};
 					marker_details.latlng = new google.maps.LatLng(listing['location']['coords'][0], listing['location']['coords'][1]);
-					
-					if (listing['images'][0]['url']) {
-				    	var image_url = listing['images'][0]['url'];
-				    };
+
+          if (listing['images'] != '') {
+            var image_url = listing['images'][0]['url'];
+          };
 
 				    marker_details.content = '<div id="content">'+
                         '<div id="siteNotice">'+'</div>'+

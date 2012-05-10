@@ -22,7 +22,11 @@ class PLS_Partials_Property_Details {
 	        ob_start();
 	        ?>
 
-					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span></h2>
+					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress">
+					  <span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span>
+					</h2>
+
+          <p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
 
 					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
@@ -57,7 +61,6 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['half_baths']) && ($listing_data['cur_data']['half_baths'] != null)): ?>
                           <li><span>Half Baths: </span><?php echo $listing_data['cur_data']['half_baths'] ?></li>
                         <?php endif; ?>
-                        <li itemprop="price"><span>Price: </span><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
                         <li><span>Square Feet: </span><?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
                           <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
@@ -81,7 +84,7 @@ class PLS_Partials_Property_Details {
 
                 <?php $amenities = PLS_Format::amenities_but(&$listing_data, array('half_baths', 'beds', 'baths', 'url', 'sqft', 'avail_on', 'price', 'desc')); ?>
                
-                <?php if (isset($amenities['list'])): ?>
+                <?php if (!empty($amenities['list'])): ?>
                   <div class="amenities-section grid_8 alpha">
                     <h3>Listing Amenities</h3>
                     <ul>
@@ -92,8 +95,7 @@ class PLS_Partials_Property_Details {
                     </ul>
 	                </div>	
                 <?php endif ?>
-                
-                <?php if (isset($amenities['ngb'])): ?>
+                <?php if (!empty($amenities['ngb'])): ?>
 	                <div class="amenities-section grid_8 alpha">
 	                  <h3>Local Amenities</h3>
                     <ul>
@@ -105,7 +107,7 @@ class PLS_Partials_Property_Details {
 	                </div>
                 <?php endif ?>
                 
-                <?php if (isset($amenities['uncur'])): ?>
+                <?php if (!empty($amenities['uncur'])): ?>
 	                <div class="amenities-section grid_8 alpha">
 	                  <h3>Custom Amenities</h3>
                     <ul>
