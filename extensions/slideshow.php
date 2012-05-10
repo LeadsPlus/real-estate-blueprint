@@ -252,6 +252,13 @@ class PLS_Slideshow {
 
         if ($listing && isset($listing['images'])) {
 
+          // for listings with no images
+          if (empty($listing['images'])) {
+            $empty_slide_array['images'][0] = PLS_IMG_URL . "/null/listing-1200x720.jpg";
+            // Default single image slide array successfully created
+            return $empty_slide_array;
+          }
+
             foreach ($listing['images'] as $image) {
             $slide_array['images'][] = $image['url'];
             // $slide_array['links'][] = 'google.com';
