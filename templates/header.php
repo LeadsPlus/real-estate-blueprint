@@ -146,7 +146,7 @@
 
                 <?php pls_do_atomic( 'header' ); ?>
 
-                <div class="header-membership"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
+                <div class="header-membership"><?php echo PLS_Plugin_API::placester_lead_control_panel(array('separator' => '|')); ?></div>
 
             </div>
             <?php pls_do_atomic( 'before_nav'); ?>

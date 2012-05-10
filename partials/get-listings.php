@@ -169,7 +169,7 @@ class PLS_Partial_Get_Listings {
 
  <div class="actions">
    <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" itemprop="url">View Property Details</a>
-   <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+   <?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
  </div>
 
  <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
