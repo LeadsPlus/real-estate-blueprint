@@ -264,6 +264,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-maps-util');
         add_theme_support( 'pls-debug');
         add_theme_support( 'pls-membership');
+        add_theme_support( 'pls-custom-meta');
 
         //style options, need to be set in style-util.php
         add_theme_support( 'pls-typography-options');
@@ -383,6 +384,9 @@ class Placester_Blueprint {
 
         /** Load the debug functionality if supported. */
         require_if_theme_supports( 'pls-debug', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'debug.php' );
+
+        /** Load the debug functionality if supported. */
+        require_if_theme_supports( 'pls-custom-meta', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'taxonomy.php' );
 
         /** Create the listings and blog pages. */
         $this->create_pages();

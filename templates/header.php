@@ -143,11 +143,16 @@
 									<?php endif; ?>
 
                 </hgroup>
+<<<<<<< HEAD
 
                 <?php pls_do_atomic( 'header' ); ?>
 
                 <div class="header-membership"><?php echo PLS_Plugin_API::placester_lead_control_panel(array('separator' => '|')); ?></div>
 
+=======
+                <div class="header-membership"><?php echo PLS_Plugin_API::placester_lead_control_panel(array()); ?></div>
+                <?php pls_do_atomic( 'header' ); ?>    
+>>>>>>> 1
             </div>
             <?php pls_do_atomic( 'before_nav'); ?>
 

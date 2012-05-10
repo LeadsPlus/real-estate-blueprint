@@ -27,7 +27,7 @@ function pls_register_widgets() {
 
 	/** Load the Placester Contact widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/contact.php' );
-	
+
 	/** Load the Placester Recent Posts widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/recent-posts.php' );
 

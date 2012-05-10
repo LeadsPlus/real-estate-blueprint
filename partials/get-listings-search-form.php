@@ -91,6 +91,7 @@ class PLS_Partials_Listing_Search_Form {
 
         
         $form_options = array();
+
         // Set Form Defaults for params onload, set in Theme Options
         $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
         $form_options['location']['region'] = pls_get_option('form_default_options_region');
@@ -99,6 +100,7 @@ class PLS_Partials_Listing_Search_Form {
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 
+
         $user_search_params = pls_get_option($args['theme_option_id']);
         if (isset($user_search_params['hide_all'])) {
           return '';
