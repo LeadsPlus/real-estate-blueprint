@@ -1,9 +1,7 @@
 <?php 
 global $query_string;
-$args = wp_parse_args($query_string, array('','state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false));
+$args = wp_parse_args($query_string, array('','state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false, 'image_limit' => 25));
 $taxonomy = PLS_Taxonomy::get($args);
-//pls_dump($taxonomy);
-
 ?>
 
 
@@ -17,13 +15,17 @@ $taxonomy = PLS_Taxonomy::get($args);
 		<h3><?php echo $taxonomy['another'] ?></h3>
 	</div>
 	<div class="map polygon-too">
-		<?php echo PLS_Map::dynamic(null, array('width' => 590, 'height' => 250, 'zoom' => 16)); ?>
+		<?php echo PLS_Map::neighborhood($taxonomy['listings_raw'], array('width' => 590, 'height' => 250, 'zoom' => 16), array(), $taxonomy['polygon']) ?>
 	</div>
 	<div class="all-listings">
-		<?php echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home&request_params=location[" . $taxonomy['api_field'] . "]=" . $taxonomy['name'] ) ?>
+		<?php echo $taxonomy['listings'] ?>
 	</div>
 	<div class="automate-photos">
-		
+		<?php foreach ($taxonomy['listing_photos'] as $image): ?>
+			<section class="image-photo" style="float: left; margin: 10px">
+				<a href="<?php echo $image['listing_url'] ?>" title="<?php echo $image['full_address'] ?>"><img src="<?php echo $image['image_url'] ?> " alt="" width=100 height=100></a>		
+			</section>
+		<?php endforeach ?>
 	</div>
 	<div class="attached-photos">
 		
@@ -37,5 +39,4 @@ $taxonomy = PLS_Taxonomy::get($args);
 	</div>
 </div>
 <div>
-	close 
 </div>
