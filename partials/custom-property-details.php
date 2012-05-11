@@ -23,7 +23,13 @@ class PLS_Partials_Property_Details {
 	        ?>
 
 					<h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
-
+					<div>
+						<ul>
+							<?php foreach (PLS_Taxonomy::get_links($listing_data['location']) as $label => $link): ?>
+								<li><a href="<?php echo $link ?>"><?php echo $label ?></a></li>
+							<?php endforeach ?>
+						</ul>
+					</div>
 					<span class="listing_type"> <?php echo @$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0] ?></span>
 
 					<div class="clearfix"></div>
