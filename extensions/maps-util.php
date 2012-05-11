@@ -136,6 +136,7 @@ class PLS_Map {
 							    fillColor: data[item].settings.fill.color,
 							    fillOpacity: data[item].settings.fill.opacity
 							  });
+							polygon.tax = data[item];
 							polygon.setMap(<?php echo $map_js_var ?>.map);
 							pls_create_polygon_listeners(polygon);
 							customTxt = data[item].name;
@@ -506,7 +507,8 @@ class PLS_Map {
 					}); 
 
 					google.maps.event.addListener(polygon,"click",function(){
-						console.log(polygon)
+						console.log(this);
+						window.location.href = this.tax.permalink;
 					}); 
 				}
 
