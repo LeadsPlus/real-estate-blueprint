@@ -34,7 +34,7 @@ class PLS_Map {
 				var other_text = [];
 				var centers = [];
 				
-				jQuery(function() { 
+				jQuery(function($) { 
 					google.maps.event.addDomListener(window, 'load', function() {
 						var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
 						var myOptions = { zoom: <?php echo $zoom; ?>, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
@@ -44,6 +44,40 @@ class PLS_Map {
 						<?php endforeach ?>	
 						pls_center_map(<?php echo self::$map_js_var ?>);
 					});
+
+					<?php if ($ajax_form_class): ?>
+					$('.<?php echo $ajax_form_class ?>').live('change', function () {
+						console.log('asdf');
+						update_listings();
+					});
+
+					function update_listings (){
+						var request = {};
+				      	$.each($('.<?php echo $ajax_form_class ?>').serializeArray(), function(i, field) {
+							request[field.name] = field.value;
+						});
+						request.action = 'pls_listings_ajax';
+						request.iDisplayLength = 50;
+						request.iDisplayStart = 0;
+						request.context = '<?php echo $ajax_form_class ?>';
+						request.sEcho = 1;
+						
+						$.post(info.ajaxurl, request, function(ajax_response, textStatus, xhr) {
+							console.log(ajax_response);
+						  if (ajax_response && ajax_response['aaData'] && typeof pls_google_map !== 'undefined') {
+		                        pls_clear_markers(pls_google_map);
+		                        if (typeof window['google'] != 'undefined') {
+		                          for (var listing in ajax_response['aaData']) {
+		                              var listing_json = ajax_response['aaData'][listing][1];
+		                              pls_create_listing_marker(listing_json, pls_google_map);
+		                          }
+		                        }
+		                    };
+						}, 'json');
+						
+						console.log(request);
+					}
+					<?php endif; ?>
 				});	  
 			</script>
 			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
@@ -147,14 +181,8 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
-    // wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
-    // wp_enqueue_script('text-overlay');
-
 		ob_start();
 		?>
-
-
       		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
@@ -226,14 +254,7 @@ class PLS_Map {
 					});
 				});	  
 			</script>
-			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
-			<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
-				<form>
-					<?php if ($show_lifestyle_checkboxes): ?>
-						<?php echo self::get_lifestyle_checkboxs(); ?>
-					<?php endif ?>
-				</form>
-			</section>
+			<?php echo self::get_lifestyle_controls($map_args); ?>
 		<?php
 		return ob_get_clean();
 	}
@@ -363,27 +384,35 @@ class PLS_Map {
 					});
 				});	  
 			</script>
-			<div class="map_wrapper" style="position: relative">
+			<?php echo self::get_lifestyle_controls($map_args); ?>
+		<?php
+		return ob_get_clean();
+	}
+
+	function get_lifestyle_controls ($map_args) {
+		extract($map_args);
+		ob_start();
+		?>
+		<div class="map_wrapper" style="position: relative">
 				<div id="loading_overlay" class="loading_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $loading_overlay ?></div>
 				<div id="empty_overlay" class="empty_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $empty_overlay ?></div>
 				<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 				<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
 					<?php if ($show_lifestyle_controls): ?>
 						<div class="location_wrapper" >
-							<?php echo implode(self::get_area_selectors(), '') ?>
+							<?php echo implode(self::get_area_selectors($map_args), '') ?>
 						</div>
 						<div class="clear"></div>
 					<?php endif ?>			
 					<div class="checkbox_wrapper">
 						<form>
 						<?php if ($show_lifestyle_checkboxes): ?>
-							<?php echo self::get_lifestyle_checkboxs(); ?>
+							<?php echo self::get_lifestyle_checkboxs($map_args); ?>
 						<?php endif ?>
 						</form>
 					</div>
 				</section>	
 			</div>
-			
 		<?php
 		return ob_get_clean();
 	}
@@ -506,7 +535,6 @@ class PLS_Map {
 					if (listing['images'] && listing['images'][0] && listing['images'][0]['url']) {
 				    	var image_url = listing['images'][0]['url'];
 				    };
-				    console.log(listing);
 				    marker_details.content = '<div id="content">'+
                         '<div id="siteNotice">'+'</div>'+
                           '<h2 id="firstHeading" class="firstHeading">'+ listing['location']['full_address'] +'</h2>'+
@@ -631,7 +659,8 @@ class PLS_Map {
         	'loading_overlay' => '<div>Loading...</div>',
         	'empty_overlay' => '<div>No Results</div>',
         	'search_on_load' => false,
-        	'polygon_options' => array()
+        	'polygon_options' => array(),
+        	'ajax_form_class' => false
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
