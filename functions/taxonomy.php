@@ -32,8 +32,6 @@ class PLS_Taxonomy {
 		$term = wp_parse_args($term, $custom_data);
 		$term['api_field'] = $subject['api_field'];
 
-		$listings_raw = PLS_Plugin_API::get_property_list();  
-
 		return $term;
 	}
 
