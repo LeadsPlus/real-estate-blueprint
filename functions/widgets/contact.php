@@ -10,7 +10,7 @@ class Placester_Contact_Widget extends WP_Widget {
   //Front end contact form
   function form($instance){
     //Defaults
-    $instance = wp_parse_args( (array) $instance, array('title'=>'', 'modern' => 0) );
+    $instance = wp_parse_args( (array) $instance, array('title'=>'', 'button' => 'Submit', 'modern' => 0) );
 
     $title = htmlspecialchars($instance['title']);
 
@@ -20,7 +20,7 @@ class Placester_Contact_Widget extends WP_Widget {
 
     // Output the options
     echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
-
+    echo '<p><label for="' . $this->get_field_name('button') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('button') . '" name="' . $this->get_field_name('button') . '" value="' . $button . '" /></p>';
     echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
     
     ?>
@@ -32,6 +32,7 @@ class Placester_Contact_Widget extends WP_Widget {
   function update($new_instance, $old_instance){
     $instance = $old_instance;
     $instance['title'] = strip_tags(stripslashes($new_instance['title']));
+    $instance['button'] = strip_tags(stripslashes($new_instance['button']));
     $instance['modern'] = isset($new_instance['modern']) ? 1 : 0;
     return $instance;
   }
@@ -62,6 +63,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
         $inner_containers = apply_filters('inner_containers', empty($instance['inner_containers']) ? '' : $instance['inner_containers']);
         $textarea_container = apply_filters('textarea_container', !isset($instance['textarea_container']) ? $inner_containers : $instance['textarea_container']);
+        $button_class = apply_filters('button_class', !isset($instance['button_class']) ? 'button-primary' : $instance['button_class']);
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
         
@@ -114,7 +116,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                   <?php } ?>
-                    <input type="submit" value="<?php echo $submit_value; ?>" tabindex="5" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="5" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  

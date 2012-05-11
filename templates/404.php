@@ -13,17 +13,19 @@
 <section class="left-content">
 
 	<section id="post-0" <?php post_class() ?>>
-        <h2 class="error-404-title entry-title"><?php 'Not Found'; ?></h2>
-		<section class="entry-content">
+
+      <h2 class="error-404-title entry-title">Not Found</h2>
+
+      <section class="entry-content">
  
-            <p>
-                <?php printf( 'You tried going to %1$s, and it doesn\'t exist. All is not lost! You can search for what you\'re looking for.', '<code>' . home_url( esc_url( $_SERVER['REQUEST_URI'] ) ) . '</code>' ); ?>
-            </p>
+        <p>You navigated to a page that doesn't exist.</p>
 
-            <?php get_search_form(); // Loads the searchform.php template. ?>
+        <code><?php echo home_url( esc_url( $_SERVER['REQUEST_URI'] ) ) ?></code>
 
-		</section><!-- .entry-content -->
+        <p>Please use the navigation bar to find what you were looking for. Otherwise, feel free to email to the site owner, <a href="mailto:<?php echo @pls_get_option('pls-company-email') ?>"><?php echo @pls_get_option('pls-company-email') ?></a>, with any questions.</p>
 
-	</section>
+      </section><!-- .entry-content -->
+
+  </section>
 
 </section>

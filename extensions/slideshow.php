@@ -21,16 +21,10 @@ class PLS_Slideshow {
      */
     static function init() {
 
-// <<<<<<< HEAD
-      // self::enqueue(); // This broke the site when taken out.
-		// For Wordpress 3.3.0
-    // add_action('wp_head', array(__CLASS__,'enqueue'));
-// =======
 		// For Wordpress 3.3.0
         if (!is_admin()) {
             add_action('init', array(__CLASS__,'enqueue'));
         }
-// >>>>>>> 1.3
     }
 
     static function enqueue() {
