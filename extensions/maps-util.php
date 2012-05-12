@@ -225,7 +225,7 @@ class PLS_Map {
 						var mapCenter = polygonbounds.getCenter();
 						google.maps.event.addListenerOnce(<?php echo self::$map_js_var ?>.map, 'idle', function() {
 							<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);
-							<?php echo self::$map_js_var ?>.map.setZoom(14);
+							<?php echo self::$map_js_var ?>.map.setZoom(13);
 						});
 					});
 				});	  
