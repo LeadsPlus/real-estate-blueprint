@@ -34,8 +34,10 @@ class PLS_Partials_Property_Details {
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
+
 								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'image'))); ?>
 								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
+
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">

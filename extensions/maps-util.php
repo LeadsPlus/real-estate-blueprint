@@ -167,6 +167,7 @@ class PLS_Map {
 				<?php echo $map_js_var; ?>.map;
 				<?php echo $map_js_var; ?>.markers = [];
 				<?php echo $map_js_var; ?>.infowindows = [];
+				<?php echo $map_js_var; ?>.polygons = [];
 				var other_polygons = [];
 				var other_text = [];
 				var centers = [];
@@ -575,7 +576,21 @@ class PLS_Map {
 
 					google.maps.event.addListener(polygon,"click",function(){
 						console.log(this);
-						window.location.href = this.tax.permalink;
+						var that = this;
+						request = {};
+						request.action = 'polygon_listings';
+						request.vertices = this.tax.vertices;
+						jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
+							if (data) {
+								pls_clear_markers(<?php echo self::$map_js_var ?>);
+								for (var i = data.length - 1; i >= 0; i--) {
+									pls_create_listing_marker(data[i], <?php echo self::$map_js_var ?>);
+								};
+								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, <?php echo self::$map_js_var ?>);
+							};
+						},'json');
+						
+						// window.location.href = this.tax.permalink;
 					}); 
 				}
 
@@ -648,9 +663,11 @@ class PLS_Map {
 	        		for (var i = points.length - 1; i >= 0; i--) {
     					coords.push(new google.maps.LatLng( points[i][0], points[i][1]));
 	        		};	
+	        		console.log('here');
 	        		if (polygon_options) {
 	        			var polyOptions = polygon_options;
 	        			polyOptions.paths = coords;
+	        			console.log('here');
 	        		} else {
 	        			var polyOptions = {strokeColor: '#000000',strokeOpacity: 1.0,strokeWeight: 3, paths: coords};
 	        		}
