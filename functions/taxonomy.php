@@ -42,7 +42,11 @@ class PLS_Taxonomy {
 		$term['listings'] = pls_get_listings( "limit=5&context=home&request_params=location[" . $term['api_field'] . "]=" . $term['name'] );
 		
 		$term['listing_photos'] = array();
+		$term['areas'] = array('locality' => array(), 'postal' => array(), 'neighborhood' => array(), 'address' => array());
+		$locality_tree = array('city' => array('postal', 'neighborhood', 'address'), 'zip' => array('neighborhood', 'address'), 'neighborhood' => array('address'), 'street' => array());
 		$listings_raw = PLS_Plugin_API::get_property_list("location[" . $term['api_field'] . "]=" . $term['name']);  
+		
+		$api_translations = array('locality' => 'city', 'neighborhood' => 'neighborhood', 'postal' => 'zip', 'address' => 'street');
 		$term['listings_raw'] = $listings_raw['listings'];
 		$count = 0;
 		if (isset($listings_raw['listings'])) {
@@ -56,13 +60,18 @@ class PLS_Taxonomy {
 						$count++;
 					}
 				}
+				if (isset($locality_tree[$subject['taxonomy']])) {
+					foreach ($locality_tree[$subject['taxonomy']] as $locality) {
+						$link = array('name' => $listing['location'][$locality], 'permalink' => get_term_link($listing['location'][$locality], $api_translations[$locality] ));
+						if (is_string($link['permalink'])) {
+							$term['areas'][$locality][] = $link;
+						}
+					}
+				}
 			}
 		}
 		$term['polygon'] = PLS_Plugin_API::get_polygon_detail(array('tax' => $term['api_field'], 'slug' => $subject['term']));
-
-	
 		set_transient( $transient_id, $term , 3600 * 48 );
-
 		return $term;
 	}
 
@@ -73,7 +82,7 @@ class PLS_Taxonomy {
 		global $query_string;
 		$args = wp_parse_args($query_string, $neighborhoods);
 		foreach ($neighborhoods as $neighborhood => $value) {
-			if ($args[$neighborhood]) {
+			if (isset($args[$neighborhood]) && isset($location[$api_translations[$neighborhood]])) {
 				$response[ $location[$api_translations[$neighborhood]] ]  = get_term_link( $args[$neighborhood], $neighborhood );
 			}
 		}
