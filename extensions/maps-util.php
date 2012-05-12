@@ -18,13 +18,9 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
-		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
-		wp_enqueue_script('text-overlay');
-
-
 		ob_start();
 		?>
+      <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -64,12 +60,12 @@ class PLS_Map {
 						
 						$.post(info.ajaxurl, request, function(ajax_response, textStatus, xhr) {
 							console.log(ajax_response);
-						  if (ajax_response && ajax_response['aaData'] && typeof pls_google_map !== 'undefined') {
-		                        pls_clear_markers(pls_google_map);
+						  if (ajax_response && ajax_response['aaData'] && typeof <?php echo $map_js_var; ?> !== 'undefined') {
+		                        pls_clear_markers(<?php echo $map_js_var; ?>);
 		                        if (typeof window['google'] != 'undefined') {
 		                          for (var listing in ajax_response['aaData']) {
 		                              var listing_json = ajax_response['aaData'][listing][1];
-		                              pls_create_listing_marker(listing_json, pls_google_map);
+		                              pls_create_listing_marker(listing_json, <?php echo $map_js_var; ?>);
 		                          }
 		                        }
 		                    };
@@ -161,13 +157,11 @@ class PLS_Map {
 		$map_args = self::process_defaults($map_args);
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
-		
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
-		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
-		wp_enqueue_script('text-overlay');
 
 		ob_start();
 		?>
+		  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+		  <script src="<?php echo trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' ?>"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -390,7 +384,7 @@ class PLS_Map {
 							request.action = 'lifestyle_polygon';
 							request.location = {};
 							request.location = '' + new_point.lat() + ',' + new_point.lng();
-							request.radius = $('.location_select select#radius').val();
+							request.radius = $('.location_select select.radius').val();
 							request.types = get_form_items();
 							$.post(info.ajaxurl, request, function(data, textStatus, xhr) {
 								var results = data.places;
@@ -429,7 +423,7 @@ class PLS_Map {
 						function get_location () {
 							var response = false;
 							var location_type = $('#lifestyle_form_wrapper select[name="location"]').val();
-							var location_value = $('.location_select_wrapper select#' + location_type).val();
+							var location_value = $('.location_select_wrapper select.' + location_type).val();
 							if (location_value != 'Any') {
 								response = {};
 								response.address = location_value;
@@ -444,7 +438,7 @@ class PLS_Map {
 					      	search_places();
 					      });
 
-					      $('#lifestyle_form_wrapper select#location').live('change', function(event) {
+					      $('#lifestyle_form_wrapper select.location').live('change', function(event) {
 					      	event.preventDefault();
 					      	update_lifestyle_location_selects();
 					      });
@@ -453,7 +447,7 @@ class PLS_Map {
 					      function update_lifestyle_location_selects () {
 					      	var location_type = $('#lifestyle_form_wrapper select[name="location"]').val();
 					      	$('.location_select_wrapper').hide();
-					      	$('.location_select_wrapper select#' + location_type).parent().show().find('.chzn-container').css('width', '150px');
+					      	$('.location_select_wrapper select.' + location_type).parent().show().find('.chzn-container').css('width', '150px');
 					      }
 					});
 				});	  
@@ -473,7 +467,7 @@ class PLS_Map {
 				<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 				<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
 					<?php if ($show_lifestyle_controls): ?>
-						<div class="location_wrapper" >
+						<div class="location_wrapper">
 							<?php echo implode(self::get_area_selectors($map_args), '') ?>
 						</div>
 						<div class="clear"></div>
@@ -491,7 +485,7 @@ class PLS_Map {
 		return ob_get_clean();
 	}
 
-	private static function get_area_selectors () {
+	private static function get_area_selectors ($map_args = array()) {
 			$response = array();
 			$form_options = array();
 			$form_options['locality'] = array_merge(array('false' => '---'), PLS_Plugin_API::get_location_list('locality'));
@@ -499,17 +493,17 @@ class PLS_Map {
 	        $form_options['postal'] = array_merge(array('false' => '---'),PLS_Plugin_API::get_location_list('postal')); 
 	        $form_options['neighborhood'] = array_merge(array('false' => '---'),PLS_Plugin_API::get_location_list('neighborhood')); 
 	        
-	        $response['location'] = '<div class="location_select"><select name="location" id="location" style="width: 140px">
+	        $response['location'] = '<div class="location_select"><select name="location" class="location" style="width: 140px">
 				<option value="locality">City</option>
 				<option value="region">State</option>
 				<option value="postal">Zip</option>
 				<option value="neighborhood">Neighborhood</option>
 			</select></div>';
-	        $response['locality'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[locality]', 'id' => 'locality' ), pls_h_options( $form_options['locality'], wp_kses_post(@$_POST['location']['locality'] ), true )) . '</div>';
-	        $response['region'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[region]', 'id' => 'region' ), pls_h_options( $form_options['region'], wp_kses_post(@$_POST['location']['region'] ), true )) . '</div>';
-	        $response['postal'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[postal]', 'id' => 'postal' ), pls_h_options( $form_options['postal'], wp_kses_post(@$_POST['location']['postal'] ), true )) . '</div>';
-	        $response['neighborhood'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[neighborhood]', 'id' => 'neighborhood' ), pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )) . '</div>';
-	        $response['radius'] = '<div class="location_select"><select name="radius" id="radius" style="width: 140px">
+	        $response['locality'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[locality]', 'class' => 'locality' ), pls_h_options( $form_options['locality'], wp_kses_post(@$_POST['location']['locality'] ), true )) . '</div>';
+	        $response['region'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[region]', 'class' => 'region' ), pls_h_options( $form_options['region'], wp_kses_post(@$_POST['location']['region'] ), true )) . '</div>';
+	        $response['postal'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[postal]', 'class' => 'postal' ), pls_h_options( $form_options['postal'], wp_kses_post(@$_POST['location']['postal'] ), true )) . '</div>';
+	        $response['neighborhood'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[neighborhood]', 'class' => 'neighborhood' ), pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )) . '</div>';
+	        $response['radius'] = '<div class="location_select"><select name="radius" class="radius" style="width: 140px">
 							<option value="200">200 meters</option>
 							<option value="500">500 meters</option>
 							<option value="1000">1000 meters</option>

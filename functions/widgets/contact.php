@@ -53,7 +53,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $email_label = apply_filters('email_label', !isset($instance['email_label']) ? 'Email Address (required)' : $instance['email_label']);
         $email_value = apply_filters('email_value', !isset($instance['email_value']) ? 'Email Address' : $instance['email_value']);
         $phone_label = apply_filters('phone_label', !isset($instance['phone_label']) ? 'Phone Number (required)' : $instance['phone_label']);
-        $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Numbe' : $instance['phone_value']);
+        $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Number' : $instance['phone_value']);
         $fname_label = apply_filters('fname_label', !isset($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
         $fname_value = apply_filters('fname_value', !isset($instance['fname_value']) ? 'First Name' : $instance['fname_value']);
         $lname_label = apply_filters('lname_label', !isset($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
