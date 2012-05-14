@@ -134,6 +134,12 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                       wp_register_script( 'jquery-ui-datepicker', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery.ui.datepicker.js' , array( 'jquery'), NULL, true );
                       wp_enqueue_script( 'jquery-ui-datepicker' );
                     }
+                    if (isset( $GLOBALS['wp_scripts']->registered['jquery-ui-dialog']) )  {
+                      wp_enqueue_script( 'jquery-ui-dialog' );
+                    } else {
+                      // wp_register_script( 'jquery-ui-dialog', trailingslashit( PLS_JS_URL ) . 'libs/jquery-ui/js/jquery.ui.dialog.js' , array( 'jquery'), NULL, true );
+                      // wp_enqueue_script( 'jquery-ui-dialog' );
+                    }
 
                 }
                 if ( in_array( 'style', $js[0]['jquery-ui'] ) ) {

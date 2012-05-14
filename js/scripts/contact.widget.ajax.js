@@ -1,50 +1,53 @@
 jQuery(document).ready(function($) {
 
-  $(".side-ctnr.placester_contact form input#firstName").focusout( function() {
-    if(this.value == '') {
-      this.value = 'First Name';
-    }
-  });
-  $('.side-ctnr.placester_contact form input[name="firstName"]').focus( function() {
-    if(this.value == 'First Name') {
-      this.value = '';
-    }
-  });
+  if (typeof pls_fill_contact_form == "undefined") {
+    $(".side-ctnr.placester_contact form input#firstName").focusout( function() {
+      if(this.value == '') {
+        this.value = 'First Name';
+      }
+    });
+    $('.side-ctnr.placester_contact form input[name="firstName"]').focus( function() {
+      if(this.value == 'First Name') {
+        this.value = '';
+      }
+    });
 
-  $(".side-ctnr.placester_contact form input#lastName").focusout( function() {
-    if(this.value == '') {
-      this.value = 'Last Name';
-    }
-  });
-  $('.side-ctnr.placester_contact form input[name="lastName"]').focus( function() {
-    if(this.value == 'Last Name') {
-      this.value = '';
-    }
-  });
+    $(".side-ctnr.placester_contact form input#lastName").focusout( function() {
+      if(this.value == '') {
+        this.value = 'Last Name';
+      }
+    });
+    $('.side-ctnr.placester_contact form input[name="lastName"]').focus( function() {
+      if(this.value == 'Last Name') {
+        this.value = '';
+      }
+    });
 
-  $(".side-ctnr.placester_contact form input#email").focusout( function() {
+    $(".side-ctnr.placester_contact form input#email").focusout( function() {
 
-    if(this.value == '') {
-      this.value = 'Email Address';
-    }
-  });
-  $('.side-ctnr.placester_contact form input[type="email"]').focus( function() {
-    if(this.value == 'Email Address') {
-      this.value = '';
-    }
-  });
+      if(this.value == '') {
+        this.value = 'Email Address';
+      }
+    });
+    $('.side-ctnr.placester_contact form input[type="email"]').focus( function() {
+      if(this.value == 'Email Address') {
+        this.value = '';
+      }
+    });
 
-  $(".side-ctnr.placester_contact form input#email").focusout( function() {
+    $('.side-ctnr.placester_contact form input#phone').focus( function() {
+      if(this.value == 'Phone Number') {
+        this.value = '';
+      }
+    });
+    $(".side-ctnr.placester_contact form input#phone").focusout( function() {
+      if(this.value == '') {
+        this.value = 'Phone Number';
+      }
+    });
+  };
 
-    if(this.value == '') {
-      this.value = 'Email Address';
-    }
-  });
-  $('.side-ctnr.placester_contact form input#phone').focus( function() {
-    if(this.value == 'Phone Number') {
-      this.value = '';
-    }
-  });
+
 
    var widget = jQuery('.side-ctnr.placester_contact');
 	jQuery('.side-ctnr.placester_contact form').submit(function(e) {

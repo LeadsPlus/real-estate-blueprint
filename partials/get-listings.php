@@ -44,13 +44,11 @@ class PLS_Partial_Get_Listings {
             /** Placester API arguments. */
             'limit' => 5,
             'sort_type' => 'asc',
+            'request_params' => ''
         );
 
         /** Merge the arguments with the defaults. */
         $args = wp_parse_args( $args, $defaults );
-
-        /** Process arguments that need to be sent to the API. */
-        $request_params = PLS_Plugin_API::get_valid_property_list_fields( $args );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
@@ -65,7 +63,6 @@ class PLS_Partial_Get_Listings {
 
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
-
         /** Display a placeholder if the plugin is not active or there is no API key. */
         if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
             global $PLS_API_DEFAULT_LISTING;
@@ -168,7 +165,7 @@ class PLS_Partial_Get_Listings {
 						<?php endif; ?>
                     <div class="actions">
                         <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>">View Property Details</a>
-												<?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+												<?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
                     </div>
                 </div>
             </div><!-- .entry-summary -->

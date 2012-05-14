@@ -82,14 +82,26 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 1,
             'min_price' => 1,
             'max_price' => 1,
+            'neighborhood' => 1,
+            'min_price_rental' => 1,
+            'max_price_rental' => 1,
             'include_submit' => true
-        ); 
+        );
 
         $args = wp_parse_args( $args, $defaults );
         
+        $form_options = array();
+        $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
+        $form_options['location']['region'] = pls_get_option('form_default_options_region');
+        $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
+        $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
+        $_POST = wp_parse_args($_POST, $form_options);
+               
         //respect user settings, unless they are all empty. 
+
         $user_search_params = pls_get_option($args['theme_option_id']);
         if (isset($user_search_params['hide_all'])) {
+
           return '';
         }
         $not_empty_flag = false;
@@ -201,8 +213,15 @@ class PLS_Partials_Listing_Search_Form {
             $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('postal')); 
             unset($form_options['zips']['false']);    
         }
+
+        if (!PLS_Plugin_API::get_location_list('neighborhood')) {
+            $form_options['neighborhood'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('neighborhood')); 
+            unset($form_options['neighborhood']['false']);    
+        }
         
-    // Price for Sales 
+    // Price for Sales
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
               'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
@@ -279,29 +298,6 @@ class PLS_Partials_Listing_Search_Form {
                 '6000' => '$6,000',
                 '7000' => '$7,000',
                 '8000' => '$8,000',
-
-                // '200' => '$200',
-                // '400' => '$400',
-                // '600' => '$600',
-                // '800' => '$800',
-                // '1000' => '$1,000',
-                // '1200' => '$1,200',
-                // '1400' => '$1,400',
-                // '1600' => '$1,600',
-                // '1800' => '$1,800',
-                // '2000' => '$2,000',
-                // '2200' => '$2,200',
-                // '2400' => '$2,400',
-                // '2600' => '$2,600',
-                // '28000' => '$2,800',
-                // '3000' => '$3,000',
-                // '3500' => '$3,500',
-                // '4000' => '$4,000',
-                // '4500' => '$4,500',
-                // '5000' => '$5,000',
-                // '6000' => '$6,000',
-                // '7000' => '$7,000',
-                // '8000' => '$8,000',
           );
 
             $user_price_start_rental = '';
@@ -509,6 +505,15 @@ class PLS_Partials_Listing_Search_Form {
             );
         }
 
+        /** Add the cities select element. */
+        if ($neighborhood == 1) {
+            $form_html['neighborhood'] = pls_h(
+                'select',
+                array( 'name' => 'location[neighborhood]' ) + $form_opt_attr['neighborhood'],
+                pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )
+            );
+        }
+
         /** Add the minimum price select element. */
         if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
@@ -529,7 +534,7 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         /** Add the minimum price select element. */
-        if ($min_price == 1) {
+        if ($min_price_rental == 1) {
             $form_html['min_price_rental'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[min_price]' ) + $form_opt_attr['min_price'],
@@ -538,7 +543,7 @@ class PLS_Partials_Listing_Search_Form {
         }
         
         /** Add the maximum price select element. */
-        if ($max_price == 1) {
+        if ($max_price_rental == 1) {
             $form_html['max_price_rental'] = pls_h(
                 'select',
                 array( 'name' => 'metadata[max_price]' ) + $form_opt_attr['max_price'],
@@ -548,6 +553,20 @@ class PLS_Partials_Listing_Search_Form {
         }
 
         $section_title = array(
+            'bedrooms' => 'Beds',
+            'bathrooms' => 'Baths',
+            'half_baths' => 'Half Baths',
+            'property_type' => 'Property Type',
+            'zoning_types' => 'Zoning Type',
+            'listing_types' => 'Listing Type',
+            'purchase_types' => 'Purchase Type',
+            'available_on' => 'Available',
+            'cities' => 'Near',
+            'states' => 'State',
+            'zips' => 'Zip Code',
+            'min_price' => 'Min Price',
+            'max_price' => 'Max Price',
+            'neighborhood' => "Neighborhood",
             'bedrooms' => __( 'Beds', pls_get_textdomain() ),
             'min_beds' => __( 'Min Beds', pls_get_textdomain() ),
             'max_beds' => __( 'Max Beds', pls_get_textdomain() ),

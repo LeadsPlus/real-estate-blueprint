@@ -23,15 +23,21 @@ class PLS_Partials_Property_Details {
 	        ?>
 
 					<h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
-
+					<div>
+						<ul>
+							<?php foreach (PLS_Taxonomy::get_links($listing_data['location']) as $label => $link): ?>
+								<li><a href="<?php echo $link ?>"><?php echo $label ?></a></li>
+							<?php endforeach ?>
+						</ul>
+					</div>
 					<span class="listing_type"> <?php echo @$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0] ?></span>
 
 					<div class="clearfix"></div>
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
-								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
-								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
+								<?php //echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
+								<?php echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">
@@ -111,7 +117,7 @@ class PLS_Partials_Property_Details {
 	            <div class="map-wrapper grid_8 alpha">
 	                <h3>Property Map</h3>
                     <div class="map">
-                        <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
+                    	<?php echo PLS_Map::lifestyle($listing_data, array('width' => 590, 'height' => 250, 'zoom' => 16, 'life_style_search' => true,'show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1])); ?>
                     </div>
 	            </div>
         		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => $listing_data['rets']['aname'] , 'office_name' => $listing_data['rets']['oname'])); ?>
