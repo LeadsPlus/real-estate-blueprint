@@ -320,7 +320,7 @@ class PLS_Plugin_API {
                 'townhouse' => 'Townhouse',
                 // 'brownstone' => 'Brownstone',
                 'fam_home' => 'Single Family Home',
-                // 'multi_fam_home' => 'Multi Family Home',
+                'multi_fam' => 'Multi Family Home',
                 // 'flat' => 'Flat',
                 // 'loft' => 'Loft',
                 // 'cottage' => 'Cottage',
