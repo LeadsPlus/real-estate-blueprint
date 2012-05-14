@@ -591,7 +591,7 @@ class PLS_Map {
 								pls_clear_markers(<?php echo self::$map_js_var ?>);
 								for (var i = data.length - 1; i >= 0; i--) {
 									pls_create_listing_marker(data[i], <?php echo self::$map_js_var ?>);
-								};
+								}
 								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, <?php echo self::$map_js_var ?>);
 							};
 						},'json');
