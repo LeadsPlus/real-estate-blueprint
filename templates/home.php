@@ -34,5 +34,12 @@
 		?>
 </div>
 <div id="listing" class="grid_8 alpha">
+
     <?php echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
+
+	<?php //echo PLS_Map::lifestyle_polygon(array('cur_data' => array(),'location' => array('coords' => array(41.815594,-71.413879))), array('width' => 590, 'height' => 300, 'zoom' => 16,'map_js_var' => 'test4', 'canvas_id' => 'another4', 'life_style_search' => 'true','show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'lat' => '41.815594', 'lng' => '-71.413879')); ?>
+    <?php //echo pls_get_listings( "limit=5&featured_option_id=custom-featured-listings&context=home" ) ?>
+    <?php //PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => false, 'office_name' => false)); ?>
+     <?php //echo PLS_Map::polygon(null, array('width' => 590, 'height' => 250, 'zoom' => 16,'map_js_var' => 'test2', 'canvas_id' => 'another2', 'polygon_search' => 'city')); ?>
+
 </div>
