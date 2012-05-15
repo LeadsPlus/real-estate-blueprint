@@ -18,13 +18,14 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
 		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
 		wp_enqueue_script('text-overlay');
 
 
 		ob_start();
 		?>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -592,6 +593,7 @@ class PLS_Map {
 									pls_create_listing_marker(data[i], map_js_var);
 								};
 								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
+
 							};
 						},'json');
 						
