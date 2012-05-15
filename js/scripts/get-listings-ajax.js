@@ -16,17 +16,18 @@ jQuery(document).ready(function($) {
                 "url" : sSource,
                 "data" : aoData,
                 "success" : function(ajax_response) {
-                    if (ajax_response && ajax_response['aaData'] && typeof pls_google_map !== 'undefined') {
+                    if (ajax_response && ajax_response['aaData']) {
                         custom_total_results(ajax_response);
+                        if (typeof pls_google_map !== 'undefined') {
                         pls_clear_markers(pls_google_map);
-                        if (typeof window['google'] != 'undefined') {
-                          for (var listing in ajax_response['aaData']) {
-                              var listing_json = ajax_response['aaData'][listing][1];
-                              pls_create_listing_marker(listing_json, pls_google_map);
+                          if (typeof window['google'] != 'undefined') {
+                            for (var listing in ajax_response['aaData']) {
+                                var listing_json = ajax_response['aaData'][listing][1];
+                                pls_create_listing_marker(listing_json, pls_google_map);
+                            }
                           }
                         }
-                    };
-
+                      };
                     //required to load the datatable
                    fnCallback(ajax_response)
                 }

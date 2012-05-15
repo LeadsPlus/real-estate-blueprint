@@ -683,11 +683,14 @@ class PLS_Map {
 							map_js_var.markers[i].setMap(map_js_var.map);
 							bounds.extend(map_js_var.markers[i].getPosition());
 						};
-						map_js_var.map.fitBounds(bounds);
-							google.maps.event.addListenerOnce(map_js_var.map, 'bounds_changed', function(event) {
-							    if (this.getZoom() > 15) 
-							        this.setZoom(15);
-							});
+
+          if(typeof map_js_var.map != "undefined") {
+            map_js_var.map.fitBounds(bounds);
+            google.maps.event.addListenerOnce(map_js_var.map, 'bounds_changed', function(event) {
+              if (this.getZoom() > 15) 
+                this.setZoom(15);
+              });
+          }
 					};
 				}	
 
