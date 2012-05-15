@@ -211,7 +211,7 @@ class PLS_Map {
 							  });
 							polygon.tax = data[item];
 							polygon.setMap(<?php echo $map_js_var ?>.map);
-							pls_create_polygon_listeners(polygon);
+							pls_create_polygon_listeners(polygon, <?php echo $map_js_var ?>);
 							customTxt = data[item].name;
 				            var bounds = new google.maps.LatLngBounds();
 				            for (p = 0; p < polygon.getPath().length; p++) {
@@ -569,7 +569,7 @@ class PLS_Map {
 		ob_start();
 		?>
 			<script type="text/javascript">
-				function pls_create_polygon_listeners (polygon) {
+				function pls_create_polygon_listeners (polygon, map_js_var) {
 					google.maps.event.addListener(polygon,"mouseover",function(){
 						polygon.setOptions({fillOpacity: "0.9"});
 					}); 
@@ -587,11 +587,11 @@ class PLS_Map {
 						request.vertices = this.tax.vertices;
 						jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
 							if (data) {
-								pls_clear_markers(<?php echo self::$map_js_var ?>);
+								pls_clear_markers(map_js_var);
 								for (var i = data.length - 1; i >= 0; i--) {
-									pls_create_listing_marker(data[i], <?php echo self::$map_js_var ?>);
+									pls_create_listing_marker(data[i], map_js_var);
 								};
-								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, <?php echo self::$map_js_var ?>);
+								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
 							};
 						},'json');
 						
@@ -668,11 +668,9 @@ class PLS_Map {
 	        		for (var i = points.length - 1; i >= 0; i--) {
     					coords.push(new google.maps.LatLng( points[i][0], points[i][1]));
 	        		};	
-	        		console.log('here');
 	        		if (polygon_options) {
 	        			var polyOptions = polygon_options;
 	        			polyOptions.paths = coords;
-	        			console.log('here');
 	        		} else {
 	        			var polyOptions = {strokeColor: '#000000',strokeOpacity: 1.0,strokeWeight: 3, paths: coords};
 	        		}
