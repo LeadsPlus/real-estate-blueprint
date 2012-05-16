@@ -52,7 +52,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $email_label = apply_filters('email_label', !isset($instance['email_label']) ? 'Email Address (required)' : $instance['email_label']);
         $email_value = apply_filters('email_value', !isset($instance['email_value']) ? 'Email Address' : $instance['email_value']);
         $phone_label = apply_filters('phone_label', !isset($instance['phone_label']) ? 'Phone Number (required)' : $instance['phone_label']);
-        $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Numbe' : $instance['phone_value']);
+        $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Number' : $instance['phone_value']);
         $fname_label = apply_filters('fname_label', !isset($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
         $fname_value = apply_filters('fname_value', !isset($instance['fname_value']) ? 'First Name' : $instance['fname_value']);
         $lname_label = apply_filters('lname_label', !isset($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
@@ -64,10 +64,10 @@ class Placester_Contact_Widget extends WP_Widget {
         $textarea_container = apply_filters('textarea_container', !isset($instance['textarea_container']) ? $inner_containers : $instance['textarea_container']);
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
-        
+        $send_to_email = apply_filters('send_to_email', !isset($instance['send_to_email']) ? '' : $instance['send_to_email']);
+
         $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
         $template_url = get_template_directory_uri();
-
     
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
@@ -105,6 +105,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
+                    <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
                   <?php } else { ?>
                     <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
                     <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName" tabindex="2" />
@@ -113,6 +114,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
+                    <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
                     <input type="submit" value="<?php echo $submit_value; ?>" tabindex="5" />
                   </form>
@@ -204,6 +206,10 @@ function ajax_placester_contact() {
 
       $api_whoami = PLS_Plugin_API::get_user_details();
 
+      if (trim($_POST['send_to_email']) == true) {
+        $api_whoami['email'] = $_POST['send_to_email'];
+      }
+      
       if (trim($_POST['email_confirmation']) == true) {
         wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);
       } elseif ($api_whoami['email']) {
