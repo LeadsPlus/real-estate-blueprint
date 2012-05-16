@@ -106,8 +106,16 @@ class PLS_Plugin_API {
         return array();
     }
 
-    static function get_taxonomies_by_type($params) {
+    static function get_taxonomies_by_type($params = array()) {
         $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygons_by_type'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
+    static function get_polygon_detail ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygon_detail'), $params );
         if ( $return ) {
             return $return;
         }
@@ -168,7 +176,7 @@ class PLS_Plugin_API {
      * @link http://docs.placester.com/rest/api/v1/properties/get.html
      * @since 0.0.1
      */
-    static function get_property_list( $params ) {
+    static function get_property_list( $params = array() ) {
 
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( array('PL_Listing_Helper','results'), $params );
@@ -324,7 +332,7 @@ class PLS_Plugin_API {
                 'townhouse' => 'Townhouse',
                 // 'brownstone' => 'Brownstone',
                 'fam_home' => 'Single Family Home',
-                // 'multi_fam_home' => 'Multi Family Home',
+                'multi_fam' => 'Multi Family Home',
                 // 'flat' => 'Flat',
                 // 'loft' => 'Loft',
                 // 'cottage' => 'Cottage',

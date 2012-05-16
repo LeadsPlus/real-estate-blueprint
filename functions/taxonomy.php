@@ -10,8 +10,16 @@ class PLS_Taxonomy {
 	}
 
 	function get ($args = array()) {
+
+		$signature = base64_encode(sha1(implode($args), true));
+        $transient_id = 'pl_' . $signature;
+        $transient = get_transient($transient_id);
+        
+        if ($transient) {
+        	return $transient;
+        } 
+
 		extract(self::process_args($args), EXTR_SKIP);
-		// pls_dump($args);
 		$subject = array();
 		if ($street) {
 			$subject += array('taxonomy' => 'street', 'term' => $street, 'api_field' => 'address');
@@ -31,10 +39,54 @@ class PLS_Taxonomy {
 		}
 		$term = wp_parse_args($term, $custom_data);
 		$term['api_field'] = $subject['api_field'];
-
-		$listings_raw = PLS_Plugin_API::get_property_list();  
-
+		$term['listings'] = pls_get_listings( "limit=5&context=home&request_params=location[" . $term['api_field'] . "]=" . $term['name'] );
+		
+		$term['listing_photos'] = array();
+		$term['areas'] = array('locality' => array(), 'postal' => array(), 'neighborhood' => array(), 'address' => array());
+		$locality_tree = array('city' => array('postal', 'neighborhood', 'address'), 'zip' => array('neighborhood', 'address'), 'neighborhood' => array('address'), 'street' => array());
+		$listings_raw = PLS_Plugin_API::get_property_list("location[" . $term['api_field'] . "]=" . $term['name']);  
+		
+		$api_translations = array('locality' => 'city', 'neighborhood' => 'neighborhood', 'postal' => 'zip', 'address' => 'street');
+		$term['listings_raw'] = $listings_raw['listings'];
+		$count = 0;
+		if (isset($listings_raw['listings'])) {
+			foreach ($listings_raw['listings'] as $key => $listing) {
+				if (!empty($listing['images'])) {
+					foreach ($listing['images'] as $image) {
+						if ($count > $image_limit) {
+							break;
+						}
+						$term['listing_photos'][] = array('full_address' => $listing['location']['full_address'], 'image_url' => $image['url'], 'listing_url' => $listing['cur_data']['url']);
+						$count++;
+					}
+				}
+				if (isset($locality_tree[$subject['taxonomy']])) {
+					foreach ($locality_tree[$subject['taxonomy']] as $locality) {
+						$link = array('name' => $listing['location'][$locality], 'permalink' => get_term_link($listing['location'][$locality], $api_translations[$locality] ));
+						if (is_string($link['permalink'])) {
+							$term['areas'][$locality][] = $link;
+						}
+					}
+				}
+			}
+		}
+		$term['polygon'] = PLS_Plugin_API::get_polygon_detail(array('tax' => $term['api_field'], 'slug' => $subject['term']));
+		set_transient( $transient_id, $term , 3600 * 48 );
 		return $term;
+	}
+
+	function get_links ($location) {
+		$response = array();
+		$neighborhoods = array('state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false);
+		$api_translations = array('state' => 'region', 'city' => 'locality', 'neighborhood' => 'neighborhood', 'zip' => 'postal', 'street' => 'address');
+		global $query_string;
+		$args = wp_parse_args($query_string, $neighborhoods);
+		foreach ($neighborhoods as $neighborhood => $value) {
+			if (isset($args[$neighborhood]) && isset($location[$api_translations[$neighborhood]])) {
+				$response[ $location[$api_translations[$neighborhood]] ]  = get_term_link( $args[$neighborhood], $neighborhood );
+			}
+		}
+		return $response;
 	}
 
 	function add_meta ($type, $id, $label) {

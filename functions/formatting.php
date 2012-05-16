@@ -250,6 +250,7 @@ class PLS_Format {
 		$amenities['list'] = array();
 
 		foreach ($listing_data['cur_data'] as $amenity => $value) {
+		  if (empty($value)) { continue; }
 			if (in_array($amenity, $amenities_to_remove)) { continue; }
 			if (is_int(strrpos((string)$amenity, 'ngb'))) {
 				if ($value) {
@@ -262,6 +263,7 @@ class PLS_Format {
 			}
 		}
 		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
+      if (empty($uncur_value)) { continue; }
 			if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
 			$amenities['uncur'][$uncur_amenity] = $uncur_value;
 		}		

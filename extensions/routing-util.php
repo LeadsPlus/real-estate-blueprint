@@ -229,7 +229,7 @@ class PLS_Route {
 		
 		// sets the request for the standard 404
 		// template
-		self::$request = '404.php';
+		self::$request[] = '404.php';
 	}
 
 	// hooked to search
@@ -237,27 +237,27 @@ class PLS_Route {
 		
 		// sets the request for the standard search
 		// template
-		self::$request = 'search.php';
+		self::$request[] = 'search.php';
 	}
 
 	// hooked to home + index
 	function handle_home() {
 
 		//check for index.php, same hook as home.
-		self::$request = array( 'home.php', 'index.php' );		
+		self::$request = array_merge(self::$request, array( 'home.php', 'index.php' ));		
 	}
 
 	// hooked to front-page.php
 	function handle_front_page () {
-		self::$request = 'front-page.php';
+		self::$request[] = 'front-page.php';
 	}
 
 	function handle_paged() {
-		self::$request = 'paged.php';
+		self::$request[] = 'paged.php';
 	}
 
 	function handle_date() {
-		self::$request = 'date.php';
+		self::$request[] = 'date.php';
 	}
 
 	// needs additional logic to handle different types of 
@@ -274,7 +274,7 @@ class PLS_Route {
 			
 		$templates[] = 'archive.php';
 
-		self::$request = $templates;
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 
@@ -288,7 +288,7 @@ class PLS_Route {
 		$templates[] = "author-{$author->ID}.php";
 		$templates[] = 'author.php';
 
-		self::$request = $templates;
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 
@@ -302,7 +302,7 @@ class PLS_Route {
 		$templates[] = "category-{$category->term_id}.php";
 		$templates[] = 'category.php';
 
-		self::$request = $templates;
+		self::$request = array_merge(self::$request, $template);
 	}
 
 
@@ -317,7 +317,7 @@ class PLS_Route {
 		$templates[] = "tag-{$tag->term_id}.php";
 		$templates[] = 'tag.php';
 
-		self::$request = $templates;
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 	// attachment pages, not sure what to do with this.
@@ -336,7 +336,7 @@ class PLS_Route {
 			return $template;
 		else
 
-		self::$request = $template;
+		self::$request =  array_merge(self::$request, $templates);
 	}
 
 	// hooked to handle single templates
@@ -349,7 +349,7 @@ class PLS_Route {
 		$templates[] = "single-{$object->post_type}.php";
 		$templates[] = "single.php";
 		
-		self::$request = $templates;
+		self::$request =  array_merge(self::$request, $templates);
 	}
 
 	// hooked to handle page templates
@@ -388,7 +388,7 @@ class PLS_Route {
 		// request var so router can use them later
 		// when the filter is called to decide
 		// which pages to look for. 
-		self::$request = $templates;
+		self::$request =  array_merge(self::$request, $templates);
 	}
 
 	function handle_taxonomy() {
@@ -411,7 +411,7 @@ class PLS_Route {
 			} elseif ($state) {
 				$templates[] = 'attribute-state.php';
 			}
-			self::$request = $templates;
+			self::$request =  array_merge(self::$request, $templates);
 		} else {
 			$term = get_queried_object();
 			$taxonomy = $term->taxonomy;
@@ -424,7 +424,7 @@ class PLS_Route {
 
 		}
 
-		self::$request = $templates;
+		self::$request =  array_merge(self::$request, $templates);
 	}
 
 

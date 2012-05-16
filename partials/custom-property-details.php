@@ -23,15 +23,21 @@ class PLS_Partials_Property_Details {
 	        ?>
 
 					<h2><?php echo $listing_data['location']['address'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['locality']; ?></h2>
-
+					<div>
+						<ul>
+							<?php foreach (PLS_Taxonomy::get_links($listing_data['location']) as $label => $link): ?>
+								<li><a href="<?php echo $link ?>"><?php echo $label ?></a></li>
+							<?php endforeach ?>
+						</ul>
+					</div>
 					<span class="listing_type"> <?php echo @$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0] ?></span>
 
 					<div class="clearfix"></div>
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
-								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
-								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
+								<?php //echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true)) ?>
+								<?php echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">

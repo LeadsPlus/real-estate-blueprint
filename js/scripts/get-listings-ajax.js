@@ -52,11 +52,9 @@ jQuery(document).ready(function($) {
         return aoData;
     }
 
-    if (typeof custom_total_results == 'function') {
-      function custom_total_results (ajax_response) {
-        $('#pls_listings_search_results #pls_num_results').html(ajax_response.iTotalDisplayRecords);
-      }  
-    };
+  function custom_total_results (ajax_response) {
+    $('#pls_listings_search_results #pls_num_results').html(ajax_response.iTotalDisplayRecords);
+  }  
     
     //datepicker
     $("input#metadata-max_avail_on_picker, #metadata-min_avail_on_picker").datepicker({
