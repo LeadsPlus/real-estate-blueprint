@@ -102,7 +102,7 @@ class PLS_Taxonomy {
         include_once(PLS_Route::locate_blueprint_option('meta.php'));        
 		
 		//throws random errors if you aren't an admin, can't be loaded with admin_init...
-        if (!is_admin()) {
+        if (!is_admin() || !class_exists('Tax_Meta_Class')) {
         	return;	
         }
         
