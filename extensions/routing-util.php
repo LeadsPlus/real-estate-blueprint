@@ -393,13 +393,12 @@ class PLS_Route {
 
 	function handle_taxonomy() {
 		global $query_string;
-		$args = wp_parse_args($query_string, array('state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false));
+		$args = wp_parse_args($query_string, array('state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false, 'mlsid' => false));
 		extract($args);
 
 		$templates = array();
 
-		if ($state || $city || $zip || $neighborhood || $street) {
-			$templates[] = 'attribute.php';
+		if ($state || $city || $zip || $neighborhood || $street || $mlsid) {
 			if ($street) {
 				$templates[] = 'attribute-street.php';
 			} elseif ($neighborhood) {
@@ -410,7 +409,10 @@ class PLS_Route {
 				$templates[] = 'attribute-city.php';
 			} elseif ($state) {
 				$templates[] = 'attribute-state.php';
+			} elseif ($mlsid) {
+				$templates[] = 'attribute-mlsid.php';
 			}
+			$templates[] = 'attribute.php';
 			self::$request =  array_merge(self::$request, $templates);
 		} else {
 			$term = get_queried_object();
