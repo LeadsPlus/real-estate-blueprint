@@ -83,7 +83,12 @@ class PLS_Taxonomy {
 		$args = wp_parse_args($query_string, $neighborhoods);
 		foreach ($neighborhoods as $neighborhood => $value) {
 			if (isset($args[$neighborhood]) && isset($location[$api_translations[$neighborhood]])) {
-				$response[ $location[$api_translations[$neighborhood]] ]  = get_term_link( $args[$neighborhood], $neighborhood );
+				$term_link = get_term_link( $args[$neighborhood], $neighborhood );
+				if (!is_object($term_link)) {
+					$response[ $location[$api_translations[$neighborhood]] ] = $term_link;	
+				} else {
+					$response[ $location[$api_translations[$neighborhood]] ] = '';	
+				}
 			}
 		}
 		return $response;
