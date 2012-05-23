@@ -11,7 +11,7 @@ class PLS_Taxonomy {
 
 	function get ($args = array()) {
 
-		$signature = base64_encode(sha1(implode($args), true));
+		$signature = sha1(implode($args), true);
         $transient_id = 'pl_' . $signature;
         $transient = get_transient($transient_id);
         
