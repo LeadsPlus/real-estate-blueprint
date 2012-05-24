@@ -315,6 +315,7 @@ class PLS_Format {
 				'price_unit' => 'Unit Price',
 				'lt_sz_unit' => 'Unit Lot Size',
 				'lse_trms' => 'Lease Terms',
+				'lse_type' => "Lease Type",
 				'ngb_trans' => 'Local Public Transportation',
 				'off_den' => 'Office / Den',
 				'frnshed' => 'Furnished',
