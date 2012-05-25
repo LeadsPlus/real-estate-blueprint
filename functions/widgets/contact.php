@@ -70,7 +70,6 @@ class Placester_Contact_Widget extends WP_Widget {
 
         $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
         $template_url = get_template_directory_uri();
-
     
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
@@ -117,7 +116,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
-                    <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
+                    <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
                     <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="5" />
                   </form>

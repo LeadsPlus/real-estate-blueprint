@@ -30,7 +30,7 @@
 
 	<?php elseif ( is_tax() ) : ?>
 
-        <h2><?php single_term_title(); ?></h2>
+        
 
 	<?php elseif ( is_author() ) : ?>
 

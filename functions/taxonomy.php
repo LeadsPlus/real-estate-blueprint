@@ -11,7 +11,7 @@ class PLS_Taxonomy {
 
 	function get ($args = array()) {
 
-		$signature = base64_encode(sha1(implode($args), true));
+		$signature = sha1(implode($args), true);
         $transient_id = 'pl_' . $signature;
         $transient = get_transient($transient_id);
         
@@ -83,7 +83,12 @@ class PLS_Taxonomy {
 		$args = wp_parse_args($query_string, $neighborhoods);
 		foreach ($neighborhoods as $neighborhood => $value) {
 			if (isset($args[$neighborhood]) && isset($location[$api_translations[$neighborhood]])) {
-				$response[ $location[$api_translations[$neighborhood]] ]  = get_term_link( $args[$neighborhood], $neighborhood );
+				$term_link = get_term_link( $args[$neighborhood], $neighborhood );
+				if (!is_object($term_link)) {
+					$response[ $location[$api_translations[$neighborhood]] ] = $term_link;	
+				} else {
+					$response[ $location[$api_translations[$neighborhood]] ] = '';	
+				}
 			}
 		}
 		return $response;
@@ -102,7 +107,7 @@ class PLS_Taxonomy {
         include_once(PLS_Route::locate_blueprint_option('meta.php'));        
 		
 		//throws random errors if you aren't an admin, can't be loaded with admin_init...
-        if (!is_admin()) {
+        if (!is_admin() || !class_exists('Tax_Meta_Class')) {
         	return;	
         }
         
