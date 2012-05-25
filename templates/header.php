@@ -77,7 +77,7 @@
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title><?php pls_document_title(); ?></title>
+  <title><?php echo $name; ?></title>
 
   <!-- Facebook Tags -->
   <meta property="og:site_name" content="<?php echo pls_get_option('pls-site-title'); ?>" />
