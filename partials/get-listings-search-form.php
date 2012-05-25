@@ -455,7 +455,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
-                array( 'name' => 'zoning_types'  ) + $form_opt_attr['zoning_types'],
+                array( 'name' => 'zoning_types[]'  ) + $form_opt_attr['zoning_types'],
                 pls_h_options( $form_options['zoning_types'], wp_kses_post( @$_POST['zoning_types'] ) )
             );
         }
@@ -464,7 +464,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
+                array( 'name' => 'purchase_types[]' ) + $form_opt_attr['purchase_types'],
                 pls_h_options( $form_options['purchase_types'], wp_kses_post(@$_POST['purchase_types']) )
             );
         }
@@ -554,6 +554,8 @@ class PLS_Partials_Listing_Search_Form {
 
         $section_title = array(
             'bedrooms' => 'Beds',
+            'min_beds' => 'Min Beds',
+            'max_beds' => 'Max Beds',
             'bathrooms' => 'Baths',
             'half_baths' => 'Half Baths',
             'property_type' => 'Property Type',
@@ -566,24 +568,9 @@ class PLS_Partials_Listing_Search_Form {
             'zips' => 'Zip Code',
             'min_price' => 'Min Price',
             'max_price' => 'Max Price',
-            'neighborhood' => "Neighborhood",
-            'bedrooms' => __( 'Beds', pls_get_textdomain() ),
-            'min_beds' => __( 'Min Beds', pls_get_textdomain() ),
-            'max_beds' => __( 'Max Beds', pls_get_textdomain() ),
-            'bathrooms' => __( 'Baths', pls_get_textdomain() ),
-            'half_baths' => __( 'Half Baths', pls_get_textdomain() ),
-            'property_type' => __( 'Property Type', pls_get_textdomain() ),
-            'zoning_types' => __( 'Zoning Type', pls_get_textdomain() ),
-            'listing_types' => __( 'Listing Type', pls_get_textdomain() ),
-            'purchase_types' => __( 'Purchase Type', pls_get_textdomain() ),
-            'available_on' => __( 'Available', pls_get_textdomain() ),
-            'cities' => __( 'Near', pls_get_textdomain() ),
-            'states' => __( 'State', pls_get_textdomain() ),
-            'zips' => __( 'Zip Code', pls_get_textdomain() ),
-            'min_price' => __( 'Min Price', pls_get_textdomain() ),
-            'max_price' => __( 'Max Price', pls_get_textdomain() ),
-            'min_price_rental' => __( 'Min Price Rental', pls_get_textdomain() ),
-            'max_price_rental' => __( 'Max Price Rental', pls_get_textdomain() ),
+            'min_price_rental' => 'Min Price Rental',
+            'max_price_rental' => 'Max Price Rental',
+            'neighborhood' => 'Neighborhood',
         );
 
         // In case user somehow disables all filters.

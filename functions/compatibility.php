@@ -644,7 +644,7 @@ $PLS_API_DEFAULT_LISTING = array(
     'listings' => array(
         array(
         'id' => '1',
-        'property_type' => array('fam_home'),
+        'property_type' => 'fam_home',
         'zoning_types' => array('residential'),
         'purchase_types' => array('sale'),
         'listing_types' => array('fam_home'),

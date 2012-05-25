@@ -244,6 +244,26 @@ class PLS_Format {
 		return $new_phone;
 	}
 
+  function translate_property_type($listing) {
+    
+    if (isset($listing['property_type']) && ($listing['property_type'] != null) && !empty($listing['property_type'])) {
+
+      if ( $listing['property_type'] == "fam_home") {
+        $property_type = 'Single Family Home';
+      } elseif ( $listing['property_type'] == "multi_fam") {
+        $property_type = 'Multi Family Home';
+      } else {
+
+        if (strpos($listing['property_type'], ' ')) { 
+          $property_type = ucwords(implode($listing['property_type'], '')); 
+        } else { 
+          $property_type = ucfirst($listing['property_type']); 
+        }
+      }
+    return $property_type;
+    }
+  }
+
 	function amenities_but($listing_data, $amenities_to_remove) {
 		$amenities = array();
 		$amenities['ngb'] = array();
