@@ -142,7 +142,11 @@ class PLS_Partials_Get_Listings_Ajax {
         );
         
 
-        $signature = sha1(implode($defaults));
+        if (isset($defaults['search_query']['sEcho'])) {
+          unset($defaults['search_query']['sEcho']);
+        }
+        $args_signature = is_array($defaults) ? http_build_query($defaults) : $defaults;
+        $signature = sha1($args_signature);
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
         if ($transient) {

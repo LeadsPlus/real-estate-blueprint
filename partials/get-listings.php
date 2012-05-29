@@ -33,7 +33,7 @@ class PLS_Partial_Get_Listings {
      */
     function init ($args = '') {
        
-        $args_signature = is_array($args) ? implode($args) : $args;
+        $args_signature = is_array($args) ? http_build_query($args) : $args;
         $signature = sha1($args_signature);
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
