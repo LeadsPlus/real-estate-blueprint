@@ -76,7 +76,7 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
                           <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <?php endif; ?>
-                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing); ?></li>
+                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing_data); ?></li>
                         <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
                         	<li><span>MLS #: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
                         <?php endif; ?>
