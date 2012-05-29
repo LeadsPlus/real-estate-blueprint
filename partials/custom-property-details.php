@@ -7,6 +7,14 @@ class PLS_Partials_Property_Details {
 		global $post;
 
 	    if($post->post_type == 'property') {
+	    	
+	    	$id = get_post_meta($post->ID, 'id');
+	    	if ($id) {
+	    		$api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));	
+	    		if (!empty($api_response['listings'])) {
+	    			$listing_data = $api_response['listings'][0];
+	    		}
+	    	}
 
 	        $content = get_option('placester_listing_layout');
 
@@ -16,7 +24,8 @@ class PLS_Partials_Property_Details {
 	        }
 
             $html = '';
-	        $listing_data = unserialize($post->post_content);
+            
+	        // $listing_data = unserialize($post->post_content);
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
 
 	        ob_start();
@@ -26,7 +35,7 @@ class PLS_Partials_Property_Details {
 					  <span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span>
 					</h2>
 
-          <p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
+          			<p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
 
 					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 

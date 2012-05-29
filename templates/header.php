@@ -39,7 +39,7 @@
   // Single Blog Post
   $itemtype = 'http://schema.org/BlogPosting';
   $name = $post->post_title;
-  if (has_post_thumbnail( $post->ID ) ) {
+  if (function_exists('has_post_thumbnail') && has_post_thumbnail( $post->ID ) ) {
     $post_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
     $image = $post_image[0];
   }

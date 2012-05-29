@@ -234,6 +234,8 @@ class Placester_Blueprint {
 	 */
     function default_theme_support() {
 
+        add_theme_support( 'post-thumbnails' );
+        
         /** Add theme support for theme wrappers */
         add_theme_support( 'pls-routing-util' );
 
