@@ -10,7 +10,9 @@
  */
 ?>
 
-<?php PLS_Route::get_template_part( 'loop', 'meta' ); // Loads the loop-meta.php template. ?>
+
+<section class="left-content">
+<?php PLS_Route::get_template_part( 'loop', 'meta' ); // Loads the loop-meta.php template. ?>    
 
 <?php if ( have_posts() ) : ?>
     
@@ -53,3 +55,5 @@
     <?php PLS_Route::get_template_part( 'loop', 'error' ); ?>
 
 <?php endif; ?>
+    
+</section>

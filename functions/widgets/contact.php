@@ -41,9 +41,15 @@ class Placester_Contact_Widget extends WP_Widget {
       global $post;
         
         if (!empty($post) && isset($post->post_type) && $post->post_type == 'property') {
-          $data = unserialize($post->post_content);
+          $id = get_post_meta($post->ID, 'id');
+          if ($id) {
+            $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));  
+            if (!empty($api_response['listings'])) {
+              $data = $api_response['listings'][0];
+            }
+          }
         } else {
-          $data = array();
+          $data = array('id' => false, 'location' => array('full_address' => false));
         }
         extract($args);
         

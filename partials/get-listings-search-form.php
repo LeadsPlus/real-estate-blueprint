@@ -90,11 +90,27 @@ class PLS_Partials_Listing_Search_Form {
 
         $args = wp_parse_args( $args, $defaults );
         
-        $form_options = array();
-        $form_options['location']['locality'] = pls_get_option('form_default_options_locality');
-        $form_options['location']['region'] = pls_get_option('form_default_options_region');
-        $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
-        $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
+        $form_options = array('location' => array(
+              'locality' => pls_get_option('form_default_options_locality'),
+              'region' => pls_get_option('form_default_options_region'),
+              'postal' => pls_get_option('form_default_options_postal'),
+              'neighborhood' => pls_get_option('form_default_options_neighborhood')
+            ),
+            'metadata' => array(
+              'beds' => false,
+              'baths' => false,
+              'half_baths' => false,
+              'max_price' => false,
+              'min_price' => false,
+              'avail_on' => false,
+              'min_beds' => false,
+              'max_beds' => false
+            ),
+            'purchase_types' => '',
+            'property_type' => '',
+            'listing_types' => '',
+            'zoning_types' => ''
+          );
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 

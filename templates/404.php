@@ -13,7 +13,7 @@
 <section class="left-content">
 
 	<section id="post-0" <?php post_class() ?>>
-        <h2 class="error-404-title entry-title"><?php echo 'Not Found'; ?></h2>
+        <h3 class="error-404-title entry-title"><?php echo 'Not Found'; ?></h3>
 		<section class="entry-content">
  
             <p>
