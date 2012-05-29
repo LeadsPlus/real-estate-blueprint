@@ -141,9 +141,9 @@ class PLS_Partials_Get_Listings_Ajax {
             'allow_id_empty' => false
         );
         
-        $signature = sha1(implode($defaults), true);
+        $signature = sha1(implode($defaults));
         $transient_id = 'pl_' . $signature;
-        $transient = get_transient($transient_id);
+        $transient = get_site_transient($transient_id);
         
         if ($transient) {
             $transient['sEcho'] = $_POST['sEcho'];
@@ -251,7 +251,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
 
-        set_transient( $transient_id, $response , 3600 * 48 );
+        set_site_transient( $transient_id, $response , 3600 * 48 );
 
         echo json_encode($response);
 

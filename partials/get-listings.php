@@ -34,9 +34,9 @@ class PLS_Partial_Get_Listings {
     function init ($args = '') {
        
 
-        $signature = sha1(implode($args), true);
+        $signature = sha1(implode($args));
         $transient_id = 'pl_' . $signature;
-        $transient = get_transient($transient_id);
+        $transient = get_site_transient($transient_id);
         
         if ($transient) {
             return $transient;
@@ -211,7 +211,7 @@ class PLS_Partial_Get_Listings {
 
     /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
     $return = apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
-    set_transient( $transient_id, $return , 3600 * 48 );
+    set_site_transient( $transient_id, $return , 3600 * 48 );
   
     return $return;
   }
