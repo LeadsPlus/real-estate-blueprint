@@ -66,10 +66,10 @@ class Placester_Contact_Widget extends WP_Widget {
         $button_class = apply_filters('button_class', !isset($instance['button_class']) ? 'button-primary' : $instance['button_class']);
         
         $email_confirmation = apply_filters('email_confirmation', empty($instance['email_confirmation']) ? false : $instance['email_confirmation']);
-        
+        $send_to_email = apply_filters('send_to_email', !isset($instance['send_to_email']) ? '' : $instance['send_to_email']);
+
         $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
         $template_url = get_template_directory_uri();
-
     
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
@@ -107,6 +107,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
+                    <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
                   <?php } else { ?>
                     <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
                     <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName" tabindex="2" />
@@ -115,6 +116,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
+                    <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
                     <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="5" />
                   </form>
@@ -205,6 +207,10 @@ function ajax_placester_contact() {
     if( empty($error) ) {
 
       $api_whoami = PLS_Plugin_API::get_user_details();
+
+      if (trim($_POST['send_to_email']) == true) {
+        $api_whoami['email'] = $_POST['send_to_email'];
+      }
 
       if (trim($_POST['email_confirmation']) == true) {
         wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);

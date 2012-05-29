@@ -18,9 +18,15 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
+    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
+		wp_enqueue_script('text-overlay');
+
+
 		ob_start();
 		?>
-      <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -86,14 +92,16 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
 		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
 		wp_enqueue_script('text-overlay');
 
 
 		ob_start();
 		?>
-			<script type="text/javascript">				
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+
+			<script type="text/javascript">
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
 				<?php echo $map_js_var; ?>.markers = [];
@@ -167,6 +175,7 @@ class PLS_Map {
 				<?php echo $map_js_var; ?>.map;
 				<?php echo $map_js_var; ?>.markers = [];
 				<?php echo $map_js_var; ?>.infowindows = [];
+				<?php echo $map_js_var; ?>.polygons = [];
 				var other_polygons = [];
 				var other_text = [];
 				var centers = [];
@@ -204,7 +213,7 @@ class PLS_Map {
 							  });
 							polygon.tax = data[item];
 							polygon.setMap(<?php echo $map_js_var ?>.map);
-							pls_create_polygon_listeners(polygon);
+							pls_create_polygon_listeners(polygon, <?php echo $map_js_var ?>);
 							customTxt = data[item].name;
 				            var bounds = new google.maps.LatLngBounds();
 				            for (p = 0; p < polygon.getPath().length; p++) {
@@ -224,7 +233,7 @@ class PLS_Map {
 						var mapCenter = polygonbounds.getCenter();
 						google.maps.event.addListenerOnce(<?php echo self::$map_js_var ?>.map, 'idle', function() {
 							<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);
-							<?php echo self::$map_js_var ?>.map.setZoom(14);
+							<?php echo self::$map_js_var ?>.map.setZoom(13);
 						});
 					});
 				});	  
@@ -563,7 +572,7 @@ class PLS_Map {
 		ob_start();
 		?>
 			<script type="text/javascript">
-				function pls_create_polygon_listeners (polygon) {
+				function pls_create_polygon_listeners (polygon, map_js_var) {
 					google.maps.event.addListener(polygon,"mouseover",function(){
 						polygon.setOptions({fillOpacity: "0.9"});
 					}); 
@@ -575,7 +584,22 @@ class PLS_Map {
 
 					google.maps.event.addListener(polygon,"click",function(){
 						console.log(this);
-						window.location.href = this.tax.permalink;
+						var that = this;
+						request = {};
+						request.action = 'polygon_listings';
+						request.vertices = this.tax.vertices;
+						jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
+							if (data) {
+								pls_clear_markers(map_js_var);
+								for (var i = data.length - 1; i >= 0; i--) {
+									pls_create_listing_marker(data[i], map_js_var);
+								};
+								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
+
+							};
+						},'json');
+						
+						// window.location.href = this.tax.permalink;
 					}); 
 				}
 
@@ -666,11 +690,14 @@ class PLS_Map {
 							map_js_var.markers[i].setMap(map_js_var.map);
 							bounds.extend(map_js_var.markers[i].getPosition());
 						};
-						map_js_var.map.fitBounds(bounds);
-							google.maps.event.addListenerOnce(map_js_var.map, 'bounds_changed', function(event) {
-							    if (this.getZoom() > 15) 
-							        this.setZoom(15);
-							});
+
+          if(typeof map_js_var.map != "undefined") {
+            map_js_var.map.fitBounds(bounds);
+            google.maps.event.addListenerOnce(map_js_var.map, 'bounds_changed', function(event) {
+              if (this.getZoom() > 15) 
+                this.setZoom(15);
+              });
+          }
 					};
 				}	
 

@@ -43,8 +43,10 @@ class PLS_Partials_Property_Details {
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
+
 								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'image'))); ?>
 								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
+
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">
@@ -74,6 +76,7 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
                           <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <?php endif; ?>
+                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing); ?></li>
                         <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
                         	<li><span>MLS #: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
                         <?php endif; ?>

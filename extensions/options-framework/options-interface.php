@@ -507,6 +507,59 @@ function optionsframework_fields() {
 
 
 
+		// Featured Listing Selection
+		case "featured_neighborhoods":
+
+			ob_start();
+			?>
+
+			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
+
+				<div class="fls-address">
+
+          <label>Neighborhoods</label>
+          <?php $categories = get_categories('type=property&taxonomy=neighborhood'); ?>
+          <select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-neighborhood">
+            <?php for ($i = 1; $i <= 200; $i++) {
+              if (!isset($categories[$i])) {
+                break;
+              } else {
+              echo '<option value=' . $categories[$i]->slug . '>';
+                echo $categories[$i]->name;
+              echo '</option>';
+              }
+            }
+            ?>
+          </select>
+          
+
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Neighborhood" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
+					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
+
+				</div>
+
+				<h4 class="heading">Featured Neighborhoods</h4>
+				<div class="fls-option">
+					<div class="controls">
+						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
+							<?php if (isset($settings[$value['id']])): ?>
+								<?php foreach ($settings[$value['id']] as $key => $text): ?>
+									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
+								<?php endforeach ?>
+							<?php endif ?>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+<?php echo pls_get_option('') ?>
+
+			<?php
+			$output .= trim( ob_get_clean() );
+		break;
+
+
+
 		// Heading for Navigation
 		case "heading":
 			if ($counter >= 2) {
