@@ -302,7 +302,7 @@ class PLS_Route {
 		$templates[] = "category-{$category->term_id}.php";
 		$templates[] = 'category.php';
 
-		self::$request = array_merge(self::$request, $template);
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 
@@ -326,14 +326,15 @@ class PLS_Route {
 	function handle_attachment() {
 		
 		global $posts;
-		
+		$templates = array();
+
 		$type = explode('/', $posts[0]->post_mime_type);
 		if ( $template = get_query_template($type[0]) )
-			return $template;
+			$templates[] = $template;
 		elseif ( $template = get_query_template($type[1]) )
-			return $template;
+			$templates[] = $template;
 		elseif ( $template = get_query_template("$type[0]_$type[1]") )
-			return $template;
+			$templates[] = $template;
 		else
 
 		self::$request =  array_merge(self::$request, $templates);
