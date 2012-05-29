@@ -571,10 +571,11 @@ class PLS_Plugin_API {
         $return = self::_try_for_exceptions( array('PL_Helper_User', 'whoami'));
 
         /** If no exceptions were detected, return the result. */
-        if ( $return ) 
+        if ( $return ) {
             return $return;
-
-        return false;
+        }
+            
+        return array('first_name' => '', 'last_name' => '', 'phone' => '', 'email' => '');
     }
 
     static function mls_message($context) {

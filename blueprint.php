@@ -357,6 +357,8 @@ class Placester_Blueprint {
         /** Load the notifications. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
 
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'meta.php' );
+
         /** Load the styles functions. */
         require_once( trailingslashit ( PLS_CSS_DIR ) . 'styles.php' );
 
