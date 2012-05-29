@@ -141,7 +141,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'allow_id_empty' => false
         );
         
-        $signature = base64_encode(sha1(implode($defaults), true));
+        $signature = sha1(implode($defaults), true);
         $transient_id = 'pl_' . $signature;
         $transient = get_transient($transient_id);
         

@@ -34,7 +34,7 @@ class PLS_Partial_Get_Listings {
     function init ($args = '') {
        
 
-        $signature = base64_encode(sha1(implode($args), true));
+        $signature = sha1(implode($args), true);
         $transient_id = 'pl_' . $signature;
         $transient = get_transient($transient_id);
         
