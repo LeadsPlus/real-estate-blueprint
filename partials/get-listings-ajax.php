@@ -142,6 +142,15 @@ class PLS_Partials_Get_Listings_Ajax {
         );
         
 
+        $signature = sha1(implode($defaults));
+        $transient_id = 'pl_' . $signature;
+        $transient = get_site_transient($transient_id);
+        if ($transient) {
+            $transient['sEcho'] = $_POST['sEcho'];
+            echo json_encode($transient);
+            die();
+        } 
+
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
 
@@ -234,6 +243,9 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['aaData'] = $listings;
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
+        
+        set_site_transient($transient_id, $response , 3600 * 48 );
+        
         echo json_encode($response);
 
         //wordpress echos out a 0 randomly. die prevents it.
