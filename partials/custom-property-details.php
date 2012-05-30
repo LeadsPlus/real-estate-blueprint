@@ -8,13 +8,13 @@ class PLS_Partials_Property_Details {
 
 	    if($post->post_type == 'property') {
 	    	
-	    	$id = get_post_meta($post->ID, 'id');
-	    	if ($id) {
-	    		$api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));	
-	    		if (!empty($api_response['listings'])) {
-	    			$listing_data = $api_response['listings'][0];
-	    		}
-	    	}
+        // $id = get_post_meta($post->ID, 'id');
+        // if ($id) {
+        //  $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));  
+        //  if (!empty($api_response['listings'])) {
+        //    $listing_data = $api_response['listings'][0];
+        //  }
+        // }
 
 	        $content = get_option('placester_listing_layout');
 
@@ -25,7 +25,7 @@ class PLS_Partials_Property_Details {
 
             $html = '';
             
-	        // $listing_data = unserialize($post->post_content);
+          $listing_data = unserialize($post->post_content);
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
 
 	        ob_start();
@@ -76,7 +76,7 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
                           <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <?php endif; ?>
-                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing); ?></li>
+                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing_data); ?></li>
                         <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
                         	<li><span>MLS #: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
                         <?php endif; ?>
