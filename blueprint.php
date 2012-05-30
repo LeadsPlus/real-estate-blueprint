@@ -267,6 +267,7 @@ class Placester_Blueprint {
         add_theme_support( 'pls-debug');
         add_theme_support( 'pls-membership');
         add_theme_support( 'pls-custom-meta');
+        add_theme_support( 'pls-walkscore');
 
         //style options, need to be set in style-util.php
         add_theme_support( 'pls-typography-options');
@@ -389,6 +390,9 @@ class Placester_Blueprint {
 
         /** Load the debug functionality if supported. */
         require_if_theme_supports( 'pls-custom-meta', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'taxonomy.php' );
+
+        /** Load the debug functionality if supported. */
+        require_if_theme_supports( 'pls-walkscore', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'walkscore.php' );
 
         /** Create the listings and blog pages. */
         $this->create_pages();

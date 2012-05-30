@@ -106,6 +106,14 @@ class PLS_Plugin_API {
         return array();
     }
 
+    static function get_walkscore($args = array()) {
+        $return = self::_try_for_exceptions( array('PL_Walkscore','get_score'), $args );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
     static function get_taxonomies_by_type($params = array()) {
         $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygons_by_type'), $params );
         if ( $return ) {

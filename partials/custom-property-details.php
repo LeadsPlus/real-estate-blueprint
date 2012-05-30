@@ -137,7 +137,10 @@ class PLS_Partials_Property_Details {
                     	<?php echo PLS_Map::lifestyle($listing_data, array('width' => 590, 'height' => 250, 'zoom' => 16, 'life_style_search' => true,'show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1])); ?>
                     </div>
 	            </div>
-        		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
+	            <div>
+	            	<?php $walkscore = PLS_Walkscore_Helper::get_score($listing_data['location']['coords'][0], $listing_data['location']['coords'][1], $listing_data['location']['full_address'], 'WALKSCORE-API-KEY'); ?>
+	            </div>
+ 		     	<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
 
 			<?php
 	        $html = ob_get_clean();
