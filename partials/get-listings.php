@@ -38,9 +38,9 @@ class PLS_Partial_Get_Listings {
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
         
-        if ($transient) {
-            return $transient;
-        } 
+        // if ($transient) {
+        //     return $transient;
+        // } 
 
         /** Define the default argument array. */
         $defaults = array(
