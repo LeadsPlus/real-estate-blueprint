@@ -219,7 +219,7 @@ class PLS_Map {
 							  });
 							polygon.tax = data[item];
 							polygon.setMap(<?php echo $map_js_var ?>.map);
-							pls_create_polygon_listeners(polygon, <?php echo $map_js_var ?>);
+							pls_create_polygon_listeners(polygon, <?php echo $map_js_var ?>, '<?php echo $polygon_click_action ?>');
 							customTxt = data[item].name;
 				            var bounds = new google.maps.LatLngBounds();
 				            for (p = 0; p < polygon.getPath().length; p++) {
@@ -578,7 +578,7 @@ class PLS_Map {
 		ob_start();
 		?>
 			<script type="text/javascript">
-				function pls_create_polygon_listeners (polygon, map_js_var) {
+				function pls_create_polygon_listeners (polygon, map_js_var, click_type) {
 					google.maps.event.addListener(polygon,"mouseover",function(){
 						polygon.setOptions({fillOpacity: "0.9"});
 					}); 
@@ -589,23 +589,24 @@ class PLS_Map {
 					}); 
 
 					google.maps.event.addListener(polygon,"click",function(){
-						console.log(this);
-						var that = this;
-						request = {};
-						request.action = 'polygon_listings';
-						request.vertices = this.tax.vertices;
-						jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
-							if (data) {
-								pls_clear_markers(map_js_var);
-								for (var i = data.length - 1; i >= 0; i--) {
-									pls_create_listing_marker(data[i], map_js_var);
-								};
-								pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
+						if (click_type && click_type == 'redirect') {
+							window.location.href = this.tax.permalink
+						} else {
+							var that = this;
+							request = {};
+							request.action = 'polygon_listings';
+							request.vertices = this.tax.vertices;
+							jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
+								if (data) {
+									pls_clear_markers(map_js_var);
+									for (var i = data.length - 1; i >= 0; i--) {
+										pls_create_listing_marker(data[i], map_js_var);
+									};
+									pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
 
-							};
-						},'json');
-						
-						// window.location.href = this.tax.permalink;
+								};
+							},'json');	
+						}
 					}); 
 				}
 
@@ -763,7 +764,8 @@ class PLS_Map {
         	'search_on_load' => false,
         	'polygon_options' => array(),
         	'ajax_form_class' => false,
-        	'polygon' => false
+        	'polygon' => false,
+        	'polygon_click_action' => false
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
