@@ -122,6 +122,14 @@ class PLS_Plugin_API {
         return array();
     }
 
+    static function get_taxonomies_by_slug($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygons_by_slug'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
     static function get_polygon_detail ($params = array()) {
         $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygon_detail'), $params );
         if ( $return ) {

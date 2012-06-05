@@ -194,7 +194,13 @@ class PLS_Map {
 						<?php endforeach ?>	
 						pls_center_map(<?php echo self::$map_js_var ?>);
 
-						var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_type($polygon_search)) ?>;
+						<?php if ($polygon): ?>
+							console.log('here');
+							var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_slug($polygon)) ?>;
+						<?php else: ?>
+							var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_type($polygon_search)) ?>;
+						<?php endif ?>
+						console.log(data);
 						for (var j = other_polygons.length - 1; j >= 0; j--) {
 							other_polygons[j].setMap(null);
 						};
@@ -756,7 +762,8 @@ class PLS_Map {
         	'empty_overlay' => '<div>No Results</div>',
         	'search_on_load' => false,
         	'polygon_options' => array(),
-        	'ajax_form_class' => false
+        	'ajax_form_class' => false,
+        	'polygon' => false
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
