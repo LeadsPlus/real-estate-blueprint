@@ -518,15 +518,27 @@ class PLS_Map {
 	        $response['region'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[region]', 'class' => 'region' ), pls_h_options( $form_options['region'], wp_kses_post(@$_POST['location']['region'] ), true )) . '</div>';
 	        $response['postal'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[postal]', 'class' => 'postal' ), pls_h_options( $form_options['postal'], wp_kses_post(@$_POST['location']['postal'] ), true )) . '</div>';
 	        $response['neighborhood'] = '<div class="location_select_wrapper" style="display: none">' . pls_h( 'select', array( 'name' => 'location[neighborhood]', 'class' => 'neighborhood' ), pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )) . '</div>';
-	        $response['radius'] = '<div class="location_select"><select name="radius" class="radius" style="width: 140px">
-							<option value="200">200 meters</option>
-							<option value="500">500 meters</option>
-							<option value="1000">1000 meters</option>
-							<option value="2000">2000 meters</option>
-							<option value="5000" selected>5000 meters</option>
-							<option value="10000">10000 meters</option>
-							<option value="20000">20000 meters</option>
-						</select></div>';
+	        if ($map_args['lifestyle_distance'] == 'miles') {
+	        	$response['radius'] = '<div class="location_select"><select name="radius" class="radius" style="width: 140px">
+											<option value="402">1/4 mile</option>
+											<option value="804">1/2 mile</option>
+											<option value="1207">3/4 mile</option>
+											<option value="1609">1 mile</option>
+											<option value="4828" selected>3 miles</option>
+											<option value="8046">5 miles</option>
+											<option value="16093">10 miles</option>
+										</select></div>';
+	        } else {
+				$response['radius'] = '<div class="location_select"><select name="radius" class="radius" style="width: 140px">
+											<option value="200">200 meters</option>
+											<option value="500">500 meters</option>
+											<option value="1000">1000 meters</option>
+											<option value="2000">2000 meters</option>
+											<option value="5000" selected>5000 meters</option>
+											<option value="10000">10000 meters</option>
+											<option value="20000">20000 meters</option>
+										</select></div>';
+	        }
 	        return $response;
 	}
 
@@ -765,7 +777,8 @@ class PLS_Map {
         	'polygon_options' => array(),
         	'ajax_form_class' => false,
         	'polygon' => false,
-        	'polygon_click_action' => false
+        	'polygon_click_action' => false,
+        	'lifestyle_distance' => 'miles'
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
