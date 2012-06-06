@@ -3,8 +3,6 @@
  * Header Template
  *
  */
-?>
-<?php
   global $post;
   $itemtype = '';
   $name = '';
@@ -19,46 +17,72 @@
     if(isset($content) && $content != '') {return $content;}
     $html = '';
     $listing = @unserialize($post->post_content);
-
-    // Single Property
-    $itemtype = 'http://schema.org/Offer';
-    if (isset($listing['location']['unit']) && $listing['location']['unit'] != null) {
-      $name = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
-      $address = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
-    } else {
-      $name = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
-      $address = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
-    }
     
-    $image = @$listing['images']['0']['url'];
-    $description = @$listing['cur_data']['desc'];
-    $author = @pls_get_option('pls-user-name');
+    global $query_string;
+    $neighborhood = strpos($query_string, 'neighborhood=');
+    
+    if ($neighborhood == 0) {
+      // Neighborhood Page
+      $args = wp_parse_args($query_string, array('','state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false, 'image_limit' => 20));
+      $taxonomy = PLS_Taxonomy::get($args);
+
+      $name = @$taxonomy['name'];
+      $description = @$taxonomy['description'];
+      $author = @pls_get_option('pls-user-name');
+      $image = @$taxonomy['listing_photos'][0]['image_url'];
+    } else {
+    
+      // Single Property
+      $itemtype = 'http://schema.org/Offer';
+      if (isset($listing['location']['unit']) && $listing['location']['unit'] != null) {
+        $name = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+        $address = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+      } else {
+        $name = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+        $address = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+      }
+    
+      $image = @$listing['images']['0']['url'];
+      $description = @$listing['cur_data']['desc'];
+      $author = @pls_get_option('pls-user-name');
+    }
 
   } elseif ( is_single() ) {
 
   // Single Blog Post
   $itemtype = 'http://schema.org/BlogPosting';
   $name = $post->post_title;
-  if (function_exists('has_post_thumbnail') && has_post_thumbnail( $post->ID ) ) {
-    $post_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
-    $image = $post_image[0];
-  }
-  $description = pls_get_option('pls-site-subtitle');
+
+    if (has_post_thumbnail( $post->ID ) ) {
+      $post_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
+      $image = $post_image[0];
+    }
+    $descrip = strip_tags($post->post_content);
+    $descrip_more = '';
+    if (strlen($descrip) > 155) {
+      $descrip = substr($descrip,0,155);
+      $descrip_more = ' ...';
+    }
+    $descrip = str_replace('"', '', $descrip);
+    $descrip = str_replace("'", '', $descrip);
+    $descripwords = preg_split('/[\n\r\t ]+/', $descrip, -1, PREG_SPLIT_NO_EMPTY);
+    array_pop($descripwords);
+  $description = implode(' ', $descripwords) . $descrip_more;
   $address = @pls_get_option('pls-company-street') . " " . @pls_get_option('pls-company-locality') . ", " . @pls_get_option('pls-company-region');
   $author = $post->post_author;
 
   } else {
-  
-  $itemtype = 'http://schema.org/LocalBusiness';
-  if (is_home()) {
-    $name = pls_get_option('pls-company-name');
-  } elseif (isset($post)) {
-    $name = $post->post_title;
-  }
-  $image = pls_get_option('pls-site-logo');
-  $description = pls_get_option('pls-company-description');
-  $address = @pls_get_option('pls-company-street') . " " . @pls_get_option('pls-company-locality') . ", " . @pls_get_option('pls-company-region');
-  $author = pls_get_option('pls-user-name');
+    // Home and other pages
+    $itemtype = 'http://schema.org/LocalBusiness';
+    if (is_home()) {
+      $name = pls_get_option('pls-company-name');
+    } elseif (isset($post)) {
+      $name = $post->post_title;
+    }
+    $image = pls_get_option('pls-site-logo');
+    $description = pls_get_option('pls-company-description');
+    $address = @pls_get_option('pls-company-street') . " " . @pls_get_option('pls-company-locality') . ", " . @pls_get_option('pls-company-region');
+    $author = pls_get_option('pls-user-name');
   }
 ?>
 <!doctype xmlns:fb="http://ogp.me/ns/fb#" html itemscope itemtype="<?php echo $itemtype; ?>">
