@@ -456,7 +456,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($zoning_types == 1) {
             $form_html['zoning_types'] = pls_h(
                 'select',
-                array( 'name' => 'zoning_types'  ) + $form_opt_attr['zoning_types'],
+                array( 'name' => 'zoning_types[]'  ) + $form_opt_attr['zoning_types'],
                 pls_h_options( $form_options['zoning_types'], wp_kses_post( @$_POST['zoning_types'] ) )
             );
         }
@@ -465,7 +465,7 @@ class PLS_Partials_Listing_Search_Form {
         if ($purchase_types == 1) {
             $form_html['purchase_types'] = pls_h(
                 'select',
-                array( 'name' => 'purchase_types' ) + $form_opt_attr['purchase_types'],
+                array( 'name' => 'purchase_types[]' ) + $form_opt_attr['purchase_types'],
                 pls_h_options( $form_options['purchase_types'], wp_kses_post(@$_POST['purchase_types']) )
             );
         }
