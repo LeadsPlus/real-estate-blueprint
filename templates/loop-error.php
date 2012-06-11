@@ -12,7 +12,7 @@
 
 		<section class="entry-content">
 
-			<p><?php _e( 'Apologies, but no entries were found.', pls_get_textdomain() ); ?></p>
+			<p><?php 'Apologies, but no entries were found.'; ?></p>
 
 		</section><!-- .entry-content -->
 

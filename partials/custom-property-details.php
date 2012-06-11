@@ -7,6 +7,14 @@ class PLS_Partials_Property_Details {
 		global $post;
 
 	    if($post->post_type == 'property') {
+	    	
+        // $id = get_post_meta($post->ID, 'id');
+        // if ($id) {
+        //  $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));  
+        //  if (!empty($api_response['listings'])) {
+        //    $listing_data = $api_response['listings'][0];
+        //  }
+        // }
 
 	        $content = get_option('placester_listing_layout');
 
@@ -16,13 +24,18 @@ class PLS_Partials_Property_Details {
 	        }
 
             $html = '';
-	        $listing_data = unserialize($post->post_content);
+            
+          $listing_data = unserialize($post->post_content);
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
 
 	        ob_start();
 	        ?>
 
-					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress"><span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span></h2>
+					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress">
+					  <span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span>
+					</h2>
+
+          			<p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
 
 					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
@@ -30,8 +43,10 @@ class PLS_Partials_Property_Details {
 
 						<?php if ($listing_data['images']): ?>
 							<div class="theme-default property-details-slideshow">
+
 								<?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 590, 'h' => 300), 'fancybox' => false, 'as_html' => true, 'html' => array('itemprop' => 'image'))); ?>
 								<?php // echo PLS_Slideshow::slideshow( array( 'anim_speed' => 1000, 'pause_time' => 15000, 'control_nav' => true, 'width' => 620, 'height' => 300, 'context' => 'home', 'data' => PLS_Slideshow::prepare_single_listing($listing_data) ) ); ?>
+
 							</div>
 
 							<div class="details-wrapper grid_8 alpha">
@@ -57,11 +72,11 @@ class PLS_Partials_Property_Details {
                         <?php if (isset($listing_data['cur_data']['half_baths']) && ($listing_data['cur_data']['half_baths'] != null)): ?>
                           <li><span>Half Baths: </span><?php echo $listing_data['cur_data']['half_baths'] ?></li>
                         <?php endif; ?>
-                        <li itemprop="price"><span>Price: </span><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
                         <li><span>Square Feet: </span><?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
                         <?php if (isset($listing_data['cur_data']['avail_on']) && ($listing_data['cur_data']['avail_on'] != null)): ?>
                           <li itemprop="availability"><span>Available: </span><?php echo @$listing_data['cur_data']['avail_on'] ?></li>
                         <?php endif; ?>
+                        <li>Property Type: <?php echo PLS_Format::translate_property_type($listing_data); ?></li>
                         <?php if (isset($listing_data['rets']) && isset($listing_data['rets']['mls_id'])): ?>
                         	<li><span>MLS #: </span><?php echo $listing_data['rets']['mls_id'] ?></li>	
                         <?php endif; ?>
@@ -81,7 +96,7 @@ class PLS_Partials_Property_Details {
 
                 <?php $amenities = PLS_Format::amenities_but(&$listing_data, array('half_baths', 'beds', 'baths', 'url', 'sqft', 'avail_on', 'price', 'desc')); ?>
                
-                <?php if (isset($amenities['list'])): ?>
+                <?php if (!empty($amenities['list'])): ?>
                   <div class="amenities-section grid_8 alpha">
                     <h3>Listing Amenities</h3>
                     <ul>
@@ -92,8 +107,7 @@ class PLS_Partials_Property_Details {
                     </ul>
 	                </div>	
                 <?php endif ?>
-                
-                <?php if (isset($amenities['ngb'])): ?>
+                <?php if (!empty($amenities['ngb'])): ?>
 	                <div class="amenities-section grid_8 alpha">
 	                  <h3>Local Amenities</h3>
                     <ul>
@@ -105,7 +119,7 @@ class PLS_Partials_Property_Details {
 	                </div>
                 <?php endif ?>
                 
-                <?php if (isset($amenities['uncur'])): ?>
+                <?php if (!empty($amenities['uncur'])): ?>
 	                <div class="amenities-section grid_8 alpha">
 	                  <h3>Custom Amenities</h3>
                     <ul>
@@ -120,10 +134,13 @@ class PLS_Partials_Property_Details {
 	            <div class="map-wrapper grid_8 alpha">
 	                <h3>Property Map</h3>
                     <div class="map">
-                        <?php echo PLS_Map::dynamic($listing_data, array('lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1], 'width' => 590, 'height' => 250, 'zoom' => 16)); ?>
+                    	<?php echo PLS_Map::lifestyle($listing_data, array('width' => 590, 'height' => 250, 'zoom' => 16, 'life_style_search' => true,'show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'lat'=>$listing_data['location']['coords'][0], 'lng'=>$listing_data['location']['coords'][1])); ?>
                     </div>
 	            </div>
-        		<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
+	            <div>
+	            	<?php $walkscore = PLS_Walkscore_Helper::get_score($listing_data['location']['coords'][0], $listing_data['location']['coords'][1], $listing_data['location']['full_address'], 'WALKSCORE-API-KEY'); ?>
+	            </div>
+ 		     	<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
 
 			<?php
 	        $html = ob_get_clean();

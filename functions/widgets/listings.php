@@ -32,11 +32,11 @@ class PLS_Widget_Listings extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname' => 'pls-listings',
-			'description' => esc_html__( 'A widget that displays a list of listings of a certain type.', $this->textdomain )
+			'description' => 'A widget that displays a list of listings of a certain type.'
 		);
 
 		/* Create the widget. */
-        parent::__construct( "pls-listings", esc_attr__( 'Placester: Listings List', $this->textdomain ), $widget_options );
+        parent::__construct( "pls-listings", 'Placester: Listings List', $widget_options );
         add_filter( 'pls_listing_get_listings_widget', array(__CLASS__,'custom_widget_html_filter'), 10, 2);
 
 	}
@@ -129,7 +129,7 @@ class PLS_Widget_Listings extends WP_Widget {
 
 		/** Set up the default form values. */
 		$defaults = array(
-			'title' => esc_attr__( 'Listings', $this->textdomain ),
+			'title' => 'Listings',
             'type' => 'all',
 			'placeholder' => '',
             'limit' => 5,
@@ -145,9 +145,9 @@ class PLS_Widget_Listings extends WP_Widget {
 		);
 
         $type_array = array( 
-            'all' => esc_attr__( 'All', $this->textdomain ),
-            'featured' => esc_attr__( 'Featured', $this->textdomain ),
-            'new' => esc_attr__( 'New', $this->textdomain ),
+            'all' => 'All',
+            'featured' => 'Featured',
+            'new' => 'New',
         );
 
 		/** Merge the user-selected arguments with the defaults. */
@@ -158,7 +158,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Title input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Title', pls_get_textdomain() ) . ':' .
+                    'Title' . ':' .
                     pls_h( 
                         'input',
                         array(
@@ -175,7 +175,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Type options */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Listings Type', pls_get_textdomain() ) . ':' .
+                    'Listings Type' . ':' .
                     pls_h( 
                         'select',
                         array(
@@ -193,7 +193,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Photo input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Photo placeholder URL', pls_get_textdomain() ) . ':' .
+                    'Photo placeholder URL' . ':' .
                     pls_h( 
                         'input',
                         array(
@@ -210,7 +210,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Width text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Photo width', pls_get_textdomain() ) . ': ' .
+                    'Photo width' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -227,7 +227,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Height text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Photo height', pls_get_textdomain() ) . ': ' .
+                    'Photo height' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -244,7 +244,7 @@ class PLS_Widget_Listings extends WP_Widget {
             /** Print the Number text input */
             pls_h_p( 
                 pls_h_label( 
-                    __( 'Number of listings', pls_get_textdomain() ) . ': ' .
+                    'Number of listings' . ': ' .
                     pls_h( 
                         'input',
                         array(
@@ -272,6 +272,9 @@ class PLS_Widget_Listings extends WP_Widget {
                     <span class="bed"><?php echo $listing_data['cur_data']['beds']; ?> Beds</span>
                     <span class="bath"><?php echo $listing_data['cur_data']['baths'] ?> Baths</span>
                     <span class="area"><?php echo $listing_data['cur_data']['sqft'] ?> Sqft.</span>
+                    <?php if (isset($listing_data['rets']['mls_id'])) { ?>
+                      <span class="mls">MLS #: <?php echo $listing_data['rets']['mls_id'] ?></span>
+                    <?php } ?>
                 </section>
                 <section class="featured-image">
                     <?php if ( is_array($listing_data['images']) ): ?>

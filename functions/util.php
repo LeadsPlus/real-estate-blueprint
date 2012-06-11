@@ -144,12 +144,3 @@ function pls_quick_list ($unknown_object, $recursive = false, $skip_html_keys = 
 
 	return $html_list;
 }
-
-add_filter( 'wp_nav_menu_args', 'default_wp_nav_menu_args' );
-function default_wp_nav_menu_args( $args = '' ) {
-    // pls_dump($args);
-    $args['show_home'] = true;
-    $args['depth'] = 1;
-
-    return $args;
-}

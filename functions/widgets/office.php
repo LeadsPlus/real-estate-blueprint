@@ -34,10 +34,10 @@ class PLS_Widget_Office extends WP_Widget {
 
 			<section id="map-widget">
 
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
 				<script type="text/javascript">
-					$(document).ready(function () {
+					jQuery(document).ready(function () {
 
 								var myOptions = {
 									center: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>),
@@ -94,14 +94,14 @@ class PLS_Widget_Office extends WP_Widget {
 			$height = strip_tags($instance['height']);
 	    ?>
 
-			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo __('Title'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('subtitle'); ?>"><?php echo __('Subtitle'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('subtitle'); ?>" name="<?php echo $this->get_field_name('subtitle'); ?>" type="text" value="<?php echo esc_attr($subtitle); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('street_address'); ?>"><?php echo __('Street Address'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('street_address'); ?>" name="<?php echo $this->get_field_name('street_address'); ?>" type="text" value="<?php echo esc_attr($street_address); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('city_state_zip'); ?>"><?php echo __('City, State, Zip'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('city_state_zip'); ?>" name="<?php echo $this->get_field_name('city_state_zip'); ?>" type="text" value="<?php echo esc_attr($city_state_zip); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('lat'); ?>"><?php echo __('Latitude'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('lat'); ?>" name="<?php echo $this->get_field_name('lat'); ?>" type="text" value="<?php echo esc_attr($lat); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('lng'); ?>"><?php echo __('Longitude'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('lng'); ?>" name="<?php echo $this->get_field_name('lng'); ?>" type="text" value="<?php echo esc_attr($lng); ?>" /></label></p>
-      <p><label for="<?php echo $this->get_field_id('width'); ?>"><?php echo __('Width'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr($width); ?>" /></label></p>
-      <p><label for="<?php echo $this->get_field_id('height'); ?>"><?php echo __('Height'); ?>: <input class="widefat" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr($height); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo 'Title' ?>: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('subtitle'); ?>"><?php echo 'Subtitle' ?>: <input class="widefat" id="<?php echo $this->get_field_id('subtitle'); ?>" name="<?php echo $this->get_field_name('subtitle'); ?>" type="text" value="<?php echo esc_attr($subtitle); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('street_address'); ?>"><?php echo 'Street Address' ?>: <input class="widefat" id="<?php echo $this->get_field_id('street_address'); ?>" name="<?php echo $this->get_field_name('street_address'); ?>" type="text" value="<?php echo esc_attr($street_address); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('city_state_zip'); ?>"><?php echo 'City, State, Zip' ?>: <input class="widefat" id="<?php echo $this->get_field_id('city_state_zip'); ?>" name="<?php echo $this->get_field_name('city_state_zip'); ?>" type="text" value="<?php echo esc_attr($city_state_zip); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('lat'); ?>"><?php echo 'Latitude' ?>: <input class="widefat" id="<?php echo $this->get_field_id('lat'); ?>" name="<?php echo $this->get_field_name('lat'); ?>" type="text" value="<?php echo esc_attr($lat); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('lng'); ?>"><?php echo 'Longitude' ?>: <input class="widefat" id="<?php echo $this->get_field_id('lng'); ?>" name="<?php echo $this->get_field_name('lng'); ?>" type="text" value="<?php echo esc_attr($lng); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('width'); ?>"><?php echo 'Width' ?>: <input class="widefat" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr($width); ?>" /></label></p>
+      <p><label for="<?php echo $this->get_field_id('height'); ?>"><?php echo 'Height' ?>: <input class="widefat" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr($height); ?>" /></label></p>
 
 
 	    <?php

@@ -1,3 +1,5 @@
+@import "variables"
+
 // Search Page
 .page-template-page-template-listings-php
   form
@@ -14,16 +16,7 @@
     margin-top: 20px
     padding-top: 20px
 
-.pls-quick-search
-  form
-    .pls_search_form
-      float: left
-      width: 140px
-      margin-bottom: 10px
-      .chzn-container
-        width: 120px !important
-      .chzn-drop, .chzn-results
-        width: 118px !important
+
     
 
 // Forms
@@ -87,6 +80,7 @@ ul.chzn-results
       b
         background-position: -18px 1px !important
 
+// Number of Listings
 #placester_listings_list_length
   float: right
   margin-top: -53px
@@ -96,7 +90,8 @@ ul.chzn-results
     display: none
   .chzn-results
     width: 100% !important
-    
+
+// Sort Dropdowns
 .sort_wrapper
   .sort_item
     float: left
@@ -113,9 +108,11 @@ ul.chzn-results
     .chzn-results
       width: 100% !important
 
+// DataTables no results
 .dataTables_empty
   color: red
 
+// DataTables loading/processing
 .dataTables_processing
   position: absolute
   margin: -100px 0 0 300px
@@ -160,3 +157,26 @@ body.page-template-page-template-listings-php, body.page-template-page-template-
 .complex-search
   #pls_listings_search_results
     margin-top: 30px
+
+// Forms
+form, fieldset, .placester_listings_list_length
+  label, p
+    color: $gray
+  p
+    @include p-font-styles
+  input[type="text"], input[type="email"], input[type="password"], textarea
+    background-color: $white
+    color: $gray-light
+
+ul.chzn-results
+  li
+    color: $gray !important
+    &.highlighted
+      background-color: $gray !important
+      color: $white !important
+    &.group-result
+      color: $gray-light !important
+
+.chzn-single
+  span
+    color: $gray

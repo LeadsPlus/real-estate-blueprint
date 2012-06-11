@@ -9,7 +9,7 @@ function optionsframework_fields() {
 	$optionsframework_settings = get_option('optionsframework');
 	
 	// Get the theme name so we can display it up top
-	$themename = get_theme_data(STYLESHEETPATH . '/style.css');
+	$themename = get_theme_data(get_stylesheet_directory() . '/style.css');
 	$themename = $themename['Name'];
 
 	// Gets the unique option id
@@ -436,16 +436,13 @@ function optionsframework_fields() {
 										'3000' => '3,000',
 										'4000' => '4,000',
 										'5000' => '5,000',
-										'6000' => '6,000',
-										'7000' => '7,000',
-										'8000' => '8,000',
-										'9000' => '9,000',
-										'10000' => '10,000',
-										'11000' => '11,000',
-										'12000' => '12,000',
-										'13000' => '13,000',
-										'14000' => '14,000',
-										'15000' => '15,000',
+										'50000' => '5,0000',
+										'10000' => '100,000',
+										'20000' => '200,000',
+										'30000' => '300,000',
+										'50000' => '500,000',
+										'70000' => '700,000',
+										'1000000' => '1,000,000'
 										);
 								foreach ($min_price as $key => $v) {
 									echo '<option value="' . $key . '">' . $v . '</option>';
@@ -459,23 +456,19 @@ function optionsframework_fields() {
 						<select name="metadata[max_price]">
 							<?php $max_price = array(
 										'false' => 'Any',
-										'200' => '200',
 										'500' => '500',
 										'1000' => '1,000',
 										'2000' => '2,000',
 										'3000' => '3,000',
 										'4000' => '4,000',
 										'5000' => '5,000',
-										'6000' => '6,000',
-										'7000' => '7,000',
-										'8000' => '8,000',
-										'9000' => '9,000',
-										'10000' => '10,000',
-										'11000' => '11,000',
-										'12000' => '12,000',
-										'13000' => '13,000',
-										'14000' => '14,000',
-										'15000' => '15,000',
+										'50000' => '5,0000',
+										'10000' => '100,000',
+										'20000' => '200,000',
+										'30000' => '300,000',
+										'50000' => '500,000',
+										'70000' => '700,000',
+										'1000000' => '1,000,000'
 										);
 								foreach ($max_price as $key => $v) {
 									echo '<option value="' . $key . '">' . $v . '</option>';
@@ -507,6 +500,59 @@ function optionsframework_fields() {
 				</div>
 			</div>
 
+
+			<?php
+			$output .= trim( ob_get_clean() );
+		break;
+
+
+
+		// Featured Listing Selection
+		case "featured_neighborhoods":
+
+			ob_start();
+			?>
+
+			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
+
+				<div class="fls-address">
+
+          <label>Neighborhoods</label>
+          <?php $categories = get_categories('type=property&taxonomy=neighborhood'); ?>
+          <select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-neighborhood">
+            <?php for ($i = 1; $i <= 200; $i++) {
+              if (!isset($categories[$i])) {
+                break;
+              } else {
+              echo '<option value=' . $categories[$i]->slug . '>';
+                echo $categories[$i]->name;
+              echo '</option>';
+              }
+            }
+            ?>
+          </select>
+          
+
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Neighborhood" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
+					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
+
+				</div>
+
+				<h4 class="heading">Featured Neighborhoods</h4>
+				<div class="fls-option">
+					<div class="controls">
+						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
+							<?php if (isset($settings[$value['id']])): ?>
+								<?php foreach ($settings[$value['id']] as $key => $text): ?>
+									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
+								<?php endforeach ?>
+							<?php endif ?>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+<?php echo pls_get_option('') ?>
 
 			<?php
 			$output .= trim( ob_get_clean() );

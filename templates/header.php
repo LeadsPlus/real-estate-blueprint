@@ -2,41 +2,134 @@
 /**
  * Header Template
  *
- * The header template is generally used on every page of your site. Nearly all other templates call it 
- * somewhere near the top of the file. It is used mostly as an opening wrapper, which is closed with the 
- * footer.php file. It also executes key functions needed by the theme, child themes, and plugins. 
- *
- * @package PlacesterBlueprint
- * @subpackage Template
  */
+  global $post;
+  $itemtype = '';
+  $name = '';
+  $image = '';
+  $description = '';
+  $address = '';
+  $author = '';
+
+  if ( isset($post) && $post->post_type == "property" ) { 
+
+    $content = get_option('placester_listing_layout');
+    if(isset($content) && $content != '') {return $content;}
+    $html = '';
+    $listing = @unserialize($post->post_content);
+    
+    global $query_string;
+    $neighborhood = strpos($query_string, 'neighborhood=');
+    
+    if ($neighborhood == 0) {
+      // Neighborhood Page
+      $args = wp_parse_args($query_string, array('','state' => false, 'city' => false, 'neighborhood' => false, 'zip' => false, 'street' => false, 'image_limit' => 20));
+      $taxonomy = PLS_Taxonomy::get($args);
+
+      $name = @$taxonomy['name'];
+      $description = @$taxonomy['description'];
+      $author = @pls_get_option('pls-user-name');
+      $image = @$taxonomy['listing_photos'][0]['image_url'];
+    } else {
+    
+      // Single Property
+      $itemtype = 'http://schema.org/Offer';
+      if (isset($listing['location']['unit']) && $listing['location']['unit'] != null) {
+        $name = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+        $address = @$listing['location']['address'] . ', ' . $listing['location']['unit'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+      } else {
+        $name = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+        $address = @$listing['location']['address'] . ' ' . @$listing['location']['locality'] . ', ' . @$listing['location']['region'];
+      }
+    
+      $image = @$listing['images']['0']['url'];
+      $description = @$listing['cur_data']['desc'];
+      $author = @pls_get_option('pls-user-name');
+    }
+
+  } elseif ( is_single() ) {
+
+  // Single Blog Post
+  $itemtype = 'http://schema.org/BlogPosting';
+  $name = $post->post_title;
+
+    if (has_post_thumbnail( $post->ID ) ) {
+      $post_image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
+      $image = $post_image[0];
+    }
+    $descrip = strip_tags($post->post_content);
+    $descrip_more = '';
+    if (strlen($descrip) > 155) {
+      $descrip = substr($descrip,0,155);
+      $descrip_more = ' ...';
+    }
+    $descrip = str_replace('"', '', $descrip);
+    $descrip = str_replace("'", '', $descrip);
+    $descripwords = preg_split('/[\n\r\t ]+/', $descrip, -1, PREG_SPLIT_NO_EMPTY);
+    array_pop($descripwords);
+  $description = implode(' ', $descripwords) . $descrip_more;
+  $address = @pls_get_option('pls-company-street') . " " . @pls_get_option('pls-company-locality') . ", " . @pls_get_option('pls-company-region');
+  $author = $post->post_author;
+
+  } else {
+    // Home and other pages
+    $itemtype = 'http://schema.org/LocalBusiness';
+    if (is_home()) {
+      $name = pls_get_option('pls-company-name');
+    } elseif (isset($post)) {
+      $name = $post->post_title;
+    }
+    $image = pls_get_option('pls-site-logo');
+    $description = pls_get_option('pls-company-description');
+    $address = @pls_get_option('pls-company-street') . " " . @pls_get_option('pls-company-locality') . ", " . @pls_get_option('pls-company-region');
+    $author = pls_get_option('pls-user-name');
+  }
 ?>
-<!doctype html itemscope itemtype="http://schema.org/LocalBusiness">
+<!doctype xmlns:fb="http://ogp.me/ns/fb#" html itemscope itemtype="<?php echo $itemtype; ?>">
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 7]> <html class="no-js ie7 oldie" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8]> <html class="no-js ie8 oldie" <?php language_attributes(); ?>> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
 
-    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-    Remove this if you use the .htaccess -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="<?php bloginfo( 'charset' ); ?>">
 
-    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+  Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title><?php pls_document_title(); ?></title>
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<?php if ( pls_get_option('pls-site-favicon') ) { ?>
-		<link href="<?php echo pls_get_option('pls-site-favicon'); ?>" rel="shortcut icon" type="image/x-icon" />
-		<?php } ?>
+  <title><?php echo $name; ?></title>
 
-		<?php if ( (pls_get_option('pls-css-options')) && (pls_get_option('pls-custom-css')) ) { ?>
-			<style type="text/css"><?php echo pls_get_option('pls-custom-css'); ?></style>
-		<?php } ?>
+  <!-- Facebook Tags -->
+  <meta property="og:site_name" content="<?php echo pls_get_option('pls-site-title'); ?>" />
+  <meta property="og:title" content="<?php echo $name; ?>" />
+  <meta property="og:url" content="<?php the_permalink(); ?>" />
+  <meta property="og:image" content="<?php echo $image; ?>">
+  <meta property="fb:admins" content="<?php echo pls_get_option('pls-facebook-admins'); ?>">
+  <!-- Meta Tags -->
+  <meta name="description" content="<?php echo $description; ?>">
+  <meta name="author" content="<?php echo $author; ?>">
+  <!-- Schema.org Tags -->
+  <meta itemprop="name" content="<?php echo $name; ?>">
+  <meta itemprop="email" content="<?php echo @pls_get_option('pls-company-email') ?>">
+  <meta itemprop="address" content="<?php echo $address; ?>">
+  <meta itemprop="description" content="<?php echo $description; ?>">
+  <meta itemprop="url" content="<?php the_permalink(); ?>">
 
-		<?php //Required by WordPress
-		if ( is_singular() ) wp_enqueue_script( "comment-reply" ); ?>
+  <?php if ( pls_get_option('pls-site-favicon') ) { ?>
+    <link href="<?php echo pls_get_option('pls-site-favicon'); ?>" rel="shortcut icon" type="image/x-icon" />
+  <?php } ?>
+
+  <?php if ( (pls_get_option('pls-css-options')) && (pls_get_option('pls-custom-css')) ) { ?>
+    <style type="text/css"><?php echo pls_get_option('pls-custom-css'); ?></style>
+  <?php } ?>
+
+  <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+  <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="all" />
+  <?php wp_head(); ?>
 
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,6 +153,7 @@
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
     <?php wp_head(); ?>
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -99,9 +193,10 @@
 
                 <?php pls_do_atomic( 'header' ); ?>
 
-                <div class="header-membership"><?php echo PL_Membership::placester_lead_control_panel(array()); ?></div>
+                <div class="header-membership"><?php echo PLS_Plugin_API::placester_lead_control_panel(array('separator' => '|')); ?></div>
 
             </div>
+
             <?php pls_do_atomic( 'before_nav'); ?>
 
             <?php PLS_Route::get_template_part( 'menu', 'primary' ); // Loads the menu-primary.php template. ?>

@@ -24,11 +24,11 @@
 
         <?php pls_do_atomic( 'before_entry_content' ); ?>
 
-        <?php the_content( __( 'Read the rest of this entry &raquo;', pls_get_textdomain() ) ); ?>
+        <?php the_content( 'Read the rest of this entry &raquo;' ); ?>
 
         <div class="entry-meta">
-                    <?php wp_link_pages( array( 'before' => '<p><strong>' . __( 'Pages', pls_get_textdomain() ) . ':</strong> ', 'after' => '</p>', 'next_or_number' => 'number' ) ); ?>
-                    <?php the_tags( '<p class="blog-tags blog-meta"><span>' . __( 'Tags', pls_get_textdomain() ) . ':</span> ', ', ', '</p>'); ?>
+                    <?php wp_link_pages( array( 'before' => '<p><strong>' . 'Pages' . ':</strong> ', 'after' => '</p>', 'next_or_number' => 'number' ) ); ?>
+                    <?php the_tags( '<p class="blog-tags blog-meta"><span>' . 'Tags' . ':</span> ', ', ', '</p>'); ?>
         </div>
 
         <?php pls_do_atomic( 'after_entry_content' ); ?>
@@ -38,12 +38,12 @@
             <p class="blog-meta"> 
 
                 <?php if ( comments_open() ) {
-                    _e( 'You can <a href="#respond">skip to the end</a> and leave a response.', pls_get_textdomain() );
+                    'You can <a href="#respond">skip to the end</a> and leave a response.';
 
                 } else {
-                    _e( 'Comments are currently closed.', pls_get_textdomain() );
+                    'Comments are currently closed.';
 
-                } edit_post_link( __( 'Edit this entry', pls_get_textdomain() ), ' ', '.' ); ?>
+                } edit_post_link( 'Edit this entry', ' ', '.' ); ?>
             </p>
 
         </footer>

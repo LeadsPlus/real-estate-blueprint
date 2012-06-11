@@ -88,8 +88,8 @@ class PLS_Partials_Get_Listings_Ajax {
                   <div class="sort_item">
                     <label for="sort_by">Sort Direction</label>
                     <select name="sort_type" id="sort_dir">
+                        <option value="desc">Descending</option>
                         <option value="asc">Ascending</option>
-                        <option value="asc">Descending</option>
                     </select>
                   </div>
               </form>  
@@ -141,6 +141,18 @@ class PLS_Partials_Get_Listings_Ajax {
             'allow_id_empty' => false
         );
         
+        if (isset($defaults['search_query']['sEcho'])) {
+          unset($defaults['search_query']['sEcho']);
+        }
+        $args_signature = is_array($defaults) ? http_build_query($defaults) : $defaults;
+        $signature = sha1($args_signature);
+        $transient_id = 'pl_' . $signature;
+        $transient = get_site_transient($transient_id);
+        // if ($transient) {
+        //     $transient['sEcho'] = $_POST['sEcho'];
+        //     echo json_encode($transient);
+        //     die();
+        // } 
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
@@ -173,15 +185,20 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
+<div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Offer">
 
   <div class="listing-thumbnail grid_3 alpha">
          <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>
   </div>
 
   <div class="listing-item-details grid_5 omega">
-    <p class="listing-item-address h4" itemprop="name"><a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>" itemprop="url"><?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?></a>
-    </p>
+    <header>
+      <p class="listing-item-address h4" itemprop="name">
+        <a href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" rel="bookmark" title="<?php echo $listing['location']['address'] ?>" itemprop="url">
+          <?php echo $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region'] . ' ' . $listing['location']['postal']  ?>
+        </a>
+      </p>
+    </header>
 
     <div class="basic-details">
       <ul>
@@ -212,14 +229,14 @@ class PLS_Partials_Get_Listings_Ajax {
     </div>
 
     <p class="listing-description p4" itemprop="description">
-    	<?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
+      <?php echo substr($listing['cur_data']['desc'], 0, 300); ?>
     </p>
 
   </div>
 
   <div class="actions">
     <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>" itemprop="url">View Property Details</a>
-    <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
+    <?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
   </div>
     
   <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => @$listing['rets']['aname'] , 'office_name' => @$listing['rets']['oname'])); ?>
@@ -236,6 +253,9 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['aaData'] = $listings;
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
+
+        set_site_transient( $transient_id, $response , 3600 * 48 );
+
         echo json_encode($response);
 
         //wordpress echos out a 0 randomly. die prevents it.

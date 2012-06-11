@@ -123,7 +123,7 @@ function optionsframework_options() {
         "type" => "upload");
 
     // If using image radio buttons, define a directory path
-    $imagepath =  get_bloginfo('stylesheet_directory') . '/images/';
+    $imagepath =  get_stylesheet_directory_uri() . '/images/';
 
     $options[] = array( "name" => "Example Image Selector",
         "desc" => "Images for layout.",

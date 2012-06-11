@@ -244,17 +244,47 @@ class PLS_Format {
 		return $new_phone;
 	}
 
+  function translate_property_type($listing) {
+    
+    if (isset($listing['property_type']) && ($listing['property_type'] != null) && !empty($listing['property_type'])) {
+
+      if ( $listing['property_type'] == "fam_home") {
+        $property_type = 'Single Family Home';
+      } elseif ( $listing['property_type'] == "multi_fam") {
+        $property_type = 'Multi Family Home';
+      } else {
+
+        if (strpos($listing['property_type'], ' ')) { 
+          $property_type = ucwords(implode($listing['property_type'], '')); 
+        } else { 
+          $property_type = ucfirst($listing['property_type']); 
+        }
+      }
+    return $property_type;
+    }
+  }
+
+
 	function amenities_but($listing_data, $amenities_to_remove) {
 		$amenities = array();
+		$amenities['ngb'] = array();
+		$amenities['list'] = array();
+
 		foreach ($listing_data['cur_data'] as $amenity => $value) {
+		  if (empty($value)) { continue; }
 			if (in_array($amenity, $amenities_to_remove)) { continue; }
 			if (is_int(strrpos((string)$amenity, 'ngb'))) {
-				$amenities['ngb'][$amenity] = ' ' . $value;
+				if ($value) {
+					$amenities['ngb'][$amenity] = ' ' . $value;	
+				}
 			} else {
-				$amenities['list'][$amenity] =  ' ' .$value;
+				if ($value) {
+					$amenities['list'][$amenity] =  ' ' .$value;
+				}
 			}
 		}
 		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
+      if (empty($uncur_value)) { continue; }
 			if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
 			$amenities['uncur'][$uncur_amenity] = $uncur_value;
 		}		
@@ -282,12 +312,14 @@ class PLS_Format {
   }
 
 	function translate_amenities ($amenities) {
+		
 		$local_dictionary = array(
 				'half_baths' => 'Half Baths',
 				'price' => 'Price',
 				'sqft' => 'Square Feet',
 				'baths' => 'Baths',
 				'avail_on' => 'Available On',
+				'cons_stts' => 'Construction Status',
 				'beds' => 'Beds',
 				'url' => 'Link',
 				'desc' => 'Description',
@@ -304,6 +336,7 @@ class PLS_Format {
 				'price_unit' => 'Unit Price',
 				'lt_sz_unit' => 'Unit Lot Size',
 				'lse_trms' => 'Lease Terms',
+				'lse_type' => "Lease Type",
 				'ngb_trans' => 'Local Public Transportation',
 				'off_den' => 'Office / Den',
 				'frnshed' => 'Furnished',
@@ -318,7 +351,7 @@ class PLS_Format {
 				'yard' => 'Has Yard',
 				'hdwdflr' => 'Hardwood Floors',
 				'sauna' => 'Sauna',
-				'year_blt' => 'Year Build',
+				'year_blt' => 'Year Built',
 				"oid" => "Office ID",
 				"aid" => "Agent ID",
 				"mls_id" => "MLS ID",
@@ -383,6 +416,8 @@ class PLS_Format {
       	"assofee" => "Association Fee",
       	"garagetype" => "Garage Type",
       	"historic" => "Historic",
+      	"age_years" => "Age in Years",
+      	"foundation" => "Foundation",
       	"foundlength" => "Foundation Length",
       	"foundwidth" => "Foundation Width",
       	"assessment" => "Assessment",
@@ -390,14 +425,17 @@ class PLS_Format {
       	"lotfrontage" => "Waterfront",
       	"taxyear" => "Tax Year",
       	"heat1" => "Heat",
-      	"room" => "Rooms",
+      	"total_rooms" => "Total Rooms",
+      	"total_fireplaces" => "Total Fireplaces",
+      	"total_closets" => "Total Closets",
+      	"fencing" => "Fencing",
+      	"construction" => "Construction",
       	"floor" => "Floors",
       	"occupancy" => "Occupancy",
       	"belowgroundlsqf" => "Below Ground Sqft",
       	"insulation" => "Insulation",
       	"approx_head_cost" => "Approximate Head Cost",
       	"approx_lot_sqft" => "4791",
-      	"appliances" => "Appliances",
       	"cooling" => "Cooling",
       	"basement" => "Basement",
       	"basemnt" => "Basement",
@@ -437,6 +475,9 @@ class PLS_Format {
       	"interior" => "Interior",
         "water_amenities" => "Water Amenities",
         "acres" => "Acres",
+        "master_bath" => "Master Bath",
+        "park_type" => "Parking Type",
+        "basemnt" => "Basement",
         "move_in" => "Move In",
         "bld_name" => "Building Name",
         "tl_earn" => "Total Earned",
@@ -458,7 +499,6 @@ class PLS_Format {
         "stve_ovn" => "Stove/Oven",
         "stnstl_app" => "Stainless Steel Appliances",
         "attic" => "Attic",
-        "basemnt" => "Basement",
         "washer" => "Washer",
         "dryer" => "Dryer",
         "lndry_in" => "Laundry Area - Inside",
@@ -496,8 +536,13 @@ class PLS_Format {
         "cats" => "Cats",
         "dogs" => "Dogs",
         "pk_lease" => "Parking Lease",
-        "lease_type" => "Lease Type"
+        "lease_type" => "Lease Type",
+        "master_bath" => "Master Bath",
+        "area" => "Area"
 			);
+		
+		$api_dictionary = PLS_Plugin_API::get_translations();
+		$local_dictionary = array_merge($local_dictionary, $api_dictionary);
 
 		global $pls_custom_amenity_dictionary;
 
@@ -513,7 +558,6 @@ class PLS_Format {
 		}
 		return $amenities;
 	}
-
 
 //end of class
 }

@@ -28,11 +28,9 @@ class PLS_Image {
 
 	static function init() {
 
-	  if (!is_admin()) { // This broke the site when taken out.
-      self::enqueue();
-    }
-
-		add_action('wp_head', array(__CLASS__,'enqueue'));
+		if (!is_admin()) {
+			add_action('init', array(__CLASS__,'enqueue'));
+		}
 	}
 
     static function enqueue() {
@@ -152,7 +150,8 @@ class PLS_Image {
 			'as_html' => false,
 			'as_url' => true,
 			'fancybox' => array(
-			'trigger_class' => 'pls_use_fancy'
+			'trigger_class' => 'pls_use_fancy',
+			'classes' => false
 			),
 		);
 
@@ -165,4 +164,5 @@ class PLS_Image {
 				
 	}
 }// end class 
+
 ?>

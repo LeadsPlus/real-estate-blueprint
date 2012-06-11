@@ -35,19 +35,17 @@
               </div><!-- .entry-summary -->
 
               <div class="entry-meta">
-                  <a class="more-link" href="<?php the_permalink() ?>" itemprop="url"> <?php _e( 'Continue reading <span class="meta-nav">&rarr;</span>', pls_get_textdomain() ) ?></a>
+                  <a class="more-link" href="<?php the_permalink() ?>" itemprop="url"> Continue reading <span class="meta-nav">&rarr;</span></a>
               </div><!-- .entry-meta -->
 
               <?php pls_do_atomic( 'after_entry_content' ); ?>
 
               <footer>
-                  <?php the_tags( __( 'Tags', pls_get_textdomain() ) . ': ', ', ', '<br />'); ?> 
+                  <?php the_tags( 'Tags' . ': ', ', ', '<br />'); ?> 
                   Posted in <?php the_category( ', ' ) ?>
-                  | <?php edit_post_link( __( 'Edit', pls_get_textdomain() ), '', ' | ' ); ?>
-                  <?php comments_popup_link( __( 'No Comments', pls_get_textdomain() ) . '&#187;', __( '1 Comment', pls_get_textdomain() ) . '&#187;', __( '% Comments', pls_get_textdomain() ) . '&#187;' ); ?>
+                  | <?php edit_post_link(  'Edit', '', ' | ' ); ?>
+                  <?php comments_popup_link( 'No Comments' . '&#187;', '1 Comment' . '&#187;', '% Comments' . '&#187;' ); ?>
               </footer>
-
-            </section>
 
             <?php pls_do_atomic( 'close_entry' ); ?>
 
@@ -58,8 +56,8 @@
     <?php endwhile; ?>
 
     <nav class="posts">
-        <div class="prev"><?php next_posts_link( __( '&laquo; Older Entries', pls_get_textdomain() ) ) ?></div>
-        <div class="next"><?php previous_posts_link( __( 'Newer Entries &raquo;', pls_get_textdomain() ) ) ?></div>
+        <div class="prev"><?php next_posts_link( '&laquo; Older Entries' ) ?></div>
+        <div class="next"><?php previous_posts_link( 'Newer Entries &raquo;' ) ?></div>
     </nav>
     
 <?php else : ?>

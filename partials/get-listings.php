@@ -33,6 +33,15 @@ class PLS_Partial_Get_Listings {
      */
     function init ($args = '') {
        
+        $args_signature = is_array($args) ? http_build_query($args) : $args;
+        $signature = sha1($args_signature);
+        $transient_id = 'pl_' . $signature;
+        $transient = get_site_transient($transient_id);
+        
+        // if ($transient) {
+        //     return $transient;
+        // } 
+
         /** Define the default argument array. */
         $defaults = array(
             'width' => 100,
@@ -44,13 +53,11 @@ class PLS_Partial_Get_Listings {
             /** Placester API arguments. */
             'limit' => 5,
             'sort_type' => 'asc',
+            'request_params' => ''
         );
 
         /** Merge the arguments with the defaults. */
         $args = wp_parse_args( $args, $defaults );
-
-        /** Process arguments that need to be sent to the API. */
-        $request_params = PLS_Plugin_API::get_valid_property_list_fields( $args );
 
         /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
@@ -65,7 +72,6 @@ class PLS_Partial_Get_Listings {
 
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
-
         /** Display a placeholder if the plugin is not active or there is no API key. */
         if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
             global $PLS_API_DEFAULT_LISTING;
@@ -123,84 +129,92 @@ class PLS_Partial_Get_Listings {
              ob_start();
              ?>
 
+
 <div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
 
- <div class="listing-thumbnail grid_3 alpha">
-        <a href="<?php echo @$listing_data['cur_data']['url']; ?>"><?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing_data['location']['full_address'], 'itemprop' => 'image'))); ?></a>
- </div>
+  <div class="listing-thumbnail grid_3 alpha">
+    <a href="<?php echo @$listing_data['cur_data']['url']; ?>">
+      <?php echo PLS_Image::load($listing_data['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing_data['location']['full_address'], 'itemprop' => 'image'))); ?>
+    </a>
+  </div>
 
- <div class="listing-item-details grid_5 omega">
-   <p class="listing-item-address h4" itemprop="name"><a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $listing_data['location']['address'] ?>" itemprop="url"><?php echo $listing_data['location']['address'] . ', ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['postal']  ?></a>
-   </p>
+  <div class="listing-item-details grid_5 omega">
+    <p class="listing-item-address h4" itemprop="name">
+      <a href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" rel="bookmark" title="<?php echo $listing_data['location']['address'] ?>" itemprop="url">
+        <?php echo $listing_data['location']['address'] . ', ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'] . ' ' . $listing_data['location']['postal']  ?>
+      </a>
+    </p>
 
-   <div class="basic-details">
-     <ul>
-     	<?php if (!empty($listing_data['cur_data']['beds'])) { ?>
-     		<li class="basic-details-beds p1"><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></li>
-     	<?php } ?>
+    <div class="basic-details">
+      <ul>
+        <?php if (!empty($listing_data['cur_data']['beds'])) { ?>
+          <li class="basic-details-beds p1"><span>Beds:</span> <?php echo @$listing_data['cur_data']['beds']; ?></li>
+        <?php } ?>
 
-     	<?php if (!empty($listing_data['cur_data']['baths'])) { ?>
-     		<li class="basic-details-baths p1"><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></li>
-     	<?php } ?>
+        <?php if (!empty($listing_data['cur_data']['baths'])) { ?>
+          <li class="basic-details-baths p1"><span>Baths:</span> <?php echo @$listing_data['cur_data']['baths']; ?></li>
+        <?php } ?>
 
-     	<?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
-     		<li class="basic-details-half-baths p1"><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></li>
-     	<?php } ?>
+        <?php if (!empty($listing_data['cur_data']['half_baths'])) { ?>
+          <li class="basic-details-half-baths p1"><span>Half Baths:</span> <?php echo @$listing_data['cur_data']['half_baths']; ?></li>
+        <?php } ?>
 
-     	<?php if (!empty($listing_data['cur_data']['price'])) { ?>
-     		<li class="basic-details-price p1" itemprop="price"><span>Price:</span> <?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
-     	<?php } ?>
+        <?php if (!empty($listing_data['cur_data']['price'])) { ?>
+          <li class="basic-details-price p1" itemprop="price"><span>Price:</span> <?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?></li>
+        <?php } ?>
 
-     	<?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
-     		<li class="basic-details-sqft p1"><span>Sqft:</span> <?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
-     	<?php } ?>
+        <?php if (!empty($listing_data['cur_data']['avail_on'])) { ?>
+          <li class="basic-details-sqft p1"><span>Sqft:</span> <?php echo PLS_Format::number($listing_data['cur_data']['sqft'], array('abbreviate' => false, 'add_currency_sign' => false)); ?></li>
+        <?php } ?>
 
-       <?php if (!empty($listing_data['rets']['mls_id'])) { ?>
-         <li class="basic-details-mls p1"><span>MLS ID:</span> <?php echo @$listing_data['rets']['mls_id']; ?></li>
-       <?php } ?>
-     </ul>
-   </div>
+        <?php if (!empty($listing_data['rets']['mls_id'])) { ?>
+          <li class="basic-details-mls p1"><span>MLS ID:</span> <?php echo @$listing_data['rets']['mls_id']; ?></li>
+        <?php } ?>
+      </ul>
+    </div>
 
-   <p class="listing-description p4">
-   	<?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
-   </p>
+    <p class="listing-description p4">
+      <?php echo substr($listing_data['cur_data']['desc'], 0, 300); ?>
+    </p>
 
- </div>
+  </div>
 
- <div class="actions">
-   <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" itemprop="url">View Property Details</a>
-   <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
- </div>
+  <div class="actions">
+    <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing_data['id']); ?>" itemprop="url">View Property Details</a>
+    <?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing_data['id'])); ?>
+  </div>
 
- <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
+  <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
 
 </div>
 
-             <?php
-             $listing_html = ob_get_clean();
+<?php
+      $listing_html = ob_get_clean();
 
-            /** Filter (pls_listing[_context]) the resulting html for a single listing. */
-            $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );
+      /** Filter (pls_listing[_context]) the resulting html for a single listing. */
+      $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );
 
-            /** Append the html to an array. This will be passed to the final filter. */
-            $listings_html[] = $listing_html;
+      /** Append the html to an array. This will be passed to the final filter. */
+      $listings_html[] = $listing_html;
 
-            /** Merge all the listings html. */
-            $return .= $listing_html;
+      /** Merge all the listings html. */
+      $return .= $listing_html;
 
-        }
-
-        /** Wrap the listings html. */
-        $return = pls_h(
-            'section',
-            array( 'class' => "pls-listings pls-listings " . pls_get_merged_strings( array( 'pls-listing', $context ), '-', 'pre', false ) ),
-            $return
-        );
-
-        /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
-        return apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
     }
+
+    /** Wrap the listings html. */
+    $return = pls_h(
+      'section',
+      array( 'class' => "pls-listings pls-listings " . pls_get_merged_strings( array( 'pls-listing', $context ), '-', 'pre', false ) ),
+      $return
+    );
+
+    /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
+    $return = apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
+    set_site_transient( $transient_id, $return , 3600 * 48 );
+  
+    return $return;
+  }
 
 
 }
-        

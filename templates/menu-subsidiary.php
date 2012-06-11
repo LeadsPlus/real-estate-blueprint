@@ -12,7 +12,7 @@ if ( has_nav_menu( 'subsidiary' ) ) : ?>
 
     <?php pls_do_atomic( 'before_menu_subsidiary' ); ?>
 
-	<section class="footer-nav">
+	<section class="footer-nav" role="navigation">
 
         <?php pls_do_atomic( 'open_menu_subsidiary' ); ?>
 

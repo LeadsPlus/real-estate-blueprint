@@ -32,7 +32,7 @@
  * Big thanks to Justin Tadlock for inspiration with his HybridCore Framework.
  *
  * @package PlacesterBlueprint
- * @version 2.0
+ * @version 2.1
  * @author Placester, Alex Ciobica, Matt Barba
  * @link http://placester.com/themes/blueprint/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -59,9 +59,10 @@ class Placester_Blueprint {
 	 *
 	 * @since 0.0.1
 	 */
+
     function __construct($version = '0.0') {
 
-        $version_locked = '2.0';
+        $version_locked = '2.1';
         if ($version != $version_locked) {
             die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
@@ -233,6 +234,8 @@ class Placester_Blueprint {
 	 */
     function default_theme_support() {
 
+        add_theme_support( 'post-thumbnails' );
+        
         /** Add theme support for theme wrappers */
         add_theme_support( 'pls-routing-util' );
 
@@ -254,7 +257,7 @@ class Placester_Blueprint {
             'jquery-ui' => array('script' => true, 'style' => true), 
             'spinner' => array( 'script' => true, 'style' => true ), 
             'masonry' => array('script' => true, 'style' => false),
-            'jquery-tools' => array('script' => true, 'style' => false)
+            'jquery-tools' => array('script' => true, 'style' => false),
           ) 
         );
         add_theme_support( 'pls-theme-options' );
@@ -263,6 +266,8 @@ class Placester_Blueprint {
         add_theme_support( 'pls-maps-util');
         add_theme_support( 'pls-debug');
         add_theme_support( 'pls-membership');
+        add_theme_support( 'pls-custom-meta');
+        add_theme_support( 'pls-walkscore');
 
         //style options, need to be set in style-util.php
         add_theme_support( 'pls-typography-options');
@@ -365,6 +370,9 @@ class Placester_Blueprint {
         /** Load the widgets. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'widgets.php' );
 
+        /** Load the notifications. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
+
         /** Load the styles functions. */
         require_once( trailingslashit ( PLS_CSS_DIR ) . 'styles.php' );
 
@@ -379,6 +387,12 @@ class Placester_Blueprint {
 
         /** Load the debug functionality if supported. */
         require_if_theme_supports( 'pls-debug', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'debug.php' );
+
+        /** Load the debug functionality if supported. */
+        require_if_theme_supports( 'pls-custom-meta', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'taxonomy.php' );
+
+        /** Load the debug functionality if supported. */
+        require_if_theme_supports( 'pls-walkscore', trailingslashit ( PLS_FUNCTIONS_DIR ) . 'walkscore.php' );
 
         /** Create the listings and blog pages. */
         $this->create_pages();
@@ -432,7 +446,8 @@ class Placester_Blueprint {
             $page_list[] = array( 'title' => 'Blog', 'template' => 'page-template-blog.php' );
             $page_list[] = array( 'title' => 'Listings', 'template' => 'page-template-listings.php' );
             $page_list[] = array( 'title' => 'Client Profile', 'template' => 'page-template-client.php' );
-            PLS_Plugin_API::create_page($page_list);            
+            $page_list[] = array( 'title' => 'Sample Listing', 'template' => 'sample-listing.php' );
+            PLS_Pages::create_once($page_list);
         } 
     }
 }
