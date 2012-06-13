@@ -551,9 +551,14 @@ class PLS_Format {
 		}
 		
 		foreach ($amenities as $key => $value) {
+			if ($value == '1') {
+				$value = 'Yes';
+			} elseif ($value == '0') {
+				$value = 'No';
+			}		
 			if (isset($local_dictionary[$key])) {
 				unset($amenities[$key]);
-				$amenities[$local_dictionary[$key]] = $value;
+				$amenities[$local_dictionary[$key]] = ucwords($value);
 			}
 		}
 		return $amenities;
