@@ -293,7 +293,7 @@ class PLS_Route {
 
 
 	// hooked to handle page templates
-	function handle_category($template) {
+	function handle_category($templates) {
 		$category = get_queried_object();
 
 		$templates = array();
@@ -302,7 +302,7 @@ class PLS_Route {
 		$templates[] = "category-{$category->term_id}.php";
 		$templates[] = 'category.php';
 
-		self::$request = array_merge(self::$request, $template);
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 
