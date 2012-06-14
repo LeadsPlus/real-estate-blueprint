@@ -262,7 +262,7 @@ class PLS_Route {
 
 	// needs additional logic to handle different types of 
 	// post type archives. 
-	function handle_archive($template) {
+	function handle_archive($templates) {
 
 		$post_type = get_query_var( 'post_type' );
 
