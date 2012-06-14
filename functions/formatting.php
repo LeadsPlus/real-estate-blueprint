@@ -551,9 +551,38 @@ class PLS_Format {
 		}
 		
 		foreach ($amenities as $key => $value) {
+			if ($value == '1') {
+				$value = 'Yes';
+			} elseif ($value == '0') {
+				$value = 'No';
+			}		
 			if (isset($local_dictionary[$key])) {
+				if ($key == 'style') {
+					$style_values = array("bungal"=> "Bungalow",
+						"cape"=> "Cape Cod",
+						"colonial"=> "Colonial",
+						"contemp"=> "Contemporary",
+						"cott"=> "Cottage",
+						"farmh"=> "Farmhouse",
+						"fnt_bk_splt"=> "Front to Back Split",
+						"gamb_dutc"=> "Gambrel/Dutch",
+						"garrison"=> "Garrison",
+						"greek_rev"=> "Greek Revival",
+						"loft_splt"=> "Lofted Split",
+						"mult_lvl"=> "Multi-level",
+						"rai_ranch"=> "Raised Ranch",
+						"ranch"=> "Ranch",
+						"saltb"=> "Saltbox",
+						"split_ent"=> "Split Entry",
+						"tudor"=> "Tudor",
+						"victor"=> "Victorian",
+						"antiq"=> "antique");
+					if (isset($style_values[$value])) {
+						$value = $style_values[$value];
+					}
+				}
 				unset($amenities[$key]);
-				$amenities[$local_dictionary[$key]] = $value;
+				$amenities[$local_dictionary[$key]] = ucwords($value);
 			}
 		}
 		return $amenities;

@@ -262,7 +262,7 @@ class PLS_Route {
 
 	// needs additional logic to handle different types of 
 	// post type archives. 
-	function handle_archive($template) {
+	function handle_archive($templates) {
 
 		$post_type = get_query_var( 'post_type' );
 
@@ -293,7 +293,7 @@ class PLS_Route {
 
 
 	// hooked to handle page templates
-	function handle_category($template) {
+	function handle_category($templates) {
 		$category = get_queried_object();
 
 		$templates = array();
@@ -302,7 +302,7 @@ class PLS_Route {
 		$templates[] = "category-{$category->term_id}.php";
 		$templates[] = 'category.php';
 
-		self::$request = array_merge(self::$request, $template);
+		self::$request = array_merge(self::$request, $templates);
 	}
 
 
