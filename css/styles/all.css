@@ -385,6 +385,10 @@ article.property-details {
 
 article.post {
   border-bottom: 1px solid #DBDBDB; }
+article h1 {
+  font-size: 34px;
+  margin: 0px;
+  padding: 0px; }
 article h2 {
   font-size: 30px;
   margin: 0px;
