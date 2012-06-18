@@ -99,6 +99,8 @@ class PLS_Partials_Listing_Search_Form {
         $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
         $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
         $form_options['location']['county'] = pls_get_option('form_default_options_county');
+        $form_options['property_type'] = pls_get_option('form_default_options_property_type');
+        
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 
