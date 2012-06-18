@@ -109,7 +109,7 @@ class PLS_Partials_Listing_Search_Form {
               'max_beds' => false
             ),
             'purchase_types' => '',
-            'property_type' => '',
+            'property_type' => pls_get_option('form_default_options_property_type'),
             'listing_types' => '',
             'zoning_types' => ''
           );
