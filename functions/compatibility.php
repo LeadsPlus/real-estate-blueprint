@@ -122,6 +122,14 @@ class PLS_Plugin_API {
         return array();
     }
 
+    static function get_schools ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Education_Helper','get_schools'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
     /**
      * Returns the local property url.
      *
