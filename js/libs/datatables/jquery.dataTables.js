@@ -9023,7 +9023,8 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			 
+			"sLengthMenu": "<span id='dataTables_length_show'>Show</span> _MENU_ <span id='dataTables_length_results'>Results</span>",
 		
 		
 			/**
