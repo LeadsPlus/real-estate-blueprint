@@ -87,17 +87,14 @@ class PLS_Plugin_API {
         return $return;
     }
 
-    /**
-     * Returns the company details object.
-     *
-     * Object looks like this:
-     * TODO
-     * 
-     * @static
-     * @return mixed False if plugin data cannot be accessed, or the company 
-     * details object otherwise.
-     * @since 0.0.1
-     */
+    static function get_schools ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Education_Helper','get_schools'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+    
     static function get_company_details() {
         $return = self::_try_for_exceptions( 'get_company_details' );
         if ( $return ) {

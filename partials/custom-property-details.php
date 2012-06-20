@@ -30,7 +30,7 @@ class PLS_Partials_Property_Details {
 
 	        ob_start();
 	        ?>
-
+	        
 					<h2 itemprop="name" itemscope itemtype="http://schema.org/PostalAddress">
 					  <span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span>
 					</h2>
@@ -139,6 +139,18 @@ class PLS_Partials_Property_Details {
 	            </div>
 	            <div>
 	            	<?php $walkscore = PLS_Walkscore_Helper::get_score($listing_data['location']['coords'][0], $listing_data['location']['coords'][1], $listing_data['location']['full_address'], 'WALKSCORE-API-KEY'); ?>
+	            </div>
+	            <div>
+		        	<?php //$schools = PLS_Plugin_API::get_schools( array('edu_key' => 'fed0f4e5a907b6f5453132ee3e26823a', 'area_search' => array('city' => $listing_data['location']['locality'], 'state' => $listing_data['location']['region']), 'maxResult' => 15 ) ); ?>
+		        	<?php //$schools = PLS_Plugin_API::get_schools( array('edu_key' => 'fed0f4e5a907b6f5453132ee3e26823a', 'lat_lng_search' => array('latitude' => $listing_data['location']['coords'][0], 'longitude' => $listing_data['location']['coords'][1], 'distance' => 5 ), 'maxResult' => 15 ) ); ?>
+		        	<?php //if (!empty($schools)): ?>
+			        	<?php //foreach ( $schools as $school): ?>
+				        	<!-- <ul> -->
+				        		<?php //pls_dump($school) ?>
+				        		<li><?php echo $school['school']['schoolname'] ?></</li>
+				        	<!-- </ul> -->
+				        <?php //endforeach ?>		
+		        	<?php //endif ?>
 	            </div>
  		     	<?php PLS_Listing_Helper::get_compliance(array('context' => 'listings', 'agent_name' => @$listing_data['rets']['aname'] , 'office_name' => @$listing_data['rets']['oname'])); ?>
 
