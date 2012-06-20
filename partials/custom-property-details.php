@@ -147,7 +147,7 @@ class PLS_Partials_Property_Details {
 			        	<?php //foreach ( $schools as $school): ?>
 				        	<!-- <ul> -->
 				        		<?php //pls_dump($school) ?>
-				        		<li><?php echo $school['school']['schoolname'] ?></</li>
+				        		<!-- <li><?php //echo $school['school']['schoolname'] ?></</li> -->
 				        	<!-- </ul> -->
 				        <?php //endforeach ?>		
 		        	<?php //endif ?>
