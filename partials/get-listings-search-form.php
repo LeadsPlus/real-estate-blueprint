@@ -79,9 +79,10 @@ class PLS_Partials_Listing_Search_Form {
             'cities' => 1,
             'states' => 1,
             'zips' => 1,
+            'neighborhood' => 1,
+            'county' => 1,
             'min_price' => 1,
             'max_price' => 1,
-            'neighborhood' => 1,
             'min_price_rental' => 1,
             'max_price_rental' => 1,
             'include_submit' => true
@@ -97,6 +98,9 @@ class PLS_Partials_Listing_Search_Form {
         $form_options['location']['region'] = pls_get_option('form_default_options_region');
         $form_options['location']['postal'] = pls_get_option('form_default_options_postal');
         $form_options['location']['neighborhood'] = pls_get_option('form_default_options_neighborhood');
+        $form_options['location']['county'] = pls_get_option('form_default_options_county');
+        $form_options['property_type'] = pls_get_option('form_default_options_property_type');
+        
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 
@@ -220,6 +224,13 @@ class PLS_Partials_Listing_Search_Form {
         } else {
             $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('neighborhood')); 
             unset($form_options['neighborhood']['false']);    
+        }
+        
+        if (!PLS_Plugin_API::get_location_list('county')) {
+            $form_options['county'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['county'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('county')); 
+            unset($form_options['county']['false']);
         }
         
     // Price for Sales
@@ -506,12 +517,21 @@ class PLS_Partials_Listing_Search_Form {
             );
         }
 
-        /** Add the cities select element. */
+        /** Add the neighborhood select element. */
         if ($neighborhood == 1) {
             $form_html['neighborhood'] = pls_h(
                 'select',
                 array( 'name' => 'location[neighborhood]' ) + $form_opt_attr['neighborhood'],
                 pls_h_options( $form_options['neighborhood'], wp_kses_post(@$_POST['location']['neighborhood'] ), true )
+            );
+        }
+
+        /** Add the county select element. */
+        if ($county == 1) {
+            $form_html['county'] = pls_h(
+                'select',
+                array( 'name' => 'location[county]' ) + $form_opt_attr['county'],
+                pls_h_options( $form_options['county'], wp_kses_post(@$_POST['location']['county'] ), true )
             );
         }
 
@@ -568,6 +588,7 @@ class PLS_Partials_Listing_Search_Form {
             'min_price' => 'Min Price',
             'max_price' => 'Max Price',
             'neighborhood' => 'Neighborhood',
+            'county' => 'County',
             'min_beds' => 'Min Beds',
             'max_beds' => 'Max Beds',
             'min_price_rental' => 'Min Price Rental',
