@@ -63,7 +63,7 @@ class Placester_Blueprint {
 
         $version_locked = '1.3';
         if ($version != $version_locked) {
-            die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
+            die('This theme is version locked to ' . $version . ' of Blueprint. You are using version ' . $version_locked . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
 
         /** Let the world know that this is a Placester theme. */
