@@ -38,9 +38,9 @@ class PLS_Partial_Get_Listings {
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
         
-        if ($transient) {
-            return $transient;
-        } 
+        // if ($transient) {
+        //     return $transient;
+        // } 
 
 
         /** Define the default argument array. */
@@ -62,7 +62,7 @@ class PLS_Partial_Get_Listings {
 
         /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
-        
+          
         /** Sanitize the width. */
         if ( $width ) 
             $width = absint( $width );
@@ -71,8 +71,8 @@ class PLS_Partial_Get_Listings {
         if ( $height ) 
             $height = absint( $height );
 
-        $request_params = array('limit' => $limit, 'sort_type' => $sort_type);
-
+        $request_params = wp_parse_args($request_params, array('limit' => $limit, 'sort_type' => $sort_type));
+        
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
         /** Display a placeholder if the plugin is not active or there is no API key. */
