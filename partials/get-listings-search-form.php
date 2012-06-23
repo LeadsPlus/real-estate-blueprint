@@ -90,7 +90,6 @@ class PLS_Partials_Listing_Search_Form {
 
         $args = wp_parse_args( $args, $defaults );
 
-        
         $form_options = array();
 
         // Set Form Defaults for params onload, set in Theme Options
@@ -106,7 +105,8 @@ class PLS_Partials_Listing_Search_Form {
         //respect user settings, unless they are all empty. 
 
         $user_search_params = pls_get_option($args['theme_option_id']);
-        if (isset($user_search_params['hide_all'])) {
+        
+        if (isset($user_search_params['hide_all']) && $user_search_params['hide_all'] == 1) {
           return '';
         }
         $not_empty_flag = false;
