@@ -87,6 +87,17 @@ class PLS_Plugin_API {
         return $return;
     }
 
+    static function get_api_key () {
+        if ( function_exists( 'placester_get_api_key' )) {
+            $api_key = placester_get_api_key();
+            if ($api_key) {
+                return $api_key;
+            } else {
+                return false;
+            }
+        }
+    }
+
     static function get_schools ($params = array()) {
         $return = self::_try_for_exceptions( array('PL_Education_Helper','get_schools'), $params );
         if ( $return ) {
