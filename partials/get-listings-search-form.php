@@ -575,6 +575,8 @@ class PLS_Partials_Listing_Search_Form {
 
         $section_title = array(
             'bedrooms' => 'Beds',
+            'min_beds' => 'Min Beds',
+            'max_beds' => 'Max Beds',
             'bathrooms' => 'Baths',
             'half_baths' => 'Half Baths',
             'property_type' => 'Property Type',

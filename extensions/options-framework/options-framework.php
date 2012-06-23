@@ -221,8 +221,8 @@ function optionsframework_page() {
 		<?php echo $return[0]; /* Settings */ ?>
         
         <div id="optionsframework-submit">
-			<input type="submit" class="button-primary" name="update" value="<?php esc_attr_e( 'Save Options' ); ?>" />
-            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults' ); ?>" onclick="return confirm( '<?php print esc_js( 'Click OK to reset. Any theme settings will be lost!' ); ?>' );" />
+			<input type="submit" class="button-primary" name="update" value="<?php echo 'Save Options'; ?>" />
+            <input type="submit" class="reset-button button-secondary" name="reset" value="<?php echo 'Restore Defaults' ; ?>" onclick="return confirm( '<?php print esc_js( 'Click OK to reset. Any theme settings will be lost!' ); ?>' );" />
             <div class="clear"></div>
 		</div>
 	</form>

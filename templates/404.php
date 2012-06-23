@@ -17,6 +17,7 @@
       <h2 class="error-404-title entry-title">Not Found</h2>
 
       <section class="entry-content">
+
  
         <p>You navigated to a page that doesn't exist.</p>
 

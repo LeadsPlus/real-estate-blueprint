@@ -264,7 +264,6 @@ class PLS_Format {
     }
   }
 
-
 	function amenities_but($listing_data, $amenities_to_remove) {
 		$amenities = array();
 		$amenities['ngb'] = array();

@@ -70,6 +70,8 @@ class PLS_Partial_Get_Listings {
         if ( $height ) 
             $height = absint( $height );
 
+        $request_params = array('limit' => $limit, 'sort_type' => $sort_type);
+
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
         /** Display a placeholder if the plugin is not active or there is no API key. */
