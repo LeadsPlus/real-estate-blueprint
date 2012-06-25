@@ -105,6 +105,14 @@ class PLS_Plugin_API {
         }
         return array();
     }
+
+    static function get_polygon_listings ($params = '') {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_listings_polygon_name'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
     
     static function get_company_details() {
         $return = self::_try_for_exceptions( 'get_company_details' );
@@ -412,7 +420,7 @@ class PLS_Plugin_API {
      * has a API key, FALSE otherwise.
      * @since 0.0.1
      */
-    static function get_location_list($return_only) {
+    static function get_location_list($return_only = false) {
 
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( array('PL_Listing_Helper','locations_for_options'), $return_only);
@@ -422,6 +430,14 @@ class PLS_Plugin_API {
             return $return;
 
         return false;
+    }
+
+    static function get_location_list_polygons($return_only = false) {
+        $return = self::_try_for_exceptions( array('PL_Listing_Helper','polygon_locations'), $return_only);
+        if ( $return ) 
+            return $return;
+
+        return array();
     }
 
     /**
