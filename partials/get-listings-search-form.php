@@ -103,23 +103,13 @@ class PLS_Partials_Listing_Search_Form {
         $_POST = wp_parse_args($_POST, $form_options);
                
         //respect user settings, unless they are all empty. 
-
         $user_search_params = pls_get_option($args['theme_option_id']);
         
         if (isset($user_search_params['hide_all']) && $user_search_params['hide_all'] == 1) {
           return '';
         }
-        $not_empty_flag = false;
-        if (is_array($user_search_params)) {
-          foreach ($user_search_params as $key => $value) {
-            if ($value != '0') {
-              $not_empty_flag = true;
-            }
-          }
-        }
-        if ($not_empty_flag) {
-          $args = wp_parse_args( pls_get_option($args['theme_option_id']), $args );
-        }
+
+        $args = wp_parse_args( $args, $user_search_params);    
         
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
