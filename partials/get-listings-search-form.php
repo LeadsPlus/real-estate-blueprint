@@ -194,45 +194,52 @@ class PLS_Partials_Listing_Search_Form {
         $neighborhood_polygons_options = PLS_Plugin_API::get_location_list_polygons($neighborhood_polygons_type);
 
         if (empty($locations['locality'])) {
-            $form_options['cities'] = array('pls_empty_value' => 'Donkey');
+            $form_options['cities'] = array('pls_empty_value' => 'Any');
         } else {
-            $form_options['cities'] = array_merge(array('pls_empty_value' => 'Any'), $locations['locality']);
-            unset($form_options['cities']['false']);
+            unset($locations['locality']['false']);
+            sort($locations['locality']);
+            $form_options['cities'] = array('pls_empty_value' => 'Any') + $locations['locality'];
         }
 
         if (empty($locations['region'])) {
             $form_options['states'] = array('pls_empty_value' => 'Any');
         } else {
-            $form_options['states'] = array_merge(array('pls_empty_value' => 'Any'), $locations['region']);
-            unset($form_options['states']['false']);
+            unset($locations['region']['false']);
+            sort($locations['region']);
+            $form_options['states'] = array('pls_empty_value' => 'Any') + $locations['region'];
+            
         }
 
         if (empty($locations['postal'])) {
             $form_options['zips'] = array('pls_empty_value' => 'Any'); 
         } else {
-            $form_options['zips'] = array_merge(array('pls_empty_value' => 'Any'),$locations['postal']); 
-            unset($form_options['zips']['false']);    
+            unset($locations['postal']['false']);
+            sort($locations['postal']);
+            $form_options['zips'] = array('pls_empty_value' => 'Any') + $locations['postal'];
         }
 
         if (empty($locations['neighborhood'])) {
             $form_options['neighborhood'] = array('pls_empty_value' => 'Any'); 
         } else {
-            $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),$locations['neighborhood']); 
-            unset($form_options['neighborhood']['false']);    
+            unset($locations['neighborhood']['false']);
+            sort($locations['neighborhood']);
+            $form_options['neighborhood'] = array('pls_empty_value' => 'Any') + $locations['neighborhood'];
         }
         
         if (empty($locations['county'])) {
             $form_options['county'] = array('pls_empty_value' => 'Any'); 
         } else {
-            $form_options['county'] = array_merge(array('pls_empty_value' => 'Any'),$locations['county']); 
-            unset($form_options['county']['false']);
+            unset($locations['county']['false']);
+            sort($locations['county']);
+            $form_options['county'] = array('pls_empty_value' => 'Any') + $locations['county'];
         }
 
         if (empty($neighborhood_polygons_options)) {
             $form_options['neighborhood_polygons'] = array('pls_empty_value' => 'Any');  
         } else {
-            $form_options['neighborhood_polygons'] = array_merge(array('pls_empty_value' => 'Any'),$neighborhood_polygons_options); 
-            unset($form_options['neighborhood_polygons']['false']);
+            unset($neighborhood_polygons_options['false']);
+            sort($neighborhood_polygons_options);
+            $form_options['neighborhood_polygons'] = array('pls_empty_value' => 'Any') + $neighborhood_polygons_options;
         }
 
         
