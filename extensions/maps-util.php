@@ -312,7 +312,7 @@ class PLS_Map {
 					      }
 
 					      function get_lifestyle_form (success_callback, failed_callback) {
-					      	var response = {location: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>) , radius: 5000, types: ['atm']};
+					      	var response = {location: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>) , radius: 5000, types: ['']};
 					      	var form_values = [];
 					      	$.each($('#lifestyle_form_wrapper form').serializeArray(), function(i, field) {
 								form_values.push(field.name);
