@@ -149,11 +149,11 @@ class PLS_Partials_Get_Listings_Ajax {
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
         
-        if ($transient) {
-            $transient['sEcho'] = $_POST['sEcho'];
-            echo json_encode($transient);
-            die();
-        } 
+        // if ($transient) {
+        //     $transient['sEcho'] = $_POST['sEcho'];
+        //     echo json_encode($transient);
+        //     die();
+        // } 
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
@@ -188,7 +188,7 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Offer">
+<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
 
   <div class="listing-thumbnail grid_3 alpha">
          <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>

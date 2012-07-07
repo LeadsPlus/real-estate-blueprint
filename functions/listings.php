@@ -12,7 +12,11 @@ class PLS_Listing_Helper {
 		$formatted_listings = '';
 		if ($api_response['listings']) {
 			foreach ($api_response['listings'] as $listing) {
-				$formatted_listings .= '<option value="' . $listing['id'] . '" >' . $listing['location']['full_address'] . '</option>';
+			  if ( !empty($listing['location']['unit']) ) {
+				  $formatted_listings .= '<option value="' . $listing['id'] . '" >' . $listing['location']['address'] . ', #' . $listing['location']['unit'] . ', ' . $listing['location']['locality'] . ', ' . $listing['location']['region'] . '</option>';
+				} else {
+				  $formatted_listings .= '<option value="' . $listing['id'] . '" >' . $listing['location']['address'] . ', ' . $listing['location']['locality'] . ', ' . $listing['location']['region'] . '</option>';
+				}
 			}
 		} else {
 		$formatted_listings .= "No Results. Broaden your search.";
