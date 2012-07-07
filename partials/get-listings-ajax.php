@@ -149,11 +149,11 @@ class PLS_Partials_Get_Listings_Ajax {
         $transient_id = 'pl_' . $signature;
         $transient = get_site_transient($transient_id);
         
-        // if ($transient) {
-        //     $transient['sEcho'] = $_POST['sEcho'];
-        //     echo json_encode($transient);
-        //     die();
-        // } 
+        if ($transient) {
+            $transient['sEcho'] = $_POST['sEcho'];
+            echo json_encode($transient);
+            die();
+        } 
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
