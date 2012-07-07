@@ -200,10 +200,10 @@ class PLS_Map {
 						<?php else: ?>
 							var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_type($polygon_search)) ?>;
 						<?php endif ?>
-						console.log(data);
 						for (var j = other_polygons.length - 1; j >= 0; j--) {
 							other_polygons[j].setMap(null);
 						};
+						var all_bounds = new google.maps.LatLngBounds();
 						for (item in data) {
 							var coords = [];
 							for (var k = data[item].vertices.length - 1; k >= 0; k--) {
@@ -223,10 +223,12 @@ class PLS_Map {
 							customTxt = data[item].name;
 				            var bounds = new google.maps.LatLngBounds();
 				            for (p = 0; p < polygon.getPath().length; p++) {
+				              all_bounds.extend(polygon.getPath().getAt(p));
 							  bounds.extend(polygon.getPath().getAt(p));
 							}
 							var center = bounds.getCenter();
 							centers.push(center);
+							<?php echo $map_js_var ?>.map.fitBounds(all_bounds);
 				            other_text = new TxtOverlay(center,customTxt,"polygon_text_area",<?php echo $map_js_var ?>.map );
 							other_polygons.push(polygon);
 							other_polygons.push(other_text);
@@ -253,7 +255,7 @@ class PLS_Map {
 				    font-weight: bold;
 				}
 			</style>
-			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
+			<?php echo self::get_lifestyle_controls($map_args); ?>
 		<?php
 		return ob_get_clean();
 	}
@@ -310,7 +312,7 @@ class PLS_Map {
 					      }
 
 					      function get_lifestyle_form (success_callback, failed_callback) {
-					      	var response = {location: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>) , radius: 5000, types: ['atm']};
+					      	var response = {location: new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>) , radius: 5000, types: ['']};
 					      	var form_values = [];
 					      	$.each($('#lifestyle_form_wrapper form').serializeArray(), function(i, field) {
 								form_values.push(field.name);
@@ -595,14 +597,15 @@ class PLS_Map {
 						polygon.setOptions({fillOpacity: "0.9"});
 					}); 
 
-
 					google.maps.event.addListener(polygon,"mouseout",function(){
 						polygon.setOptions({fillOpacity: "0.4"});
 					}); 
 
-					google.maps.event.addListener(polygon,"click",function(){
+					google.maps.event.addListener(polygon,"click",function() {
+						pls_show_loading_overlay();
 						if (click_type && click_type == 'redirect') {
 							window.location.href = this.tax.permalink
+							pls_hide_loading_overlay();
 						} else {
 							var that = this;
 							request = {};
@@ -615,7 +618,7 @@ class PLS_Map {
 										pls_create_listing_marker(data[i], map_js_var);
 									};
 									pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
-
+									pls_hide_loading_overlay();
 								};
 							},'json');	
 						}
