@@ -18,15 +18,13 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+    	wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
 		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
 		wp_enqueue_script('text-overlay');
 
-
 		ob_start();
-		?>
-		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
 
+		?>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -165,10 +163,9 @@ class PLS_Map {
 		$map_args = self::process_defaults($map_args);
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
-
+		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
 		ob_start();
 		?>
-		  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 		  <script src="<?php echo trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' ?>"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
@@ -264,10 +261,9 @@ class PLS_Map {
 		$map_args = self::process_defaults($map_args);
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
-		
+		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
 		ob_start();
 		?>
-      		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -349,13 +345,12 @@ class PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		
-    // wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places');
+     	wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
 		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
 		wp_enqueue_script('text-overlay');
 
 		ob_start();
 		?>
-		  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -503,6 +498,16 @@ class PLS_Map {
 	}
 
 	private static function get_area_selectors ($map_args = array()) {
+
+			$args_signature = is_array($map_args) ? http_build_query($map_args) : $map_args;
+	        $signature = sha1($args_signature);
+	        $transient_id = 'pl_map_selectors' . $signature;
+	        $transient = get_site_transient($transient_id);
+	        
+	        if ($transient) {
+	            return $transient;
+	        } 
+
 			$response = array();
 			$form_options = array();
 			$form_options['locality'] = array_merge(array('false' => '---'), PLS_Plugin_API::get_location_list('locality'));
@@ -541,6 +546,7 @@ class PLS_Map {
 											<option value="20000">20000 meters</option>
 										</select></div>';
 	        }
+	        set_site_transient( $transient_id, $response , 3600 * 48 );
 	        return $response;
 	}
 
