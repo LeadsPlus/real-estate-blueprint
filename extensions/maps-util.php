@@ -240,7 +240,14 @@ class PLS_Map {
 							<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);
 							<?php echo self::$map_js_var ?>.map.setZoom(13);
 						});
+
+						google.maps.event.addListenerOnce(<?php echo self::$map_js_var ?>.map, 'resize', function() {
+							google.maps.event.addListenerOnce(<?php echo self::$map_js_var ?>.map, 'idle', function() {
+								<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);	
+							});
+						});
 					});
+					
 				});	  
 			</script>
 			<style type="text/css">
