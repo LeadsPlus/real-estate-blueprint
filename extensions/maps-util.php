@@ -80,7 +80,7 @@ class PLS_Map {
 					<?php endif; ?>
 				});	  
 			</script>
-			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
+			<?php echo self::get_lifestyle_controls($map_args); ?>
 		<?php
 		return ob_get_clean();
 	}
