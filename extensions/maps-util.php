@@ -47,7 +47,6 @@ class PLS_Map {
 
 					<?php if ($ajax_form_class): ?>
 					$('.<?php echo $ajax_form_class ?>').live('change', function () {
-						console.log('asdf');
 						update_listings();
 					});
 
@@ -61,7 +60,7 @@ class PLS_Map {
 						request.iDisplayStart = 0;
 						request.context = '<?php echo $ajax_form_class ?>';
 						request.sEcho = 1;
-						
+						pls_show_loading_overlay();
 						$.post(info.ajaxurl, request, function(ajax_response, textStatus, xhr) {
 							console.log(ajax_response);
 						  if (ajax_response && ajax_response['aaData'] && typeof <?php echo $map_js_var; ?> !== 'undefined') {
@@ -73,6 +72,7 @@ class PLS_Map {
 		                          }
 		                        }
 		                    };
+		                    pls_hide_loading_overlay();
 						}, 'json');
 						
 						console.log(request);
@@ -135,9 +135,9 @@ class PLS_Map {
 						request.iDisplayStart = 0;
 						request.context = '<?php echo $ajax_form_class ?>';
 						request.sEcho = 1;
-						
+						pls_show_loading_overlay();
 						$.post(info.ajaxurl, request, function(ajax_response, textStatus, xhr) {
-							console.log(ajax_response);
+							// console.log(ajax_response);
 						  if (ajax_response && ajax_response['aaData'] && typeof pls_google_map !== 'undefined') {
 		                        pls_clear_markers(pls_google_map);
 		                        if (typeof window['google'] != 'undefined') {
@@ -147,6 +147,7 @@ class PLS_Map {
 		                          }
 		                        }
 		                    };
+		                    pls_hide_loading_overlay();
 						}, 'json');
 						
 						console.log(request);
