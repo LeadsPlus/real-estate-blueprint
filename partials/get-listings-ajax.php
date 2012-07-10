@@ -170,7 +170,7 @@ class PLS_Partials_Get_Listings_Ajax {
             if (!empty($property_ids) || $allow_id_empty) {
               $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $property_ids, 'limit' => $_POST['limit'], 'offset' => $_POST['offset']));
             } elseif (isset($search_query['neighborhood_polygons']) && !empty($search_query['neighborhood_polygons']) ) {
-              $api_response = PLS_Plugin_API::get_polygon_listings( $search_query['neighborhood_polygons'] );
+              $api_response = PLS_Plugin_API::get_polygon_listings( $search_query );
             } else {
               $api_response = PLS_Plugin_API::get_listings_list($search_query);
             }
