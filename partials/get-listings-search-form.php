@@ -69,6 +69,8 @@ class PLS_Partials_Listing_Search_Form {
             'min_beds' => 1,
             'max_beds' => 1,
             'bathrooms' => 1,
+            'min_baths' => 1,
+            'max_baths' => 1,
             'price' => 1,
             'half_baths' => 1,
             'property_type' => 1,
@@ -359,6 +361,21 @@ class PLS_Partials_Listing_Search_Form {
             '15' => '15',
       );
 
+      $form_options['min_baths'] = array(
+            'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5',
+            '6' => '6',
+            '7' => '7',
+            '8' => '8',
+            '9' => '9',
+            '10' => '10'
+      );
+
         $user_bed_start = pls_get_option('pls-option-bed-min');
         $user_bed_end = pls_get_option('pls-option-bed-max');
         $user_bed_inc = pls_get_option('pls-option-bed-inc');
@@ -371,8 +388,9 @@ class PLS_Partials_Listing_Search_Form {
             }
         }
 
-        /** Set the maximum price options array. */
+        /** Set the max beds/baths array. */
         $form_options['max_beds'] = $form_options['min_beds'];
+        $form_options['max_baths'] = $form_options['min_baths'];
 
         /** Define an array for extra attributes. */
         $form_opt_attr = array();
@@ -443,6 +461,26 @@ class PLS_Partials_Listing_Search_Form {
                 /** Get the list of options with the empty valued element selected. */
                 pls_h_options( $form_options['bathrooms'], wp_kses_post(@$_POST['metadata']['baths'] ) )
             );            
+        }
+
+        /** Add the min baths select element. */
+        if ($min_baths == 1) {
+            $form_html['min_baths'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[min_baths]') + $form_opt_attr['min_baths'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['min_baths'], @$_POST['metadata']['min_baths']  )
+                );
+        }
+
+        /** Add the max baths select element. */
+        if ($max_baths == 1) {
+            $form_html['max_baths'] = pls_h( 
+                'select',
+                array( 'name' => 'metadata[max_baths]') + $form_opt_attr['max_baths'],
+                    /** Get the list of options with the empty valued element selected. */
+                    pls_h_options( $form_options['max_baths'], @$_POST['metadata']['max_baths']  )
+                );
         }
 
         /** Add the bathroms select element. */
@@ -599,6 +637,8 @@ class PLS_Partials_Listing_Search_Form {
             'min_beds' => 'Min Beds',
             'max_beds' => 'Max Beds',
             'bathrooms' => 'Baths',
+            'min_baths' => 'Min Baths',
+            'max_baths' => 'Max Baths',
             'half_baths' => 'Half Baths',
             'property_type' => 'Property Type',
             'zoning_types' => 'Zoning Type',
