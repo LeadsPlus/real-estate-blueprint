@@ -666,17 +666,16 @@ class PLS_Map {
 				    };
 				    marker_details.content = '<div id="content">'+
                         '<div id="siteNotice">'+'</div>'+
-                          '<h2 id="firstHeading" class="firstHeading">'+ listing['location']['full_address'] +'</h2>'+
+                          '<h2 id="firstHeading" class="firstHeading"><a href="'+ listing['cur_data']['url'] + '">' + listing['location']['full_address'] +'</a></h2>'+
                           '<div id="bodyContent">'+
                             '<img width="80px" height="80px" style="float: left" src="'+image_url+'" />' +
                             '<ul style="float: right; width: 130px">' +
                               '<li> Beds: '+ listing['cur_data']['beds'] +'</li>' +
                               '<li> Baths: '+ listing['cur_data']['baths'] +'</li>' +
-                              '<li> Available: '+ listing['cur_data']['avail_on'] +'</li>' +
                               '<li> Price: '+ listing['cur_data']['price'] +'</li>' +
                             '</ul>' +
                           '</div>' +
-                          '<div style="margin: 15px 70px; float: left; font-size: 16px; font-weight: bold;"><a href="'+listing['cur_data']['url']+'">View Details</a></div>' +
+                          '<div class="viewListing" style="margin: 15px 70px; float: left; font-size: 16px; font-weight: bold;"><a href="'+listing['cur_data']['url']+'">View Details</a></div>' +
                           '<div class="clear"></div>' +
                         '</div>'+
                       '</div>';
