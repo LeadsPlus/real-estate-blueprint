@@ -193,7 +193,6 @@ class PLS_Map {
 						pls_center_map(<?php echo self::$map_js_var ?>);
 
 						<?php if ($polygon): ?>
-							console.log('here');
 							var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_slug($polygon)) ?>;
 						<?php else: ?>
 							var data = <?php echo json_encode(PLS_Plugin_API::get_taxonomies_by_type($polygon_search)) ?>;
@@ -232,11 +231,14 @@ class PLS_Map {
 							other_polygons.push(other_text);
 						};
 
-						var polygonbounds = new google.maps.LatLngBounds();
-			            for (p = 0; p < centers.length; p++) {
-						  polygonbounds.extend(centers[p]);
-						}
-						var mapCenter = polygonbounds.getCenter();
+						if (0 < centers.length) {
+							var polygonbounds = new google.maps.LatLngBounds();
+				            for (p = 0; p < centers.length; p++) {
+							  polygonbounds.extend(centers[p]);
+							}
+							var mapCenter = polygonbounds.getCenter();	
+						};
+						
 						google.maps.event.addListenerOnce(<?php echo self::$map_js_var ?>.map, 'idle', function() {
 							<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);
 							<?php echo self::$map_js_var ?>.map.setZoom(13);
@@ -774,6 +776,7 @@ class PLS_Map {
 		$defaults = array(
         	'lat' => '42.37',
         	'lng' => '-71.03',
+        	'center_location' => false,
         	'zoom' => '14',
         	'width' => 300,
         	'height' => 300,
