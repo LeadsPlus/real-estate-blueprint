@@ -111,11 +111,17 @@ jQuery(document).ready(function($) {
 	$('.fls-add-listing').live('click', function (event) {
 		event.preventDefault();
 		var key = $(this).parent().children('select').val();
+		var iterator = $(this).parent().children('select').attr('ref');
 		var text = $(this).parent().find('option:selected').text();
 		$(this).parent().find('option:selected').remove();
 		var option_name = $(this).parent().find('#option-name').val();
 		var listing_box = $(this).parent().parent().find('.fls-option');
-		var html = "<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'>" + text + "</div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='" +option_name+ "["+key+"]=' value='"+text+"' /></li>";
+		if ($(this).hasClass('for_slideshow')) {
+			var html = "<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'>" + text + "</div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='" +option_name+ "["+iterator+"]["+key+"]=' value='"+text+"' /></li>";	
+		} else {
+			var html = "<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'>" + text + "</div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='" +option_name+ "["+key+"]=' value='"+text+"' /></li>";	
+		};
+		
 		listing_box.append(html);
 	});
 
@@ -143,5 +149,13 @@ jQuery(document).ready(function($) {
 			};
 		}, 'json');
 	}
+
+
+	$('.slideshow_type').live('change', function(event) {
+		$(this).parent().parent().children('.type_controls').hide();
+		$(this).parent().parent().children('.type_controls#' + $(this).val() + '_type').show();
+		
+	});
+	$('.slideshow_type').trigger('change');
 		 		
 });	

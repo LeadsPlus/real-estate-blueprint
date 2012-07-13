@@ -260,7 +260,7 @@ function optionsframework_fields() {
 		
 		// Background
 		case 'background':
-			
+			// pls_dump($val);
 			$background = $val;
 
 			// Check if null
@@ -384,11 +384,152 @@ function optionsframework_fields() {
 
 		break;
 
+		case "slideshow":
+		if (!isset($val['num_slides'])) {
+			$val['num_slides'] = 3;
+		}
+		ob_start();
+			pls_dump($value, $val);
+			for ($i=0; $i < $val['num_slides']; $i++) { 
+				?>
+					<div class="featured_slideshow_options">
+						<div class="featured_slide">
+							<div class="featured_slide_header">
+								<h2>Slide <?php echo $i+1 ?></h2>
+								<select class="slideshow_type" name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][type]') ?>" id="" >
+									<option value="custom" <?php echo $val[$i]['type'] == 'custom' ? 'selected=selected' : '' ?> >Custom Image</option>
+									<option value="listing" <?php echo $val[$i]['type'] == 'listing' ? 'selected=selected' : '' ?> >Listing</option>
+<!-- 									<option value="post">Post</option>
+									<option value="area">Area Page</option> -->
+								</select>
+							</div>
+							<div class="type_controls" id="custom_type">
+								<p>Select an image for the background of the slide and enter in text or html to be displayed. </p>
+								<div id="image_wrapper_<?php echo $i ?>" class="item_row">
+									<label for="">Background Image</label>
+									<?php echo optionsframework_medialibrary_uploader( $value['id'], $val[$i]['image'], null, '',0, "image", $i ); ?>		
+								</div>
+								<div class="item_row">
+									<label for="">Click to Link</label>
+									<input type="text" value="<?php echo $val[$i]['link'] ?>" name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][link]') ?>">
+								</div>
+								<div class="item_row">
+									<label for="">HTML/Text Displayed</label>
+									<textarea name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][html]') ?>" id="" cols="30" rows="10"><?php echo $val[$i]['html'] ?></textarea>	
+								</div>
+							</div>
+							<div class="type_controls" id="listing_type">
+								<?php echo pls_generate_featured_listings_ui($value, $val[$i], $option_name, $i, $for_slideshow = true) ?>		
+							</div>
+							<!-- <div class="type_controls" id="post_type">
+								<select name="" id="">
+									<option>How the web was won</option>
+								</select>
+							</div>
+							<div class="type_controls" id="area_type">
+								
+							</div> -->
+						</div>						
+					</div>
+				<?php
+			}
+			$output .= trim( ob_get_clean() );
+		break;
+
 		// Featured Listing Selection
 		case "featured_listing":
+			$output .= pls_generate_featured_listings_ui($value,$val, $option_name);
+		break;
+
+
+
+		// Featured Listing Selection
+		case "featured_neighborhoods":
 
 			ob_start();
 			?>
+
+			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
+
+				<div class="fls-address">
+
+          <label>Neighborhoods</label>
+          <?php $categories = get_categories('type=property&taxonomy=neighborhood'); ?>
+          <select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-neighborhood">
+            <?php for ($i = 1; $i <= 200; $i++) {
+              if (!isset($categories[$i])) {
+                break;
+              } else {
+              echo '<option value=' . $categories[$i]->slug . '>';
+                echo $categories[$i]->name;
+              echo '</option>';
+              }
+            }
+            ?>
+          </select>
+          
+
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Neighborhood" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
+					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
+
+				</div>
+
+				<h4 class="heading">Featured Neighborhoods</h4>
+				<div class="fls-option">
+					<div class="controls">
+						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
+							<?php if (isset($settings[$value['id']])): ?>
+								<?php foreach ($settings[$value['id']] as $key => $text): ?>
+									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
+								<?php endforeach ?>
+							<?php endif ?>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+
+
+			<?php
+			$output .= trim( ob_get_clean() );
+		break;
+
+
+
+		// Heading for Navigation
+		case "heading":
+			if ($counter >= 2) {
+			   $output .= '</div>'."\n";
+			}
+			$jquery_click_hook = preg_replace('/[^a-zA-Z0-9._\-]/', '', strtolower($value['name']) );
+			$jquery_click_hook = "of-option-" . $jquery_click_hook;
+			$menu .= '<li class="side-bar-nav-item"><a id="'.  esc_attr( $jquery_click_hook ) . '-tab" class="nav-tab" title="' . esc_attr( $value['name'] ) . '" href="' . esc_attr( '#'.  $jquery_click_hook ) . '">' . esc_html( $value['name'] ) . '</a></li>';
+			$output .= '<div class="group" id="' . esc_attr( $jquery_click_hook ) . '">';
+			$output .= '<h3 id="optionsframework-submit-top" >' . esc_html( $value['name'] ) . '<input type="submit" class="top-button button-primary" name="update" value="'. 'Save Options'  . '" /></h3>' . "\n";
+			break;
+		}
+
+		if ( ( $value['type'] != "heading" ) && ( $value['type'] != "info" ) ) {
+			if ( $value['type'] != "checkbox" ) {
+				$output .= '<br/>';
+			}
+			$output .= '</div>';
+			if ( $value['type'] != "checkbox" ) {
+				$output .= '<div class="explain">' . wp_kses( $explain_value, $allowedtags) . '</div>'."\n";
+			}
+			$output .= '<div class="clear"></div></div></div>'."\n";
+		}
+	}
+    $output .= '</div>';
+
+    return array($output,$menu);
+}
+
+function pls_generate_featured_listings_ui ($value, $val, $option_name, $iterator = false, $for_slideshow = false) {
+ob_start();
+
+			?>
+
 				<div class="featured_listings_options">
 					<div class="featured-listing-form-city">
 						<label>City</label>
@@ -480,8 +621,8 @@ function optionsframework_fields() {
 				
 			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
 				<div class="fls-address">
-					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address"></select><div id="search_message" style="display:none; margin-top: 23px; font-weight: bold;">Searching...</div>
-					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
+					<select name="<?php echo $value['id']; ?>" <?php echo $iterator ? 'ref="' . $iterator. '"' : '' ?> class="fls-address-select" id="fls-select-address"></select><div id="search_message" style="display:none; margin-top: 23px; font-weight: bold;">Searching...</div>
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button <?php echo $for_slideshow ? 'for_slideshow' : '' ?>" id="add-listing-<?php echo $value['id']; ?>">	
 					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
 				</div>
 
@@ -489,9 +630,23 @@ function optionsframework_fields() {
 				<div class="fls-option">
 					<div class="controls">
 						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
-							<?php if (isset($settings[$value['id']])): ?>
-								<?php foreach ($settings[$value['id']] as $key => $text): ?>
-									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
+							<?php if (isset($val) && !empty($val) && isset($val['type']) && $val['type'] == 'listing'): ?>
+								<?php foreach ($val as $key => $text): ?>
+									<?php if ($key == 'type' || $key == 'html' || $key == 'image' || $key == 'link'): ?>
+										<?php continue; ?>
+									<?php endif ?>
+									<li style='float:left; list-style-type: none;'>
+										<div id='pls-featured-text' style='width: 200px; float: left;'>
+											<?php echo $text ?>
+										</div>
+										<a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a>
+										<?php if ($iterator == false): ?>
+											<input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' />	
+										<?php else: ?>
+											<input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . ']['.$iterator.'][' . $key . ']=' ) ?>' value='<?php echo $text ?>' />	
+										<?php endif ?>
+										
+									</li>
 								<?php endforeach ?>
 							<?php endif ?>
 						</ul>
@@ -502,90 +657,6 @@ function optionsframework_fields() {
 
 
 			<?php
-			$output .= trim( ob_get_clean() );
-		break;
-
-
-
-		// Featured Listing Selection
-		case "featured_neighborhoods":
-
-			ob_start();
-			?>
-
-			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
-
-				<div class="fls-address">
-
-          <label>Neighborhoods</label>
-          <?php $categories = get_categories('type=property&taxonomy=neighborhood'); ?>
-          <select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-neighborhood">
-            <?php for ($i = 1; $i <= 200; $i++) {
-              if (!isset($categories[$i])) {
-                break;
-              } else {
-              echo '<option value=' . $categories[$i]->slug . '>';
-                echo $categories[$i]->name;
-              echo '</option>';
-              }
-            }
-            ?>
-          </select>
-          
-
-					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Neighborhood" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
-					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
-
-				</div>
-
-				<h4 class="heading">Featured Neighborhoods</h4>
-				<div class="fls-option">
-					<div class="controls">
-						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
-							<?php if (isset($settings[$value['id']])): ?>
-								<?php foreach ($settings[$value['id']] as $key => $text): ?>
-									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
-								<?php endforeach ?>
-							<?php endif ?>
-						</ul>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-<?php echo pls_get_option('') ?>
-
-			<?php
-			$output .= trim( ob_get_clean() );
-		break;
-
-
-
-		// Heading for Navigation
-		case "heading":
-			if ($counter >= 2) {
-			   $output .= '</div>'."\n";
-			}
-			$jquery_click_hook = preg_replace('/[^a-zA-Z0-9._\-]/', '', strtolower($value['name']) );
-			$jquery_click_hook = "of-option-" . $jquery_click_hook;
-			$menu .= '<li class="side-bar-nav-item"><a id="'.  esc_attr( $jquery_click_hook ) . '-tab" class="nav-tab" title="' . esc_attr( $value['name'] ) . '" href="' . esc_attr( '#'.  $jquery_click_hook ) . '">' . esc_html( $value['name'] ) . '</a></li>';
-			$output .= '<div class="group" id="' . esc_attr( $jquery_click_hook ) . '">';
-			$output .= '<h3 id="optionsframework-submit-top" >' . esc_html( $value['name'] ) . '<input type="submit" class="top-button button-primary" name="update" value="'. 'Save Options'  . '" /></h3>' . "\n";
-			break;
-		}
-
-		if ( ( $value['type'] != "heading" ) && ( $value['type'] != "info" ) ) {
-			if ( $value['type'] != "checkbox" ) {
-				$output .= '<br/>';
-			}
-			$output .= '</div>';
-			if ( $value['type'] != "checkbox" ) {
-				$output .= '<div class="explain">' . wp_kses( $explain_value, $allowedtags) . '</div>'."\n";
-			}
-			$output .= '<div class="clear"></div></div></div>'."\n";
-		}
-	}
-    $output .= '</div>';
-
-    return array($output,$menu);
+			return trim( ob_get_clean() );
 }
 

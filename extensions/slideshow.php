@@ -83,64 +83,97 @@ class PLS_Slideshow {
             'context' => '',
             'context_var' => false,
             'featured_option_id' => false,
+            'allow_user_slides' => false,
+            'user_slides_header_id' => false,
             'listings' => 'limit=5&sort_by=price',
             'data' => false,
         );
-
-        /** Merge the arguments with the defaults. */
         $args = wp_parse_args( $args, $defaults );
-
-        /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
 
-        if ( !$data || ! is_array($data) ) {
+        // pls_dump(pls_get_option($user_slides_header_id));
 
+        if ( !$data || ! is_array($data) ) {
             /** Display a placeholder if the plugin is not active or there is no API key. */
             if ( pls_has_plugin_error() && current_user_can( 'administrator' ) ) {
                 global $PLS_API_DEFAULT_LISTING;
                 $api_response = $PLS_API_DEFAULT_LISTING;
-            } elseif (pls_has_plugin_error()) {
-                global $PLS_API_DEFAULT_LISTING;
-                $api_response = $PLS_API_DEFAULT_LISTING;
             } else {
-                /** Request the list of properties. */
-                if ($featured_option_id) {
-                    $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
-                } 
+                /** Data assumed to take this form. */
+                $data = array('images' => array(),'links' => array(),'captions' => array());
 
-                if (!$featured_option_id || empty($api_response['listings'])) {
-                    $api_response = PLS_Plugin_API::get_property_list($listings);    
+                //if the dev allows user input, get a list of the stytles
+                if ($allow_user_slides && $user_slides_header_id) {
+                    $slides = pls_get_option($user_slides_header_id);
+                    foreach ($slides as $index => $slide) {
+                        switch ($slide['type']) {
+                            case 'listing':
+                                unset($slide['html'], $slide['image'], $slide['type'], $slide['link']);
+                                $property_id = key($slide);
+                                $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => array($property_id)));
+                                if ($api_response['total'] == '1') {
+                                    $listing = $api_response['listings'][0];
+                                    $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
+                                    /** Overwrite the placester url with the local url. */
+                                    $data['links'][] = $listing_url;
+                                    $data['images'][] = ! empty( $listing['images'] ) ?  $listing['images'][0]['url'] : PLS_IMG_URL . "/null/listing-1200x720.jpg";
+                                    $data['listing'][] = $listing;
+                                    /** Get the listing caption. */
+                                    ob_start();
+                                    ?>
+                                     <div id="caption-<?php echo $index ?>" class="orbit-caption">
+                                        <p class="caption-title"><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
+                                        <p class="caption-subtitle"><?php printf( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
+                                        <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php 'See Details' ?></span></a>
+                                    </div>
+                                    <?php 
+                                    $data['captions'][] = trim( ob_get_clean() );
+                                } else {
+
+                                }
+                                break;
+                            case 'default':
+                            case 'custom':
+                                $data['images'][] = $slide['image'];
+                                $data['links'][] = $slide['link'];
+                                ob_start();
+                                    ?>
+                                     <div id="caption-<?php echo $index ?>" class="orbit-caption">
+                                        <?php echo $slide['html']; ?>
+                                    </div>
+                                    <?php 
+                                $data['captions'][] = trim( ob_get_clean() );
+                                break;
+                        }
+                    }
+                } else {
+                    if ($featured_option_id) {
+                        $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
+                    } else {
+                        $api_response = PLS_Plugin_API::get_property_list($listings);    
+                    }
+
+                    $listings = $api_response['listings'];
+                    foreach ($listings as $index => $listing) {
+                        $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
+                        
+                        /** Overwrite the placester url with the local url. */
+                        $data['links'][] = $listing_url;
+                        $data['images'][] = ! empty( $listing['images'] ) ?  $listing['images'][0]['url'] : PLS_IMG_URL . "/null/listing-1200x720.jpg";
+                        $data['listing'][] = $listing;
+
+                        /** Get the listing caption. */
+                        ob_start();
+                        ?>
+                         <div id="caption-<?php echo $index ?>" class="orbit-caption">
+                            <p class="caption-title"><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
+                            <p class="caption-subtitle"><?php printf( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
+                            <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php 'See Details' ?></span></a>
+                        </div>
+                        <?php 
+                        $data['captions'][] = trim( ob_get_clean() );
+                    }
                 }
-            }
-
-            $listings = $api_response['listings'];
-
-            /** Data assumed to take this form. */
-            $data = array(
-                'images' => array(),
-                'links' => array(),
-                'captions' => array(),
-            );
-
-            foreach ($listings as $index => $listing) {
-                $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
-                
-                /** Overwrite the placester url with the local url. */
-                $data['links'][] = $listing_url;
-                $data['images'][] = ! empty( $listing['images'] ) ?  $listing['images'][0]['url'] : PLS_IMG_URL . "/null/listing-1200x720.jpg";
-                $data['listing'][] = $listing;
-
-                /** Get the listing caption. */
-                ob_start();
-                ?>
-                 <div id="caption-<?php echo $index ?>" class="orbit-caption">
-                    <p class="caption-title"><a href="<?php echo $listing['cur_data']['url'] ?>"><?php echo $listing['location']['address'] ?></a></p>
-                    <p class="caption-subtitle"><?php printf( ' <span class="price">%1$s beds</span>, <span class="baths">%2$s baths</span>', $listing['cur_data']['beds'], $listing['cur_data']['baths']); ?></p>
-                    <a class="button details" href="<?php echo $listing['cur_data']['url'] ?>"><span><?php 'See Details' ?></span></a>
-                </div>
-                <?php 
-                $data['captions'][] = trim( ob_get_clean() );
-
             }
         }
 
@@ -151,7 +184,6 @@ class PLS_Slideshow {
             'slides' => '',
             'captions' => '',
         );
-
         /** Create the slideshow */
         foreach( $data['images'] as $index => $slide_src ) {
             $extra_attr = array();
@@ -164,7 +196,7 @@ class PLS_Slideshow {
             }
 
             /** Create the img element. */
-						$slide = pls_h_img($slide_src, false, $extra_attr);
+            $slide = pls_h_img($slide_src, false, $extra_attr);
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )

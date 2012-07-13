@@ -241,6 +241,14 @@ function of_sanitize_featured_listing($value) {
 }
 add_filter( 'of_sanitize_featured_listing', 'of_sanitize_featured_listing' );
 
+function of_sanitize_slideshow($value) {
+	// pls_dump($value);
+	// $value = wp_parse_args($value, array('image' => ''));
+	// $value['image'] = apply_filters( 'of_sanitize_upload', $value['image'] );
+	return $value;
+}
+add_filter( 'of_sanitize_slideshow', 'of_sanitize_slideshow' );
+
 function of_sanitize_border_style( $value ) {
 	$recognized = of_recognized_border_styles();
 	if ( array_key_exists( $value, $recognized ) ) {
