@@ -386,12 +386,15 @@ function optionsframework_fields() {
 
 		case "slideshow":
 		if (!isset($val['num_slides'])) {
-			$val['num_slides'] = 3;
+			$val['num_slides'] = 6;
 		}
 		ob_start();
-			pls_dump($value, $val);
 			for ($i=0; $i < $val['num_slides']; $i++) { 
 				?>
+					<?php if (!isset($val[$i])): ?>
+						<?php $val[$i] = array(); ?>
+					<?php endif ?>
+					<?php $val[$i] = wp_parse_args($val[$i], array('image' => '', 'link' => '', 'html' => '', 'type' => '', '')) ?>
 					<div class="featured_slideshow_options">
 						<div class="featured_slide">
 							<div class="featured_slide_header">
