@@ -149,7 +149,9 @@ class PLS_Slideshow {
                 } else {
                     if ($featured_option_id) {
                         $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
-                    } else {
+                    } 
+
+                    if (empty($api_response['listings'])) {
                         $api_response = PLS_Plugin_API::get_property_list($listings);    
                     }
 
