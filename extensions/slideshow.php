@@ -89,6 +89,10 @@ class PLS_Slideshow {
             'data' => false,
         );
         $args = wp_parse_args( $args, $defaults );
+        $cache = new PLS_Cache('Slideshow');
+        if ($result = $cache->get($args)) {
+          return $result;
+        }
         extract( $args, EXTR_SKIP );
 
         // pls_dump(pls_get_option($user_slides_header_id));
@@ -274,8 +278,9 @@ class PLS_Slideshow {
         /** Geth the js. */
         $js = ob_get_clean();
 		$js = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_js', $context ), '_', 'pre', false ), $js, $html, $data, $context, $context_var );
-
-        return apply_filters( pls_get_merged_strings( array( 'pls_slideshow', $context ), '_', 'pre', false ), $css . $html . $js, $html, $js, $data, $context, $context_var, $args );
+        $full_slideshow = apply_filters( pls_get_merged_strings( array( 'pls_slideshow', $context ), '_', 'pre', false ), $css . $html . $js, $html, $js, $data, $context, $context_var, $args );
+        $cache->save($full_slideshow);
+        return $full_slideshow;
     }
 
     static function prepare_single_listing ($listing = false) {
