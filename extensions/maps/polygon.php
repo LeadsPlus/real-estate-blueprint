@@ -105,7 +105,8 @@ class PLS_Map_Polygon extends PLS_Map {
 			</style>
 			<?php echo self::get_lifestyle_controls($map_args); ?>
 		<?php
-		return ob_get_clean();
+		$response = ob_get_clean();
+		return $response;
 	}
 
 }
