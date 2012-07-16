@@ -13,7 +13,7 @@ class PLS_Taxonomy {
 
 		$cache = new PLS_Cache('nbh');
 		if ($result = $cache->get($args)) {
-			// return $result;
+			return $result;
 		}
 
 		extract(self::process_args($args), EXTR_SKIP);
