@@ -113,6 +113,14 @@ class PLS_Plugin_API {
         }
         return array();
     }
+
+    static function get_polygon_links ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygon_links'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
     
     static function get_company_details() {
         $return = self::_try_for_exceptions( 'get_company_details' );
