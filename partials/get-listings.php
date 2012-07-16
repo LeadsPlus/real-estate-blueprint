@@ -33,14 +33,10 @@ class PLS_Partial_Get_Listings {
      */
     function init ($args = '') {
 
-        $args_signature = is_array($args) ? http_build_query(array_merge($args, array('api_key' => PLS_Plugin_API::get_api_key()) ) ) : $args;
-        $signature = sha1($args_signature);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_site_transient($transient_id);
-        
-        // if ($transient) {
-        //     return $transient;
-        // } 
+        $cache = new PLS_Cache('static listings');
+        if ($result = $cache->get($args)) {
+          return $result;
+        }
 
         /** Define the default argument array. */
         $defaults = array(
@@ -213,8 +209,7 @@ class PLS_Partial_Get_Listings {
 
     /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
     $return = apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
-    set_site_transient( $transient_id, $return , 3600 * 48 );
-  
+    $cache->save($return);  
     return $return;
   }
 
