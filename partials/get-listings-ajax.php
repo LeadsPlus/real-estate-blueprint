@@ -145,7 +145,7 @@ class PLS_Partials_Get_Listings_Ajax {
           unset($defaults['search_query']['sEcho']);
         }
 
-        $cache = new PLS_Cache('ajax listings');
+        $cache = new PLS_Cache('ajaxListings');
         if ($transient = $cache->get($defaults)) {
             $transient['sEcho'] = $_POST['sEcho'];
             echo json_encode($transient);
