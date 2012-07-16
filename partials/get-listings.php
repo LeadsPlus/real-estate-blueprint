@@ -33,7 +33,7 @@ class PLS_Partial_Get_Listings {
      */
     function init ($args = '') {
 
-        $cache = new PLS_Cache('staticListings');
+        $cache = new PLS_Cache('list');
         if ($result = $cache->get($args)) {
           return $result;
         }

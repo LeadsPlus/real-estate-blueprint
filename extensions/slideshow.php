@@ -89,7 +89,7 @@ class PLS_Slideshow {
             'data' => false,
         );
         $args = wp_parse_args( $args, $defaults );
-        $cache = new PLS_Cache('Slideshow');
+        $cache = new PLS_Cache('slide');
         if ($result = $cache->get($args)) {
           return $result;
         }
