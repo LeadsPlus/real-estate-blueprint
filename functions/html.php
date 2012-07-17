@@ -166,9 +166,6 @@ function pls_h_checkbox( $checked, $extra_attr = array() ) {
  */
 function pls_h_options( $option_array, $selected_value = false, $clone_value = false, $extra_attr = array() ) {
 
-    if ( ! is_array( $option_array ) )
-        return;
-
     $return = '';
 
     foreach ( $option_array as $key => $value ) {
@@ -183,9 +180,16 @@ function pls_h_options( $option_array, $selected_value = false, $clone_value = f
         $option_label = $value;
 
         $attr = array();
-
-        if ( ( $selected_value ) && ( (string) $selected_value == (string) $option_value ) )
+        //allow the form library to accept arrays for multiselect items
+        if ( $selected_value && is_array($selected_value) ) {
+            foreach ($selected_value as $single_value) {
+                if ($single_value == $option_value) {
+                    $attr['selected'] = true;
+                }
+            }
+        } elseif ( ( $selected_value ) && ( (string) $selected_value == (string) $option_value ) ) {
             $attr['selected'] = true;
+        }
 
         $attr['value'] = $option_value;
 
