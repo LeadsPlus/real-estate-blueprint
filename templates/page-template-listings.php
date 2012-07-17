@@ -14,7 +14,7 @@
 	}
 </style>
 <section class="complex-search grid_8 alpha" itemscope itemtype="http://schema.org/SearchResultsPage">
-	<?php echo PLS_Partials::get_listings_search_form('context=listings&ajax=1&theme_option_id=listing-search-page'); ?>
+	<?php echo PLS_Partials::get_listings_search_form('context=listings&ajax=1&neighborhood_polygons=1&neighborhood_polygons_type=neighborhood'); ?>
 	<div class="clear"></div>
 	<div style="font-size: 16px; font-weight: bold; float: right;" id="pls_listings_search_results"><span id="pls_num_results"></span> listing match your search.</div>
 </section>

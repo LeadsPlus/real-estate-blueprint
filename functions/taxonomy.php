@@ -11,13 +11,10 @@ class PLS_Taxonomy {
 
 	function get ($args = array()) {
 
-		$signature = sha1(implode($args), true);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_transient($transient_id);
-        
-        if ($transient) {
-        	return $transient;
-        } 
+		$cache = new PLS_Cache('nbh');
+		if ($result = $cache->get($args)) {
+			return $result;
+		}
 
 		extract(self::process_args($args), EXTR_SKIP);
 		$subject = array();
@@ -39,15 +36,25 @@ class PLS_Taxonomy {
 		}
 		$term = wp_parse_args($term, $custom_data);
 		$term['api_field'] = $subject['api_field'];
-		$term['listings'] = pls_get_listings( "limit=5&context=home&request_params=location[" . $term['api_field'] . "]=" . $term['name'] );
-		
-		$term['listing_photos'] = array();
+
+		//if there's a polygon, use that to get listings. Otherwise, use the name of the neighborhood
+		$polygon = PLS_Plugin_API::get_taxonomies_by_slug($subject['term']);
+		if (!is_array($polygons) && !empty($polygon[0])) {
+			$polygon[0]['neighborhood_polygons'] = $polygon[0]['name'];
+			$listings_raw = PLS_Plugin_API::get_polygon_listings( $polygon[0] );
+			$term['listings'] = pls_get_listings( "limit=5&context=home&neighborhood_polygons=" . $term['name'] );
+		} else {
+			$listings_raw = PLS_Plugin_API::get_property_list("location[" . $term['api_field'] . "]=" . $term['name']);  	
+			$term['listings'] = pls_get_listings( "limit=5&context=home&request_params=location[" . $term['api_field'] . "]=" . $term['name'] );
+		}
 		$term['areas'] = array('locality' => array(), 'postal' => array(), 'neighborhood' => array(), 'address' => array());
 		$locality_tree = array('city' => array('postal', 'neighborhood', 'address'), 'zip' => array('neighborhood', 'address'), 'neighborhood' => array('address'), 'street' => array());
-		$listings_raw = PLS_Plugin_API::get_property_list("location[" . $term['api_field'] . "]=" . $term['name']);  
 		
-		$api_translations = array('locality' => 'city', 'neighborhood' => 'neighborhood', 'postal' => 'zip', 'address' => 'street');
 		$term['listings_raw'] = $listings_raw['listings'];
+
+		//assemble all the photos
+		$api_translations = array('locality' => 'city', 'neighborhood' => 'neighborhood', 'postal' => 'zip', 'address' => 'street');
+		$term['listing_photos'] = array();
 		$count = 0;
 		if (isset($listings_raw['listings'])) {
 			foreach ($listings_raw['listings'] as $key => $listing) {
@@ -71,7 +78,7 @@ class PLS_Taxonomy {
 			}
 		}
 		$term['polygon'] = PLS_Plugin_API::get_polygon_detail(array('tax' => $term['api_field'], 'slug' => $subject['term']));
-		set_transient( $transient_id, $term , 3600 * 48 );
+		$cache->save($term);
 		return $term;
 	}
 

@@ -29,7 +29,8 @@ jQuery(document).ready(function($) {
                         }
                       };
                     //required to load the datatable
-                   fnCallback(ajax_response)
+                   fnCallback(ajax_response);
+                   update_favorites_through_cache();
                 }
             });
         } 
@@ -53,9 +54,38 @@ jQuery(document).ready(function($) {
         return aoData;
     }
 
-  function custom_total_results (ajax_response) {
-    $('#pls_listings_search_results #pls_num_results').html(ajax_response.iTotalDisplayRecords);
-  }
+    function custom_total_results (ajax_response) {
+        $('#pls_listings_search_results #pls_num_results').html(ajax_response.iTotalDisplayRecords);
+    }
+
+    function update_favorites_through_cache () {
+        $.post(info.ajaxurl, {action: 'get_favorites'}, function(data, textStatus, xhr) {
+            if (data) {
+                $('#pl_add_remove_lead_favorites .pl_prop_fav_link').each(function(index) {
+                    var flag = false;
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        //this listing should be a favorite
+                        if ($(this).attr('href') == ('#' + data[i].id) ) {
+                            if ($(this).attr('id') == 'pl_add_favorite') {
+                                $(this).hide();
+                            } else {
+                                $(this).show();
+                            };
+                            flag = true;
+                        } 
+                    };
+                    //this listing shouldn't be a favorite
+                    if (!flag) {
+                        if ($(this).attr('id') == 'pl_add_favorite') {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        };
+                    };
+                });     
+            };
+        }, 'json');
+    }
 
     //datepicker
     $("input#metadata-max_avail_on_picker, #metadata-min_avail_on_picker").datepicker({

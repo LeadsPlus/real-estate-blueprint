@@ -260,7 +260,7 @@ function optionsframework_fields() {
 		
 		// Background
 		case 'background':
-			
+			// pls_dump($val);
 			$background = $val;
 
 			// Check if null
@@ -384,125 +384,64 @@ function optionsframework_fields() {
 
 		break;
 
+		case "slideshow":
+		if (!isset($val['num_slides'])) {
+			$val['num_slides'] = 6;
+		}
+		ob_start();
+			for ($i=0; $i < $val['num_slides']; $i++) { 
+				?>
+					<?php if (!isset($val[$i])): ?>
+						<?php $val[$i] = array(); ?>
+					<?php endif ?>
+					<?php $val[$i] = wp_parse_args($val[$i], array('image' => '', 'link' => '', 'html' => '', 'type' => '', '')) ?>
+					<div class="featured_slideshow_options">
+						<div class="featured_slide">
+							<div class="featured_slide_header">
+								<h2>Slide <?php echo $i+1 ?></h2>
+								<select class="slideshow_type" name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][type]') ?>" id="" >
+									<option value="custom" <?php echo $val[$i]['type'] == 'custom' ? 'selected=selected' : '' ?> >Custom Image</option>
+									<option value="listing" <?php echo $val[$i]['type'] == 'listing' ? 'selected=selected' : '' ?> >Listing</option>
+<!-- 									<option value="post">Post</option>
+									<option value="area">Area Page</option> -->
+								</select>
+							</div>
+							<div class="type_controls" id="custom_type">
+								<p>Select an image for the background of the slide and enter in text or html to be displayed. </p>
+								<div id="image_wrapper_<?php echo $i ?>" class="item_row">
+									<label for="">Background Image</label>
+									<?php echo optionsframework_medialibrary_uploader( $value['id'], $val[$i]['image'], null, '',0, "image", $i ); ?>		
+								</div>
+								<div class="item_row">
+									<label for="">Click to Link</label>
+									<input type="text" value="<?php echo $val[$i]['link'] ?>" name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][link]') ?>">
+								</div>
+								<div class="item_row">
+									<label for="">HTML/Text Displayed</label>
+									<textarea name="<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $i . '][html]') ?>" id="" cols="30" rows="10"><?php echo $val[$i]['html'] ?></textarea>	
+								</div>
+							</div>
+							<div class="type_controls" id="listing_type">
+								<?php echo pls_generate_featured_listings_ui($value, $val[$i], $option_name, $i, $for_slideshow = true) ?>		
+							</div>
+							<!-- <div class="type_controls" id="post_type">
+								<select name="" id="">
+									<option>How the web was won</option>
+								</select>
+							</div>
+							<div class="type_controls" id="area_type">
+								
+							</div> -->
+						</div>						
+					</div>
+				<?php
+			}
+			$output .= trim( ob_get_clean() );
+		break;
+
 		// Featured Listing Selection
 		case "featured_listing":
-
-			ob_start();
-			?>
-				<div class="featured_listings_options">
-					<div class="featured-listing-form-city">
-						<label>City</label>
-						<select name="location[locality]">
-							<?php $cities = PLS_Plugin_API::get_location_list('locality');
-								foreach ($cities as $key => $v) {
-									echo '<option value="' . $key . '">' . $v . '</option>';
-								} 
-							?>
-						</select>
-					</div>
-
-					<div class="featured-listing-form-zip">
-						<label>Zip Code</label>
-						<select name="location[postal]">
-							<?php $zip = PLS_Plugin_API::get_location_list('postal');
-								foreach ($zip as $key => $v) {
-									echo '<option value="' . $key . '">' . $v . '</option>';
-								} 
-							?>
-						</select>
-					</div>
-
-					<div class="featured-listing-form-beds">
-						<label>Beds</label>
-						<select name="metadata[beds]">
-							<?php $beds = range(0, 16);
-								echo '<option value="false">Any</option>';
-								foreach ($beds as $key => $v) {
-									echo '<option value="' . $key . '">' . $v . '</option>';
-								} 
-							?>
-						</select>
-					</div>
-
-					<div class="featured-listing-form-min-price">
-						<label>Min Price</label>
-						<select name="metadata[min_price]">
-							<?php $min_price = array(
-										'false' => 'Any',
-										'200' => '200',
-										'500' => '500',
-										'1000' => '1,000',
-										'2000' => '2,000',
-										'3000' => '3,000',
-										'4000' => '4,000',
-										'5000' => '5,000',
-										'50000' => '5,0000',
-										'10000' => '100,000',
-										'20000' => '200,000',
-										'30000' => '300,000',
-										'50000' => '500,000',
-										'70000' => '700,000',
-										'1000000' => '1,000,000'
-										);
-								foreach ($min_price as $key => $v) {
-									echo '<option value="' . $key . '">' . $v . '</option>';
-								} 
-							?>
-						</select>
-					</div>
-
-					<div class="featured-listing-form-max-price">
-						<label>Max Price</label>
-						<select name="metadata[max_price]">
-							<?php $max_price = array(
-										'false' => 'Any',
-										'500' => '500',
-										'1000' => '1,000',
-										'2000' => '2,000',
-										'3000' => '3,000',
-										'4000' => '4,000',
-										'5000' => '5,000',
-										'50000' => '5,0000',
-										'10000' => '100,000',
-										'20000' => '200,000',
-										'30000' => '300,000',
-										'50000' => '500,000',
-										'70000' => '700,000',
-										'1000000' => '1,000,000'
-										);
-								foreach ($max_price as $key => $v) {
-									echo '<option value="' . $key . '">' . $v . '</option>';
-								} 
-							?>
-						</select>
-					</div>
-				</div>
-				
-			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
-				<div class="fls-address">
-					<select name="<?php echo $value['id']; ?>" class="fls-address-select" id="fls-select-address"></select><div id="search_message" style="display:none; margin-top: 23px; font-weight: bold;">Searching...</div>
-					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button" id="add-listing-<?php echo $value['id']; ?>">	
-					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
-				</div>
-
-				<h4 class="heading">Featured Listings</h4>
-				<div class="fls-option">
-					<div class="controls">
-						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
-							<?php if (isset($settings[$value['id']])): ?>
-								<?php foreach ($settings[$value['id']] as $key => $text): ?>
-									<li style='float:left; list-style-type: none;'><div id='pls-featured-text' style='width: 200px; float: left;'><?php echo $text ?></div><a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a><input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' /></li>
-								<?php endforeach ?>
-							<?php endif ?>
-						</ul>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-
-
-			<?php
-			$output .= trim( ob_get_clean() );
+			$output .= pls_generate_featured_listings_ui($value,$val, $option_name);
 		break;
 
 
@@ -552,7 +491,7 @@ function optionsframework_fields() {
 					<div class="clear"></div>
 				</div>
 			</div>
-<?php echo pls_get_option('') ?>
+
 
 			<?php
 			$output .= trim( ob_get_clean() );
@@ -587,5 +526,161 @@ function optionsframework_fields() {
     $output .= '</div>';
 
     return array($output,$menu);
+}
+
+function pls_generate_featured_listings_ui ($value, $val, $option_name, $iterator = false, $for_slideshow = false) {
+ob_start();
+
+			?>
+
+				<div class="featured_listings_options">
+					<div class="featured-listing-form-city">
+						<label>City</label>
+						<select name="location[locality]">
+							<?php $cities = PLS_Plugin_API::get_location_list('locality');
+								foreach ($cities as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-zip">
+						<label>Zip Code</label>
+						<select name="location[postal]">
+							<?php $zip = PLS_Plugin_API::get_location_list('postal');
+								foreach ($zip as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-beds">
+						<label>Beds</label>
+						<select name="metadata[beds]">
+							<?php $beds = range(0, 16);
+								echo '<option value="false">Any</option>';
+								foreach ($beds as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-beds">
+						<label>Rent/Sale</label>
+						<select name="purchase_types[]">
+							<?php
+								echo '<option value="false">Any</option>';
+								echo '<option value="rental">Rent</option>';
+								echo '<option value="sale">Buy</option>';
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-min-price">
+						<label>Min Price</label>
+						<select name="metadata[min_price]">
+							<?php $min_price = array(
+										'false' => 'Any',
+										'200' => '200',
+										'500' => '500',
+										'1000' => '1,000',
+										'1200' => '1,200',
+										'1400' => '1,400',
+										'1600' => '1,600',
+										'1800' => '1,800',
+										'2000' => '2,000',
+										'2200' => '2,200',
+										'2400' => '2,400',
+										'2600' => '2,600',
+										'2800' => '2,800',
+										'3000' => '3,000',
+										'3500' => '3,500',
+										'4000' => '4,000',
+										'4500' => '4,500',
+										'5000' => '5,000',
+										'50000' => '5,0000',
+										'10000' => '100,000',
+										'20000' => '200,000',
+										'30000' => '300,000',
+										'50000' => '500,000',
+										'70000' => '700,000',
+										'1000000' => '1,000,000'
+										);
+								foreach ($min_price as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+
+					<div class="featured-listing-form-max-price">
+						<label>Max Price</label>
+						<select name="metadata[max_price]">
+							<?php $max_price = array(
+										'false' => 'Any',
+										'500' => '500',
+										'1000' => '1,000',
+										'2000' => '2,000',
+										'3000' => '3,000',
+										'4000' => '4,000',
+										'5000' => '5,000',
+										'50000' => '5,0000',
+										'10000' => '100,000',
+										'20000' => '200,000',
+										'30000' => '300,000',
+										'50000' => '500,000',
+										'70000' => '700,000',
+										'1000000' => '1,000,000'
+										);
+								foreach ($max_price as $key => $v) {
+									echo '<option value="' . $key . '">' . $v . '</option>';
+								} 
+							?>
+						</select>
+					</div>
+				</div>
+				
+			<div class="featured-listing-search" id="featured-listing-search-<?php echo $value['id']; ?>">
+				<div class="fls-address">
+					<select name="<?php echo $value['id']; ?>" <?php echo $iterator ? 'ref="' . $iterator. '"' : '' ?> class="fls-address-select" id="fls-select-address"></select><div id="search_message" style="display:none; margin-top: 23px; font-weight: bold;">Searching...</div>
+					<input type="submit" name="<?php echo $value['id']; ?>" value="Add Listing" class="fls-add-listing button <?php echo $for_slideshow ? 'for_slideshow' : '' ?>" id="add-listing-<?php echo $value['id']; ?>">	
+					<input type="hidden" value="<?php echo esc_attr( $option_name . '[' . $value['id'] . ']' ) ?>" id="option-name">	
+				</div>
+
+				<h4 class="heading">Featured Listings</h4>
+				<div class="fls-option">
+					<div class="controls">
+						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
+							<?php if ( isset($val) && !empty($val) && ( !isset($val['type']) || ( isset($val['type']) && $val['type'] == 'listing') ) ): ?>
+								<?php foreach ($val as $key => $text): ?>
+									<?php if ($key == 'type' || $key == 'html' || $key == 'image' || $key == 'link'): ?>
+										<?php continue; ?>
+									<?php endif ?>
+									<li style='float:left; list-style-type: none;'>
+										<div id='pls-featured-text' style='width: 200px; float: left;'>
+											<?php echo $text ?>
+										</div>
+										<a style='float:left;' href='#' id='pls-option-remove-listing'>Remove</a>
+										<?php if ($iterator == false): ?>
+											<input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . '][' . $key . ']=' ) ?>' value='<?php echo $text ?>' />	
+										<?php else: ?>
+											<input type='hidden' name='<?php echo esc_attr( $option_name . '[' . $value['id'] . ']['.$iterator.'][' . $key . ']=' ) ?>' value='<?php echo $text ?>' />	
+										<?php endif ?>
+										
+									</li>
+								<?php endforeach ?>
+							<?php endif ?>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+
+
+			<?php
+			return trim( ob_get_clean() );
 }
 

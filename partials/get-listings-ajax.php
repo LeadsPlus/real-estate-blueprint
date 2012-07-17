@@ -144,15 +144,13 @@ class PLS_Partials_Get_Listings_Ajax {
         if (isset($defaults['search_query']['sEcho'])) {
           unset($defaults['search_query']['sEcho']);
         }
-        $args_signature = is_array($defaults) ? http_build_query($defaults) : $defaults;
-        $signature = sha1($args_signature);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_site_transient($transient_id);
-        // if ($transient) {
-        //     $transient['sEcho'] = $_POST['sEcho'];
-        //     echo json_encode($transient);
-        //     die();
-        // } 
+
+        $cache = new PLS_Cache('list');
+        if ($transient = $cache->get($defaults)) {
+            $transient['sEcho'] = $_POST['sEcho'];
+            echo json_encode($transient);
+            die();
+        }
 
         /** Extract the arguments after they merged with the defaults. */
         extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
@@ -168,6 +166,8 @@ class PLS_Partials_Get_Listings_Ajax {
             /** Get the listings list markup and javascript. */
             if (!empty($property_ids) || $allow_id_empty) {
               $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $property_ids, 'limit' => $_POST['limit'], 'offset' => $_POST['offset']));
+            } elseif (isset($search_query['neighborhood_polygons']) && !empty($search_query['neighborhood_polygons']) ) {
+              $api_response = PLS_Plugin_API::get_polygon_listings( $search_query );
             } else {
               $api_response = PLS_Plugin_API::get_listings_list($search_query);
             }
@@ -185,7 +185,7 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Offer">
+<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
 
   <div class="listing-thumbnail grid_3 alpha">
          <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>
@@ -254,7 +254,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
 
-        set_site_transient( $transient_id, $response , 3600 * 48 );
+        $cache->save($response);
 
         echo json_encode($response);
 

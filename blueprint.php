@@ -367,11 +367,11 @@ class Placester_Blueprint {
         /** Load the notifications. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
 
+        /** Load the notifications. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'caching.php' );
+
         /** Load the widgets. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'widgets.php' );
-
-        /** Load the notifications. */
-        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'notifications.php' );
 
         /** Load the styles functions. */
         require_once( trailingslashit ( PLS_CSS_DIR ) . 'styles.php' );
@@ -425,7 +425,12 @@ class Placester_Blueprint {
         require_if_theme_supports( 'pls-image-util', trailingslashit ( PLS_EXT_DIR ) . 'image-util.php' );
 
         /** Load the Maps Util extension if supported. */
-        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps-util.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/maps-util.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/lifestyle.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/lifestyle_polygon.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/listings.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/polygon.php' );
+        require_if_theme_supports( 'pls-maps-util', trailingslashit ( PLS_EXT_DIR ) . 'maps/neighborhood.php' );
 
         /** Load the Maps Util extension if supported. */
         require_if_theme_supports( 'pls-membership', trailingslashit ( PLS_EXT_DIR ) . 'membership.php' );

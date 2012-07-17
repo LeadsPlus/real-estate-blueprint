@@ -87,8 +87,35 @@ class PLS_Plugin_API {
         return $return;
     }
 
+    static function get_api_key () {
+        if ( function_exists( 'placester_get_api_key' )) {
+            $api_key = placester_get_api_key();
+            if ($api_key) {
+                return $api_key;
+            } else {
+                return false;
+            }
+        }
+    }
+
     static function get_schools ($params = array()) {
         $return = self::_try_for_exceptions( array('PL_Education_Helper','get_schools'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
+    static function get_polygon_listings ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_listings_polygon_name'), $params );
+        if ( $return ) {
+            return $return;
+        }
+        return array();
+    }
+
+    static function get_polygon_links ($params = array()) {
+        $return = self::_try_for_exceptions( array('PL_Taxonomy_Helper','get_polygon_links'), $params );
         if ( $return ) {
             return $return;
         }
@@ -401,7 +428,7 @@ class PLS_Plugin_API {
      * has a API key, FALSE otherwise.
      * @since 0.0.1
      */
-    static function get_location_list($return_only) {
+    static function get_location_list($return_only = false) {
 
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( array('PL_Listing_Helper','locations_for_options'), $return_only);
@@ -411,6 +438,14 @@ class PLS_Plugin_API {
             return $return;
 
         return false;
+    }
+
+    static function get_location_list_polygons($return_only = false) {
+        $return = self::_try_for_exceptions( array('PL_Listing_Helper','polygon_locations'), $return_only);
+        if ( $return ) 
+            return $return;
+
+        return array();
     }
 
     /**

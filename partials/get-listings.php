@@ -32,15 +32,11 @@ class PLS_Partial_Get_Listings {
      * @since 0.0.1
      */
     function init ($args = '') {
-       
-        $args_signature = is_array($args) ? http_build_query($args) : $args;
-        $signature = sha1($args_signature);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_site_transient($transient_id);
-        
-        // if ($transient) {
-        //     return $transient;
-        // } 
+
+        $cache = new PLS_Cache('list');
+        if ($result = $cache->get($args)) {
+          return $result;
+        }
 
         /** Define the default argument array. */
         $defaults = array(
@@ -53,7 +49,8 @@ class PLS_Partial_Get_Listings {
             /** Placester API arguments. */
             'limit' => 5,
             'sort_type' => 'asc',
-            'request_params' => ''
+            'request_params' => '',
+            'neighborhood_polygons' => false
         );
 
         /** Merge the arguments with the defaults. */
@@ -70,6 +67,8 @@ class PLS_Partial_Get_Listings {
         if ( $height ) 
             $height = absint( $height );
 
+        $request_params = wp_parse_args($request_params, array('limit' => $limit, 'sort_type' => $sort_type));
+
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
         /** Display a placeholder if the plugin is not active or there is no API key. */
@@ -80,14 +79,15 @@ class PLS_Partial_Get_Listings {
             global $PLS_API_DEFAULT_LISTING;
             $listings_raw = $PLS_API_DEFAULT_LISTING;
         } else {
-            /** Request the list of properties. */
-            if ($featured_option_id) {
-                $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
-            }
 
-            if (!$featured_option_id || empty($listings_raw['listings'])) {
-                $listings_raw = PLS_Plugin_API::get_property_list($request_params);    
-            }
+            /** Get the listings list markup and javascript. */
+              if ($featured_option_id) {
+                $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
+              } elseif (isset($neighborhood_polygons) ) {
+                $listings_raw = PLS_Plugin_API::get_polygon_listings( array('neighborhood_polygons' => $neighborhood_polygons ) );
+              } else {
+                $listings_raw = PLS_Plugin_API::get_listings_list($request_params);
+              }
         }
         
         // pls_dump($listings_raw);
@@ -211,8 +211,7 @@ class PLS_Partial_Get_Listings {
 
     /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
     $return = apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
-    set_site_transient( $transient_id, $return , 3600 * 48 );
-  
+    $cache->save($return);  
     return $return;
   }
 

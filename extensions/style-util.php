@@ -30,6 +30,7 @@ class PLS_Style {
         require_if_theme_supports("pls-user-options", PLS_Route::locate_blueprint_option('user.php'));
         require_if_theme_supports("pls-search-options", PLS_Route::locate_blueprint_option('search.php'));    
         require_if_theme_supports("pls-color-options", PLS_Route::locate_blueprint_option('colors.php'));    
+        require_if_theme_supports("pls-color-options", PLS_Route::locate_blueprint_option('slideshow.php'));    
         require_if_theme_supports("pls-typography-options", PLS_Route::locate_blueprint_option('typography.php'));
         require_if_theme_supports("pls-header-options", PLS_Route::locate_blueprint_option('header.php'));
         require_if_theme_supports("pls-navigation-options", PLS_Route::locate_blueprint_option('navigation.php'));   
@@ -140,9 +141,9 @@ class PLS_Style {
             case 'background':
                 return self::handle_background($value, $id, $default, $type, $important);
                 break;
-						case 'border':
-								return self::handle_border($value, $id, $default, $type, $important);
-								break;
+			case 'border':
+					return self::handle_border($value, $id, $default, $type, $important);
+					break;
         }
     }
 
@@ -155,7 +156,7 @@ class PLS_Style {
             foreach ($value as $key => $value) {
                 switch ($key) {
                     case 'color':
-												$css_style .= self::make_style('background', $value, $important);
+						$css_style .= self::make_style('background', $value, $important);
                         break;
 
                     case 'image':
