@@ -633,7 +633,7 @@ ob_start();
 				<div class="fls-option">
 					<div class="controls">
 						<ul name="<?php echo $value['id']; ?>" id="fls-added-listings">
-							<?php if (isset($val) && !empty($val) && isset($val['type']) && $val['type'] == 'listing'): ?>
+							<?php if ( isset($val) && !empty($val) && ( !isset($val['type']) || ( isset($val['type']) && $val['type'] == 'listing') ) ): ?>
 								<?php foreach ($val as $key => $text): ?>
 									<?php if ($key == 'type' || $key == 'html' || $key == 'image' || $key == 'link'): ?>
 										<?php continue; ?>
