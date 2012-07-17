@@ -568,6 +568,17 @@ ob_start();
 						</select>
 					</div>
 
+					<div class="featured-listing-form-beds">
+						<label>Rent/Sale</label>
+						<select name="purchase_types[]">
+							<?php
+								echo '<option value="false">Any</option>';
+								echo '<option value="rental">Rent</option>';
+								echo '<option value="sale">Buy</option>';
+							?>
+						</select>
+					</div>
+
 					<div class="featured-listing-form-min-price">
 						<label>Min Price</label>
 						<select name="metadata[min_price]">
@@ -576,9 +587,19 @@ ob_start();
 										'200' => '200',
 										'500' => '500',
 										'1000' => '1,000',
+										'1200' => '1,200',
+										'1400' => '1,400',
+										'1600' => '1,600',
+										'1800' => '1,800',
 										'2000' => '2,000',
+										'2200' => '2,200',
+										'2400' => '2,400',
+										'2600' => '2,600',
+										'2800' => '2,800',
 										'3000' => '3,000',
+										'3500' => '3,500',
 										'4000' => '4,000',
+										'4500' => '4,500',
 										'5000' => '5,000',
 										'50000' => '5,0000',
 										'10000' => '100,000',
