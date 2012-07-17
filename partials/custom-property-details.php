@@ -35,7 +35,9 @@ class PLS_Partials_Property_Details {
 					  <span itemprop="streetAdress"><?php echo $listing_data['location']['address']; ?></span> <span itemprop="addressLocality"><?php echo $listing_data['location']['locality']; ?></span>, <span itemprop="addressRegion"><?php echo $listing_data['location']['region']; ?></span>
 					</h2>
 
-          			<p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
+          <?php echo PL_Membership::placester_favorite_link_toggle(array('property_id' => $listing_data['id'], 'add_text' => 'Add To Favorites', 'remove_text' => 'Remove From Favorites')); ?>
+
+          <p itemprop="price"><?php echo PLS_Format::number($listing_data['cur_data']['price'], array('abbreviate' => false, 'add_currency_sign' => true)); ?> <span><?php echo PLS_Format::translate_lease_terms($listing_data); ?></span></p>
 
 					<p class="listing_type"><?php if(isset($listing_data['zoning_types'][0]) && isset($listing_data['purchase_types'][0])) { echo ucwords(@$listing_data['zoning_types'][0] . ' ' . @$listing_data['purchase_types'][0]); } ?></p>
 
