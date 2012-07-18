@@ -16,6 +16,7 @@ class PLS_Map_Polygon extends PLS_Map {
 				<?php echo $map_js_var; ?>.markers = [];
 				<?php echo $map_js_var; ?>.infowindows = [];
 				<?php echo $map_js_var; ?>.polygons = [];
+				<?php echo $map_js_var; ?>.selected_polygon = [];
 				var other_polygons = [];
 				var other_text = [];
 				var centers = [];
@@ -42,6 +43,9 @@ class PLS_Map_Polygon extends PLS_Map {
 						for (var j = other_polygons.length - 1; j >= 0; j--) {
 							other_polygons[j].setMap(null);
 						};
+
+
+
 						var all_bounds = new google.maps.LatLngBounds();
 						for (item in data) {
 							var coords = [];
@@ -90,6 +94,56 @@ class PLS_Map_Polygon extends PLS_Map {
 								<?php echo self::$map_js_var ?>.map.setCenter(mapCenter);	
 							});
 						});
+
+						<?php if ($search_class): ?>
+							// prevents default on search button
+					        $('.<?php echo $search_class ?>, #sort_by, #sort_dir').live('change submit', function(event) {
+					            event.preventDefault();
+					            var search_filters = {};
+					            $.extend(search_filters, get_map_bounds_for_search(<?php echo self::$map_js_var ?>) );
+					            $.extend(search_filters, get_search_filters('<?php echo $search_class ?>') );
+
+					            //if the user has selected a polygon
+					            if (typeof <?php echo self::$map_js_var ?>.selected_polygon !== 'undefined' && <?php echo self::$map_js_var ?>.selected_polygon.length > 0) {
+									var that = <?php echo self::$map_js_var ?>.selected_polygon;
+									request = {};
+									search_filters.action = 'polygon_listings';
+									search_filters.vertices = <?php echo self::$map_js_var ?>.selected_polygon.tax.vertices;
+									jQuery.post(info.ajaxurl, search_filters, function(data, textStatus, xhr) {
+										if (data) {
+											pls_clear_markers(map_js_var);
+											for (var i = data.length - 1; i >= 0; i--) {
+												pls_create_listing_marker(data[i], map_js_var);
+											};
+											pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
+											pls_hide_loading_overlay();
+										};
+									},'json');
+					            } else {
+					            	var that = <?php echo self::$map_js_var ?>.selected_polygon;
+									request = {};
+									search_filters.action = 'polygon_listings';
+									jQuery.post(info.ajaxurl, search_filters, function(data, textStatus, xhr) {
+										if (data) {
+											pls_clear_markers(<?php echo self::$map_js_var ?>);
+											for (var i = data.length - 1; i >= 0; i--) {
+												pls_create_listing_marker(data[i], <?php echo self::$map_js_var ?>);
+											};
+
+											// pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, <?php echo self::$map_js_var ?>);
+											pls_hide_loading_overlay();
+
+											console.log(data.length);
+											if (data.length == '50') {
+												show_max_results_overlay(<?php echo self::$map_js_var ?>);
+											};
+										};
+									},'json');
+					            };
+				            	
+					        });
+						<?php endif ?>
+
 					});
 					
 				});	  
