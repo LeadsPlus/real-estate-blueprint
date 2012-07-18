@@ -61,11 +61,13 @@ class PLS_Partials_Get_Listings_Ajax {
             'append_to_map' => true,
             'search_query' => $_POST,
             'table_id' => 'placester_listings_list',
-            'show_sort' => true
+            'show_sort' => true,
+            'search_class' => 'pls_listings_search_results'
         );
 
         /** Extract the arguments after they merged with the defaults. */
-        extract( wp_parse_args( $args, $defaults ), EXTR_SKIP );
+        $args = wp_parse_args( $args, $defaults );
+        extract( $args, EXTR_SKIP );
         
         $sort_by_options = array('images' => 'Images','location.address' => 'Address', 'location.locality' => 'City', 'location.region' => 'State', 'location.postal' => 'Zip', 'zoning_types' => 'Zoning', 'purchase_types' => 'Purchase Type', 'listing_types' => 'Listing Type', 'property_type' => 'Property Type', 'cur_data.beds' => 'Beds', 'cur_data.baths' => 'Baths', 'cur_data.price' => 'Price', 'cur_data.sqft' => 'Square Feet', 'cur_data.avail_on' => 'Date Available');;
 
@@ -96,26 +98,28 @@ class PLS_Partials_Get_Listings_Ajax {
             <?php endif ?>
             
 
-            <!-- Datatable -->
-            <div class="clear"></div>
+              <!-- Datatable -->
+              <div class="clear"></div>
 
-            <div id="container" style="width: 99%">
-              <div id="context" class="<?php echo $context ?>"></div>
-              <table id="<?php echo $table_id ?>" class="widefat post fixed placester_properties" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th><span></span></th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                  <tr>
-                    <th></th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-        <?php
+              <div id="container" style="width: 99%">
+                <div id="context" class="<?php echo $context ?>"></div>
+                <table id="<?php echo $table_id ?>" class="widefat post fixed placester_properties" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th><span></span></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tfoot>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+          <?php
+          extract($args);
+          include(trailingslashit( PLS_JS_DIR ) . 'scripts/get-listings-ajax.php');
         echo ob_get_clean();
     }
 
