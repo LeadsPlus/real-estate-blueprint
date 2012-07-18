@@ -95,7 +95,7 @@ class PLS_Partials_Listing_Search_Form {
         $args = wp_parse_args( $args, $defaults );
         $cache = new PLS_Cache('form');
         if ($result = $cache->get($args)) {
-          return $result;
+          // return $result;
         }
 
         $form_options = array();
@@ -528,10 +528,18 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Add the purchase type select element. */
         if ($purchase_types == 1) {
+          $default_purchase_types = @pls_get_option('default_form_options_purchase_types');
+          // Set Default
+          if ( empty($_POST['purchase_types']) ) {
+            $purchase_types_select = array($default_purchase_types);
+          } else {
+            $purchase_types_select = wp_kses_post(@$_POST['purchase_types']);
+          }
+          
             $form_html['purchase_types'] = pls_h(
                 'select',
                 array( 'name' => 'purchase_types[]' ) + $form_opt_attr['purchase_types'],
-                pls_h_options( $form_options['purchase_types'], wp_kses_post(@$_POST['purchase_types']) )
+                pls_h_options( $form_options['purchase_types'], $purchase_types_select )
             );
         }
         
