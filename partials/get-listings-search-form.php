@@ -95,7 +95,7 @@ class PLS_Partials_Listing_Search_Form {
         $args = wp_parse_args( $args, $defaults );
         $cache = new PLS_Cache('form');
         if ($result = $cache->get($args)) {
-          // return $result;
+          return $result;
         }
 
         $form_options = array();

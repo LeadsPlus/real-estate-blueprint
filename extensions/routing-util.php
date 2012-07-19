@@ -32,6 +32,7 @@ class PLS_Route {
 		add_action( 'archive_template', array( __CLASS__, 'handle_archive'  ));	
 		add_action( 'date_template', array( __CLASS__, 'handle_date'  ));	
 		add_action( 'tag_template', array( __CLASS__, 'handle_tag'  ));	
+		add_action( 'author_template', array( __CLASS__, 'handle_author'  ));	
 		add_action( 'single_template', array( __CLASS__, 'handle_single'  ));	
 		add_action( 'page_template', array( __CLASS__, 'handle_page'  ));	
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ));	
