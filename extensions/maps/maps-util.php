@@ -20,7 +20,7 @@ class PLS_Map {
 		<div class="map_wrapper" style="position: relative">
 				<div id="loading_overlay" class="loading_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $loading_overlay ?></div>
 				<div id="empty_overlay" class="empty_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $empty_overlay ?></div>
-				<div id="full_overlay" class="full_overlay" style="z-index: 50; display: none; position: absolute;"><?php echo $full_overlay ?></div>
+				<div id="full_overlay" class="full_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px;"><?php echo $full_overlay ?></div>
 				<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 				<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
 					<?php if ($show_lifestyle_controls): ?>
@@ -138,52 +138,86 @@ class PLS_Map {
 	function utilities () {
 		ob_start();
 		?>
+			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/map.js"></script>
 			<script type="text/javascript">
+
+				function get_listings (search_form_class, map_js_var) {
+					pls_show_loading_overlay();
+					var request = get_search_filters(search_form_class, map_js_var);
+					request.action = 'polygon_listings';
+					jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
+						if (data) {
+							pls_clear_markers(map_js_var);
+							for (var i = data.length - 1; i >= 0; i--) {
+								pls_create_listing_marker(data[i], map_js_var, false);
+							};
+							pls_hide_loading_overlay();
+						};
+					},'json');
+				}
+
+				function generate_verticies_inputs (search_form_class, map_js_var) {
+					var dom_inputs = '<div id="verticies">';
+					jQuery('.' + search_form_class + ' #vertices').remove();
+					if (map_js_var && typeof map_js_var.selected_polygon == 'object') {
+						 	var path = map_js_var.selected_polygon.getPath();
+						 	for (var i = path.length - 1; i >= 0; i--) {
+				            	dom_inputs += '<input type="hidden" name="polygon[' + i + '][lat]" value="' + path.getAt(i).lat() + '" >'
+								dom_inputs += '<input type="hidden" name="polygon[' + i + '][lng]" value="' + path.getAt(i).lng() + '" >'	
+						 	};
+					} else {
+						var response = get_map_bounds_for_search(map_js_var);
+						if ( response.vertices ) {
+							var verticies = response.vertices;
+							for (var i = verticies.length - 1; i >= 0; i--) {
+								dom_inputs += '<input type="hidden" name="polygon[' + i + '][lat]" value="' + verticies[i]['lat'] + '" >'
+								dom_inputs += '<input type="hidden" name="polygon[' + i + '][lng]" value="' + verticies[i]['lng'] + '" >'
+							};
+						};
+					};
+					dom_inputs += '</div>';
+					jQuery('.' + search_form_class).append(dom_inputs);					
+				}
 
 				function get_map_bounds_for_search(map_js_var) {
 					var response = {}
+					var bounds = map_js_var.map.getBounds();
+					if ( typeof bounds == 'undefined' ) {
+						return response;
+					}
 					response.vertices = [];
 					response.vertices[0] = {};
 					response.vertices[1] = {};
 					response.vertices[2] = {};
 					response.vertices[3] = {};
-
-					var bounds = map_js_var.map.getBounds();
-
-					response['vertices'][0]['lat'] = bounds.getNorthEast().lat();
-					response['vertices'][0]['lng'] = bounds.getNorthEast().lng();
-
-					response['vertices'][1]['lat'] = bounds.getNorthEast().lat();
-					response['vertices'][1]['lng'] = bounds.getSouthWest().lng();
-
-					response['vertices'][2]['lat'] = bounds.getSouthWest().lat();
-					response['vertices'][2]['lng'] = bounds.getSouthWest().lng();
-
-					response['vertices'][3]['lat'] = bounds.getSouthWest().lat();
-					response['vertices'][3]['lng'] = bounds.getNorthEast().lng();
+					response.vertices[0]['lat'] = bounds.getNorthEast().lat();
+					response.vertices[0]['lng'] = bounds.getNorthEast().lng();
+					response.vertices[1]['lat'] = bounds.getNorthEast().lat();
+					response.vertices[1]['lng'] = bounds.getSouthWest().lng();
+					response.vertices[2]['lat'] = bounds.getSouthWest().lat();
+					response.vertices[2]['lng'] = bounds.getSouthWest().lng();
+					response.vertices[3]['lat'] = bounds.getSouthWest().lat();
+					response.vertices[3]['lng'] = bounds.getNorthEast().lng();
+					
 					return response;
 				}
 
-				function generate_verticies_inputs () {
 
+				function handle_max_results_overlay (map_js_var) {
+					if (map_js_var.markers.length >= 50) {
+						jQuery('#full_overlay').fadeIn();
+					} else {
+						jQuery('#full_overlay').hide();
+					};
 				}
 
-
-				function show_max_results_overlay () {
-					jQuery('#full_overlay').show();
-					console.log('I would show the max results overlay.')
-				}
-
-				function get_search_filters (form_class) {
+				function get_search_filters (form_class, map_js_var) {
 					var result = {};
+					generate_verticies_inputs(form_class, map_js_var);
 					jQuery.each(jQuery('.'+ form_class +', .sort_wrapper').serializeArray(), function(i, field) {
 						result[field.name] = field.value;
 		            });
 		            return result;
-				}
-
-				function get_listings () {
-					console.log('im getting listings');
 				}
 
 				function pls_create_polygon_listeners (polygon, map_js_var, click_type) {
@@ -383,7 +417,7 @@ class PLS_Map {
         	'polygon_click_action' => false,
         	'lifestyle_distance' => 'miles',
         	'search_class' => 'pls_listings_search_results',
-        	'full_overlay' => '<div>Zoom in to see more results</div>'
+        	'full_overlay' => '<div style="width: 100%; background-color:rgba(0,0,0,0.5); padding: 10px; color: white">Only showing 50 results. Zoom in to refine your search</div>'
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
