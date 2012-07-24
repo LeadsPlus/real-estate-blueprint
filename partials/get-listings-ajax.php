@@ -119,8 +119,6 @@ class PLS_Partials_Get_Listings_Ajax {
                 </table>
               </div>
           <?php
-          extract($args);
-          include(trailingslashit( PLS_JS_DIR ) . 'scripts/get-listings-ajax.php');
         echo ob_get_clean();
     }
 
