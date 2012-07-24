@@ -1,56 +1,36 @@
 function List () {}
 
 List.prototype.init = function ( params ) {
+	console.log('list init')
 	var that = this;
-	this.dom_id = params.dom_id;
-	this.filter = params.filter || false;
-	this.map = params.map || false;
+	this.listings = params.listings || alert('You need to include a listings object');
+
+	this.dom_id = params.dom_id || '#placester_listings_list';
 	this.class = params.class || false;
-
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
-	this.settings.fnServerData = function (  sSource, aoData, fnCallback  ) {
-		console.log(this.dom_id);
-		
-		// if (that.filter) {
-		// 	aoData = that.filter.update( aoData );	
-		// };
-		aoData.push( { "name": "action", "value" : "pls_listings_ajax"} );
-	    jQuery.ajax({
-	        "dataType" : 'json',
-	        "type" : "POST",
-	        "url" : sSource,
-	        "data" : aoData,
-	        "success" : function(ajax_response) {
-	            if (ajax_response && ajax_response['aaData']) {
-
-	                that.total_results(ajax_response);
-	                
-	                if (typeof pls_google_map !== 'undefined') {
-	                pls_clear_markers(pls_google_map);
-	                
-	                  if (typeof window['google'] != 'undefined') {
-	                    for (var listing in ajax_response['aaData']) {
-	                        var listing_json = ajax_response['aaData'][listing][1];
-	                        pls_create_listing_marker(listing_json, pls_google_map);
-	                    }
-	                  }
-	                }
-	              };
-	            //required to load the datatable
-	           fnCallback(ajax_response);
-	           that.update_favorites_through_cache();
-	        }
-	    });
-	}
-	this.datatable = jQuery(this.dom_id).dataTable(this.settings);
-
-	if (this.filter) {
-		jQuery(this.filter.class + ', #sort_by, #sort_dir').live('change submit', function(event) {
-	        event.preventDefault();
-	        my_listings_datatable.fnDraw();
-	    });	
-	};
 	
+	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
+		if (params.get_listings) {
+			params.get_listings( that, sSource, aoData, fnCallback )
+		} else {
+			that.get_listings( that, sSource, aoData, fnCallback )
+		};
+	}
+	
+	//boot up the datatable
+	this.datatable = jQuery(this.dom_id).dataTable(this.settings);
+}
+
+List.prototype.get_listings = function (self, sSource, aoData, fnCallback ) {
+
+	var that = self;
+
+	that.listings.get( sSource, aoData, function (ajax_response) {
+		that.total_results(ajax_response);
+		fnCallback(ajax_response);
+		that.update_favorites_through_cache();
+	});
+
 }
 
 List.prototype.total_results = function ( ajax_response ) {
