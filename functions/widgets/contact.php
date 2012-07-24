@@ -36,7 +36,7 @@ class Placester_Contact_Widget extends WP_Widget {
     $instance['modern'] = isset($new_instance['modern']) ? 1 : 0;
     return $instance;
   }
-  
+
   // Admin widget
   function widget($args, $instance) {
       global $post;
@@ -54,10 +54,8 @@ class Placester_Contact_Widget extends WP_Widget {
         $email_value = apply_filters('email_value', !isset($instance['email_value']) ? 'Email Address' : $instance['email_value']);
         $phone_label = apply_filters('phone_label', !isset($instance['phone_label']) ? 'Phone Number (required)' : $instance['phone_label']);
         $phone_value = apply_filters('phone_value', !isset($instance['phone_value']) ? 'Phone Number' : $instance['phone_value']);
-        $fname_label = apply_filters('fname_label', !isset($instance['fname_label']) ? 'First Name (required)' : $instance['fname_label']);
-        $fname_value = apply_filters('fname_value', !isset($instance['fname_value']) ? 'First Name' : $instance['fname_value']);
-        $lname_label = apply_filters('lname_label', !isset($instance['lname_label']) ? 'Last Name (required)' : $instance['lname_label']);
-        $lname_value = apply_filters('lname_value', !isset($instance['lname_value']) ? 'Last Name' : $instance['lname_value']);
+        $name_label = apply_filters('name_label', !isset($instance['name_label']) ? 'Name (required)' : $instance['name_label']);
+        $name_value = apply_filters('name_value', !isset($instance['name_value']) ? 'Name' : $instance['name_value']);
         $question_label = apply_filters('question_label', !isset($instance['question_label']) ? 'Any questions for us?' : $instance['question_label']);
         $container_class = apply_filters('container_class', empty($instance['container_class']) ? '' : $instance['container_class']);
         $inner_class = apply_filters('inner_class', empty($instance['inner_class']) ? '' : $instance['inner_class']);
@@ -83,25 +81,21 @@ class Placester_Contact_Widget extends WP_Widget {
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label class="required" for="firstName"><?php echo $fname_label; ?></label><input class="required" id="firstName" value="<?php echo $fname_value ?>" type="text" name="firstName" tabindex="1" />
+                    <label class="required" for="name"><?php echo $name_label; ?></label><input class="required" id="name" value="<?php echo $name_value ?>" type="text" name="name" tabindex="1" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="lastName"><?php echo $lname_label; ?></label><input class="required" id="lastName" value="<?php echo $lname_value ?>" type="text" name="lastName" tabindex="2" />
-                    <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
-
-                    <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" value="<?php echo $email_value ?>" type="email" name="email" tabindex="3" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" value="<?php echo $email_value ?>" type="email" name="email" tabindex="2" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php if(isset($instance['phone_number'])) { ?>
                       <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="<?php echo $phone_value ?>" type="text" name="phone" tabindex="4" />
+                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="<?php echo $phone_value ?>" type="text" name="phone" tabindex="3" />
                       <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
                     <?php } ?>
 
                     <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
-                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="5"></textarea>
+                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="4"></textarea>
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
@@ -110,15 +104,14 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
                   <?php } else { ?>
                     <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
-                    <input class="required" placeholder="<?php echo $fname_label; ?>" type="text" name="firstName" tabindex="2" />
-                    <input class="required" placeholder="<?php echo $lname_label; ?>" type="text" name="lastName" tabindex="3" />
-                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="4"></textarea>
+                    <input class="required" placeholder="<?php echo $name_label; ?>" type="text" name="name" tabindex="2" />
+                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="3"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
-                    <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="5" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="4" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  
@@ -154,18 +147,11 @@ function ajax_placester_contact() {
       $error = "";
       $message = "A prospective client wants to get in touch with you. \n\n";
 
-      // Check to make sure that the first name field is not empty
-      if( trim($_POST['firstName']) == '' || trim($_POST['firstName']) == 'First Name') {
-        $error .= "Your first name is required<br/>";
+      // Check to make sure that the name field is not empty
+      if( trim($_POST['name']) == '' || trim($_POST['name']) == 'Name' ) {
+        $error .= "Your name is required<br/>";
       } else {
-        $message .= "First Name: " . trim($_POST['firstName']) . " \n";
-      }
-
-      // Check to make sure that the last name field is not empty
-      if( trim($_POST['lastName']) == '' || trim($_POST['lastName']) == 'Last Name' ) {
-        $error .= "Your last name is required<br/>";
-      } else {
-        $message .= "Last Name: " . trim($_POST['lastName']) . " \n";
+        $message .= "Name: " . trim($_POST['name']) . " \n";
       }
 
       // Check to make sure sure that a valid email address is submitted
