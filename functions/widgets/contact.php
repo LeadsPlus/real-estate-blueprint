@@ -213,6 +213,9 @@ function ajax_placester_contact() {
         $message .= "Listing Address: " . $_POST['fullAddress'] . " \n";
       }
 
+      $message .= "\n";
+      $message .= "This message was sent from the contact form at: \n" . $_SERVER['HTTP_REFERER'] . " \n";
+
     if( empty($error) ) {
 
       $api_whoami = PLS_Plugin_API::get_user_details();
