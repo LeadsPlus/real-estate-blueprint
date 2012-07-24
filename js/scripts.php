@@ -41,6 +41,9 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
          *  notification about needing the plugin. Localize the notification 
          *  message. Accompanied by plugin-nags.css.
          */
+        wp_register_script( 'listings-object', trailingslashit( PLS_JS_URL ) . 'scripts/listings.js' , NULL, NULL, true );
+        wp_enqueue_script('listings-object');
+
         wp_register_script( 'get-listings-fav-ajax', trailingslashit( PLS_JS_URL ) . 'scripts/get-listings-fav-ajax.js' , NULL, NULL, true );
         wp_enqueue_script('get-listings-fav-ajax');
 

@@ -95,7 +95,7 @@ class PLS_Partials_Listing_Search_Form {
         $args = wp_parse_args( $args, $defaults );
         $cache = new PLS_Cache('form');
         if ($result = $cache->get($args)) {
-          return $result;
+          // return $result;
         }
 
         $form_options = array();
@@ -697,9 +697,7 @@ class PLS_Partials_Listing_Search_Form {
             /** Append the form submit. */
             $form .= $form_html['submit'];
         }
-        
-
-        
+           
 
         /** Wrap the combined form content in the form element and filter it. */
         $form_id = pls_get_merged_strings( array( 'pls-listings-search-form', $context ), '-', 'pre', false );
@@ -710,9 +708,11 @@ class PLS_Partials_Listing_Search_Form {
             $form_data->hidden_field . apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_inner", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $context_var )
         );
 
+        $form .= '<script type="text/javascript" src="' . trailingslashit(PLS_JS_URL) . 'scripts/filters.js"></script>';
+
         /** Filter the form. */
         $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
-            
+
         $cache->save($return);
         return $return;
 

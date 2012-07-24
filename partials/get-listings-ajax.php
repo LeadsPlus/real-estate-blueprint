@@ -62,7 +62,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'search_query' => $_POST,
             'table_id' => 'placester_listings_list',
             'show_sort' => true,
-            'search_class' => 'pls_listings_search_results'
+            'map_js_var' => 'pls_google_map'
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -76,6 +76,7 @@ class PLS_Partials_Get_Listings_Ajax {
 
         ob_start();
         ?>
+                <script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/listing-list.js"></script>
             <!-- Sort Dropdown -->
             <?php if ($show_sort): ?>
               <form class="sort_wrapper">
@@ -137,7 +138,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'sort_type' => 'desc',
             'crop_description' => 0,
             'listings_per_page' => get_option( 'posts_per_page' ),
-            'context' => $_POST['context'],
+            'context' => isset($_POST['context']) ? $_POST['context'] : '',
             'context_var' => NULL,
             'append_to_map' => true,
             'search_query' => $_POST,
