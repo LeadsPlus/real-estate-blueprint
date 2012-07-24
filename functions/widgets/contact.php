@@ -99,7 +99,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
-                    <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
+                    <input type="hidden" name="fullAddress" value="<?php echo @self::_get_full_address($data);  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
                   <?php } else { ?>
@@ -107,7 +107,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input class="required" placeholder="<?php echo $name_label; ?>" type="text" name="name" tabindex="2" />
                     <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="3"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
-                    <input type="hidden" name="fullAddress" value="<?php echo @$data['location']['full_address'];  ?>">
+                    <input type="hidden" name="fullAddress" value="<?php echo @self::_get_full_address($data);  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
@@ -118,6 +118,29 @@ class Placester_Contact_Widget extends WP_Widget {
               <div class="separator"></div>
             </section>
     <?php }
+
+  /**
+   * Compensate for different address fields in the API response
+   * @param array $data
+   * @return string
+   */
+  function _get_full_address($data) {
+    if(isset($data['location']['full_address'])) {
+      return $data['location']['full_address'];
+    }
+    elseif(isset($data['location']['address'])) {
+      // TODO: Localize address formatting
+      $address  = $data['location']['address'] . " \n";
+      $address .= $data['location']['locality'] . ", " . $data['location']['region'] . " " . $data['location']['postal'] . " \n";
+      $address .= $data['location']['country'];
+
+      return $address;
+    }
+    else {
+      return '';
+    }
+  }
+
   // }
 } // End Class
 
