@@ -25,7 +25,7 @@
         else if(config_or_action instanceof Object) {
             jQuery.extend(config, config_or_action);
             if(jQuery(selector).size() === 0) {
-                jQuery('body').append('<div class="error_tooltip ' + css_class + '">' + config_or_action.text + '</div>');
+                jQuery('body').append('<div class="error_tooltip ' + css_class + '">' + config_or_action.text + '<div class="tooltip_arrow_border"></div><div class="tooltip_arrow"></div></div>');
                 target = jQuery(selector);
                 target.css({display: 'block', position: 'absolute'});
                 target.css({
