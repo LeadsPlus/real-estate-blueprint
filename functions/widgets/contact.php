@@ -116,6 +116,12 @@ class Placester_Contact_Widget extends WP_Widget {
                       <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
                     <?php } ?>
 
+                    <?php $full_address = @self::_get_full_address($data); if(!empty($full_address)) : ?>
+                      <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
+                      <label>Property</label><span class="info"><?php echo str_replace("\n", " ", $full_address); ?></span>
+                      <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>                      
+                    <?php endif; ?>
+
                     <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
                     <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="<?php echo $sidebar_pos; ?>4"></textarea>
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>

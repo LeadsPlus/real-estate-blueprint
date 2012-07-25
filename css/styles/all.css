@@ -718,7 +718,7 @@ header nav {
 
 form, fieldset, .placester_listings_list_length {
   float: left; }
-  form label, form input, form textarea, form .chzn-container, form select, fieldset label, fieldset input, fieldset textarea, fieldset .chzn-container, fieldset select, .placester_listings_list_length label, .placester_listings_list_length input, .placester_listings_list_length textarea, .placester_listings_list_length .chzn-container, .placester_listings_list_length select {
+  form label, form input, form textarea, form .chzn-container, form select, fieldset label, fieldset input, fieldset textarea, fieldset .chzn-container, fieldset select, .placester_listings_list_length label, .placester_listings_list_length input, .placester_listings_list_length textarea, .placester_listings_list_length .chzn-container, .placester_listings_list_length select, form .info {
     float: left; }
   form label, form p, fieldset label, fieldset p, .placester_listings_list_length label, .placester_listings_list_length p {
     width: 100%;

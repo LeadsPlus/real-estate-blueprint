@@ -3,9 +3,13 @@
     margin-bottom: 5px;
     font-size: 13px;
 }
-.side-ctnr.placester_contact input[type="text"], .side-ctnr.placester_contact input[type="email"], .side-ctnr.placester_contact textarea {
+.side-ctnr.placester_contact input[type="text"], .side-ctnr.placester_contact input[type="email"], .side-ctnr.placester_contact textarea, .side-ctnr.placester_contact .info {
     width: 200px;
     margin-bottom: 10px;
+}
+
+.side-ctnr.placester_contact .info {
+  font-size: 80%;
 }
 
 .side-ctnr.placester_contact textarea {
