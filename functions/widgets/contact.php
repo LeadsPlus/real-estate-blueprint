@@ -68,7 +68,7 @@ class Placester_Contact_Widget extends WP_Widget {
 
         $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
         $template_url = get_template_directory_uri();
-    
+
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
         if ( $title ) {
           echo '<h3>' . $title . '</h3>';
@@ -81,11 +81,11 @@ class Placester_Contact_Widget extends WP_Widget {
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="name"><?php echo $name_label; ?></label><input class="required" id="name" value="<?php echo $name_value ?>" type="text" name="name" tabindex="1" />
+                    <label class="required" for="name"><?php echo $name_label; ?></label><input class="required" id="name" placeholder="<?php echo $name_value ?>" type="text" name="name" tabindex="1" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" value="<?php echo $email_value ?>" type="email" name="email" tabindex="2" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" placeholder="<?php echo $email_value ?>" type="email" name="email" tabindex="2" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php if(isset($instance['phone_number'])) { ?>
