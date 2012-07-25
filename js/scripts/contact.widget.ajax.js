@@ -112,7 +112,7 @@ jQuery(document).ready(function($) {
                         $this.find('input[type=submit]').errorTooltip('submit_error', {text: "An error occurred. Please try again."});
                         setTimeout(function() {
                             $this.errorTooltip('submit_error', 'fade');
-                        }, 2000);
+                        }, 10000);
                         clear_form($this);
 
                     //     widget.find('.placester_loading').hide();
