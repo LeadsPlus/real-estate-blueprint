@@ -29,10 +29,10 @@
                 target = jQuery(selector);
                 target.css({display: 'block', position: 'absolute'});
                 target.css({
-                    top: this.offset().top - (target.height() / 2),
-                    left: this.offset().left - (target.width() + 15),
+                    top: this.offset().top - 15,
+                    left: this.offset().left,
                     opacity: 0.6
-                }).animate({left: this.offset().left - (target.width() + 30), opacity: 1}, 750);
+                }).animate({top: this.offset().top - (target.height() + 20), opacity: 1}, 500);
             }
         }
 
