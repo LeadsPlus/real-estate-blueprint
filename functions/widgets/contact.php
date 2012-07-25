@@ -40,9 +40,25 @@ class Placester_Contact_Widget extends WP_Widget {
   // Admin widget
   function widget($args, $instance) {
     
+
     // Find where this widget's sidebar falls in the list of registered sidebars
     // Use this to get a number we can use for unique tabindexes
-    $sidebar_pos = array_search($args['id'], array_keys(wp_get_sidebars_widgets())) + 1;
+    if(isset($args['id'])) {
+      // Widget is rendering as part of a sidebar
+      $sidebar_pos = array_search($args['id'], array_keys(wp_get_sidebars_widgets())) + 1;
+    }
+    elseif(isset($instance['number'])) {
+      // Widget is being passed an instance number
+      // the theme is probably instantiating the widget itself
+      $sidebar_pos = $instance['number'];
+    }
+    else {
+      // Nothing else to go on, really. Make a counter and
+      // increment it each time the widget it rendered on this
+      // page hit
+      static $instance_count = 1;
+      $sidebar_pos = $instance_count++;
+    }
 
       global $post;
         
@@ -104,7 +120,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="<?php echo $sidebar_pos; ?>4"></textarea>
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
-                    <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
+                    <input type="hidden" name="id" value="<?php if(isset($data['id'])) { echo $data['id']; } ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @self::_get_full_address($data);  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
