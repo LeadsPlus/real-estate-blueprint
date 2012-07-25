@@ -105,7 +105,7 @@ jQuery(document).ready(function($) {
                         $this.find('input[type=submit]').errorTooltip('submit_success', {text: "Thank you for the email. We\'ll get back to you shortly."});
                         setTimeout(function() {
                             $this.errorTooltip('submit_success', 'fade');
-                        }, 2000);
+                        }, 10000);
                         clear_form($this);
                     }
                     else {
