@@ -261,7 +261,7 @@ function ajax_placester_contact() {
         $placester_Mail = wp_mail($email, 'Prospective client from ' . home_url(), $message);
       }
       
-      $name = $_POST['firstName'] . ' ' . $_POST['lastName'];
+      $name = $_POST['name'];
       PLS_Membership::create_person(array('metadata' => array('name' => $name, 'email' => $_POST['email'] ) )) ;
 
 
