@@ -45,34 +45,29 @@ jQuery(document).ready(function($) {
 
    var widget = jQuery('.side-ctnr.placester_contact');
 
+    var valid_email = function (email) {
+        // Email regex courtesy http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+        return (email !== "" && email.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i));
+    };
+
     // Validate the name field
     jQuery("#name", widget).bind('blur.pl', function() {
-        var field = jQuery(this);
-        var field_value = field.val();
-
-        if(field_value === "" || field_value === "Name" ) {
-            field.errorTooltip('name_error', {text: "Please enter your name"});
-        }
-        else {
-            field.errorTooltip('name_error', 'remove');
+        if(jQuery(this).val() !== "") {
+            jQuery(this).errorTooltip('name_error', 'remove');
         }
     });
 
     // Validate the email field
     jQuery("#email", widget).bind('blur.pl', function() {
-        var field = jQuery(this);
-        var field_value = field.val();
-
-        // Email regex courtesy http://fightingforalostcause.net/misc/2006/compare-email-regex.php
-        if(field_value === "" || field_value === "Email Address" || !field_value.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i)) {
-            field.errorTooltip('email_error', {text: "Please enter a valid email address"});
-        }
-        else {
-            field.errorTooltip('email_error', 'remove');
+        if(valid_email(jQuery(this).val())) {
+            jQuery(this).errorTooltip('email_error', 'remove');
         }
     });
 
 	jQuery('.side-ctnr.placester_contact form').submit(function(e) {
+
+        var error_found = false;
+
         $this = jQuery(this);
         e.preventDefault();
 
@@ -84,11 +79,20 @@ jQuery(document).ready(function($) {
             form.find('input[type="text"], input[type="email"], textarea').val('');
         };
 
-        if(jQuery('.error_tooltip:visible').size() > 0) {
-            // Can't submit if there's still an error
-            jQuery(this).find('input[type=submit]').errorTooltip('submit_error', {text: "Please fix the errors above"});
+        // Validate the name field
+        if(jQuery('#name', this).val() === "") {
+            jQuery("#name", this).errorTooltip('name_error', {text: "Please enter your name"});
+            error_found = true;
         }
-        else {
+
+        // Validate the email address field
+        var email_value = jQuery("#email", this).val();
+        if(!valid_email(email_value)) {
+            jQuery("#email", this).errorTooltip('email_error', {text: "Please enter a valid email address"});
+            error_found = true;
+        }
+
+        if(!error_found) {
             jQuery(this).find('input[type=submit').errorTooltip('submit_error', 'remove');
 
             jQuery.ajax({
