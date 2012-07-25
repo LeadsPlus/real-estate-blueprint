@@ -39,6 +39,11 @@ class Placester_Contact_Widget extends WP_Widget {
 
   // Admin widget
   function widget($args, $instance) {
+    
+    // Find where this widget's sidebar falls in the list of registered sidebars
+    // Use this to get a number we can use for unique tabindexes
+    $sidebar_pos = array_search($args['id'], array_keys(wp_get_sidebars_widgets())) + 1;
+
       global $post;
         
         if (!empty($post) && isset($post->post_type) && $post->post_type == 'property') {
@@ -81,21 +86,21 @@ class Placester_Contact_Widget extends WP_Widget {
                   // For HTML5 enabled themes
                   if ( $modern == 0 ) { ?>
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="name"><?php echo $name_label; ?></label><input class="required" id="name" placeholder="<?php echo $name_value ?>" type="text" name="name" tabindex="1" />
+                    <label class="required" for="name"><?php echo $name_label; ?></label><input class="required" id="name" placeholder="<?php echo $name_value ?>" type="text" name="name" tabindex="<?php echo $sidebar_pos; ?>1" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" placeholder="<?php echo $email_value ?>" type="email" name="email" tabindex="2" />
+                    <label class="required" for="email"><?php echo $email_label; ?></label><input class="required" id="email" placeholder="<?php echo $email_value ?>" type="email" name="email" tabindex="<?php echo $sidebar_pos; ?>2" />
                     <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
 
                     <?php if(isset($instance['phone_number'])) { ?>
                       <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="<?php echo $phone_value ?>" type="text" name="phone" tabindex="3" />
+                      <label class="required" for="phone"><?php echo $phone_label; ?></label><input class="required" id="phone" value="<?php echo $phone_value ?>" type="text" name="phone" tabindex="<?php echo $sidebar_pos; ?>3" />
                       <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
                     <?php } ?>
 
                     <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
-                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="4"></textarea>
+                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="<?php echo $sidebar_pos; ?>4"></textarea>
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
@@ -103,15 +108,15 @@ class Placester_Contact_Widget extends WP_Widget {
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo $send_to_email;  ?>">
                   <?php } else { ?>
-                    <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="1" />
-                    <input class="required" placeholder="<?php echo $name_label; ?>" type="text" name="name" tabindex="2" />
-                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="3"></textarea>
+                    <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="<?php echo $sidebar_pos; ?>1" />
+                    <input class="required" placeholder="<?php echo $name_label; ?>" type="text" name="name" tabindex="<?php echo $sidebar_pos; ?>2" />
+                    <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="<?php echo $sidebar_pos; ?>3"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @self::_get_full_address($data);  ?>">
                     <input type="hidden" name="email_confirmation" value="<?php echo $email_confirmation;  ?>">
                     <input type="hidden" name="send_to_email" value="<?php echo @$send_to_email;  ?>">
                   <?php } ?>
-                    <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="4" />
+                    <input type="submit" value="<?php echo $submit_value; ?>" class="<?php echo $button_class; ?>" tabindex="<?php echo $sidebar_pos; ?>4" />
                   </form>
                 <div class="placester_loading"></div>
               </section>  
