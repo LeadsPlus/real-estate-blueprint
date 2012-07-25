@@ -3,7 +3,7 @@
  */
 (function($){
 
-    $.fn.errorTooltip = function(css_class, config_or_action) {
+    $.fn.errorTooltip = function(tooltip_name, config_or_action) {
         
         var config = {
             text: 'An error has occurred',
@@ -11,13 +11,13 @@
             css_class: 'error_tooltip'
         };
         
-        var selector = '.' + css_class,
+        var selector = '.' + tooltip_name,
             target;
 
         if(config_or_action === "remove") {
             jQuery(selector).remove();
         }
-        if(config_or_action === "fade") {
+        else if(config_or_action === "fade") {
             jQuery(selector).fadeOut('slow', function() {
                 jQuery(this).remove();
             });
@@ -25,7 +25,7 @@
         else if(config_or_action instanceof Object) {
             jQuery.extend(config, config_or_action);
             if(jQuery(selector).size() === 0) {
-                jQuery('body').append('<div class="placester_tooltip ' + css_class + '">' + config_or_action.text + '<div class="tooltip_arrow_border"></div><div class="tooltip_arrow"></div></div>');
+                jQuery('body').append('<div class="placester_tooltip ' +  tooltip_name + ' ' + config_or_action.css_class + '">' + config_or_action.text + '<div class="tooltip_arrow_border"></div><div class="tooltip_arrow"></div></div>');
                 target = jQuery(selector);
                 target.css({display: 'block', position: 'absolute'});
                 target.css({
@@ -78,6 +78,12 @@ jQuery(document).ready(function($) {
         var clear_form = function(form) {
             form.find('input[type="text"], input[type="email"], textarea').val('');
         };
+
+        // Clear out existing tooltips
+        jQuery("#name", this).errorTooltip('name_error', 'remove');
+        jQuery("#email", this).errorTooltip('email_error', 'remove');
+        $this.find('input[type=submit]').errorTooltip('submit_success', 'remove');
+        $this.find('input[type=submit]').errorTooltip('submit_error', 'remove');
 
         // Validate the name field
         if(jQuery('#name', this).val() === "") {
