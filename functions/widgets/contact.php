@@ -16,13 +16,15 @@ class Placester_Contact_Widget extends WP_Widget {
 
     extract($instance, EXTR_SKIP);
 
-    $checked = $instance['modern'] == 1 ? 'checked' : '';
+    $modern_checked = isset($instance['modern']) && $instance['modern'] == 1 ? 'checked' : '';
+    $show_property_checked = isset($instance['show_property']) && $instance['show_property'] == 1 ? 'checked' : '';
 
     // Output the options
     echo '<p><label for="' . $this->get_field_name('title') . '"> Title: </label><input class="widefat" type="text" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" value="' . $title . '" /></p>';
     echo '<p><label for="' . $this->get_field_name('button') . '"> Submit button label: </label><input class="widefat" type="text" id="' . $this->get_field_id('button') . '" name="' . $this->get_field_name('button') . '" value="' . $button . '" /></p>';
-    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
-    
+    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('modern') . '" name="' . $this->get_field_name('modern') . '"' . $modern_checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('modern') . '"> Use placeholders instead of labels</label></p>';
+    echo '<p><input class="checkbox" type="checkbox" id="' . $this->get_field_id('show_property') . '" name="' . $this->get_field_name('show_property') . '"' . $show_property_checked . ' style="margin-right: 5px;"/><label for="' . $this->get_field_id('show_property') . '"> Display property address on the form when viewing a property page</label></p>';
+
     ?>
 
 <?php 
@@ -34,6 +36,7 @@ class Placester_Contact_Widget extends WP_Widget {
     $instance['title'] = strip_tags(stripslashes($new_instance['title']));
     $instance['button'] = strip_tags(stripslashes($new_instance['button']));
     $instance['modern'] = isset($new_instance['modern']) ? 1 : 0;
+    $instance['show_property'] = isset($new_instance['show_property']) ? 1 : 0;
     return $instance;
   }
 
@@ -88,6 +91,7 @@ class Placester_Contact_Widget extends WP_Widget {
         $send_to_email = apply_filters('send_to_email', !isset($instance['send_to_email']) ? '' : $instance['send_to_email']);
 
         $modern = ( isset($instance['modern']) && !empty($instance['modern']) ) ? 1 : 0;
+        $show_property = ( isset($instance['show_property']) && !empty($instance['show_property']) ) ? 1 : 0;        
         $template_url = get_template_directory_uri();
 
         echo '<section class="side-ctnr placester_contact ' . $container_class . '">' . "\n";
@@ -116,10 +120,12 @@ class Placester_Contact_Widget extends WP_Widget {
                       <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>
                     <?php } ?>
 
-                    <?php $full_address = @self::_get_full_address($data); if(!empty($full_address)) : ?>
-                      <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
-                      <label>Property</label><span class="info"><?php echo str_replace("\n", " ", $full_address); ?></span>
-                      <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>                      
+                    <?php if($show_property == 1) : ?>
+                      <?php $full_address = @self::_get_full_address($data); if(!empty($full_address)) : ?>
+                        <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
+                        <label>Property</label><span class="info"><?php echo str_replace("\n", " ", $full_address); ?></span>
+                        <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>                      
+                      <?php endif; ?>
                     <?php endif; ?>
 
                     <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
@@ -133,6 +139,15 @@ class Placester_Contact_Widget extends WP_Widget {
                   <?php } else { ?>
                     <input class="required" placeholder="<?php echo $email_label; ?>" type="email" name="email" tabindex="<?php echo $sidebar_pos; ?>1" />
                     <input class="required" placeholder="<?php echo $name_label; ?>" type="text" name="name" tabindex="<?php echo $sidebar_pos; ?>2" />
+
+                    <?php if($show_property == 1) : ?>
+                      <?php $full_address = @self::_get_full_address($data); if(!empty($full_address)) : ?>
+                        <?php echo empty($instance['inner_containers']) ? '' : '<div class="' . $instance['inner_containers'] .'">'; ?>
+                        <label>Property</label><span class="info"><?php echo str_replace("\n", " ", $full_address); ?></span>
+                        <?php echo empty($instance['inner_containers']) ? '' : '</div>'; ?>                      
+                      <?php endif; ?>
+                    <?php endif; ?>
+
                     <textarea rows="5" placeholder="<?php echo $question_label; ?>" name="question" tabindex="<?php echo $sidebar_pos; ?>3"></textarea>
                     <input type="hidden" name="id" value="<?php echo @$data['id'];  ?>">
                     <input type="hidden" name="fullAddress" value="<?php echo @self::_get_full_address($data);  ?>">
