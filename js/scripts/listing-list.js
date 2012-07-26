@@ -1,14 +1,17 @@
 function List () {}
 
+List.prototype.sEcho = 1;
+
 List.prototype.init = function ( params ) {
-	console.log('list init')
 	var that = this;
 	this.listings = params.listings || alert('You need to include a listings object');
+
+	this.loading_class = params.loading_class || '.dataTables_processing'
 
 	this.dom_id = params.dom_id || '#placester_listings_list';
 	this.class = params.class || false;
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
-	
+
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
 		if (params.get_listings) {
 			params.get_listings( that, sSource, aoData, fnCallback )
@@ -16,21 +19,21 @@ List.prototype.init = function ( params ) {
 			that.get_listings( that, sSource, aoData, fnCallback )
 		};
 	}
-	
-	//boot up the datatable
-	this.datatable = jQuery(this.dom_id).dataTable(this.settings);
 }
 
-List.prototype.get_listings = function (self, sSource, aoData, fnCallback ) {
-
+List.prototype.get_listings = function ( self, sSource, aoData, fnCallback ) {
 	var that = self;
+	that.show_loading();
+	that.fnCallback = fnCallback;
+	that.listings.get();
 
-	that.listings.get( sSource, aoData, function (ajax_response) {
-		that.total_results(ajax_response);
-		fnCallback(ajax_response);
-		that.update_favorites_through_cache();
-	});
+}
 
+List.prototype.update = function (ajax_response) {
+	this.total_results(ajax_response);
+	this.fnCallback(ajax_response);
+	this.update_favorites_through_cache();
+	this.hide_loading();
 }
 
 List.prototype.total_results = function ( ajax_response ) {
@@ -64,4 +67,16 @@ List.prototype.update_favorites_through_cache = function () {
 	            });     
 	        };
 	    }, 'json');
-} 
+}
+
+List.prototype.listeners = function () {
+	
+}
+
+List.prototype.show_loading = function () {
+	jQuery(this.loading_class).css('visibility', 'visible');
+}
+
+List.prototype.hide_loading = function () {
+	jQuery(this.loading_class).css('visibility', 'hidden');
+}

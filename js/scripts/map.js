@@ -3,18 +3,20 @@ function Map () {
 }
 
 Map.prototype.init = function ( params ) {
-	this.map = params.map || {};
+	this.dom_id = params.dom_id || ''
 	this.listings = params.listings || {};
 	this.polygons = params.polygons || {};
 	this.markers = params.markers || {};
 
-
-	
+	//build map
 }
 
 Map.prototype.get_bounds =  function () {
+	if (!this.map) {
+		return {};
+	};
 	var response = {}
-	var bounds = map_js_var.map.getBounds();
+	// var bounds = map_js_var.map.getBounds();
 	if ( typeof bounds == 'undefined' ) {
 		return response;
 	}
@@ -34,3 +36,10 @@ Map.prototype.get_bounds =  function () {
 
 	return response;
 }
+
+Map.prototype.listeners = function () {
+
+}
+
+Map.prototype.update = function () {}
+	
