@@ -51,14 +51,14 @@ jQuery(document).ready(function($) {
     };
 
     // Validate the name field
-    jQuery("#name", widget).bind('blur.pl', function() {
+    jQuery("input[name=name]", widget).bind('blur.pl', function() {
         if(jQuery(this).val() !== "") {
             jQuery(this).errorTooltip('name_error', 'remove');
         }
     });
 
     // Validate the email field
-    jQuery("#email", widget).bind('blur.pl', function() {
+    jQuery("input[name=email]", widget).bind('blur.pl', function() {
         if(valid_email(jQuery(this).val())) {
             jQuery(this).errorTooltip('email_error', 'remove');
         }
@@ -80,21 +80,21 @@ jQuery(document).ready(function($) {
         };
 
         // Clear out existing tooltips
-        jQuery("#name", this).errorTooltip('name_error', 'remove');
-        jQuery("#email", this).errorTooltip('email_error', 'remove');
+        jQuery("input[name=name]", this).errorTooltip('name_error', 'remove');
+        jQuery("input[name=email]", this).errorTooltip('email_error', 'remove');
         $this.find('input[type=submit]').errorTooltip('submit_success', 'remove');
         $this.find('input[type=submit]').errorTooltip('submit_error', 'remove');
 
         // Validate the name field
-        if(jQuery('#name', this).val() === "") {
-            jQuery("#name", this).errorTooltip('name_error', {text: "Please enter your name"});
+        if(jQuery('input[name=name]', this).val() === "") {
+            jQuery("input[name=name]", this).errorTooltip('name_error', {text: "Please enter your name"});
             error_found = true;
         }
 
         // Validate the email address field
-        var email_value = jQuery("#email", this).val();
+        var email_value = jQuery("input[name=email]", this).val();
         if(!valid_email(email_value)) {
-            jQuery("#email", this).errorTooltip('email_error', {text: "Please enter a valid email address"});
+            jQuery("input[name=email]", this).errorTooltip('email_error', {text: "Please enter a valid email address"});
             error_found = true;
         }
 
