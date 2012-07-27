@@ -29,12 +29,22 @@ Map.prototype.init = function ( params ) {
 	//marker settings
 	this.marker = {}
 	this.marker.icon = params.marker || false;
-	this.marker.mouseover = params.mouseover || function () {
-
-	}
-
+	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
+	
 	// map/list interaction
-	// this.on_hover = params.on_hover || true;
+	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
+	
+	}
+	Map.prototype.marker_mouseover = params.marker_mouseover || function ( listing_id ) {
+		var marker = this.markers_hash[listing_id];
+		marker.setIcon(this.marker.icon_hover);
+		// marker.setIcon(google.maps.Animation.BOUNCE);
+	}
+	Map.prototype.marker_mouseout = params.marker_mouseout || function ( listing_id ) {
+		var marker = this.markers_hash[listing_id];
+		marker.setIcon(null);
+		// this.list.row_mouseleave( listing_id );
+	}
 
 	//build map
 	var that = this;
@@ -129,12 +139,17 @@ Map.prototype.create_marker = function ( marker_options ) {
 
 	google.maps.event.addListener(marker,"mouseover",function(){
 		that.marker_mouseover( marker.listing.id );
-		that.list.row_mouseover( marker.listing.id );
+		if ( that.list ) {
+			that.list.row_mouseover( marker.listing.id );	
+		}
+		
 	}); 
 
 	google.maps.event.addListener(marker,"mouseout",function(){
-		that.list.row_mouseleave( marker.listing.id );
 		that.marker_mouseout( marker.listing.id );
+		if ( that.list ) {
+			that.list.row_mouseleave( marker.listing.id );
+		}
 	});
 
 	that.markers.push(marker);
@@ -142,25 +157,6 @@ Map.prototype.create_marker = function ( marker_options ) {
 	marker.setMap(this.map);
 }
 
-
-Map.prototype.marker_click = function ( listing_id ) {
-	
-}
-
-Map.prototype.marker_mouseover = function ( listing_id ) {
-	var marker = this.markers_hash[listing_id];
-
-	marker.setAnimation(google.maps.Animation.BOUNCE);
-
-	setTimeout(function () {
-		marker.setAnimation( null );
-	}, 750);
-	
-}
-
-Map.prototype.marker_mouseout = function ( listing_id ) {
-	// this.list.row_mouseleave( listing_id );
-}
 
 Map.prototype.center = function () {
 	var that = this;
