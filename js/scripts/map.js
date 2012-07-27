@@ -1,8 +1,11 @@
-//info windows
-//link list and map
+
+
 //polygon map
 //lifestyle map
 //lifestyle polygon map
+
+// only trigger map reload after 70% move in a direction
+// only trigger map reload after a zoom out.
 
 function Map () {}
 
@@ -38,12 +41,10 @@ Map.prototype.init = function ( params ) {
 	Map.prototype.marker_mouseover = params.marker_mouseover || function ( listing_id ) {
 		var marker = this.markers_hash[listing_id];
 		marker.setIcon(this.marker.icon_hover);
-		// marker.setIcon(google.maps.Animation.BOUNCE);
 	}
 	Map.prototype.marker_mouseout = params.marker_mouseout || function ( listing_id ) {
 		var marker = this.markers_hash[listing_id];
 		marker.setIcon(null);
-		// this.list.row_mouseleave( listing_id );
 	}
 
 	//build map
