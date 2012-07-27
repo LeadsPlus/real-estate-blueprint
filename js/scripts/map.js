@@ -1,6 +1,7 @@
 //info windows
 //max results behavior
 //no results behavior
+//link list and map
 //polygon map
 //lifestyle map
 //lifestyle polygon map
@@ -35,6 +36,7 @@ Map.prototype.init = function ( params ) {
 }
 
 Map.prototype.update = function ( ajax_response ) {
+	console.log(ajax_response);
 	if (ajax_response && ajax_response.aaData) {
 		this.clear();
 		for (var i = ajax_response.aaData.length - 1; i >= 0; i--) {
@@ -43,6 +45,13 @@ Map.prototype.update = function ( ajax_response ) {
 		// if filter by bounds, don't move the map, it's confusing
 		if (this.center) {
 			this.center();	
+		}
+
+		//show full overlay so users knows to zoom if they want.
+		if ( ajax_response.iTotalRecords > 50) {
+			this.show_full();
+		} else {
+			this.hide_full();
 		}
 	} else {
 		this.show_empty();
@@ -182,4 +191,10 @@ Map.prototype.show_loading = function () {
 }
 Map.prototype.hide_loading = function () {
 	jQuery('.map_wrapper #loading_overlay').hide();
+}
+Map.prototype.show_full = function () {
+	jQuery('#full_overlay').fadeIn();
+}
+Map.prototype.hide_full = function () {
+	jQuery('#full_overlay').hide();
 }
