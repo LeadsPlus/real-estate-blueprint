@@ -24,15 +24,15 @@ class PLS_Map_Listings extends PLS_Map {
 				var centers = [];
 				
 				jQuery(function($) { 
-					google.maps.event.addDomListener(window, 'load', function() {
-						var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
-						var myOptions = { zoom: <?php echo $zoom; ?>, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
-						<?php echo $map_js_var ?>.map = new google.maps.Map(document.getElementById("<?php echo $canvas_id ?>"), myOptions);
-						<?php foreach (self::$markers as $marker): ?>
-							<?php echo $marker; ?>
-						<?php endforeach ?>	
-						pls_center_map(<?php echo self::$map_js_var ?>);
-					});
+					// google.maps.event.addDomListener(window, 'load', function() {
+					// 	var latlng = new google.maps.LatLng(<?php echo $lat; ?>, <?php echo $lng; ?>);
+					// 	var myOptions = { zoom: <?php echo $zoom; ?>, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
+					// 	<?php echo $map_js_var ?>.map = new google.maps.Map(document.getElementById("<?php echo $canvas_id ?>"), myOptions);
+					// 	<?php foreach (self::$markers as $marker): ?>
+					// 		<?php echo $marker; ?>
+					// 	<?php endforeach ?>	
+					// 	pls_center_map(<?php echo self::$map_js_var ?>);
+					// });
 
 					<?php if ($ajax_form_class): ?>
 					$('.<?php echo $ajax_form_class ?>').live('change', function () {
