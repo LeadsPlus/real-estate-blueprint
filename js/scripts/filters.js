@@ -34,18 +34,3 @@ Filters.prototype.get_values = function () {
 	return result;
 	
 }
-
-Filters.prototype.verticies = function () {
-
-}
-
-
-// function my_listings_search_params (aoData) {
-            //     var results = get_search_filters();
-            //     console.log(results);
-            //     for (filter in results) {
-            //         aoData.push({"name" : filter, "value" : results[filter]});
-            //     }
-            //     aoData.push({"name": "context", "value" : $('#context').attr('class')});
-            //     return aoData;
-            // }
