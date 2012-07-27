@@ -1,6 +1,4 @@
 //info windows
-//max results behavior
-//no results behavior
 //link list and map
 //polygon map
 //lifestyle map
@@ -13,18 +11,30 @@ Map.prototype.init = function ( params ) {
 	this.type = params.type || alert('You must define a map type for the method to work properly');
 	this.infowindows = [];
 	this.markers = params.markers ||[];
+	this.markers_hash = {};
 	this.bounds = false;
+	this.list = params.list || false;
 
 	this.dom_id = params.dom_id || 'map_canvas'
 	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
 	this.polygons = params.polygons || {};
+	
+	// map settings
 	this.lat = params.lat || '42.37';
 	this.lng = params.lng || '-71.03';
 	this.zoom = params.zoom || 15;
-	this.marker = {};
-	this.marker.icon = params.marker || false;
 	this.cetner = params.center || true;
 	this.filter_by_bounds = params.filter_by_bounds || true;
+
+	//marker settings
+	this.marker = {}
+	this.marker.icon = params.marker || false;
+	this.marker.mouseover = params.mouseover || function () {
+
+	}
+
+	// map/list interaction
+	// this.on_hover = params.on_hover || true;
 
 	//build map
 	var that = this;
@@ -69,13 +79,16 @@ Map.prototype.clear = function () {
 }
 
 Map.prototype.create_listing_marker = function ( listing ) {
-	var marker = {};
-	marker.latlng = new google.maps.LatLng(listing['location']['coords'][0], listing['location']['coords'][1]);
+	var marker_options = {};
+	//bind the listing data to the marker so it can be used later
+	marker_options.listing = listing;
+	marker_options.animation = google.maps.Animation.DROP
+	marker_options.position = new google.maps.LatLng(listing['location']['coords'][0], listing['location']['coords'][1]);
 
 	if (listing['images'] && listing['images'][0] && listing['images'][0]['url']) {
     	var image_url = listing['images'][0]['url'];
     };
-    marker.content = '<div id="content">'+
+    marker_options.content = '<div id="content">'+
         '<div id="siteNotice">'+'</div>'+
           '<h2 id="firstHeading" class="firstHeading"><a href="'+ listing['cur_data']['url'] + '">' + listing['location']['full_address'] +'</a></h2>'+
           '<div id="bodyContent">'+
@@ -90,27 +103,63 @@ Map.prototype.create_listing_marker = function ( listing ) {
           '<div class="clear"></div>' +
         '</div>'+
       '</div>';
-    this.create_marker( marker );
+    this.create_marker( marker_options );
 }
 
-Map.prototype.create_marker = function ( marker ) {
+Map.prototype.create_marker = function ( marker_options ) {
 	var that = this;
-	if (!this.marker.icon) {
-		var marker_options = {position: marker.latlng};
-	} else {
-		var marker_options = {position: marker.latlng, icon: this.marker.icon };
-	};
+	if (this.marker.icon) {
+		marker_options.icon = this.marker.icon;
+	}
 	var marker = new google.maps.Marker(marker_options);
-	var infowindow = new google.maps.InfoWindow({content: marker.content});
+
+	marker.listing = marker_options.listing;
+	
+	var infowindow = new google.maps.InfoWindow({content: marker_options.content});
 	this.infowindows.push(infowindow);
+
 	google.maps.event.addListener(marker, 'click', function() {
+		that.marker_click( marker.listing.id );
+
 		for (var i = that.infowindows.length - 1; i >= 0; i--) {
 			that.infowindows[i].setMap(null)
-		};
+		}
 		infowindow.open( that.map, marker );
 	});
-	marker.setMap(this.map);
+
+	google.maps.event.addListener(marker,"mouseover",function(){
+		that.marker_mouseover( marker.listing.id );
+		that.list.row_mouseover( marker.listing.id );
+	}); 
+
+	google.maps.event.addListener(marker,"mouseout",function(){
+		that.list.row_mouseleave( marker.listing.id );
+		that.marker_mouseout( marker.listing.id );
+	});
+
 	that.markers.push(marker);
+	that.markers_hash[marker.listing.id] = marker;
+	marker.setMap(this.map);
+}
+
+
+Map.prototype.marker_click = function ( listing_id ) {
+	
+}
+
+Map.prototype.marker_mouseover = function ( listing_id ) {
+	var marker = this.markers_hash[listing_id];
+
+	marker.setAnimation(google.maps.Animation.BOUNCE);
+
+	setTimeout(function () {
+		marker.setAnimation( null );
+	}, 750);
+	
+}
+
+Map.prototype.marker_mouseout = function ( listing_id ) {
+	// this.list.row_mouseleave( listing_id );
 }
 
 Map.prototype.center = function () {

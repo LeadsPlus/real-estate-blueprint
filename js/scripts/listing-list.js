@@ -8,9 +8,12 @@ List.prototype.init = function ( params ) {
 
 	this.loading_class = params.loading_class || '.dataTables_processing'
 
+	this.map = params.map || false;
+
 	this.dom_id = params.dom_id || '#placester_listings_list';
 	this.class = params.class || false;
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
+	this.table_row_selector = params.table_class || '.placester_properties tr';
 
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
 		if (params.get_listings) {
@@ -69,8 +72,32 @@ List.prototype.update_favorites_through_cache = function () {
 	    }, 'json');
 }
 
+List.prototype.row_mouseover = function ( listing_id ) {
+	jQuery(this.table_row_selector).find('[data-listing=' + listing_id + ']').trigger('mouseenter');
+}
+
+List.prototype.row_mouseleave = function ( listing_id ) {
+	jQuery(this.table_row_selector).find('[data-listing=' + listing_id + ']').trigger('mouseleave');
+}
+
 List.prototype.listeners = function () {
-	
+	var that = this;
+	if ( this.map ) {
+
+		console.log('on hover event');
+
+		jQuery(this.table_row_selector).live({
+			mouseenter: function () {
+				jQuery(this).css('background-color', 'red');
+				that.map.marker_mouseover( jQuery(this).children().children().attr('data-listing') )
+			},
+			mouseleave: function () {
+				jQuery(this).css('background-color', 'inherit');
+				that.map.marker_mouseout( jQuery(this).children().children().attr('data-listing') )
+			}
+		});
+	}
+
 }
 
 List.prototype.show_loading = function () {

@@ -188,7 +188,7 @@ class PLS_Partials_Get_Listings_Ajax {
             // pls_dump($listing);
             ?>
 
-<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer">
+<div class="listing-item grid_8 alpha" itemscope itemtype="http://schema.org/Offer" data-listing="<?php echo $listing['id'] ?>">
 
   <div class="listing-thumbnail grid_3 alpha">
          <a href="<?php echo @$listing['cur_data']['url']; ?>" itemprop="url"><?php echo PLS_Image::load($listing['images'][0]['url'], array('resize' => array('w' => 210, 'h' => 140), 'fancybox' => true, 'as_html' => true, 'html' => array('alt' => $listing['location']['full_address'], 'itemprop' => 'image'))); ?></a>
