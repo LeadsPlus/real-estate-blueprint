@@ -207,22 +207,18 @@ Map.prototype.get_bounds =  function () {
 
 Map.prototype.listeners = function ( ) {
 	var that = this;
+	var timeout = false;
 	google.maps.event.addDomListener(window, 'load', function() {
-
-		//trigger a reload on zoom
-		google.maps.event.addListener(that.map, 'zoom_changed', function() {
-			google.maps.event.addListenerOnce(that.map, 'idle', function() {
-			  	that.listings.get();
-			});
+		//trigger a reload on any movement
+		google.maps.event.addListener(that.map, 'bounds_changed', function() {
+			//only reload the map once since bounds_changed is a little trigger happy
+			clearTimeout(timeout);
+			timeout = setTimeout(function () {
+				google.maps.event.addListenerOnce(that.map, 'idle', function() {
+					that.listings.get();				
+				});
+			}, 500);	
 		});
-
-		//trigger a reload on pan
-		google.maps.event.addListener(that.map, 'dragend', function() {
-			google.maps.event.addListenerOnce(that.map, 'idle', function() {
-			  	that.listings.get();
-			});
-		});
-
 	});
 }
 
