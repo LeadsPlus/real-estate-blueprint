@@ -1,4 +1,5 @@
-//bounded map search
+//map movements
+
 //info windows
 //max results behavior
 //no results behavior
@@ -48,6 +49,7 @@ Map.prototype.update = function ( ajax_response ) {
 	} else {
 		this.show_empty();
 	}
+	this.hide_loading();
 }
 
 Map.prototype.clear = function () {
@@ -150,6 +152,23 @@ Map.prototype.get_bounds =  function () {
 	return this.bounds;
 }
 
-Map.prototype.listeners = function () {}
+Map.prototype.listeners = function () {
 
-Map.prototype.show_empty = function () {}
+	//trigger a reload on zoom
+
+	//trigger a reload on pan
+
+}
+
+Map.prototype.show_empty = function () {
+	jQuery('.map_wrapper #empty_overlay').show();
+}
+Map.prototype.hide_empty = function () {
+	jQuery('.map_wrapper #empty_overlay').hide();
+}
+Map.prototype.show_loading = function () {
+	jQuery('.map_wrapper #loading_overlay').show();
+}
+Map.prototype.hide_loading = function () {
+	jQuery('.map_wrapper #loading_overlay').hide();
+}

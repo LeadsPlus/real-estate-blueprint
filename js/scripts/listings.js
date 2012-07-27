@@ -62,6 +62,7 @@ Listings.prototype.get = function ( success ) {
 
 	//get bounding box or polygon information
 	if (this.map) {
+		this.map.show_loading();
 		filters = filters.concat(this.map.get_bounds());
 	}
 
