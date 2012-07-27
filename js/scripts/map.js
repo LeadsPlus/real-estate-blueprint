@@ -1,22 +1,30 @@
-function Map () {
+//bounded map search
+//info windows
+//max results behavior
+//no results behavior
+//polygon map
+//lifestyle map
+//lifestyle polygon map
 
-}
+function Map () {}
 
 Map.prototype.init = function ( params ) {
 	this.map = false;
 	this.type = params.type || alert('You must define a map type for the method to work properly');
 	this.infowindows = [];
 	this.markers = params.markers ||[];
+	this.bounds = false;
 
 	this.dom_id = params.dom_id || 'map_canvas'
 	this.listings = params.listings || {};
 	this.polygons = params.polygons || {};
 	this.lat = params.lat || '42.37';
 	this.lng = params.lng || '-71.03';
-	this.zoom = params.zoom || 14;
+	this.zoom = params.zoom || 15;
 	this.marker = {};
 	this.marker.icon = params.marker || false;
 	this.cetner = params.center || true;
+	this.filter_by_bounds = params.filter_by_bounds || true;
 
 	//build map
 	var that = this;
@@ -33,6 +41,7 @@ Map.prototype.update = function ( ajax_response ) {
 		for (var i = ajax_response.aaData.length - 1; i >= 0; i--) {
 			this.create_listing_marker( ajax_response.aaData[i][1] );
 		}
+		// if filter by bounds, don't move the map, it's confusing
 		if (this.center) {
 			this.center();	
 		}
@@ -99,7 +108,8 @@ Map.prototype.center = function () {
 	var that = this;
 	var bounds = new google.maps.LatLngBounds();
 	
-	if (this.markers) {
+	//only reposition the map if it's not the first load (this.bounds) and the dev wants (this.filter_by_bounds)
+	if ( this.markers && ( !this.filter_by_bounds || !this.bounds ) ) {
 		for (var i = this.markers.length - 1; i >= 0; i--) {
 			this.markers[i].setMap(this.map);
 			bounds.extend(this.markers[i].getPosition());
@@ -111,34 +121,33 @@ Map.prototype.center = function () {
 	            if ( that.map.getZoom() > 15 ) {
 	            	that.map.setZoom( 15 );
 	            }
-            });
+            })
         }
 	};
 }
 
 Map.prototype.get_bounds =  function () {
-	if (!this.map) {
-		return {};
-	};
-	var response = {}
-	if ( typeof bounds == 'undefined' ) {
-		return response;
+	if (!this.map && !this.bounds) {
+		return this.bounds;
 	}
-	response.vertices = [];
-	response.vertices[0] = {};
-	response.vertices[1] = {};
-	response.vertices[2] = {};
-	response.vertices[3] = {};
-	response.vertices[0]['lat'] = bounds.getNorthEast().lat();
-	response.vertices[0]['lng'] = bounds.getNorthEast().lng();
-	response.vertices[1]['lat'] = bounds.getNorthEast().lat();
-	response.vertices[1]['lng'] = bounds.getSouthWest().lng();
-	response.vertices[2]['lat'] = bounds.getSouthWest().lat();
-	response.vertices[2]['lng'] = bounds.getSouthWest().lng();
-	response.vertices[3]['lat'] = bounds.getSouthWest().lat();
-	response.vertices[3]['lng'] = bounds.getNorthEast().lng();
+	this.bounds = [];
+	var map_bounds = this.map.getBounds();
+	if ( typeof map_bounds == 'undefined' ) {
+		return this.bounds;
+	}
+	this.bounds.push({'name' : 'polygon[0][lat]', 'value': map_bounds.getNorthEast().lat() });
+	this.bounds.push({'name' : 'polygon[0][lng]', 'value': map_bounds.getNorthEast().lng() });
 
-	return response;
+	this.bounds.push({'name' : 'polygon[1][lat]', 'value': map_bounds.getNorthEast().lat() });
+	this.bounds.push({'name' : 'polygon[1][lng]', 'value': map_bounds.getSouthWest().lng() });
+
+	this.bounds.push({'name' : 'polygon[2][lat]', 'value': map_bounds.getSouthWest().lat() });
+	this.bounds.push({'name' : 'polygon[2][lng]', 'value': map_bounds.getSouthWest().lng() });
+
+	this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
+	this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });
+
+	return this.bounds;
 }
 
 Map.prototype.listeners = function () {}

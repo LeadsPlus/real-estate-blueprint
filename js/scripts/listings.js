@@ -7,8 +7,6 @@ function Listings ( params ) {
 	this.aoData = params.aoData || [];
 }
 
-Listings.prototype.request = 0;
-
 Listings.prototype.pending = false;
 
 Listings.prototype.init = function () {
@@ -64,12 +62,11 @@ Listings.prototype.get = function ( success ) {
 
 	//get bounding box or polygon information
 	if (this.map) {
-		console.log(this.map.get_bounds());
+		filters = filters.concat(this.map.get_bounds());
 	}
 
 	//tell wordpress which hook to hit.
 	filters.push( { "name": "action", "value" : this.hook} );
-
 	jQuery.ajax({
 	    "dataType" : 'json',
 	    "type" : "POST",
