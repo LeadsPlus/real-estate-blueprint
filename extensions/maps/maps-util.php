@@ -417,7 +417,7 @@ class PLS_Map {
         	'polygon_click_action' => false,
         	'lifestyle_distance' => 'miles',
         	'search_class' => 'pls_listings_search_results',
-        	'full_overlay' => '<div style="width: 100%; background-color:rgba(0,0,0,0.5); padding: 10px; color: white">Only showing 50 results. Zoom in to refine your search</div>'
+        	'full_overlay' => '<div style="width: 100%; background-color:rgba(0,0,0,0.5); color: white">Only showing 50 results. Zoom in to refine your search</div>'
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
