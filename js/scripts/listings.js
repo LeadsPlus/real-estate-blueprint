@@ -18,11 +18,11 @@ Listings.prototype.init = function () {
 	}
 
 	if (this.map) {
-		this.map.listeners(this.get);
+		this.map.listeners();
 	}
 
 	if (this.list) {
-		this.list.listeners(this.get);
+		this.list.listeners();
 
 		//boot up the datatable
 		this.list.datatable = jQuery(this.list.dom_id).dataTable(this.list.settings);

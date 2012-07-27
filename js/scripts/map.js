@@ -1,5 +1,3 @@
-//map movements
-
 //info windows
 //max results behavior
 //no results behavior
@@ -17,7 +15,7 @@ Map.prototype.init = function ( params ) {
 	this.bounds = false;
 
 	this.dom_id = params.dom_id || 'map_canvas'
-	this.listings = params.listings || {};
+	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
 	this.polygons = params.polygons || {};
 	this.lat = params.lat || '42.37';
 	this.lng = params.lng || '-71.03';
@@ -152,12 +150,25 @@ Map.prototype.get_bounds =  function () {
 	return this.bounds;
 }
 
-Map.prototype.listeners = function () {
+Map.prototype.listeners = function ( ) {
+	var that = this;
+	google.maps.event.addDomListener(window, 'load', function() {
 
-	//trigger a reload on zoom
+		//trigger a reload on zoom
+		google.maps.event.addListener(that.map, 'zoom_changed', function() {
+			google.maps.event.addListenerOnce(that.map, 'idle', function() {
+			  	that.listings.get();
+			});
+		});
 
-	//trigger a reload on pan
+		//trigger a reload on pan
+		google.maps.event.addListener(that.map, 'dragend', function() {
+			google.maps.event.addListenerOnce(that.map, 'idle', function() {
+			  	that.listings.get();
+			});
+		});
 
+	});
 }
 
 Map.prototype.show_empty = function () {
