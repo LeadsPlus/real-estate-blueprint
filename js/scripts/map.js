@@ -158,13 +158,12 @@ Map.prototype.create_marker = function ( marker_options ) {
 	marker.setMap(this.map);
 }
 
-
 Map.prototype.center = function () {
 	var that = this;
 	var bounds = new google.maps.LatLngBounds();
 	
 	//only reposition the map if it's not the first load (this.bounds) and the dev wants (this.filter_by_bounds)
-	if ( this.markers && ( !this.filter_by_bounds || !this.bounds ) ) {
+	if ( this.markers.length > 0 && ( !this.filter_by_bounds || !this.bounds ) ) {
 		for (var i = this.markers.length - 1; i >= 0; i--) {
 			this.markers[i].setMap(this.map);
 			bounds.extend(this.markers[i].getPosition());
