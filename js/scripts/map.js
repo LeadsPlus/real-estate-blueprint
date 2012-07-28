@@ -6,10 +6,14 @@
 
 // only trigger map reload after 70% move in a direction
 // only trigger map reload after a zoom out.
+// show the number of total results on the map
 
 function Map () {}
 
 Map.prototype.init = function ( params ) {
+	//where ever you go, know who you are.
+	var that = this;
+
 	this.map = false;
 	this.type = params.type || alert('You must define a map type for the method to work properly');
 	this.infowindows = [];
@@ -26,7 +30,7 @@ Map.prototype.init = function ( params ) {
 	this.lat = params.lat || '42.37';
 	this.lng = params.lng || '-71.03';
 	this.zoom = params.zoom || 15;
-	this.cetner = params.center || true;
+	this.always_center = params.always_center || true;
 	this.filter_by_bounds = params.filter_by_bounds || true;
 
 	//marker settings
@@ -35,10 +39,35 @@ Map.prototype.init = function ( params ) {
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
 
 	//polygon settings
+	this.polygon = {};
+	this.polygon.strokeColor = params.strokeColor || null;
+	this.polygon.strokeOpacity  = params.strokeOpacity || null;
+	this.polygon.strokeWeight  = params.strokeWeight || null;
+	this.polygon.fillColor  = params.fillColor || null;
+	this.polygon.fillOpacity  = params.fillOpacity || null;
+	this.polygons = [];
+	this.polygons_verticies = [];
+	this.polygons_exclude_center = false;
 	this.selected_polygon = params.selected_polygon || false;
+	this.allow_polygons_to_clear = params.allow_polygons_to_clear || false;
 	this.slug = params.slug || false;
+	Map.prototype.polygon_click = params.polygon_click || function ( polygon ) {
+		that.selected_polygon = polygon;
+		that.polygons_exclude_center = true;
+		that.always_center = true;
+		that.listings.get();
+		for (var i = that.polygons.length - 1; i >= 0; i--) {
+			that.polygons[i].setOptions({fillOpacity: "0"});
+		}
+		polygon.setOptions({fillOpacity: "0.5"});
+	}
+	Map.prototype.polygon_mouseover = params.polygon_mouseover || function ( polygon ) {
+		polygon.setOptions({fillOpacity: "0.9"});
+	}
+	Map.prototype.polygon_mouseout = params.polygon_mouseout || function ( polygon ) {
+		polygon.setOptions({fillOpacity: "0.4"});
+	}
 
-	
 	// map/list interaction
 	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
 	
@@ -58,18 +87,147 @@ Map.prototype.init = function ( params ) {
 		var latlng = new google.maps.LatLng(that.lat, that.lng);
 		that.myOptions = { zoom: that.zoom, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.myOptions);
+
+		
+		if ( that.type == 'polygon' ) {
+			//all neighborhoods shown
+			that.polygon_init();
+		} else if ( that.type == 'neighborhood' ) {
+			//a specified neighborhood is shown
+			that.neighborhood_init();
+		} else if ( that.type == 'lifestyle' ) {
+			//show points of interests on the map.
+			that.lifestyle_init();
+		} else if ( that.type == 'lifestyle_polygon' ) {
+			//show points of interests on the map, then do listings searches with them.
+			that.polygon_lifestyle_init();
+		}
 	});
 }
 
+Map.prototype.polygon_init = function () {
+	var that = this;
+
+	if (this.slug) {
+		//if a specific polygon, get it
+		//then get the listings for it.
+
+	} else {
+		//if no polygon, get all
+		var filters = {};
+		filters.action = 'get_polygons_by_type';
+		filters.type = 'neighborhood';
+
+		jQuery.ajax({
+		    "dataType" : 'json',
+		    "type" : "POST",
+		    "url" : info.ajaxurl,
+		    "data" : filters,
+		    "success" : function ( neighborhoods ) {
+		    	if ( neighborhoods.length > 0) {
+		    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
+		    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
+
+		    			var polygon = that.create_polygon( polygon_options );
+
+
+		    		};
+		    		that.center();
+		    	} 
+				
+		    }
+		});
+
+		
+		//wait for the user to click on one
+		//then go get all the listings of the polygon clicked	
+	}
+	
+	
+	//then wait for something to happen.
+
+}
+
+//converts raw neighborhood polygon data into a useable GMaps polygon object
+Map.prototype.process_neighborhood_polygon = function ( neighborhood ) {
+	// console.log( neighborhood );
+	var polygon_options = {};
+	polygon_options.paths = [];
+	polygon_options.label = neighborhood.name || false;
+	polygon_options.tax = neighborhood.tax || false;
+
+	polygon_options.strokeColor = this.polygon.strokeColor || neighborhood.settings.border.color;
+	polygon_options.strokeOpacity = this.polygon.strokeOpacity || neighborhood.settings.border.opacity;
+	polygon_options.strokeWeight = this.polygon.strokeWeight || neighborhood.settings.border.weight;
+	polygon_options.fillColor = this.polygon.fillColor || neighborhood.settings.fill.color;
+	polygon_options.fillOpacity = this.polygon.fillOpacity || neighborhood.settings.fill.opacity;
+
+	if ( neighborhood.vertices.length > 0 ) {
+		var bounds = new google.maps.LatLngBounds();
+		for (var i = neighborhood.vertices.length - 1; i >= 0; i--) {
+			var point = neighborhood.vertices[i];
+			var gpoint = new google.maps.LatLng( point['lat'], point['lng'] );
+			polygon_options.paths.push( gpoint );	
+			//store the verticies directly so we can center the map without relooping the the polygons
+			this.polygons_verticies.push( gpoint );
+			bounds.extend( gpoint );
+		}
+		polygon_options.label_center = bounds.getCenter();
+	}
+	//so we can attach directly to the polygon object
+	polygon_options.vertices = neighborhood.vertices;
+
+	return polygon_options;
+}
+
+Map.prototype.create_polygon = function ( polygon_options ) {
+	var that = this;
+	var polygon = new google.maps.Polygon( polygon_options );
+	//faster to travers native arrays then using google's getters. We'll risk the collision
+	polygon.vertices = polygon_options.vertices;
+	
+	if ( polygon_options.label && polygon_options.label_center ) {
+		new TxtOverlay( polygon_options.label_center, polygon_options.label, "polygon_text_area", this.map );	
+	}
+	
+	polygon.setMap(this.map);
+	this.polygons.push(polygon);
+	
+	google.maps.event.addListener(polygon, 'click', function() {
+		that.polygon_click( polygon );
+	});
+
+	google.maps.event.addListener(polygon,"mouseover",function(){
+		that.polygon_mouseover( polygon );
+	}); 
+
+	google.maps.event.addListener(polygon,"mouseout",function(){
+		that.polygon_mouseout( polygon );
+	});
+
+}
+
+Map.prototype.neighborhood_init = function () {
+
+}
+Map.prototype.lifestyle_init = function () {
+
+}
+Map.prototype.lifestyle_polygon_init = function () {
+
+}
+
 Map.prototype.update = function ( ajax_response ) {
-	console.log(ajax_response);
+
 	if (ajax_response && ajax_response.aaData) {
-		this.clear();
+		if (this.markers.length > 0 )
+			this.clear();
+
 		for (var i = ajax_response.aaData.length - 1; i >= 0; i--) {
 			this.create_listing_marker( ajax_response.aaData[i][1] );
 		}
 		// if filter by bounds, don't move the map, it's confusing
-		if (this.center) {
+		if (this.always_center) {
 			this.center();	
 		}
 
@@ -91,6 +249,13 @@ Map.prototype.clear = function () {
 			this.markers[i].setMap( null )
 		}
         this.markers = [];
+	}
+
+	if ( this.allow_polygons_to_clear && this.polygons ) {
+		for (var i = this.polygons.length - 1; i >= 0; i--) {
+			this.polygons[i].setMap( null );
+		}
+		this.polygons = [];
 	}
 }
 
@@ -165,24 +330,48 @@ Map.prototype.create_marker = function ( marker_options ) {
 
 Map.prototype.center = function () {
 	var that = this;
-	var bounds = new google.maps.LatLngBounds();
-	
+	var listener = false;
 	//only reposition the map if it's not the first load (this.bounds) and the dev wants (this.filter_by_bounds)
-	if ( this.markers.length > 0 && ( !this.filter_by_bounds || !this.bounds ) ) {
-		for (var i = this.markers.length - 1; i >= 0; i--) {
-			this.markers[i].setMap(this.map);
-			bounds.extend(this.markers[i].getPosition());
-		};
+	if ( !this.filter_by_bounds || !this.bounds || this.selected_polygon) {
+		clearTimeout(listener);
 
-        if( typeof this.map != "undefined" ) {
+		var bounds = new google.maps.LatLngBounds();
+
+		if ( this.markers.length > 0 ) {
+			for (var i = this.markers.length - 1; i >= 0; i--) {
+				bounds.extend(this.markers[i].getPosition());
+			}
+		}
+		
+		if ( !this.polygons_exclude_center && this.polygons_verticies.length > 0 ) {
+			for (var i = this.polygons_verticies.length - 1; i >= 0; i--) {
+				bounds.extend(this.polygons_verticies[i]);
+			}
+		}
+		
+        if ( this.map ) {
         	this.map.fitBounds(bounds);
-            google.maps.event.addListenerOnce(this.map, 'bounds_changed', function( event ) {
-	            if ( that.map.getZoom() > 15 ) {
-	            	that.map.setZoom( 15 );
-	            }
-            })
+            listener = setTimeout( function () {
+				google.maps.event.addListenerOnce(that.map, 'bounds_changed', function( event ) {
+				    if ( that.map.getZoom() > 15 ) {
+				    	console.log('zoom issue');
+				    	that.map.setZoom( 15 );
+				    }
+				})
+            }, 750 );
         }
-	};
+	}
+}
+
+
+Map.prototype.center_on_markers = function () {
+	var bounds = new google.maps.LatLngBounds();
+
+	for (var i = this.markers.length - 1; i >= 0; i--) {
+		bounds.extend(this.markers[i].getPosition());
+	}	
+
+	this.map.fitBounds(bounds);
 }
 
 Map.prototype.get_bounds =  function () {
@@ -194,17 +383,28 @@ Map.prototype.get_bounds =  function () {
 	if ( typeof map_bounds == 'undefined' ) {
 		return this.bounds;
 	}
-	this.bounds.push({'name' : 'polygon[0][lat]', 'value': map_bounds.getNorthEast().lat() });
-	this.bounds.push({'name' : 'polygon[0][lng]', 'value': map_bounds.getNorthEast().lng() });
 
-	this.bounds.push({'name' : 'polygon[1][lat]', 'value': map_bounds.getNorthEast().lat() });
-	this.bounds.push({'name' : 'polygon[1][lng]', 'value': map_bounds.getSouthWest().lng() });
+	if (this.type == 'polygon' && this.selected_polygon) {
+		console.log(this.selected_polygon);
+		for (var i = this.selected_polygon.vertices.length - 1; i >= 0; i--) {
+			var point = this.selected_polygon.vertices[i];
+			this.bounds.push({'name' : 'polygon[' + i + '][lat]', 'value': point['lat'] });
+			this.bounds.push({'name' : 'polygon[' + i + '][lng]', 'value': point['lng'] });
+		}
+	} else {
+		this.bounds.push({'name' : 'polygon[0][lat]', 'value': map_bounds.getNorthEast().lat() });
+		this.bounds.push({'name' : 'polygon[0][lng]', 'value': map_bounds.getNorthEast().lng() });
 
-	this.bounds.push({'name' : 'polygon[2][lat]', 'value': map_bounds.getSouthWest().lat() });
-	this.bounds.push({'name' : 'polygon[2][lng]', 'value': map_bounds.getSouthWest().lng() });
+		this.bounds.push({'name' : 'polygon[1][lat]', 'value': map_bounds.getNorthEast().lat() });
+		this.bounds.push({'name' : 'polygon[1][lng]', 'value': map_bounds.getSouthWest().lng() });
 
-	this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
-	this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });
+		this.bounds.push({'name' : 'polygon[2][lat]', 'value': map_bounds.getSouthWest().lat() });
+		this.bounds.push({'name' : 'polygon[2][lng]', 'value': map_bounds.getSouthWest().lng() });
+
+		this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
+		this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });	
+	}
+	
 
 	return this.bounds;
 }
@@ -212,18 +412,22 @@ Map.prototype.get_bounds =  function () {
 Map.prototype.listeners = function ( ) {
 	var that = this;
 	var timeout = false;
-	google.maps.event.addDomListener(window, 'load', function() {
-		//trigger a reload on any movement
-		google.maps.event.addListener(that.map, 'bounds_changed', function() {
-			//only reload the map once since bounds_changed is a little trigger happy
-			clearTimeout(timeout);
-			timeout = setTimeout(function () {
-				google.maps.event.addListenerOnce(that.map, 'idle', function() {
-					that.listings.get();				
-				});
-			}, 500);	
-		});
-	});
+
+	if (this.type == 'listings') {
+		google.maps.event.addDomListener(window, 'load', function() {
+			//trigger a reload on any movement
+			google.maps.event.addListener(that.map, 'bounds_changed', function() {
+				//only reload the map once since bounds_changed is a little trigger happy
+				clearTimeout(timeout);
+				timeout = setTimeout(function () {
+					google.maps.event.addListenerOnce(that.map, 'idle', function() {
+						that.listings.get();				
+					});
+				}, 750);	
+			});
+		});	
+	}
+	
 }
 
 Map.prototype.show_empty = function () {
