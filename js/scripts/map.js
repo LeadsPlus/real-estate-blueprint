@@ -57,9 +57,9 @@ Map.prototype.init = function ( params ) {
 		that.always_center = true;
 		that.listings.get();
 		for (var i = that.polygons.length - 1; i >= 0; i--) {
-			that.polygons[i].setOptions({fillOpacity: "0"});
+			that.polygons[i].setOptions({fillOpacity: "0.4"});
 		}
-		polygon.setOptions({fillOpacity: "0.5"});
+		polygon.setOptions({fillOpacity: "0.6"});
 	}
 	Map.prototype.polygon_mouseover = params.polygon_mouseover || function ( polygon ) {
 		polygon.setOptions({fillOpacity: "0.9"});
