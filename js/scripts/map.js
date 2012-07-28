@@ -33,6 +33,11 @@ Map.prototype.init = function ( params ) {
 	this.marker = {}
 	this.marker.icon = params.marker || false;
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
+
+	//polygon settings
+	this.selected_polygon = params.selected_polygon || false;
+	this.slug = params.slug || false;
+
 	
 	// map/list interaction
 	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
