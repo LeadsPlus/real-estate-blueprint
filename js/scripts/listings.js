@@ -34,6 +34,16 @@ Listings.prototype.get = function ( success ) {
 	if ( Listings.prototype.pending ) {
 		return;
 	};
+	//or, if we're dealing with a polygon map and there's not a selected polygon
+	if ( this.map.type == 'polygon' && !this.map.selected_polygon ) {
+		if ( this.list )
+			this.list.update( {'aaData' : [], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} )
+
+		if ( this.map )
+			this.map.update( {'aaData' : [], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} )
+
+		return false;
+	}
 	this.pending = true;
 
 	var that = this;
