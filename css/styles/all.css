@@ -190,7 +190,7 @@ p {
   text-shadow: 0 1px 1px #999999; }
 
 img, embed, iframe {
-  background: white;
+  /*background: white;*/
   padding: 5px;
   border: 1px solid #999999; }
 
