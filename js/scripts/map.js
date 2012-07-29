@@ -103,7 +103,10 @@ Map.prototype.init = function ( params ) {
 		that.map_options.center = new google.maps.LatLng(that.lat, that.lng);
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
 		//sets the initial div for the map status display
-		that.add_control_container();
+		
+		if (that.status_display)
+			that.add_control_container();
+		
 		if ( that.type == 'polygon' ) {
 			//all neighborhoods shown
 			that.polygon_init();
