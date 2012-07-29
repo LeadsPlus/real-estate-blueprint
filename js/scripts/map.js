@@ -135,11 +135,18 @@ Map.prototype.polygon_init = function () {
 	//set the initial state of the polygon menu
 	if (this.status_display) {
 		google.maps.event.addDomListenerOnce(this.map, 'idle', function() {
-			var content = '<div id="polygon_display_status">';
+			var content = '<div id="polygon_display_wrapper">';
 			content += '<h5>Neighborhood Search</h5>';
-			content += '<p id="start_warning">Select a polygon to start searching</p>'
+			content += '<p id="start_warning">Select a polygon to start searching</p>';
 			content += '</div>';
 			jQuery('#' + that.status_display.dom_id).append(content);
+
+			jQuery('#polygon_unselect').live('click', function () {
+				that.selected_polygon = false;
+				that.listings.get();	
+				that.center_on_polygons();			
+				jQuery('#' + that.status_display.dom_id).append('<p id="start_warning">Select a polygon to start searching</p>');
+			});
 		});
 	}
 	
@@ -178,14 +185,31 @@ Map.prototype.polygon_init = function () {
 		//wait for the user to click on one
 		//then go get all the listings of the polygon clicked	
 	}
-	
-	
-	//then wait for something to happen.
-
 }
 Map.prototype.update_filters_polygon = function () {
-	
+
 	console.log('updating the polygon filters');
+	jQuery(' #polygon_display_status').remove();
+	
+	var content = '<div id="polygon_display_status">';
+	if (this.selected_polygon) {
+		jQuery('#' + this.status_display.dom_id + ' #start_warning').remove();
+		content += '<a id="polygon_unselect">Unselect Neighborhood</a>';
+		content += '<div>Selected Neighborhood: ' + this.selected_polygon.label + '</div>';
+		content += '<div>Number of Listings:' + this.listings.ajax_response.iTotalRecords + '</div>';
+	}
+
+	var formatted_filters = this.get_formatted_filters();
+	if ( formatted_filters.length > 0 ) {
+		content += '<ul>';
+		for (var i = formatted_filters.length - 1; i >= 0; i--) {
+			content += '<li>' + formatted_filters[i].name + formatted_filters[i].value + '</li>'
+		};
+		content += '</ul>';
+	}
+
+	content += '</div>';
+	jQuery('#' + this.status_display.dom_id).append(content);
 }
 
 //converts raw neighborhood polygon data into a useable GMaps polygon object
@@ -389,30 +413,21 @@ Map.prototype.update_filters_lifestyle = function () {}
 Map.prototype.update_filters_lifestyle_polygon = function () {}
 Map.prototype.update_filters_listings = function () {}
 
-Map.prototype.add_filters = function ( ) {
-	
-	console.log(this.listings.active_filters);
-	this.clear_controls();
+Map.prototype.get_formatted_filters = function ( ) {
 	var filters = this.listings.active_filters;
-
+	var formatted_filters = [];
 	for (var i = filters.length - 1; i >= 0; i--) {
 
-		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "") {
+		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "")
 			continue;
-		}
 			
-
 		if (this.filter_translation[filters[i].name])
 			filters[i].name = this.filter_translation[filters[i].name];
 
-		var control_settings = {}
-		control_settings.innerHTML = filters[i].name + filters[i].value;
-		this.add_control( control_settings );
-	};
-}
-
-Map.prototype.clear_controls = function ( ) {
-	this.map.controls[ this.filter_position ].clear();
+		formatted_filters.push({ name: filters[i].name, value: filters[i].value })
+	}
+	console.log(formatted_filters);
+	return formatted_filters;
 }
 
 Map.prototype.add_control_container = function () {
@@ -468,13 +483,19 @@ Map.prototype.center = function () {
 }
 
 
+Map.prototype.center_on_polygons = function () {
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = this.polygons_verticies.length - 1; i >= 0; i--) {
+		bounds.extend(this.polygons_verticies[i]);
+	}
+	this.map.fitBounds(bounds);
+}
+
 Map.prototype.center_on_markers = function () {
 	var bounds = new google.maps.LatLngBounds();
-
 	for (var i = this.markers.length - 1; i >= 0; i--) {
 		bounds.extend(this.markers[i].getPosition());
 	}	
-
 	this.map.fitBounds(bounds);
 }
 
