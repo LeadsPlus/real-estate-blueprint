@@ -1,15 +1,9 @@
 // finish styling filters
-// 
 
-
-//show number of results on the map
-
-
-//polygon map
-	// allow users to "zoom out" after a polygon
 
 //lifestyle map
 //lifestyle polygon map
+
 
 // only trigger map reload after 70% move in a direction
 // only trigger map reload after a zoom out.
@@ -155,6 +149,8 @@ Map.prototype.polygon_init = function () {
 		//if a specific polygon, get it
 		//then get the listings for it.
 
+
+
 	} else {
 		//if no polygon, get all
 		var filters = {};
@@ -170,14 +166,10 @@ Map.prototype.polygon_init = function () {
 		    	if ( neighborhoods.length > 0) {
 		    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
 		    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
-
 		    			var polygon = that.create_polygon( polygon_options );
-
-
 		    		};
 		    		that.center();
 		    	} 
-				
 		    }
 		});
 
@@ -291,7 +283,7 @@ Map.prototype.update = function ( ajax_response ) {
 			this.create_listing_marker( ajax_response.aaData[i][1] );
 		}
 		// if filter by bounds, don't move the map, it's confusing
-		if (this.always_center) {
+		if (this.always_center && this.markers.length > 0 ) {
 			this.center();	
 		}
 
