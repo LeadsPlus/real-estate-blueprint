@@ -144,53 +144,38 @@ Map.prototype.polygon_init = function () {
 		});
 	}
 	
-
+	var filters = {};
 	if (this.slug) {
-		var filters = {};
+		//if slug, only get that one
 		filters.action = 'get_polygons_by_slug';
 		filters.slug = this.slug;
-
-		jQuery.ajax({
-		    "dataType" : 'json',
-		    "type" : "POST",
-		    "url" : info.ajaxurl,
-		    "data" : filters,
-		    "success" : function ( neighborhoods ) {
-		    	console.log(neighborhoods);
-		    	if ( neighborhoods.length > 0) {
-		    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
-		    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
-		    			var polygon = that.create_polygon( polygon_options );
-		    			that.selected_polygon = polygon;
-						that.listings.get();
-		    		};
-		    		that.center();
-		    	} 
-		    }
-		});
-
 	} else {
 		//if no polygon, get all
-		var filters = {};
 		filters.action = 'get_polygons_by_type';
 		filters.type = 'neighborhood';
-
-		jQuery.ajax({
-		    "dataType" : 'json',
-		    "type" : "POST",
-		    "url" : info.ajaxurl,
-		    "data" : filters,
-		    "success" : function ( neighborhoods ) {
-		    	if ( neighborhoods.length > 0) {
-		    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
-		    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
-		    			var polygon = that.create_polygon( polygon_options );
-		    		};
-		    		that.center();
-		    	} 
-		    }
-		});
 	}
+
+	jQuery.ajax({
+	    "dataType" : 'json',
+	    "type" : "POST",
+	    "url" : info.ajaxurl,
+	    "data" : filters,
+	    "success" : function ( neighborhoods ) {
+	    	console.log(neighborhoods);
+	    	if ( neighborhoods.length > 0) {
+	    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
+	    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
+	    			var polygon = that.create_polygon( polygon_options );
+	    			if ( that.slug ) {
+	    				that.selected_polygon = polygon;
+						that.listings.get();	
+	    			}
+	    			
+	    		};
+	    		that.center();
+	    	} 
+	    }
+	});
 }
 Map.prototype.update_filters_polygon = function () {
 
@@ -525,7 +510,7 @@ Map.prototype.get_bounds =  function () {
 		if ( typeof map_bounds == 'undefined' ) {
 			return this.bounds;
 		}
-		
+
 		this.bounds.push({'name' : 'polygon[0][lat]', 'value': map_bounds.getNorthEast().lat() });
 		this.bounds.push({'name' : 'polygon[0][lng]', 'value': map_bounds.getNorthEast().lng() });
 
