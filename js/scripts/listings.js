@@ -5,6 +5,7 @@ function Listings ( params ) {
 	this.hook = params.hook || 'pls_listings_ajax';
 	this.sSource = params.sSource || info.ajaxurl;
 	this.aoData = params.aoData || [];
+	this.active_filters = [];
 }
 
 Listings.prototype.pending = false;
@@ -47,42 +48,42 @@ Listings.prototype.get = function ( success ) {
 	this.pending = true;
 
 	var that = this;
-	var filters = [];
+	that.active_filters = [];
 
 	//get pagination and sorting information
 	if (this.list && this.list.datatable) {
 		this.list.show_loading();
 		var fnSettings = this.list.datatable.fnSettings();
-		filters.push( { "name": "iDisplayLength", "value" : fnSettings._iDisplayLength } );
-		filters.push( { "name": "iDisplayStart", "value" : fnSettings._iDisplayStart } );
+		that.active_filters.push( { "name": "iDisplayLength", "value" : fnSettings._iDisplayLength } );
+		that.active_filters.push( { "name": "iDisplayStart", "value" : fnSettings._iDisplayStart } );
 		this.list.sEcho++
-		filters.push( { "name": "sEcho", "value" :  this.list.sEcho} );	
+		that.active_filters.push( { "name": "sEcho", "value" :  this.list.sEcho} );	
 		// aoData;
 	} else if ( this.list ) {
 		this.list.show_loading();
-		filters.push( { "name": "iDisplayLength", "value" : 10} );
-		filters.push( { "name": "iDisplayStart", "value" : 0} );
-		filters.push( { "name": "sEcho", "value" : 1} );	
+		that.active_filters.push( { "name": "iDisplayLength", "value" : 10} );
+		that.active_filters.push( { "name": "iDisplayStart", "value" : 0} );
+		that.active_filters.push( { "name": "sEcho", "value" : 1} );	
 	}
 
 	//get get current state of search filtes. 
 	if (this.filter) {
-		filters = filters.concat(this.filter.get_values());
+		that.active_filters = that.active_filters.concat(this.filter.get_values());
 	}
 
 	//get bounding box or polygon information
 	if (this.map) {
 		this.map.show_loading();
-		filters = filters.concat(this.map.get_bounds());
+		that.active_filters = that.active_filters.concat(this.map.get_bounds());
 	}
 
 	//tell wordpress which hook to hit.
-	filters.push( { "name": "action", "value" : this.hook} );
+	that.active_filters.push( { "name": "action", "value" : this.hook} );
 	jQuery.ajax({
 	    "dataType" : 'json',
 	    "type" : "POST",
 	    "url" : this.sSource,
-	    "data" : filters,
+	    "data" : that.active_filters,
 	    "success" : function ( ajax_response ) {
 			that.pending = false;		
 
