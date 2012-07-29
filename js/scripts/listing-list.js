@@ -84,8 +84,6 @@ List.prototype.listeners = function () {
 	var that = this;
 	if ( this.map ) {
 
-		console.log('on hover event');
-
 		jQuery(this.table_row_selector).live({
 			mouseenter: function () {
 				jQuery(this).css('background-color', 'red');
