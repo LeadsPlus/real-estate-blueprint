@@ -48,7 +48,6 @@ Map.prototype.init = function ( params ) {
 
 	this.status_display.class = params.status_display.class || 'map_filter_area';
 	this.status_display.dom_id = params.status_display.dom_id || 'map_filter_area';
-
 	this.filter_by_bounds = params.filter_by_bounds || true;
 	this.filter_translation = params.filter_translation || {'metadata[beds]': "Beds: " };
 	this.filters_display = params.filters_display || ['metadata[beds]'];
@@ -132,8 +131,18 @@ Map.prototype.init = function ( params ) {
 Map.prototype.polygon_init = function () {
 	var that = this;
 
+	console.log('polygon_init');
 	//set the initial state of the polygon menu
-	jQuery('#map_filter_area_wrapper').append('<span>A Title</span>');
+	if (this.status_display) {
+		google.maps.event.addDomListenerOnce(this.map, 'idle', function() {
+			var content = '<div id="polygon_display_status">';
+			content += '<h5>Neighborhood Search</h5>';
+			content += '<p id="start_warning">Select a polygon to start searching</p>'
+			content += '</div>';
+			jQuery('#' + that.status_display.dom_id).append(content);
+		});
+	}
+	
 
 	if (this.slug) {
 		//if a specific polygon, get it
@@ -175,6 +184,7 @@ Map.prototype.polygon_init = function () {
 
 }
 Map.prototype.update_filters_polygon = function () {
+	
 	console.log('updating the polygon filters');
 }
 
