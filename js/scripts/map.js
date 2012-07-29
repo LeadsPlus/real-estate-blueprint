@@ -1,4 +1,7 @@
-//show filters on the map
+// finish styling filters
+// 
+
+
 //show number of results on the map
 
 
@@ -94,7 +97,14 @@ Map.prototype.init = function ( params ) {
 	var that = this;
 	google.maps.event.addDomListener(window, 'load', function() {
 		var latlng = new google.maps.LatLng(that.lat, that.lng);
-		that.myOptions = { zoom: that.zoom, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
+		that.myOptions = { zoom: that.zoom, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP, 
+		mapTypeControl: false,
+		streetViewControl: false,
+    	zoomControl: true,
+	    zoomControlOptions: {
+	      style: google.maps.ZoomControlStyle.SMALL,
+	      position: google.maps.ControlPosition.RIGHT_TOP
+	    }};
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.myOptions);
 		
 		if ( that.type == 'polygon' ) {
