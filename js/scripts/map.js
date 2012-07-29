@@ -30,7 +30,6 @@ Map.prototype.init = function ( params ) {
 	this.markers_hash = {};
 	this.bounds = false;
 	this.list = params.list || false;
-	this.filters = [];
 
 	this.dom_id = params.dom_id || 'map_canvas'
 	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
@@ -41,10 +40,13 @@ Map.prototype.init = function ( params ) {
 	this.lng = params.lng || '-71.03';
 	this.zoom = params.zoom || 15;
 	this.always_center = params.always_center || true;
+
+	//map status box
+	this.status_display = params.status_display || {};
 	this.filter_by_bounds = params.filter_by_bounds || true;
 	this.filter_translation = params.filter_translation || {'metadata[beds]': "Beds: " };
 	this.filters_display = params.filters_display || ['metadata[beds]'];
-	this.filter_position = params.filter_position || google.maps.ControlPosition.RIGHT_BOTTOM;
+	this.filter_position = params.filter_position || google.maps.ControlPosition.LEFT_TOP;
 
 	//marker settings
 	this.marker = {}
@@ -97,9 +99,11 @@ Map.prototype.init = function ( params ) {
 	//build map
 	var that = this;
 	google.maps.event.addDomListener(window, 'load', function() {
+		// map options are defined in init
 		that.map_options.center = new google.maps.LatLng(that.lat, that.lng);
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
-		
+		//sets the initial div for the map status display
+		that.add_control_container();
 		if ( that.type == 'polygon' ) {
 			//all neighborhoods shown
 			that.polygon_init();
@@ -118,6 +122,8 @@ Map.prototype.init = function ( params ) {
 
 Map.prototype.polygon_init = function () {
 	var that = this;
+
+	
 
 	if (this.slug) {
 		//if a specific polygon, get it
@@ -249,9 +255,19 @@ Map.prototype.update = function ( ajax_response ) {
 			this.hide_full();
 		}
 
-		if ( this.listings.active_filters && this.map ) {
-			this.add_filters();				
-		}
+		//displaying map status bars
+		if ( this.status_display && this.listings.active_filters && this.map ) {
+			if ( this.type == 'polygon' ) {
+				this.update_filters_polygon();				
+			} else if ( this.type == 'neighborhood' ) {
+				this.update_filters_neighborhood();				
+			} else if ( this.type == 'lifestyle' ) {
+				this.update_filters_lifestyle();				
+			} else if ( this.type == 'lifestyle_polygon' ) {
+				this.update_filters_lifestyle_polygon();				
+			} else if ( this.type == 'listings' )
+				this.update_filters_listings();				
+			}
 	} else {
 		this.show_empty();
 	}
@@ -344,6 +360,19 @@ Map.prototype.create_marker = function ( marker_options ) {
 }
 
 
+Map.prototype.update_filters_polygon = function () {
+	console.log('here');
+
+	//
+	jQuery('#map_filter_area_wrapper').append('<span>A Title</span>');
+
+	// this.update_control_container({});
+}
+Map.prototype.update_filters_neighborhood = function () {}
+Map.prototype.update_filters_lifestyle = function () {}
+Map.prototype.update_filters_lifestyle_polygon = function () {}
+Map.prototype.update_filters_listings = function () {}
+
 Map.prototype.add_filters = function ( ) {
 	
 	console.log(this.listings.active_filters);
@@ -352,11 +381,7 @@ Map.prototype.add_filters = function ( ) {
 
 	for (var i = filters.length - 1; i >= 0; i--) {
 
-
 		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "") {
-			console.log('HIT!!! ' + filters[i].name);
-			console.log(jQuery.inArray(filters[i].name, this.filters_display ) === -1)
-			console.log( filters[i].value == "" );
 			continue;
 		}
 			
@@ -367,8 +392,6 @@ Map.prototype.add_filters = function ( ) {
 		var control_settings = {}
 		control_settings.innerHTML = filters[i].name + filters[i].value;
 		this.add_control( control_settings );
-		// var homeControl = this.add_control(homeControlDiv, this.map);
-		// homeControlDiv.index = 1;
 	};
 }
 
@@ -376,41 +399,21 @@ Map.prototype.clear_controls = function ( ) {
 	this.map.controls[ this.filter_position ].clear();
 }
 
-Map.prototype.add_control = function ( control_settings ) {
+Map.prototype.add_control_container = function () {
 	var that = this;
 	var controlDiv = document.createElement('div');
-
-	// Set CSS styles for the DIV containing the control
-	// Setting padding to 5 px will offset the control
-	// from the edge of the map.
+	controlDiv.id = 'map_filter_area';
+	controlDiv.className = 'map_filter_area';
+	controlDiv.style.marginTop = '9px';
+	controlDiv.style.marginLeft = '7px'; 
 	controlDiv.style.padding = '5px';
-
+	
 	// Set CSS for the control border.
 	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = 'white';
-	controlUI.style.borderStyle = 'solid';
-	controlUI.style.borderWidth = '2px';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Click to set the map to Home';
+	controlUI.id = 'map_filter_area_wrapper';
 	controlDiv.appendChild(controlUI);
 
-	// Set CSS for the control interior.
-	var controlText = document.createElement('div');
-	controlText.style.fontFamily = 'Arial,sans-serif';
-	controlText.style.fontSize = '12px';
-	controlText.style.paddingLeft = '4px';
-	controlText.style.paddingRight = '4px';
-	controlText.innerHTML = control_settings.innerHTML || '<strong>Home<strong>';
-	controlUI.appendChild(controlText);
-
-	// Setup the click event listeners: simply set the map to Chicago.
-	// google.maps.event.addDomListener(controlUI, 'click', function() {
-	// 	that.map.setCenter(chicago)
-	// });
-
 	that.map.controls[ that.filter_position ].push(controlDiv);
-	that.filters.push(controlUI);
 }
 
 
