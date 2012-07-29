@@ -43,6 +43,12 @@ Map.prototype.init = function ( params ) {
 
 	//map status box
 	this.status_display = params.status_display || {};
+	if (!params.status_display)
+		params.status_display = {};
+
+	this.status_display.class = params.status_display.class || 'map_filter_area';
+	this.status_display.dom_id = params.status_display.dom_id || 'map_filter_area';
+
 	this.filter_by_bounds = params.filter_by_bounds || true;
 	this.filter_translation = params.filter_translation || {'metadata[beds]': "Beds: " };
 	this.filters_display = params.filters_display || ['metadata[beds]'];
@@ -102,11 +108,11 @@ Map.prototype.init = function ( params ) {
 		// map options are defined in init
 		that.map_options.center = new google.maps.LatLng(that.lat, that.lng);
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
-		//sets the initial div for the map status display
 		
+		//sets the initial div for the map status display
 		if (that.status_display)
 			that.add_control_container();
-		
+
 		if ( that.type == 'polygon' ) {
 			//all neighborhoods shown
 			that.polygon_init();
@@ -126,7 +132,8 @@ Map.prototype.init = function ( params ) {
 Map.prototype.polygon_init = function () {
 	var that = this;
 
-	
+	//set the initial state of the polygon menu
+	jQuery('#map_filter_area_wrapper').append('<span>A Title</span>');
 
 	if (this.slug) {
 		//if a specific polygon, get it
@@ -166,6 +173,9 @@ Map.prototype.polygon_init = function () {
 	
 	//then wait for something to happen.
 
+}
+Map.prototype.update_filters_polygon = function () {
+	console.log('updating the polygon filters');
 }
 
 //converts raw neighborhood polygon data into a useable GMaps polygon object
@@ -363,14 +373,7 @@ Map.prototype.create_marker = function ( marker_options ) {
 }
 
 
-Map.prototype.update_filters_polygon = function () {
-	console.log('here');
 
-	//
-	jQuery('#map_filter_area_wrapper').append('<span>A Title</span>');
-
-	// this.update_control_container({});
-}
 Map.prototype.update_filters_neighborhood = function () {}
 Map.prototype.update_filters_lifestyle = function () {}
 Map.prototype.update_filters_lifestyle_polygon = function () {}
@@ -405,8 +408,8 @@ Map.prototype.clear_controls = function ( ) {
 Map.prototype.add_control_container = function () {
 	var that = this;
 	var controlDiv = document.createElement('div');
-	controlDiv.id = 'map_filter_area';
-	controlDiv.className = 'map_filter_area';
+	controlDiv.id = this.status_display.dom_id;
+	controlDiv.className = this.status_display.dom_id;
 	controlDiv.style.marginTop = '9px';
 	controlDiv.style.marginLeft = '7px'; 
 	controlDiv.style.padding = '5px';
