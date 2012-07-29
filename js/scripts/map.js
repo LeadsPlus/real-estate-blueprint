@@ -146,10 +146,28 @@ Map.prototype.polygon_init = function () {
 	
 
 	if (this.slug) {
-		//if a specific polygon, get it
-		//then get the listings for it.
+		var filters = {};
+		filters.action = 'get_polygons_by_slug';
+		filters.slug = this.slug;
 
-
+		jQuery.ajax({
+		    "dataType" : 'json',
+		    "type" : "POST",
+		    "url" : info.ajaxurl,
+		    "data" : filters,
+		    "success" : function ( neighborhoods ) {
+		    	console.log(neighborhoods);
+		    	if ( neighborhoods.length > 0) {
+		    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
+		    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
+		    			var polygon = that.create_polygon( polygon_options );
+		    			that.selected_polygon = polygon;
+						that.listings.get();
+		    		};
+		    		that.center();
+		    	} 
+		    }
+		});
 
 	} else {
 		//if no polygon, get all
@@ -172,10 +190,6 @@ Map.prototype.polygon_init = function () {
 		    	} 
 		    }
 		});
-
-		
-		//wait for the user to click on one
-		//then go get all the listings of the polygon clicked	
 	}
 }
 Map.prototype.update_filters_polygon = function () {
@@ -261,6 +275,7 @@ Map.prototype.create_polygon = function ( polygon_options ) {
 		that.polygon_mouseout( polygon );
 	});
 
+	return polygon;
 }
 
 Map.prototype.neighborhood_init = function () {
@@ -279,9 +294,12 @@ Map.prototype.update = function ( ajax_response ) {
 		if (this.markers.length > 0 )
 			this.clear();
 
-		for (var i = ajax_response.aaData.length - 1; i >= 0; i--) {
-			this.create_listing_marker( ajax_response.aaData[i][1] );
+		if (ajax_response.aaData.length > 0 ) {
+			for (var i = ajax_response.aaData.length - 1; i >= 0; i--) {
+				this.create_listing_marker( ajax_response.aaData[i][1] );
+			}
 		}
+		
 		// if filter by bounds, don't move the map, it's confusing
 		if (this.always_center && this.markers.length > 0 ) {
 			this.center();	
@@ -398,8 +416,6 @@ Map.prototype.create_marker = function ( marker_options ) {
 	marker.setMap(this.map);
 }
 
-
-
 Map.prototype.update_filters_neighborhood = function () {}
 Map.prototype.update_filters_lifestyle = function () {}
 Map.prototype.update_filters_lifestyle_polygon = function () {}
@@ -496,10 +512,6 @@ Map.prototype.get_bounds =  function () {
 		return this.bounds;
 	}
 	this.bounds = [];
-	var map_bounds = this.map.getBounds();
-	if ( typeof map_bounds == 'undefined' ) {
-		return this.bounds;
-	}
 
 	if (this.type == 'polygon' && this.selected_polygon) {
 		console.log(this.selected_polygon);
@@ -509,6 +521,11 @@ Map.prototype.get_bounds =  function () {
 			this.bounds.push({'name' : 'polygon[' + i + '][lng]', 'value': point['lng'] });
 		}
 	} else {
+		var map_bounds = this.map.getBounds();
+		if ( typeof map_bounds == 'undefined' ) {
+			return this.bounds;
+		}
+		
 		this.bounds.push({'name' : 'polygon[0][lat]', 'value': map_bounds.getNorthEast().lat() });
 		this.bounds.push({'name' : 'polygon[0][lng]', 'value': map_bounds.getNorthEast().lng() });
 
