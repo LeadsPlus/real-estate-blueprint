@@ -19,7 +19,6 @@ Lifestyle.prototype.init = function () {
 	
 	jQuery('#lifestyle_form_wrapper form, .location_select_wrapper').live('change', function(event) {
       	event.preventDefault();
-      	that.map.markers = [];
       	that.map.clear();
       	that.search_places();
       });
@@ -62,11 +61,13 @@ Lifestyle.prototype.search_places = function () {
     service.search(request, function ( results, status ) {
 		var points = [];
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			that.map.hide_empty();
 			for (var i = 0; i < results.length; i++) {	
 				that.map.create_marker({position:new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()), content:results[i].name, icon: 'https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.3|0|FF8429|13|b', listing:results[i] });
 		  	}
 		}	
-		that.map.center_on_markers();
+		if (that.map.markers.length > 0 )
+			that.map.center_on_markers();
     })
 }
 				        
