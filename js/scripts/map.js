@@ -16,7 +16,6 @@ Map.prototype.init = function ( params ) {
 	var that = this;
 
 	this.map = false;
-	this.map_options = params.map_options || { zoom: that.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.RIGHT_TOP } };
 	this.type = params.type || alert('You must define a map type for the method to work properly');
 	this.infowindows = [];
 	this.markers = params.markers ||[];
@@ -55,6 +54,8 @@ Map.prototype.init = function ( params ) {
 	this.marker = {}
 	this.marker.icon = params.marker || false;
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
+
+	this.map_options = params.map_options || { zoom: this.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.RIGHT_TOP } };
 
 	//polygon settings
 	if ( this.type == 'neighborhood' ) {
@@ -133,7 +134,7 @@ Map.prototype.create_polygon = function ( polygon_options ) {
 
 Map.prototype.update = function ( ajax_response ) {
 
-	if (ajax_response && ajax_response.aaData) {
+	if (ajax_response && ajax_response.aaData.length > 0) {
 		if (this.markers.length > 0 )
 			this.clear();
 
@@ -274,7 +275,6 @@ Map.prototype.get_formatted_filters = function ( ) {
 
 		formatted_filters.push({ name: filters[i].name, value: filters[i].value })
 	}
-	console.log(formatted_filters);
 	return formatted_filters;
 }
 
@@ -354,7 +354,6 @@ Map.prototype.get_bounds =  function () {
 	this.bounds = [];
 
 	if (this.type == 'neighborhood' && this.selected_polygon) {
-		console.log(this.selected_polygon);
 		for (var i = this.selected_polygon.vertices.length - 1; i >= 0; i--) {
 			var point = this.selected_polygon.vertices[i];
 			this.bounds.push({'name' : 'polygon[' + i + '][lat]', 'value': point['lat'] });
