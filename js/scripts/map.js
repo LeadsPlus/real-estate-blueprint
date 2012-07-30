@@ -61,9 +61,9 @@ Map.prototype.init = function ( params ) {
 	if ( this.type == 'neighborhood' ) {
 		this.neighborhood = params.neighborhood || alert('If this is to be a neighborhood map, you\'ll need to give it a neighborhood object');	
 	} else if ( this.type == 'lifestyle' ) {
-		this.polygon = params.lifestyle || alert('If this is to be a lifestyle map, you\'ll need to give it a lifestyle object');	
+		this.lifestyle = params.lifestyle || alert('If this is to be a lifestyle map, you\'ll need to give it a lifestyle object');	
 	} else if ( this.type == 'lifestyle_polygon' ) {
-		this.polygon = params.lifestyle_polygon || alert('If this is to be a lifestyle_polygon map, you\'ll need to give it a lifestyle_polygon object');	
+		this.lifestyle_polygon = params.lifestyle_polygon || alert('If this is to be a lifestyle_polygon map, you\'ll need to give it a lifestyle_polygon object');	
 	} 
 	
 
@@ -96,7 +96,7 @@ Map.prototype.init = function ( params ) {
 			that.neighborhood.init();
 		} else if ( that.type == 'lifestyle' ) {
 			//show points of interests on the map.
-			that.lifestyle_init();
+			that.lifestyle.init();
 		} else if ( that.type == 'lifestyle_polygon' ) {
 			//show points of interests on the map, then do listings searches with them.
 			that.polygon_lifestyle_init();
@@ -214,17 +214,23 @@ Map.prototype.create_listing_marker = function ( listing ) {
           '<div class="clear"></div>' +
         '</div>'+
       '</div>';
-    this.create_marker( marker_options );
+    var marker = this.create_marker( marker_options );
+	this.markers_hash[marker.listing.id] = marker;
+
 }
 
 Map.prototype.create_marker = function ( marker_options ) {
+	
 	var that = this;
 	if (this.marker.icon) {
 		marker_options.icon = this.marker.icon;
 	}
+	// console.log(marker_options);
 	var marker = new google.maps.Marker(marker_options);
 
-	marker.listing = marker_options.listing;
+	if (marker_options.listing) {
+		marker.listing = marker_options.listing;	
+	}
 	
 	var infowindow = new google.maps.InfoWindow({content: marker_options.content});
 	this.infowindows.push(infowindow);
@@ -253,9 +259,9 @@ Map.prototype.create_marker = function ( marker_options ) {
 		}
 	});
 
-	that.markers.push(marker);
-	that.markers_hash[marker.listing.id] = marker;
 	marker.setMap(this.map);
+	that.markers.push(marker);
+	return marker;
 }
 
 Map.prototype.update_filters_lifestyle = function () {}
