@@ -22,33 +22,6 @@ Lifestyle.prototype.init = function () {
       	that.search_places();
       });
 
-
-	// var filters = {};
-
-	// //allow the dev to have the search start on load
-	// //allow the dev to specific the class of the listener
-
-	// jQuery.ajax({
-	//     "dataType" : 'json',
-	//     "type" : "POST",
-	//     "url" : info.ajaxurl,
-	//     "data" : filters,
-	//     "success" : function ( neighborhoods ) {
-	//     	console.log(neighborhoods);
-	//     	if ( neighborhoods.length > 0) {
-	//     		for (var i = neighborhoods.length - 1; i >= 0; i--) {
-	//     			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
-	//     			var polygon = that.create_polygon( polygon_options );
-	//     			if ( that.slug ) {
-	//     				that.selected_polygon = polygon;
-	// 					that.listings.get();	
-	//     			}
-	//     		};
-	//     		that.center();
-	//     	} 
-	//     }
-	// });
-
 }
 
 Lifestyle.prototype.search_places = function () {
