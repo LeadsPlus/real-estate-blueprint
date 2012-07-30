@@ -166,7 +166,7 @@ Map.prototype.update = function ( ajax_response ) {
 				this.update_filters_listings();				
 			}
 	} else {
-		this.show_empty();
+		// this.show_empty();
 	}
 	this.hide_loading();
 }
