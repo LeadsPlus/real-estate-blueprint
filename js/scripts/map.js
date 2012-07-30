@@ -1,7 +1,5 @@
 // finish styling filters
 
-
-//lifestyle map
 //lifestyle polygon map
 
 // only trigger map reload after 70% move in a direction
@@ -99,7 +97,7 @@ Map.prototype.init = function ( params ) {
 			that.lifestyle.init();
 		} else if ( that.type == 'lifestyle_polygon' ) {
 			//show points of interests on the map, then do listings searches with them.
-			that.polygon_lifestyle_init();
+			that.lifestyle_polygon.init();
 		}
 	});
 }
@@ -383,8 +381,6 @@ Map.prototype.get_bounds =  function () {
 		this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
 		this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });	
 	}
-	
-
 	return this.bounds;
 }
 
@@ -407,6 +403,14 @@ Map.prototype.listeners = function ( ) {
 		});	
 	}
 	
+}
+
+Map.prototype.geocode = function (address, callback ) {
+	var geocoder = new google.maps.Geocoder();
+	var bounds = this.map.getBounds();
+    geocoder.geocode( { 'address': address, bounds: bounds}, function(results, status) {
+      callback( results, status);
+    });
 }
 
 Map.prototype.show_empty = function () {

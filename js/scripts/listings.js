@@ -36,7 +36,7 @@ Listings.prototype.get = function ( success ) {
 		return;
 	};
 	//or, if we're dealing with a polygon map and there's not a selected polygon
-	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) || this.map.type == 'lifestyle' ) {
+	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) || this.map.type == 'lifestyle' || this.map.type == 'lifestyle_polygon' ) {
 		if ( this.list )
 			this.list.update( {'aaData' : [], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} )
 
