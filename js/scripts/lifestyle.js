@@ -1,6 +1,5 @@
 function Lifestyle ( params ) {
 	this.map = params.map || alert('You need to give the lifestyle object a map');
-	console.log('lifestyle init');
 };
 
 Lifestyle.prototype.init = function () {
