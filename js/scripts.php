@@ -170,6 +170,17 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
                 }
             }
         }
+
+        if ( array_key_exists( 'form', $js[0] ) ) {
+            /** Register the script and style. */
+            wp_register_script( 'form', trailingslashit( PLS_JS_URL ) . 'scripts/form.js' , array('jquery'), NULL, true );
+            /** Enqueue scrip and styles only if supported. */
+            if ( is_array( $js[0]['form'] ) ) {
+                if ( in_array( 'script', $js[0]['form'] ) ) {
+                    wp_enqueue_script( 'form' );
+                }
+            }
+        }
     }
 
 
@@ -189,6 +200,6 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         //    wp_enqueue_script('jquery');
         // } 
         /** Load Modernizr */
-        wp_enqueue_scripts( 'modernizr' );
+        wp_enqueue_script( 'modernizr' );
     }
 }
