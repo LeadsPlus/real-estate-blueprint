@@ -4,11 +4,10 @@
 //lifestyle map
 //lifestyle polygon map
 
-
 // only trigger map reload after 70% move in a direction
 // only trigger map reload after a zoom out.
 // show the number of total results on the map
-// infowindow alternative
+// infowindow alternative?
 
 function Map () {}
 
@@ -25,9 +24,14 @@ Map.prototype.init = function ( params ) {
 	this.bounds = false;
 	this.list = params.list || false;
 
-	this.dom_id = params.dom_id || 'map_canvas'
+	this.dom_id = params.dom_id || 'map_canvas';
 	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
-	this.polygons = params.polygons || {};
+	this.polygons = params.polygons || [];
+
+	this.polygons_verticies = [];
+	this.polygons_exclude_center = false;
+	this.selected_polygon = params.selected_polygon || false;
+	this.allow_polygons_to_clear = params.allow_polygons_to_clear || false;
 	
 	// map settings
 	this.lat = params.lat || '42.37';
@@ -53,34 +57,14 @@ Map.prototype.init = function ( params ) {
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
 
 	//polygon settings
-	this.polygon = {};
-	this.polygon.strokeColor = params.strokeColor || null;
-	this.polygon.strokeOpacity  = params.strokeOpacity || null;
-	this.polygon.strokeWeight  = params.strokeWeight || null;
-	this.polygon.fillColor  = params.fillColor || null;
-	this.polygon.fillOpacity  = params.fillOpacity || null;
-	this.polygons = [];
-	this.polygons_verticies = [];
-	this.polygons_exclude_center = false;
-	this.selected_polygon = params.selected_polygon || false;
-	this.allow_polygons_to_clear = params.allow_polygons_to_clear || false;
-	this.slug = params.slug || false;
-	Map.prototype.polygon_click = params.polygon_click || function ( polygon ) {
-		that.selected_polygon = polygon;
-		that.polygons_exclude_center = true;
-		that.always_center = true;
-		that.listings.get();
-		for (var i = that.polygons.length - 1; i >= 0; i--) {
-			that.polygons[i].setOptions({fillOpacity: "0.4"});
-		}
-		polygon.setOptions({fillOpacity: "0.6"});
-	}
-	Map.prototype.polygon_mouseover = params.polygon_mouseover || function ( polygon ) {
-		polygon.setOptions({fillOpacity: "0.9"});
-	}
-	Map.prototype.polygon_mouseout = params.polygon_mouseout || function ( polygon ) {
-		polygon.setOptions({fillOpacity: "0.4"});
-	}
+	if ( this.type == 'neighborhood' ) {
+		this.neighborhood = params.neighborhood || alert('If this is to be a neighborhood map, you\'ll need to give it a neighborhood object');	
+	} else if ( this.type == 'lifestyle' ) {
+		this.polygon = params.lifestyle || alert('If this is to be a lifestyle map, you\'ll need to give it a lifestyle object');	
+	} else if ( this.type == 'lifestyle_polygon' ) {
+		this.polygon = params.lifestyle_polygon || alert('If this is to be a lifestyle_polygon map, you\'ll need to give it a lifestyle_polygon object');	
+	} 
+	
 
 	// map/list interaction
 	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
@@ -106,12 +90,9 @@ Map.prototype.init = function ( params ) {
 		if (that.status_display)
 			that.add_control_container();
 
-		if ( that.type == 'polygon' ) {
+		if ( that.type == 'neighborhood' ) {
 			//all neighborhoods shown
-			that.polygon_init();
-		} else if ( that.type == 'neighborhood' ) {
-			//a specified neighborhood is shown
-			that.neighborhood_init();
+			that.neighborhood.init();
 		} else if ( that.type == 'lifestyle' ) {
 			//show points of interests on the map.
 			that.lifestyle_init();
@@ -120,119 +101,6 @@ Map.prototype.init = function ( params ) {
 			that.polygon_lifestyle_init();
 		}
 	});
-}
-
-Map.prototype.polygon_init = function () {
-	var that = this;
-
-	console.log('polygon_init');
-	//set the initial state of the polygon menu
-	if (this.status_display) {
-		google.maps.event.addDomListenerOnce(this.map, 'idle', function() {
-			var content = '<div id="polygon_display_wrapper">';
-			content += '<h5>Neighborhood Search</h5>';
-			content += '<p id="start_warning">Select a polygon to start searching</p>';
-			content += '</div>';
-			jQuery('#' + that.status_display.dom_id).append(content);
-
-			jQuery('#polygon_unselect').live('click', function () {
-				that.selected_polygon = false;
-				that.listings.get();	
-				that.center_on_polygons();			
-				jQuery('#' + that.status_display.dom_id).append('<p id="start_warning">Select a polygon to start searching</p>');
-			});
-		});
-	}
-	
-	var filters = {};
-	if (this.slug) {
-		//if slug, only get that one
-		filters.action = 'get_polygons_by_slug';
-		filters.slug = this.slug;
-	} else {
-		//if no polygon, get all
-		filters.action = 'get_polygons_by_type';
-		filters.type = 'neighborhood';
-	}
-
-	jQuery.ajax({
-	    "dataType" : 'json',
-	    "type" : "POST",
-	    "url" : info.ajaxurl,
-	    "data" : filters,
-	    "success" : function ( neighborhoods ) {
-	    	console.log(neighborhoods);
-	    	if ( neighborhoods.length > 0) {
-	    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
-	    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
-	    			var polygon = that.create_polygon( polygon_options );
-	    			if ( that.slug ) {
-	    				that.selected_polygon = polygon;
-						that.listings.get();	
-	    			}
-	    			
-	    		};
-	    		that.center();
-	    	} 
-	    }
-	});
-}
-Map.prototype.update_filters_polygon = function () {
-
-	console.log('updating the polygon filters');
-	jQuery(' #polygon_display_status').remove();
-	
-	var content = '<div id="polygon_display_status">';
-	if (this.selected_polygon) {
-		jQuery('#' + this.status_display.dom_id + ' #start_warning').remove();
-		content += '<a id="polygon_unselect">Unselect Neighborhood</a>';
-		content += '<div>Selected Neighborhood: ' + this.selected_polygon.label + '</div>';
-		content += '<div>Number of Listings:' + this.listings.ajax_response.iTotalRecords + '</div>';
-	}
-
-	var formatted_filters = this.get_formatted_filters();
-	if ( formatted_filters.length > 0 ) {
-		content += '<ul>';
-		for (var i = formatted_filters.length - 1; i >= 0; i--) {
-			content += '<li>' + formatted_filters[i].name + formatted_filters[i].value + '</li>'
-		};
-		content += '</ul>';
-	}
-
-	content += '</div>';
-	jQuery('#' + this.status_display.dom_id).append(content);
-}
-
-//converts raw neighborhood polygon data into a useable GMaps polygon object
-Map.prototype.process_neighborhood_polygon = function ( neighborhood ) {
-	// console.log( neighborhood );
-	var polygon_options = {};
-	polygon_options.paths = [];
-	polygon_options.label = neighborhood.name || false;
-	polygon_options.tax = neighborhood.tax || false;
-
-	polygon_options.strokeColor = this.polygon.strokeColor || neighborhood.settings.border.color;
-	polygon_options.strokeOpacity = this.polygon.strokeOpacity || neighborhood.settings.border.opacity;
-	polygon_options.strokeWeight = this.polygon.strokeWeight || neighborhood.settings.border.weight;
-	polygon_options.fillColor = this.polygon.fillColor || neighborhood.settings.fill.color;
-	polygon_options.fillOpacity = this.polygon.fillOpacity || neighborhood.settings.fill.opacity;
-
-	if ( neighborhood.vertices.length > 0 ) {
-		var bounds = new google.maps.LatLngBounds();
-		for (var i = neighborhood.vertices.length - 1; i >= 0; i--) {
-			var point = neighborhood.vertices[i];
-			var gpoint = new google.maps.LatLng( point['lat'], point['lng'] );
-			polygon_options.paths.push( gpoint );	
-			//store the verticies directly so we can center the map without relooping the the polygons
-			this.polygons_verticies.push( gpoint );
-			bounds.extend( gpoint );
-		}
-		polygon_options.label_center = bounds.getCenter();
-	}
-	//so we can attach directly to the polygon object
-	polygon_options.vertices = neighborhood.vertices;
-
-	return polygon_options;
 }
 
 Map.prototype.create_polygon = function ( polygon_options ) {
@@ -249,28 +117,18 @@ Map.prototype.create_polygon = function ( polygon_options ) {
 	this.polygons.push(polygon);
 	
 	google.maps.event.addListener(polygon, 'click', function() {
-		that.polygon_click( polygon );
+		that[that.type].polygon_click( polygon );
 	});
 
 	google.maps.event.addListener(polygon,"mouseover",function(){
-		that.polygon_mouseover( polygon );
+		that[that.type].polygon_mouseover( polygon );
 	}); 
 
 	google.maps.event.addListener(polygon,"mouseout",function(){
-		that.polygon_mouseout( polygon );
+		that[that.type].polygon_mouseout( polygon );
 	});
 
 	return polygon;
-}
-
-Map.prototype.neighborhood_init = function () {
-
-}
-Map.prototype.lifestyle_init = function () {
-
-}
-Map.prototype.lifestyle_polygon_init = function () {
-
 }
 
 Map.prototype.update = function ( ajax_response ) {
@@ -299,10 +157,8 @@ Map.prototype.update = function ( ajax_response ) {
 
 		//displaying map status bars
 		if ( this.status_display && this.listings.active_filters && this.map ) {
-			if ( this.type == 'polygon' ) {
-				this.update_filters_polygon();				
-			} else if ( this.type == 'neighborhood' ) {
-				this.update_filters_neighborhood();				
+			if ( this.type == 'neighborhood' ) {
+				this.neighborhood.update_filters();				
 			} else if ( this.type == 'lifestyle' ) {
 				this.update_filters_lifestyle();				
 			} else if ( this.type == 'lifestyle_polygon' ) {
@@ -401,7 +257,6 @@ Map.prototype.create_marker = function ( marker_options ) {
 	marker.setMap(this.map);
 }
 
-Map.prototype.update_filters_neighborhood = function () {}
 Map.prototype.update_filters_lifestyle = function () {}
 Map.prototype.update_filters_lifestyle_polygon = function () {}
 Map.prototype.update_filters_listings = function () {}
@@ -498,7 +353,7 @@ Map.prototype.get_bounds =  function () {
 	}
 	this.bounds = [];
 
-	if (this.type == 'polygon' && this.selected_polygon) {
+	if (this.type == 'neighborhood' && this.selected_polygon) {
 		console.log(this.selected_polygon);
 		for (var i = this.selected_polygon.vertices.length - 1; i >= 0; i--) {
 			var point = this.selected_polygon.vertices[i];
