@@ -14,7 +14,8 @@ List.prototype.init = function ( params ) {
 	this.class = params.class || false;
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
 	this.table_row_selector = params.table_class || '.placester_properties tr';
-
+  this.context = params.context || false;
+  
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
 		if (params.get_listings) {
 			params.get_listings( that, sSource, aoData, fnCallback )

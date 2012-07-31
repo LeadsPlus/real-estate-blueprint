@@ -66,6 +66,10 @@ Listings.prototype.get = function ( success ) {
 		that.active_filters.push( { "name": "sEcho", "value" : 1} );	
 	}
 
+  if (this.list && this.list.context) {
+    that.active_filters.push( { "name": "context", "value" : this.list.context} );
+  }
+  
 	//get get current state of search filtes. 
 	if (this.filter) {
 		that.active_filters = that.active_filters.concat(this.filter.get_values());
