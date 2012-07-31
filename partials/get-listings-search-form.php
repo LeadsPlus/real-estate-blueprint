@@ -716,10 +716,9 @@ class PLS_Partials_Listing_Search_Form {
             $form_data->hidden_field . apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_inner", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $context_var )
         );
 
-        $form .= '<script type="text/javascript" src="' . trailingslashit(PLS_JS_URL) . 'scripts/filters.js"></script>';
-
+        
         /** Filter the form. */
-        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var );
+        $return = apply_filters( pls_get_merged_strings( array( "pls_listings_search_form_outer", $context ), '_', 'pre', false ), $form, $form_html, $form_options, $section_title, $form_data, $form_id, $context_var ) . '<script type="text/javascript" src="' . trailingslashit(PLS_JS_URL) . 'scripts/filters.js"></script>';
 
         $cache->save($return);
         return $return;
