@@ -290,7 +290,7 @@ class PLS_Partials_Listing_Search_Form {
           }   
 
           /** Set the maximum price options array. */
-          $form_options['max_price'] = array_reverse( $form_options['min_price'], true );
+          $form_options['max_price'] = asort( $form_options['min_price']);
 
 
       // Price for Rentals 
