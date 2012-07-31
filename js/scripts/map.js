@@ -18,7 +18,7 @@ Map.prototype.init = function ( params ) {
 	this.infowindows = [];
 	this.markers = params.markers ||[];
 	this.markers_hash = {};
-	this.bounds = false;
+	this.bounds = [];
 	this.list = params.list || false;
 
 	this.dom_id = params.dom_id || 'map_canvas';
@@ -352,7 +352,7 @@ Map.prototype.center_on_markers = function () {
 }
 
 Map.prototype.get_bounds =  function () {
-	if (!this.map && !this.bounds) {
+	if (!this.map || this.bounds.length == 0) {
 		return this.bounds;
 	}
 	this.bounds = [];
