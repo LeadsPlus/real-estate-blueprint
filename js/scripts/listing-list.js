@@ -15,7 +15,8 @@ List.prototype.init = function ( params ) {
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
 	this.table_row_selector = params.table_class || '.placester_properties tr';
   this.context = params.context || false;
-  
+  this.total_results_id = params.total_results_id || '#pls_num_results';
+
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
 		if (params.get_listings) {
 			params.get_listings( that, sSource, aoData, fnCallback )
@@ -41,7 +42,7 @@ List.prototype.update = function (ajax_response) {
 }
 
 List.prototype.total_results = function ( ajax_response ) {
-	jQuery(this.class +' #pls_num_results').html(ajax_response.iTotalDisplayRecords);
+	jQuery(this.total_results_id).html(ajax_response.iTotalDisplayRecords);
 }
 
 List.prototype.update_favorites_through_cache = function () {
