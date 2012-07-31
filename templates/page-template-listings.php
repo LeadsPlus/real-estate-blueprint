@@ -16,7 +16,7 @@
 <section class="complex-search grid_8 alpha">
 	<?php echo PLS_Partials::get_listings_search_form('context=listings&ajax=1&theme_option_id=listing-search-page'); ?>
 	<div class="clear"></div>
-	<div style="font-size: 16px; font-weight: bold; float: right;" id="pls_listings_search_results"><span id="pls_num_results"></span> listing match your search.</div>
+	<div style="font-size: 16px; font-weight: bold; float: right;" id="pls_listings_search_results"><span id="pls_num_results"></span> listings match your search.</div>
 </section>
 <div class="grid_8 alpha" id="content" role="main">
     <?php echo PLS_Partials::get_listings_list_ajax('context=listings_search&table_id=placester_listings_list'); ?>
