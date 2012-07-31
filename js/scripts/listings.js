@@ -87,7 +87,7 @@ Listings.prototype.get = function ( success ) {
 	    "success" : function ( ajax_response ) {
 			that.pending = false;		
 			that.ajax_response = ajax_response;
-			if (that.map)
+			if (that.map && that.map.map)
 				that.map.update( ajax_response );
 
 			if ( that.list )
