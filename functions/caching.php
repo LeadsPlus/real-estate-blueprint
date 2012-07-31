@@ -10,6 +10,9 @@ class PLS_Cache {
 	}
 
 	function get () {
+		if (defined('WP_DEBUG')) {
+			return false;
+		}
 		$arg_hash = md5(http_build_query(func_get_args()));
 		$this->transient_id = 'pl_' . $this->type . '_' . $arg_hash;
         $transient = get_transient($this->transient_id);
