@@ -38,7 +38,6 @@ class PLS_Partial_Get_Listings {
           return $result;
         }
 
-
         /** Define the default argument array. */
         $defaults = array(
             'width' => 100,
@@ -58,7 +57,7 @@ class PLS_Partial_Get_Listings {
 
         /** Extract the arguments after they merged with the defaults. */
         extract( $args, EXTR_SKIP );
-        
+          
         /** Sanitize the width. */
         if ( $width ) 
             $width = absint( $width );
@@ -67,8 +66,8 @@ class PLS_Partial_Get_Listings {
         if ( $height ) 
             $height = absint( $height );
 
-        $request_params = array('limit' => $limit, 'sort_type' => $sort_type);
-
+        $request_params = wp_parse_args($request_params, array('limit' => $limit, 'sort_type' => $sort_type));
+        
         /** Filter the request parameters. */
         $request_params = apply_filters( pls_get_merged_strings( array( 'pls_listings_request', $context ), '_', 'pre', false ), $request_params, $context_var );
         /** Display a placeholder if the plugin is not active or there is no API key. */

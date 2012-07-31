@@ -211,15 +211,25 @@ function ajax_placester_contact() {
     if( empty($error) ) {
 
       $api_whoami = PLS_Plugin_API::get_user_details();
+      $user_email = @pls_get_option('pls-user-email');
+
+      // Check what email to send the form to...
+      if ( !empty( $user_email ) ) {
+        $email = $user_email;
+      } elseif (!empty($api_whoami['user']['email'])) {
+        $email = $api_whoami['user']['email'];
+      } else {
+        $email = $api_whoami['email'];
+      }
 
       if (trim($_POST['send_to_email']) == true) {
-        $api_whoami['email'] = $_POST['send_to_email'];
+        $email = $_POST['send_to_email'];
       }
       
       if (trim($_POST['email_confirmation']) == true) {
-        wp_mail($api_whoami['email'], 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);
-      } elseif ($api_whoami['email']) {
-        $placester_Mail = wp_mail($api_whoami['email'], 'Prospective client from ' . home_url(), $message);
+        wp_mail($email, 'Email confirmation was sent to ' . $_POST['email'] . ' from ' . home_url(), $message);
+      } elseif ($email) {
+        $placester_Mail = wp_mail($email, 'Prospective client from ' . home_url(), $message);
       }
       
       $name = $_POST['firstName'] . ' ' . $_POST['lastName'];

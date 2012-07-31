@@ -122,8 +122,9 @@ class PLS_Slideshow {
             );
 
             foreach ($listings as $index => $listing) {
-                $listing_url = PLS_Plugin_API::get_property_url( $listing['cur_data']['url'] );
-                
+
+                $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
+
                 /** Overwrite the placester url with the local url. */
                 $data['links'][] = $listing_url;
                 $data['images'][] = ! empty( $listing['images'] ) ?  $listing['images'][0]['url'] : PLS_IMG_URL . "/null/listing-1200x720.jpg";
@@ -163,11 +164,11 @@ class PLS_Slideshow {
             }
 
             /** Create the img element. */
-						$slide = pls_h_img($slide_src, false, $extra_attr);
+            $slide = pls_h_img($slide_src, false, $extra_attr);
 
             /** Wrap it in an achor if the anchor exists. */
             if ( isset( $data['links'][$index] ) )
-                $slide = pls_h_a( $listing['cur_data']['url'], $slide, array('data-caption' => "#caption-{$index}") );
+                $slide = pls_h_a( $data['links'][$index], $slide, array('data-caption' => "#caption-{$index}") );
 
             $html['slides'] .= $slide;
 

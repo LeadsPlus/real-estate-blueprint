@@ -106,25 +106,20 @@ class PLS_Widget_Recent_Posts extends WP_Widget {
                 $post_html = $instance;
                 unset( $post_html['title'] );
 
-                /** Add the post title. */
-                if ( ! empty( $instance['post_title'] ) )
-                    $post_html['post_title'] = pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title') );
+                $post_html['post_title'] = empty( $instance['post_title'] ) ? ''
+                                           : pls_h_a( get_permalink(), esc_attr( get_the_title() ? get_the_title() : get_the_ID() ), array('class' => 'title') );
 
-                /** Add the author. */
-                if ( ! empty( $instance['author'] ) )
-                    $post_html['author'] = sprintf( ' ' . 'by <span class="author">%1$s</span>', get_the_author() );
+                $post_html['author'] = empty( $instance['author'] ) ? ''
+                                       : sprintf( ' ' . 'by <span class="author">%1$s</span>', get_the_author() );
 
-                /** Add the date. */
-                if ( ! empty( $instance['date'] ) )
-                    $post_html['date'] = sprintf( ' ' . 'on <time datetime="%1$s">%2$s</time>', get_the_date( 'Y-m-d' ), get_the_date() );
+                $post_html['date'] = empty( $instance['date'] ) ? ''
+                                     : sprintf( ' ' . 'on <time datetime="%1$s">%2$s</time>', get_the_date( 'Y-m-d' ), get_the_date() );
+ 
+                $post_html['excerpt'] = empty( $instance['excerpt'] ) ? ''
+                                        : pls_h_div( ( has_excerpt() ? get_the_excerpt() : '' ), array( 'class' => 'excerpt' ) );
 
-                /** Add the excerpt */
-                if ( ! empty( $instance['excerpt'] ) )
-                    $post_html['excerpt'] = pls_h_div( ( has_excerpt() ? get_the_excerpt() : '' ), array( 'class' => 'excerpt' ) );
-
-                /** Add the read more link. */
-                if ( ! empty( $instance['read_more'] ) )
-                    $post_html['read_more'] = pls_h_a( get_permalink(), 'Read more', array( 'class' => 'read-more' ) );
+                $post_html['read_more'] = empty( $instance['read_more'] ) ? ''
+                                          : pls_h_a( get_permalink(), 'Read more', array( 'class' => 'read-more' ) );
 
                 /** Combine the post information. */
                 $post_item = pls_get_if_not_empty( $post_html['post_title'] ) . 

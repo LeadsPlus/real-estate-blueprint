@@ -83,6 +83,7 @@ class PLS_Partials_Listing_Search_Form {
             'min_price' => 1,
             'max_price' => 1,
             'neighborhood' => 1,
+            'county' => 1,
             'min_price_rental' => 1,
             'max_price_rental' => 1,
             'include_submit' => true
@@ -94,7 +95,8 @@ class PLS_Partials_Listing_Search_Form {
               'locality' => pls_get_option('form_default_options_locality'),
               'region' => pls_get_option('form_default_options_region'),
               'postal' => pls_get_option('form_default_options_postal'),
-              'neighborhood' => pls_get_option('form_default_options_neighborhood')
+              'neighborhood' => pls_get_option('form_default_options_neighborhood'),
+              'county' => pls_get_option('form_default_options_county')
             ),
             'metadata' => array(
               'beds' => false,
@@ -107,7 +109,7 @@ class PLS_Partials_Listing_Search_Form {
               'max_beds' => false
             ),
             'purchase_types' => '',
-            'property_type' => '',
+            'property_type' => pls_get_option('form_default_options_property_type'),
             'listing_types' => '',
             'zoning_types' => ''
           );
@@ -241,6 +243,13 @@ class PLS_Partials_Listing_Search_Form {
         } else {
             $form_options['neighborhood'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('neighborhood')); 
             unset($form_options['neighborhood']['false']);    
+        }
+        
+        if (!PLS_Plugin_API::get_location_list('county')) {
+            $form_options['county'] = array('pls_empty_value' => 'Any'); 
+        } else {
+            $form_options['county'] = array_merge(array('pls_empty_value' => 'Any'),PLS_Plugin_API::get_location_list('county')); 
+            unset($form_options['county']['false']);
         }
         
     // Price for Sales
@@ -536,6 +545,15 @@ class PLS_Partials_Listing_Search_Form {
             );
         }
 
+        /** Add the cities select element. */
+        if ($county == 1) {
+            $form_html['county'] = pls_h(
+                'select',
+                array( 'name' => 'location[county]' ) + $form_opt_attr['county'],
+                pls_h_options( $form_options['county'], wp_kses_post(@$_POST['location']['county'] ), true )
+            );
+        }
+
         /** Add the minimum price select element. */
         if ($min_price == 1) {
             $form_html['min_price'] = pls_h(
@@ -593,6 +611,7 @@ class PLS_Partials_Listing_Search_Form {
             'min_price_rental' => 'Min Price Rental',
             'max_price_rental' => 'Max Price Rental',
             'neighborhood' => 'Neighborhood',
+            'county' => 'County',
         );
 
         // In case user somehow disables all filters.
