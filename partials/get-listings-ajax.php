@@ -145,11 +145,10 @@ class PLS_Partials_Get_Listings_Ajax {
         if (isset($defaults['search_query']['sEcho'])) {
           unset($defaults['search_query']['sEcho']);
         }
-        $args_signature = is_array($defaults) ? http_build_query($defaults) : $defaults;
-        $signature = sha1($args_signature);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_site_transient($transient_id);
-        if ($transient) {
+
+
+        $cache = new PLS_Cache('list');
+        if ($transient = $cache->get($defaults)) {
             $transient['sEcho'] = $_POST['sEcho'];
             echo json_encode($transient);
             die();
@@ -248,7 +247,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
         
-        set_site_transient($transient_id, $response , 3600 * 48 );
+        $cache->save($response);
         
         echo json_encode($response);
 
