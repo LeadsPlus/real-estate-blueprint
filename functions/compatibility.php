@@ -583,7 +583,7 @@ class PLS_Plugin_API {
             return $return;
         }
             
-        return array('first_name' => '', 'last_name' => '', 'phone' => '', 'email' => '');
+        return array( 'user' => array( 'first_name' => '', 'last_name' => '', 'phone' => '', 'email' => '', 'headshot' => '') );
     }
 
     static function mls_message($context) {
