@@ -28,7 +28,7 @@ Filters.prototype.listeners = function (callback) {
 Filters.prototype.get_values = function () {
 	
 	var result = [];
-	jQuery.each(jQuery(this.class +', .sort_wrapper').serializeArray(), function(i, field) {
+	jQuery.each(jQuery(this.listeners.elements).serializeArray(), function(i, field) {
 		result.push({'name' : field.name, 'value' : field.value});
     });
 	return result;
