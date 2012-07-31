@@ -1,6 +1,8 @@
 function Neighborhood ( params ) {
 	var that = this;
 	this.map = params.map || false;
+	this.type = params.type || 'neighborhood';
+
 
 	this.strokeColor = params.strokeColor || null;
 	this.strokeOpacity  = params.strokeOpacity || null;
@@ -62,7 +64,7 @@ Neighborhood.prototype.init = function () {
 	} else {
 		//if no polygon, get all
 		filters.action = 'get_polygons_by_type';
-		filters.type = 'neighborhood';
+		filters.type = this.type;
 	}
 
 	jQuery.ajax({
