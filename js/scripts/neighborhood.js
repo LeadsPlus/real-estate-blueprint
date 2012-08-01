@@ -31,32 +31,9 @@ function Neighborhood ( params ) {
 }
 
 Neighborhood.prototype.init = function () {
-	var that = this;
-
-	console.log('polygon_init');
-	//set the initial state of the polygon menu
-	if (this.map.status_display) {
-		jQuery(function () {
-			google.maps.event.addDomListenerOnce(that.map.map, 'idle', function() {
-				var content = '<div id="polygon_display_wrapper">';
-				content += '<h5>Neighborhood Search</h5>';
-				content += '<p id="start_warning">Select a polygon to start searching</p>';
-				content += '</div>';
-
-				jQuery('#' + that.map.status_display.dom_id).append(content);
-				
-
-				jQuery('#polygon_unselect').live('click', function () {
-					that.map.selected_polygon = false;
-					that.map.listings.get();	
-					that.map.center_on_polygons();			
-					jQuery('#' + that.map.status_display.dom_id).append('<p id="start_warning">Select a polygon to start searching</p>');
-				});
-			});
-		})
-	}
-	
+	var that = this;	
 	var filters = {};
+
 	if (this.slug) {
 		//if slug, only get that one
 		filters.action = 'get_polygons_by_slug';
@@ -88,30 +65,6 @@ Neighborhood.prototype.init = function () {
 	    	} 
 	    }
 	});
-}
-
-Neighborhood.prototype.update_filters = function () {
-	jQuery(' #polygon_display_status').remove();
-	
-	var content = '<div id="polygon_display_status">';
-	if (this.map.selected_polygon) {
-		jQuery('#' + this.map.status_display.dom_id + ' #start_warning').remove();
-		content += '<a id="polygon_unselect">Unselect Neighborhood</a>';
-		content += '<div>Selected Neighborhood: ' + this.map.selected_polygon.label + '</div>';
-		content += '<div>Number of Listings:' + this.map.listings.ajax_response.iTotalRecords + '</div>';
-	}
-
-	var formatted_filters = this.map.get_formatted_filters();
-	if ( formatted_filters.length > 0 ) {
-		content += '<ul>';
-		for (var i = formatted_filters.length - 1; i >= 0; i--) {
-			content += '<li>' + formatted_filters[i].name + formatted_filters[i].value + '</li>'
-		};
-		content += '</ul>';
-	}
-
-	content += '</div>';
-	jQuery('#' + this.map.status_display.dom_id).append(content);
 }
 
 //converts raw neighborhood polygon data into a useable GMaps polygon object

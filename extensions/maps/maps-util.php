@@ -142,6 +142,7 @@ class PLS_Map {
 		wp_enqueue_script('lifestyle', trailingslashit(PLS_JS_URL) . 'scripts/lifestyle.js');
 		?>
 			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/map.js"></script>
+			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/status.js"></script>
 		<?php
 		echo ob_get_clean();
 	}

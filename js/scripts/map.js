@@ -20,10 +20,12 @@ Map.prototype.init = function ( params ) {
 	this.markers_hash = {};
 	this.bounds = [];
 	this.list = params.list || false;
-
 	this.dom_id = params.dom_id || 'map_canvas';
+
+	//other objects
 	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
 	this.polygons = params.polygons || [];
+	this.status_window = params.status_window || false;
 
 	this.polygons_verticies = [];
 	this.polygons_exclude_center = false;
@@ -35,19 +37,8 @@ Map.prototype.init = function ( params ) {
 	this.lng = params.lng || '-71.03';
 	this.zoom = params.zoom || 15;
 	this.always_center = params.always_center || true;
-
-	//map status box
-	this.status_display = params.status_display || {};
-	if (!params.status_display)
-		params.status_display = {};
-
-	this.status_display.class = params.status_display.class || 'map_filter_area';
-	this.status_display.dom_id = params.status_display.dom_id || 'map_filter_area';
 	this.filter_by_bounds = params.filter_by_bounds || true;
-	this.filter_translation = params.filter_translation || {'metadata[beds]': "Beds: " };
-	this.filters_display = params.filters_display || ['metadata[beds]'];
-	this.filter_position = params.filter_position || google.maps.ControlPosition.LEFT_TOP;
-
+	
 	//marker settings
 	this.marker = {}
 	this.marker.icon = params.marker || false;
@@ -86,8 +77,9 @@ Map.prototype.init = function ( params ) {
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
 		
 		//sets the initial div for the map status display
-		if (that.status_display)
-			that.add_control_container();
+		if (that.status_window)
+			that.status_window.add_control_container();
+			console.log(that.status_window);
 
 		if ( that.type == 'neighborhood' ) {
 			//all neighborhoods shown
@@ -98,6 +90,10 @@ Map.prototype.init = function ( params ) {
 		} else if ( that.type == 'lifestyle_polygon' ) {
 			//show points of interests on the map, then do listings searches with them.
 			that.lifestyle_polygon.init();
+		}
+
+		if (that.status_window) {
+			that.status_window.on_load();
 		}
 	});
 }
@@ -157,16 +153,9 @@ Map.prototype.update = function ( ajax_response ) {
 		}
 
 		//displaying map status bars
-		if ( this.status_display && this.listings.active_filters && this.map ) {
-			if ( this.type == 'neighborhood' ) {
-				this.neighborhood.update_filters();				
-			} else if ( this.type == 'lifestyle' ) {
-				this.update_filters_lifestyle();				
-			} else if ( this.type == 'lifestyle_polygon' ) {
-				this.update_filters_lifestyle_polygon();				
-			} else if ( this.type == 'listings' )
-				this.update_filters_listings();				
-			}
+		if ( this.status_display && this.listings.active_filters && this.map )
+			this.status_window.update();
+
 	} else {
 		// this.show_empty();
 	}
@@ -263,44 +252,6 @@ Map.prototype.create_marker = function ( marker_options ) {
 	that.markers.push(marker);
 	return marker;
 }
-
-Map.prototype.update_filters_lifestyle = function () {}
-Map.prototype.update_filters_lifestyle_polygon = function () {}
-Map.prototype.update_filters_listings = function () {}
-
-Map.prototype.get_formatted_filters = function ( ) {
-	var filters = this.listings.active_filters;
-	var formatted_filters = [];
-	for (var i = filters.length - 1; i >= 0; i--) {
-
-		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "")
-			continue;
-			
-		if (this.filter_translation[filters[i].name])
-			filters[i].name = this.filter_translation[filters[i].name];
-
-		formatted_filters.push({ name: filters[i].name, value: filters[i].value })
-	}
-	return formatted_filters;
-}
-
-Map.prototype.add_control_container = function () {
-	var that = this;
-	var controlDiv = document.createElement('div');
-	controlDiv.id = this.status_display.dom_id;
-	controlDiv.className = this.status_display.dom_id;
-	controlDiv.style.marginTop = '9px';
-	controlDiv.style.marginLeft = '7px'; 
-	controlDiv.style.padding = '5px';
-	
-	// Set CSS for the control border.
-	var controlUI = document.createElement('div');
-	controlUI.id = 'map_filter_area_wrapper';
-	controlDiv.appendChild(controlUI);
-
-	that.map.controls[ that.filter_position ].push(controlDiv);
-}
-
 
 Map.prototype.center = function () {
 	var that = this;
