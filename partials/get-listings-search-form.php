@@ -290,7 +290,9 @@ class PLS_Partials_Listing_Search_Form {
           }   
 
           /** Set the maximum price options array. */
-          $form_options['max_price'] = asort( $form_options['min_price']);
+          $form_options['max_price'] = array_flip($form_options['min_price']);
+          arsort($form_options['max_price']);
+          $form_options['max_price'] = array_flip($form_options['max_price']);
 
 
       // Price for Rentals 
@@ -344,7 +346,10 @@ class PLS_Partials_Listing_Search_Form {
             }   
 
             /** Set the maximum price options array. */
-            $form_options['max_price_rental'] = $form_options['min_price_rental'];
+            $form_options['max_price_rental'] = array_flip($form_options['min_price_rental']);
+            arsort($form_options['max_price_rental']);
+            $form_options['max_price_rental'] = array_flip($form_options['max_price_rental']);
+
 
       $form_options['min_beds'] = array(
             'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
