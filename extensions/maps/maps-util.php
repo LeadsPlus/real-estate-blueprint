@@ -20,6 +20,7 @@ class PLS_Map {
 		<div class="map_wrapper" style="position: relative">
 				<div id="loading_overlay" class="loading_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $loading_overlay ?></div>
 				<div id="empty_overlay" class="empty_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $empty_overlay ?></div>
+				<div id="full_overlay" class="full_overlay" style="z-index: 50; display: none; position: absolute;"><?php echo $full_overlay ?></div>
 				<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 				<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
 					<?php if ($show_lifestyle_controls): ?>
@@ -138,6 +139,53 @@ class PLS_Map {
 		ob_start();
 		?>
 			<script type="text/javascript">
+
+				function get_map_bounds_for_search(map_js_var) {
+					var response = {}
+					response.vertices = [];
+					response.vertices[0] = {};
+					response.vertices[1] = {};
+					response.vertices[2] = {};
+					response.vertices[3] = {};
+
+					var bounds = map_js_var.map.getBounds();
+
+					response['vertices'][0]['lat'] = bounds.getNorthEast().lat();
+					response['vertices'][0]['lng'] = bounds.getNorthEast().lng();
+
+					response['vertices'][1]['lat'] = bounds.getNorthEast().lat();
+					response['vertices'][1]['lng'] = bounds.getSouthWest().lng();
+
+					response['vertices'][2]['lat'] = bounds.getSouthWest().lat();
+					response['vertices'][2]['lng'] = bounds.getSouthWest().lng();
+
+					response['vertices'][3]['lat'] = bounds.getSouthWest().lat();
+					response['vertices'][3]['lng'] = bounds.getNorthEast().lng();
+					return response;
+				}
+
+				function generate_verticies_inputs () {
+
+				}
+
+
+				function show_max_results_overlay () {
+					jQuery('#full_overlay').show();
+					console.log('I would show the max results overlay.')
+				}
+
+				function get_search_filters (form_class) {
+					var result = {};
+					jQuery.each(jQuery('.'+ form_class +', .sort_wrapper').serializeArray(), function(i, field) {
+						result[field.name] = field.value;
+		            });
+		            return result;
+				}
+
+				function get_listings () {
+					console.log('im getting listings');
+				}
+
 				function pls_create_polygon_listeners (polygon, map_js_var, click_type) {
 					google.maps.event.addListener(polygon,"mouseover",function(){
 						polygon.setOptions({fillOpacity: "0.9"});
@@ -157,11 +205,12 @@ class PLS_Map {
 							request = {};
 							request.action = 'polygon_listings';
 							request.vertices = this.tax.vertices;
+							map_js_var.selected_polygon = this;
 							jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
 								if (data) {
 									pls_clear_markers(map_js_var);
 									for (var i = data.length - 1; i >= 0; i--) {
-										pls_create_listing_marker(data[i], map_js_var);
+										pls_create_listing_marker(data[i], map_js_var, true);
 									};
 									pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
 									pls_hide_loading_overlay();
@@ -189,7 +238,7 @@ class PLS_Map {
 					};
 				}
 
-				function pls_create_listing_marker (listing, map_js_var) {
+				function pls_create_listing_marker (listing, map_js_var, center) {
 					var marker_details = {};
 					marker_details.latlng = new google.maps.LatLng(listing['location']['coords'][0], listing['location']['coords'][1]);
 
@@ -211,10 +260,10 @@ class PLS_Map {
                           '<div class="clear"></div>' +
                         '</div>'+
                       '</div>';
-                      pls_create_marker(marker_details, map_js_var);
+                      pls_create_marker(marker_details, map_js_var, center);
 				}
 
-				function pls_create_marker (marker_details, map_js_var) {
+				function pls_create_marker (marker_details, map_js_var, center) {
 					if (!marker_details.icon) {
 						var marker_options = {position: marker_details.latlng};
 					} else {
@@ -231,7 +280,10 @@ class PLS_Map {
 					});
 					marker.setMap(map_js_var.map);
 					map_js_var.markers.push(marker);
-					pls_center_map(map_js_var);
+					if (center) {
+						pls_center_map(map_js_var);	
+					}
+					
 				}
 
 				function pls_create_polygon (points, polygon_options, map_js_var) {
@@ -247,6 +299,7 @@ class PLS_Map {
 	        		}
 					var neighborhood = new google.maps.Polygon(polyOptions);
 					neighborhood.setMap(map_js_var.map);
+					console.log(neighborhood);
 					map_js_var.polygons.push(neighborhood);
 				}
 
@@ -328,7 +381,9 @@ class PLS_Map {
         	'ajax_form_class' => false,
         	'polygon' => false,
         	'polygon_click_action' => false,
-        	'lifestyle_distance' => 'miles'
+        	'lifestyle_distance' => 'miles',
+        	'search_class' => 'pls_listings_search_results',
+        	'full_overlay' => '<div>Zoom in to see more results</div>'
         );
         $args = wp_parse_args( $args, $defaults );
         self::$map_js_var = $args['map_js_var'];	
