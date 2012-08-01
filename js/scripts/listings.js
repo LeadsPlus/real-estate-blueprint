@@ -40,7 +40,6 @@ Listings.prototype.init = function () {
 }
 
 Listings.prototype.get = function ( success ) {
-	console.log('here');
 	//if there's a pending request, do nothing.
 	if ( Listings.prototype.pending ) {
 		return;
