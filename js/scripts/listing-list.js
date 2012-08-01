@@ -88,11 +88,11 @@ List.prototype.listeners = function () {
 
 		jQuery(this.table_row_selector).live({
 			mouseenter: function () {
-				jQuery(this).css('background-color', 'red');
+				jQuery(this).addClass('hover');
 				that.map.marker_mouseover( jQuery(this).children().children().attr('data-listing') )
 			},
 			mouseleave: function () {
-				jQuery(this).css('background-color', 'inherit');
+				jQuery(this).removeClass('hover');
 				that.map.marker_mouseout( jQuery(this).children().children().attr('data-listing') )
 			}
 		});
