@@ -143,7 +143,9 @@ Map.prototype.update = function ( ajax_response ) {
 		}
 		
 		// if filter by bounds, don't move the map, it's confusing
-		if (this.always_center && this.markers.length > 0 ) {
+		if ( this.always_center && this.type == 'neighborhood' && this.selected_polygon) {
+			this.center_on_selected_polygon();
+		} else if (this.always_center && this.markers.length > 0 ) {
 			this.center();	
 		}
 
@@ -341,6 +343,16 @@ Map.prototype.center_on_polygons = function () {
 		bounds.extend(this.polygons_verticies[i]);
 	}
 	this.map.fitBounds(bounds);
+}
+
+Map.prototype.center_on_selected_polygon = function () {
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = this.selected_polygon.vertices.length - 1; i >= 0; i--) {
+		var vertice = this.selected_polygon.vertices[i];
+		var gpoint = new google.maps.LatLng(vertice.lat, vertice.lng);
+		bounds.extend(gpoint);
+	}
+	this.map.fitBounds(bounds);	
 }
 
 Map.prototype.center_on_markers = function () {
