@@ -26,17 +26,27 @@ Listings.prototype.init = function () {
 		this.list.listeners();
 
 		//boot up the datatable
-		this.list.datatable = jQuery(this.list.dom_id).dataTable(this.list.settings);
+		if ( this.map.filter_by_bounds ) {
+			google.maps.event.addDomListenerOnce(window, 'load', function() {
+				google.maps.event.addDomListenerOnce(that.map.map, 'idle', function() {
+					that.list.datatable = jQuery(that.list.dom_id).dataTable(that.list.settings);			
+				});
+			});
+		} else {
+			this.list.datatable = jQuery(this.list.dom_id).dataTable(this.list.settings);	
+		}
+		
 	}
 }
 
 Listings.prototype.get = function ( success ) {
+	console.log('here');
 	//if there's a pending request, do nothing.
 	if ( Listings.prototype.pending ) {
 		return;
 	};
 	//or, if we're dealing with a polygon map and there's not a selected polygon
-	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) || this.map.type == 'lifestyle' || this.map.type == 'lifestyle_polygon' ) {
+	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) ) {
 		if ( this.list )
 			this.list.update( {'aaData' : [], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} )
 
@@ -83,12 +93,14 @@ Listings.prototype.get = function ( success ) {
 
 	//tell wordpress which hook to hit.
 	that.active_filters.push( { "name": "action", "value" : this.hook} );
+	console.log(that.active_filters);
 	jQuery.ajax({
 	    "dataType" : 'json',
 	    "type" : "POST",
 	    "url" : this.sSource,
 	    "data" : that.active_filters,
 	    "success" : function ( ajax_response ) {
+	    	console.log(ajax_response);
 			that.pending = false;		
 			that.ajax_response = ajax_response;
 			if (that.map && that.map.map)
