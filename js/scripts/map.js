@@ -364,7 +364,7 @@ Map.prototype.center_on_markers = function () {
 }
 
 Map.prototype.get_bounds =  function () {
-	if ( ( !this.map || this.bounds.length == 0 ) && this.type !== 'neighborhood' && this.type !== 'lifestyle_polygon') {
+	if ( !this.map ) {
 		return this.bounds;
 	}
 	this.bounds = [];
