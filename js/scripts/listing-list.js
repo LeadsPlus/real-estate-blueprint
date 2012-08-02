@@ -8,11 +8,12 @@ List.prototype.init = function ( params ) {
 	this.loading_class = params.loading_class || '.dataTables_processing';
 	this.dom_id = params.dom_id || '#placester_listings_list';
 	this.class = params.class || false;
-	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
 	this.table_row_selector = params.table_class || '.placester_properties tr';
 	this.context = params.context || false;
 	this.total_results_id = params.total_results_id || '#pls_num_results';
 	this.num_results = params.num_results || 10;
+	this.limit_choices = params.limit_choices || [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]];
+	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl, 'iDisplayLength': this.num_results, 'aLengthMenu' : this.limit_choices };
 
 	//objects
 	this.listings = params.listings || alert('You need to include a listings object');
@@ -44,7 +45,6 @@ List.prototype.update = function (ajax_response) {
 	this.fnCallback(ajax_response);
 	this.update_favorites_through_cache();
 	this.hide_loading();
-	console.log(ajax_response.aaData);
 	if (ajax_response.aaData.length > 0) {
 		this.hide_empty();
 	} else {
