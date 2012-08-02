@@ -7,7 +7,7 @@ Status_Window.prototype.init = function ( params ) {
 	console.log(this.listings.map);
 
 	this.map = this.listings.map || alert('You need to attach a map to the listings object if you want the status object actually work');
-	
+
 	this.filter_position = params.fitler_position || google.maps.ControlPosition.LEFT_TOP;
 
 	this.class = params.class || 'map_filter_area';
@@ -20,24 +20,26 @@ Status_Window.prototype.init = function ( params ) {
 		jQuery(function () {
 			google.maps.event.addDomListenerOnce(that.map.map, 'idle', function() {
 				var content = '<div id="polygon_display_wrapper">';
-				content += '<h5>' + that.map.type + ' Search</h5>';
-				if (that.map.type == 'polygon') {
-					content += '<p id="start_warning">Select a polygon to start searching</p>';
-				} else if ( that.map.type == 'listings' ) {
-					content += '<p id="start_warning">Oh man, edge case</p>';
-				}	
-				
+				switch ( that.map.type ) {
+					case 'listings':
+						content += '<h5>Listings Search</h5>';
+						content += '<p id="start_warning">Drag the map to refine your search</p>';
+						break;
+					case 'neighborhood':
+						content += '<h5>Neighborhood Search</h5>';
+						content += '<p id="start_warning">Click on a highlighted area to start searching</p>';
+						break;
+				}
 				content += '</div>';
-
 				jQuery('#' + that.dom_id).append(content);
-				
+			});
 
-				jQuery('#polygon_unselect').live('click', function () {
-					that.map.selected_polygon = false;
-					that.map.listings.get();	
-					that.map.center_on_polygons();			
-					jQuery('#' + that.dom_id).append('<p id="start_warning">Select a polygon to start searching</p>');
-				});
+
+			jQuery('#polygon_unselect').live('click', function () {
+				that.map.selected_polygon = false;
+				that.map.listings.get();	
+				that.map.center_on_polygons();			
+				jQuery('#' + that.dom_id).append('<p id="start_warning">Select a polygon to start searching</p>');
 			});
 		});
 	}
@@ -45,6 +47,18 @@ Status_Window.prototype.init = function ( params ) {
 	Status_Window.prototype.update = params.update || function () {
 		jQuery(' #polygon_display_status').remove();
 		
+
+		switch ( that.map.type ) {
+			case 'listings':
+				content += '<h5>Listings Search</h5>';
+				content += '<p id="start_warning">Drag the map to refine your search</p>';
+				break;
+			case 'neighborhood':
+				content += '<h5>Neighborhood Search</h5>';
+				content += '<p id="start_warning">Click on a highlighted area to start searching</p>';
+				break;
+		}
+
 		var content = '<div id="polygon_display_status">';
 		if (this.map.selected_polygon) {
 			jQuery('#' + this.map.status_display.dom_id + ' #start_warning').remove();
