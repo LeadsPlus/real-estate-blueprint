@@ -226,7 +226,6 @@ Map.prototype.create_marker = function ( marker_options ) {
 
 	google.maps.event.addListener(marker, 'click', function() {
 		that.marker_click( marker.listing.id );
-
 		for (var i = that.infowindows.length - 1; i >= 0; i--) {
 			that.infowindows[i].setMap(null)
 		}
@@ -354,12 +353,22 @@ Map.prototype.listeners = function ( ) {
 	if (this.type == 'listings') {
 		google.maps.event.addDomListener(window, 'load', function() {
 			//trigger a reload on any movement
-			google.maps.event.addListener(that.map, 'bounds_changed', function() {
+			google.maps.event.addListener(that.map, 'dragend', function() {
 				//only reload the map once since bounds_changed is a little trigger happy
 				clearTimeout(timeout);
 				timeout = setTimeout(function () {
 					google.maps.event.addListenerOnce(that.map, 'idle', function() {
-						that.listings.get();				
+						that.listings.get();
+					});
+				}, 750);	
+			});
+
+			google.maps.event.addListener(that.map, 'zoom_changed', function() {
+				//only reload the map once since bounds_changed is a little trigger happy
+				clearTimeout(timeout);
+				timeout = setTimeout(function () {
+					google.maps.event.addListenerOnce(that.map, 'idle', function() {
+						that.listings.get();
 					});
 				}, 750);	
 			});
