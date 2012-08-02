@@ -407,7 +407,7 @@ class PLS_Format {
 				"blc_deck_pt" => "Balcony/Deck/Patio",
 				"dryer" => "Dryer",
 				"washer" => "Washer",
-				"cons_stts" => "Construction Status",
+        "status" => "Status",
 				"appliances" => "Appliances",
 				"oid" => "Office ID",
       	"aid" => "Agent ID",
