@@ -11,9 +11,9 @@ List.prototype.init = function ( params ) {
 	this.table_row_selector = params.table_class || '.placester_properties tr';
 	this.context = params.context || false;
 	this.total_results_id = params.total_results_id || '#pls_num_results';
-	this.num_results = params.num_results || 10;
+	this.limit_default = params.limit_default || 10;
 	this.limit_choices = params.limit_choices || [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]];
-	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl, 'iDisplayLength': this.num_results, 'aLengthMenu' : this.limit_choices };
+	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl, 'iDisplayLength': this.limit_default, 'aLengthMenu' : this.limit_choices };
 
 	//objects
 	this.listings = params.listings || alert('You need to include a listings object');
