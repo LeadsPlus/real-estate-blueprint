@@ -38,6 +38,7 @@ Map.prototype.init = function ( params ) {
 	this.zoom = params.zoom || 15;
 	this.always_center = params.always_center || true;
 	this.filter_by_bounds = params.filter_by_bounds || true;
+	this.full_callback = params.full_callback || false;
 	
 	//marker settings
 	this.marker = {}
@@ -146,8 +147,12 @@ Map.prototype.update = function ( ajax_response ) {
 		}
 
 		//show full overlay so users knows to zoom if they want.
-		if ( ajax_response.iTotalRecords > 50) {
+		var limit = this.list.limit_default || 50;
+		if ( ajax_response.iTotalRecords >= limit) {
 			this.show_full();
+			if ( this.full_callback ) {
+				this.full_callback();
+			}
 		} else {
 			this.hide_full();
 		}
