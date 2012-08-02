@@ -4,23 +4,23 @@ List.prototype.sEcho = 1;
 
 List.prototype.init = function ( params ) {
 	var that = this;
+	//list settings
+	this.loading_class = params.loading_class || '.dataTables_processing';
+	this.dom_id = params.dom_id || '#placester_listings_list';
+	this.class = params.class || false;
+	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl };
+	this.table_row_selector = params.table_class || '.placester_properties tr';
+	this.context = params.context || false;
+	this.total_results_id = params.total_results_id || '#pls_num_results';
+	this.num_results = params.num_results || 10;
+
+	//objects
 	this.listings = params.listings || alert('You need to include a listings object');
 	this.map = params.map || false;
-
-	this.loading_class = params.loading_class || '.dataTables_processing';
 
 	//empty settings
 	this.hide_on_empty = params.hide_on_empty || true;
 	this.empty_id = params.empty_id || false;
-
-	
-
-	this.dom_id = params.dom_id || '#placester_listings_list';
-	this.class = params.class || false;
-	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl, 'sZeroRecords': 'fuck you' };
-	this.table_row_selector = params.table_class || '.placester_properties tr';
-  this.context = params.context || false;
-  this.total_results_id = params.total_results_id || '#pls_num_results';
 
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
 		if (params.get_listings) {
