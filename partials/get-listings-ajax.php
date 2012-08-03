@@ -62,7 +62,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'search_query' => $_POST,
             'table_id' => 'placester_listings_list',
             'show_sort' => true,
-            'search_class' => 'pls_listings_search_results'
+            'search_class' => 'pls_search_form_listings'
         );
 
         /** Extract the arguments after they merged with the defaults. */
