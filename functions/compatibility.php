@@ -111,7 +111,7 @@ class PLS_Plugin_API {
         if ( $return ) {
             return $return;
         }
-        return array();
+        return array('listings' => array());
     }
 
     static function get_polygon_links ($params = array()) {
