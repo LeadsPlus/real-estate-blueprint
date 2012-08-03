@@ -83,15 +83,13 @@ class PLS_Partial_Get_Listings {
             /** Get the listings list markup and javascript. */
               if ($featured_option_id) {
                 $listings_raw = PLS_Listing_Helper::get_featured($featured_option_id);
-              } elseif (isset($neighborhood_polygons) ) {
+              } elseif ($neighborhood_polygons) {
                 $listings_raw = PLS_Plugin_API::get_polygon_listings( array('neighborhood_polygons' => $neighborhood_polygons ) );
               } else {
                 $listings_raw = PLS_Plugin_API::get_listings_list($request_params);
               }
         }
-        
-        // pls_dump($listings_raw);
-
+      
         /** Define variable which will contain the html string with the listings. */
         $return = '';
 
