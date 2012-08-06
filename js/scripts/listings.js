@@ -70,7 +70,7 @@ Listings.prototype.get = function ( success ) {
 		// aoData;
 	} else if ( this.list ) {
 		this.list.show_loading();
-		that.active_filters.push( { "name": "iDisplayLength", "value" : 10} );
+		that.active_filters.push( { "name": "iDisplayLength", "value" : this.list.limit_default} );
 		that.active_filters.push( { "name": "iDisplayStart", "value" : 0} );
 		that.active_filters.push( { "name": "sEcho", "value" : 1} );	
 	}
