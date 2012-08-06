@@ -14,7 +14,7 @@ List.prototype.init = function ( params ) {
 	this.limit_default = params.limit_default || 10;
 	this.limit_choices = params.limit_choices || [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]];
 	this.settings = params.settings || { "bFilter": false, "bProcessing": true, "bServerSide": true, "sServerMethod": "POST", 'sPaginationType': 'full_numbers', "sAjaxSource": info.ajaxurl, 'iDisplayLength': this.limit_default, 'aLengthMenu' : this.limit_choices };
-	this.total_results = 0;
+  this.results_as_total = 0;
 
 	//objects
 	this.listings = params.listings || alert('You need to include a listings object');
@@ -54,7 +54,7 @@ List.prototype.update = function (ajax_response) {
 }
 
 List.prototype.total_results = function ( ajax_response ) {
-	this.total_results = ajax_response.iTotalDisplayRecords;
+	this.results_as_total = ajax_response.iTotalDisplayRecords;
 	jQuery(this.total_results_id).html(this.total_results);
 }
 
