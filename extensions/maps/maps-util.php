@@ -305,7 +305,7 @@ class PLS_Map {
 
 				function pls_center_map (map_js_var) {
 					var bounds = new google.maps.LatLngBounds();
-					if (map_js_var.markers) {
+					if (map_js_var.markers.length > 0) {
 						for (var i = map_js_var.markers.length - 1; i >= 0; i--) {
 							map_js_var.markers[i].setMap(map_js_var.map);
 							bounds.extend(map_js_var.markers[i].getPosition());
