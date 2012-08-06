@@ -59,7 +59,7 @@ List.prototype.update = function (ajax_response) {
 
 List.prototype.total_results = function ( ajax_response ) {
 	this.results_as_total = ajax_response.iTotalDisplayRecords;
-	jQuery(this.total_results_id).html(this.total_results);
+	jQuery(this.total_results_id).html(this.results_as_total);
 }
 
 List.prototype.update_favorites_through_cache = function () {
