@@ -20,7 +20,7 @@ List.prototype.init = function ( params ) {
 	this.map = params.map || false;
 
 	//empty settings
-	this.hide_on_empty = params.hide_on_empty || true;
+	this.hide_on_empty = params.hide_on_empty || false;
 	this.empty_id = params.empty_id || false;
 
 	this.settings.fnServerData = function ( sSource, aoData, fnCallback ) {
