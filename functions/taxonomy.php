@@ -39,7 +39,7 @@ class PLS_Taxonomy {
 
 		//if there's a polygon, use that to get listings. Otherwise, use the name of the neighborhood
 		$polygon = PLS_Plugin_API::get_taxonomies_by_slug($subject['term']);
-		if (!is_array($polygon) && !empty($polygon[0])) {
+		if (is_array($polygon) && !empty($polygon[0])) {
 			$polygon[0]['neighborhood_polygons'] = $polygon[0]['name'];
 			$listings_raw = PLS_Plugin_API::get_polygon_listings( $polygon[0] );
 			$term['listings'] = pls_get_listings( "limit=5&context=home&neighborhood_polygons=" . $term['name'] );
