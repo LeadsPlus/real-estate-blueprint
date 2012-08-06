@@ -11,13 +11,10 @@ class PLS_Taxonomy {
 
 	function get ($args = array()) {
 
-		$signature = sha1(implode($args), true);
-        $transient_id = 'pl_' . $signature;
-        $transient = get_transient($transient_id);
-        
-        if ($transient) {
-        	return $transient;
-        } 
+		$cache = new PLS_Cache('Get Taxonomy');
+		if($tax = $cache->get($args)) {
+			return $tax;
+		}
 
 		extract(self::process_args($args), EXTR_SKIP);
 		$subject = array();
@@ -71,7 +68,7 @@ class PLS_Taxonomy {
 			}
 		}
 		$term['polygon'] = PLS_Plugin_API::get_polygon_detail(array('tax' => $term['api_field'], 'slug' => $subject['term']));
-		set_transient( $transient_id, $term , 3600 * 48 );
+		$cache->save($term, PLS_Cache::TTL_LOW);
 		return $term;
 	}
 
