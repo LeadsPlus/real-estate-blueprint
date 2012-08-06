@@ -224,8 +224,7 @@ function ajax_placester_contact() {
 
         ob_start();
           include(get_template_directory() . '/custom/contact-form-email.php');
-          $message_to_submitter = ob_get_contents();
-        ob_end_clean();
+          $message_to_submitter = ob_get_clean();
               
         wp_mail( $_POST['email'], 'Form Submitted', $message_to_submitter );
       }

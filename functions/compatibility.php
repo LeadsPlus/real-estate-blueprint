@@ -139,11 +139,22 @@ class PLS_Plugin_API {
         if (!$id) {
             return false;
         }
+
+        if(WP_DEBUG !== true) {
+            $cache = new PLS_Cache('Property URL');
+            if($url = $cache->get($id)) {
+                return $url;
+            }
+        }
+
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions( 'placester_get_property_url', $id );
 
         /** If no exceptions were detected, return the result. */
         if ( $return ) {
+            if(WP_DEBUG !== true) {
+                $cache->save($return, PLS_Cache::TTL_LOW);
+            }
             return $return;
         }
         if (pls_has_plugin_error()) {
@@ -476,18 +487,37 @@ class PLS_Plugin_API {
      * @since 0.0.1
      */
     static function get_listings_list( $args ) {
+
+        if(WP_DEBUG !== true) {
+            $cache = new PLS_Cache('Get Listings List');
+            if($return = $cache->get($args)) {
+                return $return;
+            }
+        }
+
         /** Test the function for any exceptions. */
         $return = self::_try_for_exceptions(array("PL_Listing_Helper", "results"), $args, true );
         /** If no exceptions were detected, return the result. */
         if ( $return )  {
+           if(WP_DEBUG !== true) {
+                $cache->save($return, PLS_Cache::TTL_LOW);
+            }
             return $return;
         }
         return false;
     }
 
     static function get_listings_details_list( $args ) {
+        if(WP_DEBUG !== true) {
+            $cache = new PLS_Cache('Listings Details List');
+            if($return = $cache->get($args)) {
+                return $return;
+            }
+        }
+
         $return = self::_try_for_exceptions(array("PL_Listing_Helper", "many_details"), $args, true );
         if ( $return )  {
+            $cache->save($return, PLS_Cache::TTL_LOW);
             return $return;
         }
         return false;

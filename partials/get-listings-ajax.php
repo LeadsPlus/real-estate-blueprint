@@ -165,7 +165,10 @@ class PLS_Partials_Get_Listings_Ajax {
         
         // build response for datatables.js
         $listings = array();
+        $listings_cache = new PLS_Cache('Listing Thumbnail');
+
         foreach ($api_response['listings'] as $key => $listing) {
+          if(!($item_html = $listings_cache->get(array('id' => $listing['id'])))) {
             if (empty($listing['images'])) {
                 $listing['images'][0] = array('url' => $placeholder_img);
             }
@@ -224,8 +227,11 @@ class PLS_Partials_Get_Listings_Ajax {
                 </div>
             </div>
             <?php
-            $item_html = ob_get_clean();
-            $listings[$key][] = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $item_html ), $listing, $context_var);
+              $item_html = ob_get_clean();
+              $item_html = apply_filters( pls_get_merged_strings( array( "pls_listings_list_ajax_item_html", $context ), '_', 'pre', false ), htmlspecialchars_decode( $item_html ), $listing, $context_var);
+              $listings_cache->save($item_html);
+            }
+            $listings[$key][] = $item_html;
             $listings[$key][] = $listing;
         }
 
@@ -234,7 +240,17 @@ class PLS_Partials_Get_Listings_Ajax {
         $response['aaData'] = $listings;
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
+
+        ob_start("ob_gzhandler");
         echo json_encode($response);
+
+        // Enable W3TC Debugging
+        // if(WP_DEBUG === true) {
+        //   $db = w3_instance('W3_DbCache');        
+        //   echo "\r\n\r\n".$db->_get_debug_info();
+        //   $w3_objectcache = w3_instance('W3_ObjectCache');
+        //   echo "\r\n\r\n".$w3_objectcache->_get_debug_info();
+        // }
 
         //wordpress echos out a 0 randomly. die prevents it.
         die();

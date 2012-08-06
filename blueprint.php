@@ -61,7 +61,7 @@ class Placester_Blueprint {
 	 */
 	function __construct($version = '0.0') {
 
-        $version_locked = '1.3';
+        $version_locked = '2.1';
         if ($version != $version_locked) {
             die('This theme is version locked to ' . $version_locked . ' of Blueprint. You are using version ' . $version . ' of Blueprint. Please be sure you are passing a version on instantiation, or update to the correct version of Blueprint');
         }
@@ -350,6 +350,9 @@ class Placester_Blueprint {
 
         /** Load the sidebars. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'sidebars.php' );
+
+        /** Load the partials cache. */
+        require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'caching.php' );        
 
         /** Load the widgets. */
         require_once( trailingslashit ( PLS_FUNCTIONS_DIR ) . 'widgets.php' );
