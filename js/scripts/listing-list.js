@@ -10,6 +10,7 @@ List.prototype.init = function ( params ) {
 	this.sort_wrapper = params.sort_wrapper || '.sort_wrapper';
 	this.limit_dropdown_class = params.limit_dropdown_class || '.dataTables_length';
 	this.pagination_id = params.pagination_id || this.dom_id + '_paginate';
+	this.custom_search_results_id = this.custom_search_results_id || '#pls_listings_search_results';
 	this.class = params.class || false;
 	this.table_row_selector = params.table_class || '.placester_properties tr';
 	this.context = params.context || false;
@@ -128,7 +129,9 @@ List.prototype.show_empty = function () {
 	if (this.hide_on_empty) {
 		jQuery(this.dom_id).hide();
 		jQuery(this.sort_wrapper).hide();
+		jQuery(this.limit_dropdown_class).hide();
 		jQuery(this.pagination_id).hide();
+		jQuery(this.custom_search_results_id).hide();
 	}
 		
 
@@ -140,7 +143,9 @@ List.prototype.hide_empty = function () {
 	if (this.hide_on_empty) {
 		jQuery(this.dom_id).show();	
 		jQuery(this.sort_wrapper).show();
+		jQuery(this.limit_dropdown_class).show();
 		jQuery(this.pagination_id).show();
+		jQuery(this.custom_search_results_id).show();
 	}
 		
 
