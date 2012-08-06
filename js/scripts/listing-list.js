@@ -7,6 +7,9 @@ List.prototype.init = function ( params ) {
 	//list settings
 	this.loading_class = params.loading_class || '.dataTables_processing';
 	this.dom_id = params.dom_id || '#placester_listings_list';
+	this.sort_wrapper = params.sort_wrapper || '.sort_wrapper';
+	this.limit_dropdown_class = params.limit_dropdown_class || '.dataTables_length';
+	this.pagination_id = params.pagination_id || this.dom_id + '_paginate';
 	this.class = params.class || false;
 	this.table_row_selector = params.table_class || '.placester_properties tr';
 	this.context = params.context || false;
@@ -122,16 +125,24 @@ List.prototype.hide_loading = function () {
 }
 
 List.prototype.show_empty = function () {
-	if (this.hide_on_empty)
+	if (this.hide_on_empty) {
 		jQuery(this.dom_id).hide();
+		jQuery(this.sort_wrapper).hide();
+		jQuery(this.pagination_id).hide();
+	}
+		
 
 	if (this.empty_id)
 		jQuery(this.empty_id).show();
 }
 
 List.prototype.hide_empty = function () {
-	if (this.hide_on_empty)
+	if (this.hide_on_empty) {
 		jQuery(this.dom_id).show();	
+		jQuery(this.sort_wrapper).show();
+		jQuery(this.pagination_id).show();
+	}
+		
 
 	if (this.empty_id)
 		jQuery(this.empty_id).hide();
