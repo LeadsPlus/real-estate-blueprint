@@ -139,9 +139,10 @@ class PLS_Taxonomy {
 	}
 
 	function process_args ($args) {
-		$defaults = array(
-        	
-        );
+		static $defaults = null;
+		if(null === $defaults) {
+			$defaults = array();
+		}
         $args = wp_parse_args( $args, $defaults );
         return $args;
 	}
