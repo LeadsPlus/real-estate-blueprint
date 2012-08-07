@@ -90,6 +90,10 @@ class PLS_Partials_Listing_Search_Form {
         );
 
         $args = wp_parse_args( $args, $defaults );
+        $cache = new PLS_Cache('Search Form');
+        if ($result = $cache->get($args)) {
+          return $result;
+        }
         
         $form_options = array('location' => array(
               'locality' => pls_get_option('form_default_options_locality'),
@@ -114,12 +118,6 @@ class PLS_Partials_Listing_Search_Form {
             'zoning_types' => ''
           );
         $_POST = wp_parse_args($_POST, $form_options);
-              
-
-        $cache = new PLS_Cache('form');
-        if ($result = $cache->get($args)) {
-          return $result;
-        }
 
         //respect user settings, unless they are all empty. 
 

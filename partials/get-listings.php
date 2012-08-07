@@ -33,11 +33,6 @@ class PLS_Partial_Get_Listings {
      */
     function init ($args = '') {
        
-        $cache = new PLS_Cache('list');
-        if ($result = $cache->get($args)) {
-          return $result;
-        }
-
         /** Define the default argument array. */
         $defaults = array(
             'width' => 100,
@@ -102,29 +97,44 @@ class PLS_Partial_Get_Listings {
 
         /** Collect the html for each listing. */
         $listings_html = array();
+        
+        if(WP_DEBUG !== true) {
+          $listing_cache = new PLS_Cache('Listing');
+        }
+
         foreach ( $listings_raw['listings'] as $listing_data ) {
             // pls_dump($listing_data);
             /**
              * Curate the listing_data.
              */
 
-            /** Overwrite the placester url with the local url. */
-            // $listing_data->url = PLS_Plugin_API::get_property_url( $listing_data->id );
+            $listing_html = '';
 
-            /** Use the placeholder image if the property has no photo. */
-            if ( !$listing_data['images'] ) {
-                $listing_data['images'][0]['url'] = $placeholder_img;
-                $listing_data['images'][0]['order'] = 0;
+            if(WP_DEBUG !== true) {
+              if($cached_listing_html = $listing_cache->get($listing_data)) {
+                $listing_html = $cached_listing_html;
+              }
             }
 
-            /** Remove the ID for each image (not needed by theme developers) and add the image html. */
-            foreach ( $listing_data['images'] as $image ) {
-                unset( $image['id'] );
-                $image['html'] = pls_h_img( $image['url'], $listing_data['location']['address'], $listing_img_attr );
-            }
-                $location = $listing_data['location'];
-                $full_address = $location['address'] . ' ' . $location['region'] . ', ' . $location['locality'] . ' ' . $location['postal'];
-             ob_start();
+            if(empty($listing_html)) {
+
+                /** Overwrite the placester url with the local url. */
+                // $listing_data->url = PLS_Plugin_API::get_property_url( $listing_data->id );
+
+                /** Use the placeholder image if the property has no photo. */
+                if ( !$listing_data['images'] ) {
+                    $listing_data['images'][0]['url'] = $placeholder_img;
+                    $listing_data['images'][0]['order'] = 0;
+                }
+
+                /** Remove the ID for each image (not needed by theme developers) and add the image html. */
+                foreach ( $listing_data['images'] as $image ) {
+                    unset( $image['id'] );
+                    $image['html'] = pls_h_img( $image['url'], $listing_data['location']['address'], $listing_img_attr );
+                }
+                    $location = $listing_data['location'];
+                    $full_address = $location['address'] . ' ' . $location['region'] . ', ' . $location['locality'] . ' ' . $location['postal'];
+                 ob_start();
              ?>
 
         <div class="listing-item grid_8 alpha" id="post-<?php the_ID(); ?>">
@@ -180,10 +190,16 @@ class PLS_Partial_Get_Listings {
 
 
              <?php
-             $listing_html = ob_get_clean();
+                 $listing_html = ob_get_clean();
 
-            /** Filter (pls_listing[_context]) the resulting html for a single listing. */
-            $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );
+                /** Filter (pls_listing[_context]) the resulting html for a single listing. */
+                $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );
+
+                if(WP_DEBUG !== true) {
+                  $listing_cache->save($listing_html, PLS_Cache::TTL_LOW);
+                }
+
+            }
 
             /** Append the html to an array. This will be passed to the final filter. */
             $listings_html[] = $listing_html;
@@ -202,7 +218,6 @@ class PLS_Partial_Get_Listings {
 
         /** Filter (pls_listings[_context]) the resulting html that contains the collection of listings.  */
         $response = apply_filters( pls_get_merged_strings( array( 'pls_listings', $context ), '_', 'pre', false ), $return, $listings_raw, $listings_html, $request_params, $context_var );
-        $cache->save($response);
         return $response;
     }
 
