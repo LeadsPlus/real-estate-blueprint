@@ -5,6 +5,8 @@ PLS_Route::init();
 class PLS_Route {
 
 	static $request = array();
+	const CACHE_NONE = 0;
+	const CACHE_PER_PAGE = 1;
 
 	/**
 	 * Stores the base name of the template file; e.g. 'page' for 'page.php' etc.
@@ -86,7 +88,28 @@ class PLS_Route {
 
 		if ( $load && '' != $located  ) {
 			PLS_Debug::add_msg('[[Load Requested:]] ' . $located);
+
+			// Capture/cache rendered html unless we're in debug mode
+			if((WP_DEBUG !== true) && self::CACHE_PER_PAGE === $cache_type) {        
+				$cache = new PLS_Cache('Template');
+				$cache_args = array('template' => $located, 'uri' => $_SERVER[REQUEST_URI]);
+				if ($result = $cache->get($cache_args)) {
+					PLS_Debug::add_msg('[[Router cache hit!]] Returning rendered HTML for : ' . $located);
+					echo $result;
+					return $located;
+				}
+				ob_start();
+			}
+
 			load_template( $located, $require_once);
+
+			// Capture/cache rendered html unless we're in debug mode
+			if((WP_DEBUG !== true) && self::CACHE_PER_PAGE === $cache_type) {
+				$result = ob_get_clean();
+				$cache->save($result);
+				echo $result;
+			}
+
 		} elseif ($include_vars) {
 			ob_start();
 				extract($include_vars);
@@ -104,6 +127,16 @@ class PLS_Route {
 	{
 		$located = '';
 
+		// Cache template locations
+		if((WP_DEBUG !== true)) {	
+			$cache = new PLS_Cache('Located Template');
+			$cache_args = array('template_names' => $template_names);
+			if ($located = $cache->get($cache_args)) {
+				PLS_Debug::add_msg('[[Template location cache hit!]] Returning cached location : ' . $located);
+				return $located;
+			}
+		}
+
 		foreach ( (array) $template_names as $template_name ) {
 			if ( !$template_name )
 				continue;
@@ -114,6 +147,11 @@ class PLS_Route {
 				$located = PLS_TPL_DIR . '/' . $template_name;
 				break;
 			}
+		}
+
+		// Cache template locations	
+		if((WP_DEBUG !== true)) {
+			$cache->save($located);	
 		}
 		return $located;
 	}
@@ -173,7 +211,7 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
 		//
-		return self::router('header.php', true);
+		return self::router('header.php', true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	function handle_sidebar() {
@@ -207,7 +245,7 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
 		//
-		return self::router('footer.php', true);
+		return self::router('footer.php', true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	// 
