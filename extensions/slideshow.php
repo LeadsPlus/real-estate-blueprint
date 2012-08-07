@@ -108,7 +108,7 @@ class PLS_Slideshow {
 
                 //if the dev allows user input, get a list of the stytles
                 if ($allow_user_slides && $user_slides_header_id) {
-                    $slides = pls_get_option($user_slides_header_id);
+                    $slides = pls_get_option($user_slides_header_id, array() );
                     foreach ($slides as $index => $slide) {
                         switch ($slide['type']) {
                             case 'listing':
