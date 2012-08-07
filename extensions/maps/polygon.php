@@ -177,7 +177,9 @@ class PLS_Map_Polygon extends PLS_Map {
 			<?php echo self::get_lifestyle_controls($map_args); ?>
 		<?php
 			$polygon_html = ob_get_clean();
-			$cache->save($polygon_html);
+			if(WP_DEBUG !== true) {
+				$cache->save($polygon_html);
+			}
 		}	
 		return $polygon_html;
 	}
