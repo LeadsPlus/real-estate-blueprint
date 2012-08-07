@@ -564,7 +564,9 @@ class PLS_Plugin_API {
         }
         $return = self::_try_for_exceptions(array("PL_Listing_Helper", "many_details"), $args, true );
         if ( $return )  {
-            $cache->save($return, PLS_Cache::TTL_LOW);
+            if(WP_DEBUG !== true) {
+                $cache->save($return, PLS_Cache::TTL_LOW);
+            }
             return $return;
         }
         return false;
