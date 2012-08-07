@@ -70,9 +70,7 @@ Map.prototype.init = function ( params ) {
 		marker.setIcon(null);
 	}
 
-	//build map
-	var that = this;
-	google.maps.event.addDomListener(window, 'load', function() {
+	this.init = function() {
 		// map options are defined in init
 		that.map_options.center = new google.maps.LatLng(that.lat, that.lng);
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
@@ -96,7 +94,14 @@ Map.prototype.init = function ( params ) {
 		if (that.status_window) {
 			that.status_window.on_load();
 		}
-	});
+	}
+	//build map
+	if (google && google.maps) {
+		this.init();
+	} else {
+		google.maps.event.addDomListener(window, 'load', that.init);	
+	};
+	
 }
 
 Map.prototype.create_polygon = function ( polygon_options ) {
