@@ -26,6 +26,17 @@ class PLS_Style {
     static function get_options()
     {
 
+        // Cache options
+        if((WP_DEBUG !== true)) {
+            $cache = new PLS_Cache('Theme PLS Options');
+            $cache_args = array();
+            if ($options = $cache->get($cache_args)) {
+                PLS_Debug::add_msg('[[Theme options cache hit!]] Returning cached options');
+                array_merge(self::$styles, $options);
+                return;
+            }
+        }
+
         require(PLS_Route::locate_blueprint_option('init.php'));
         require_if_theme_supports("pls-user-options", PLS_Route::locate_blueprint_option('user.php'));
         require_if_theme_supports("pls-search-options", PLS_Route::locate_blueprint_option('search.php'));    
@@ -39,6 +50,10 @@ class PLS_Style {
         require_if_theme_supports("pls-footer-options", PLS_Route::locate_blueprint_option('footer.php'));
         require_if_theme_supports("pls-css-options", PLS_Route::locate_blueprint_option('css.php'));
 
+        // Cache options
+        if((WP_DEBUG !== true)) {
+            $cache->save(self::$styles);
+        }
     }
 
     public static function add ($options = false)

@@ -54,7 +54,17 @@ class PLS_Partials {
     
     // wrapper for listings search for content
     static function get_listings_search_form( $args ) {
-        return PLS_Partials_Listing_Search_Form::init($args);
+        if(WP_DEBUG !== true) {
+            $cache = new PLS_Cache('Listings Search Form');
+            if($form = $cache->get($args)) {
+                return $form;
+            }
+        }
+        $form = PLS_Partials_Listing_Search_Form::init($args);
+        if(WP_DEBUG !== true) {
+           $cache->save($form);
+        }
+        return $form;
     }
 
     
