@@ -167,8 +167,24 @@ class PLS_Map {
 		wp_register_script('text-overlay', trailingslashit( PLS_JS_URL ) . 'libs/google-maps/text-overlay.js' );
 		wp_enqueue_script('text-overlay');
 
-		ob_start();
-		?>
+		$polygon_html = '';
+		if(WP_DEBUG !== true) {
+			$cache = new PLS_Cache('Map Polygon');
+			// Doesn't seem to always be an array
+			if(!is_array($listings)) {
+				$listings_arr = array($listings);
+			}
+			else {
+				$listings_arr = $listings;
+			}
+			if($polygon_html_cached = $cache->get(array_merge($listings_arr, $map_args, $marker_args))) {
+				$polygon_html = $polygon_html_cached;
+			}
+		}
+		if($polygon_html === '') {
+			
+			ob_start();
+			?>
 			<script type="text/javascript">				
 				var <?php echo $map_js_var; ?> = {};
 				<?php echo $map_js_var; ?>.map;
@@ -248,7 +264,10 @@ class PLS_Map {
 			</style>
 			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 		<?php
-		return ob_get_clean();
+			$polygon_html = ob_get_clean();
+			$cache->save($polygon_html);
+		}
+		return $polygon_html;
 	}
 
 	function lifestyle($listings = array(), $map_args = array(), $marker_args = array()) {
