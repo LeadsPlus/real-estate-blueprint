@@ -99,7 +99,7 @@ class PLS_Partials_Listing_Search_Form {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
           $cache_id['$_POST'] = $_POST;
         }
-        if ($result = $cache->get()) {
+        if ($result = $cache->get($cache_id)) {
           return $result;
         }
 
