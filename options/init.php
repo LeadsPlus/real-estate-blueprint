@@ -52,9 +52,9 @@ PLS_Style::add(array(
 
 		PLS_Style::add(array( 
 				"name" => "Google Analytics Tracking Code",
-				"desc" => "Add your google analytics tracking code here. It will be loaded just before the </body> tag in your site. Copy and paste your Google Analytics code, including the script tags.",
+				"desc" => "Add your google analytics tracking ID code here. It looks something like this: UA-XXXXXXX-X",
 				"id" => "pls-google-analytics",
-				"type" => "textarea"));
+				"type" => "text"));
 
 		PLS_Style::add(array(
 				"name" => "Display Theme Debug Messages",
