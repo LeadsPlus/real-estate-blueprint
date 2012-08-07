@@ -125,8 +125,8 @@ class PLS_Partials_Get_Listings_Ajax {
 	function get ($args = array()) {
 	
 		    // Pagination
-        $_POST['limit'] = $_POST['iDisplayLength'];
-        $_POST['offset'] = $_POST['iDisplayStart'];     
+        $_POST['limit'] = @$_POST['iDisplayLength'];
+        $_POST['offset'] = @$_POST['iDisplayStart'];     
 
         /** Define the default argument array. */
         $defaults = array(
@@ -252,7 +252,7 @@ class PLS_Partials_Get_Listings_Ajax {
         }
 
         // Required for datatables.js to function properly.
-        $response['sEcho'] = $_POST['sEcho'];
+        $response['sEcho'] = @$_POST['sEcho'];
         $response['aaData'] = $listings;
         $response['iTotalRecords'] = $api_response['total'];
         $response['iTotalDisplayRecords'] = $api_response['total'];
