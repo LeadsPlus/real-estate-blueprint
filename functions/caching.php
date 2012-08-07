@@ -17,6 +17,12 @@ class PLS_Cache {
 	}
 
 	function get () {
+		
+		// Just ignore caching for admins
+		if(is_admin()) {
+			return false;
+		}
+
 		$arg_hash = md5(http_build_query(func_get_args()));
 		$this->transient_id = 'pl_' . $this->type . $this->offset . '_' . $arg_hash;
         $transient = get_transient($this->transient_id);
@@ -28,7 +34,8 @@ class PLS_Cache {
 	}
 
 	public function save ($result, $duration = 172800) {
-		if ($this->transient_id) {
+		// Just ignore caching for admins
+		if ($this->transient_id && !is_admin()) {
 			set_transient($this->transient_id, $result , $duration);
 		}
 	}
