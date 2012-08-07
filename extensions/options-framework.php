@@ -28,10 +28,88 @@ if ( ! function_exists( 'optionsframework_option_name' ) ) {
 }
 
 function pls_get_option ($option, $default = '') {
+    static $pls_options = null;
+    if(null === $pls_options) {
+        $pls_options = PLS_Options_Cache::instance();
+    }
+
     if ($option !== '') {
         return of_get_option($option, $default);
-    } else {
-        return false;
+        if(isset($pls_options[$option])) {
+            return $pls_options[$option];
+        }
+        else {
+            $value = of_get_option($option, $default);
+            $pls_options[$option] = $value;
+            return $value;
+        }
+     } else {
+         return false;
+     }
+}
+
+/**
+ * Provides a mechanism for caching, storing, and purging
+ * pls_options that are stored in the database.
+ */
+class PLS_Options_Cache implements ArrayAccess {
+    
+    public $pls_options;
+    private static $instance;
+    private $cache;
+    private $dirty;
+
+    public static function instance() {
+        if(!isset(self::$instance)) {
+            self::$instance = new PLS_Options_Cache();
+        }
+        return self::$instance;
+    }
+
+    private function __construct() {
+        $this->cache = new PLS_Cache("PLS Options");
+        if($options = $this->cache->get(array('options' => true))) {
+            $this->pls_options = $options;
+            $this->dirty = false;
+        }
+        else {
+            $this->pls_options = array();
+            $this->dirty = true;
+        }
+        
+        add_action('shutdown', array($this, 'shutdown'));
+    }
+
+    public function shutdown() {
+        if($this->dirty) {
+            $this->cache->save($this->pls_options, PLS_Cache::TTL_LOW);
+        }
+    }
+
+    //////////////////////////////
+    // ArrayAccess implementation
+    //////////////////////////////
+
+    public function offsetExists ($offset) {
+        return isset($this->pls_options[$offset]);
+    }
+
+    public function offsetGet ($offset) {
+        if(isset($this->pls_options[$offset])) {
+            return $this->pls_options[$offset];    
+        }
+        else {
+            return null;
+        }
+    }
+
+    public function offsetSet ( $offset , $value ) {
+        $this->pls_options[$offset] = $value;
+        $this->dirty = true;
+    }
+
+    public function offsetUnset ( $offset ) {
+        unset($this->pls_options[$offset]);
     }
 }
 
