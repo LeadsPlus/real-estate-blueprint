@@ -8,6 +8,9 @@
 	<?php if ($compliance_message['office_name']): ?>
 		<p class="search-compliance">Courtesy of: <?php echo $compliance_message['office_name'] ?></p>	
 	<?php endif ?>
+	<?php if ($compliance_message['office_phone']): ?>
+			<span>Agent Phone: <?php echo $compliance_message['office_phone'] ?></span>
+		<?php endif ?>
 	<?php if ($compliance_message['img']): ?>
 		<img src="<?php echo $compliance_message['img'] ?>" alt="">	
 	<?php endif ?>

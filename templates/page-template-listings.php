@@ -20,6 +20,6 @@
 </section>
 <div class="grid_8 alpha" id="content" role="main">
     <?php echo PLS_Partials::get_listings_list_ajax('context=listings_search&table_id=placester_listings_list'); ?>
-    <?php PLS_Listing_Helper::get_compliance(array('context' => 'search', 'agent_name' => false, 'office_name' => false)); ?>
+    <?php PLS_Listing_Helper::get_compliance(array('context' => 'search', 'agent_name' => false, 'office_name' => false, 'office_phone' => false)); ?>
 </div>
 
