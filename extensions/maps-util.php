@@ -265,7 +265,9 @@ class PLS_Map {
 			<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 		<?php
 			$polygon_html = ob_get_clean();
-			$cache->save($polygon_html);
+			if(WP_DEBUG !== true) {
+				$cache->save($polygon_html);
+			}
 		}
 		return $polygon_html;
 	}
