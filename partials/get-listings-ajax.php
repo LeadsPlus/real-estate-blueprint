@@ -226,7 +226,7 @@ class PLS_Partials_Get_Listings_Ajax {
                             <a class="more-link" href="<?php echo PLS_Plugin_API::get_property_url($listing['id']); ?>">View Property Details</a>
                             <?php echo PLS_Plugin_API::placester_favorite_link_toggle(array('property_id' => $listing['id'])); ?>
                         </div>
-                        <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => $listing['rets']['aname'] , 'office_name' => $listing['rets']['oname'])); ?>
+                        <?php PLS_Listing_Helper::get_compliance(array('context' => 'inline_search', 'agent_name' => $listing['rets']['aname'] , 'office_name' => $listing['rets']['oname']), 'office_phone' => PLS_Format::phone($listing['contact'['phone']])); ?>
                     </div>
                 </div>
             </div>
