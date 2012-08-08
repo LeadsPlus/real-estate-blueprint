@@ -111,8 +111,7 @@ class PLS_Partial_Get_Listings {
             $listing_html = '';
 
             if(WP_DEBUG !== true) {
-                $cache_id = $args;
-                $cache_id['listing_id'] = $listing_data['id'];
+                $cache_id = array('context' => $context, 'listing_id' => $listing_data['id']);
                 if($cached_listing_html = $listing_cache->get($cache_id)) {
                     $listing_html = $cached_listing_html;
                 }
