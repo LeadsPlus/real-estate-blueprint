@@ -111,9 +111,11 @@ class PLS_Partial_Get_Listings {
             $listing_html = '';
 
             if(WP_DEBUG !== true) {
-              if($cached_listing_html = $listing_cache->get($listing_data)) {
-                $listing_html = $cached_listing_html;
-              }
+                $cache_id = $args;
+                $cache_id['listing_id'] = $listing_data['id'];
+                if($cached_listing_html = $listing_cache->get($cache_id)) {
+                    $listing_html = $cached_listing_html;
+                }
             }
 
             if(empty($listing_html)) {
