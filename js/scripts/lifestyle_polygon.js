@@ -1,5 +1,6 @@
 function Lifestyle_Polygon ( params ) {
 	this.map = params.map || alert('You need to give the lifestyle object a map');
+	this.select_poi_id = params.select_poi_id || '#lifestyle_select_poi';
 }
 
 Lifestyle_Polygon.prototype.init = function () {
@@ -34,6 +35,7 @@ Lifestyle_Polygon.prototype.init = function () {
 }
 
 Lifestyle_Polygon.prototype.search_places = function () {
+	var that = this;
 	this.map.show_loading();
 	var location = this.get_location();
 	console.log(location);
@@ -42,7 +44,9 @@ Lifestyle_Polygon.prototype.search_places = function () {
 		this.map.geocode(location.address, function ( results, status ) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				// we win
-				console.log(results);				
+				var point = results[0].geometry.location;
+				that.map.map.setCenter(point);
+				that.search_callback(point );
 			} else {
 				// we lost
 			}
@@ -65,6 +69,14 @@ Lifestyle_Polygon.prototype.search_callback = function (new_point) {
 	request.location = '' + new_point.lat() + ',' + new_point.lng();
 	request.radius = jQuery('.location_select select.radius').val();
 	request.types = this.get_form_items();
+	console.log('this is the request object')
+	console.log(request);
+	if (!request.types || request.types == "") {
+		that.show_select_poi();
+		that.map.hide_loading();
+		return false;
+	};
+	console.log('here');
 	jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
 		
 		if (data.places) {
@@ -92,10 +104,12 @@ Lifestyle_Polygon.prototype.search_callback = function (new_point) {
 		}
 
 		if (that.map.markers.length > 0 ) {
-			that.map.hide_loading();
 			that.map.hide_empty();
 			that.map.center();
+		} else {
+			that.map.show_empty();
 		}
+		that.map.hide_loading();
 		
 	}, 'json');
 }
@@ -132,4 +146,12 @@ Lifestyle_Polygon.prototype.update_lifestyle_location_selects = function () {
 	var location_type = jQuery('#lifestyle_form_wrapper select[name="location"]').val();
 	jQuery('.location_select_wrapper').hide();
 	jQuery('.location_select_wrapper select.' + location_type).parent().show().find('.chzn-container').css('width', '150px');
+}
+
+Lifestyle_Polygon.prototype.show_select_poi = function () {
+	jQuery(this.select_poi_id).fadeIn();
+}
+
+Lifestyle_Polygon.prototype.hide_select_poi = function () {
+	jQuery(this.select_poi_id).fadeOut();	
 }
