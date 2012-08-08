@@ -150,7 +150,7 @@ class PLS_Partials_Get_Listings_Ajax {
         }
 
         $cache = new PLS_Cache('list');
-        if ($transient = $cache->get($defaults)) {
+        if ($transient = $cache->get(array_merge($defaults, is_array($args) ? $args : array($args)))) {
             $transient['sEcho'] = $_POST['sEcho'];
             echo json_encode($transient);
             die();
@@ -184,7 +184,8 @@ class PLS_Partials_Get_Listings_Ajax {
         $listings_cache = new PLS_Cache('Listing Thumbnail');
 
         foreach ($api_response['listings'] as $key => $listing) {
-          if(!($item_html = $listings_cache->get(array('id' => $listing['id'])))) {
+          $cache_id = array('context' => $context, 'listing_id' => $listing['id']);
+          if(!($item_html = $listings_cache->get($cache_id))) {
             if (empty($listing['images'])) {
                 $listing['images'][0] = array('url' => $placeholder_img);
             }
