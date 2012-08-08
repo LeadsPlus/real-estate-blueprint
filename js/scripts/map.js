@@ -239,8 +239,8 @@ Map.prototype.create_marker = function ( marker_options ) {
 	var infowindow = new google.maps.InfoWindow({content: marker_options.content});
 	this.infowindows.push(infowindow);
 
-	google.maps.event.addListener(marker, 'click', function() {
-		if ( marker.listing.id ) {
+	google.maps.event.addListener(marker, 'click', marker_options.click || function() {
+		if ( marker.listing ) {
 			that.marker_click( marker.listing.id );	
 		}
 		
