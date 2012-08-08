@@ -7,13 +7,16 @@ Filters.prototype.init = function ( params ) {
 	this.map = params.map || false;
 	this.listings = params.listings || false;
 	this.class = params.class || 'pls_search_form_listings';
+
+	console.log('The class of this elemenet is: ' + this.class);
 	
-	if (params.listeners) {
-		this.listeners.elements = params.listeners.elements || this.filter.class + ', #sort_by, #sort_dir'
-		this.listeners.events = params.listeners.events || 'change submit';	
+	if (params.listener) {
+		this.listener.elements = params.listeners.elements || this.filter.class + ', #sort_by, #sort_dir'
+		this.listener.events = params.listeners.events || 'change submit';	
 	} else {
-		this.listeners.elements = this.class + ', #sort_by, #sort_dir'
-		this.listeners.events = 'change submit';	
+		this.listener = {};
+		this.listener.elements = this.class + ', #sort_by, #sort_dir'
+		this.listener.events = 'change submit';	
 	}
 }
 
@@ -26,9 +29,8 @@ Filters.prototype.listeners = function (callback) {
 }
 
 Filters.prototype.get_values = function () {
-	
 	var result = [];
-	jQuery.each(jQuery(this.listeners.elements).serializeArray(), function(i, field) {
+	jQuery.each(jQuery(this.listener.elements).serializeArray(), function(i, field) {
 		result.push({'name' : field.name, 'value' : field.value});
     });
 	return result;
