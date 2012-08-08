@@ -7,12 +7,11 @@ Filters.prototype.init = function ( params ) {
 	this.map = params.map || false;
 	this.listings = params.listings || false;
 	this.class = params.class || 'pls_search_form_listings';
-
-	console.log('The class of this elemenet is: ' + this.class);
 	
 	if (params.listener) {
-		this.listener.elements = params.listeners.elements || this.filter.class + ', #sort_by, #sort_dir'
-		this.listener.events = params.listeners.events || 'change submit';	
+		this.listener = {};
+		this.listener.elements = params.listener.elements || this.class + ', #sort_by, #sort_dir'
+		this.listener.events = params.listener.events || 'change submit';	
 	} else {
 		this.listener = {};
 		this.listener.elements = this.class + ', #sort_by, #sort_dir'
