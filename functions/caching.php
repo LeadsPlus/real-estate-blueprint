@@ -13,7 +13,7 @@ class PLS_Cache {
 
 	function __construct ($type = 'general') {
 		$this->offset = get_option('pls_cache_offset', 0);
-		$this->$type = $type;
+		$this->type = $type;
 	}
 
 	function get () {
