@@ -79,6 +79,13 @@ Lifestyle_Polygon.prototype.search_callback = function (new_point) {
 	console.log('here');
 	jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
 		
+		that.map.clear();
+
+		if (data.places.length <= 0) {
+			that.map.show_empty();
+			return;
+		}
+		
 		if (data.places) {
 			for (var i = 0; i < data.places.length; i++) {						           
 				that.map.create_marker({position: new google.maps.LatLng(data.places[i].geometry.location.lat, data.places[i].geometry.location.lng), content:data.places[i].name, icon: 'https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.3|0|FF8429|13|b' }, this);
@@ -101,6 +108,7 @@ Lifestyle_Polygon.prototype.search_callback = function (new_point) {
 			for (var i = data.listings.length - 1; i >= 0; i--) {
 				that.map.create_listing_marker( data.listings[i] );
 			};
+			that.map.center_on_markers();
 		}
 
 		if (that.map.markers.length > 0 ) {
