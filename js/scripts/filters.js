@@ -21,7 +21,7 @@ Filters.prototype.init = function ( params ) {
 
 Filters.prototype.listeners = function (callback) {
 	var that = this;
-	jQuery(this.listeners.elements).live(this.listeners.events, function(event) {
+	jQuery(this.listener.elements).live(this.listener.events, function(event) {
         event.preventDefault();
         that.listings.get();
     });	
