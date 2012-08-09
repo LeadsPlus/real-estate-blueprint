@@ -76,7 +76,7 @@ class PLS_Route {
 	// direct copy + paste of WP's locate function
 	// modified to alternate searching for the dev's
 	// templates, then look for blueprints.
-	function router ($template_names, $load = false, $require_once = true, $include_vars = false) {
+	function router ($template_names, $load = false, $require_once = true, $include_vars = false, $cache_type = self::CACHE_NONE) {
 
 		PLS_Debug::add_msg('[[Hit Router!]] Searching for: ');
 		PLS_Debug::add_msg($template_names);
@@ -212,7 +212,7 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
 		//
-		return self::router('header.php', true, null, null, self::CACHE_PER_PAGE);
+		return self::router('header.php', true, null, null, self::CACHE_NONE);
 	}
 
 	function handle_sidebar() {
