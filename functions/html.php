@@ -34,13 +34,29 @@ function pls_h( $tag ) {
             if ( true === $value )
                 $value = $key;
 
-            $tag .= ' ' . $key . '="' . esc_attr( $value ) . '"';
+            if(function_exists('filter_var')) {
+                // For performance. If filter_var is available (PHP >= 5.2),
+                // use that & iconv to deal with any special characters.
+                $safe_value = iconv("UTF-8", "UTF-8//IGNORE", $value);
+                $safe_value = filter_var($safe_value, FILTER_SANITIZE_SPECIAL_CHARS);
+                $safe_value = apply_filters( 'attribute_escape', $safe_value, $value );
+                $tag .= ' ' . $key . '="' . $safe_value . '"';
+            }
+            else {
+                // Fallback to Scribu's original, slower approach, calling WP's esc_attr()
+                $tag .= ' ' . $key . '="' . esc_attr( $value ) . '"';
+            }
         }
     } else {
         list( $closing ) = explode( ' ', $tag, 2 );
     }
 
-    if ( in_array( $closing, array( 'area', 'base', 'basefont', 'br', 'hr', 'input', 'img', 'link', 'meta' ) ) ) {
+    static $SELF_CLOSING_TAGS = null;
+    if($SELF_CLOSING_TAGS === null) {
+        $SELF_CLOSING_TAGS = array_flip(array('area', 'base', 'basefont', 'br', 'hr', 'input', 'img', 'link', 'meta'));
+    }
+
+    if ( isset($SELF_CLOSING_TAGS[$closing]) ) {
         return "<{$tag} />";
     }
 
@@ -48,6 +64,7 @@ function pls_h( $tag ) {
 
     return "<{$tag}>{$content}</{$closing}>";
 }
+
 
 /**
  * Creates an anchor html tag with given parameters.

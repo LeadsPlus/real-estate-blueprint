@@ -48,7 +48,17 @@ class PLS_Partials {
 
     // wrapper for get cities api request
     static function get_cities( $args ) {
-        return PLS_Partial_Get_Cities::init($args);
+        if(WP_DEBUG !== true) {
+            $cache = new PLS_Cache('Listings Search Form');
+            if($form = $cache->get($args)) {
+                return $form;
+            }
+        }
+        $form = PLS_Partials_Listing_Search_Form::init($args);
+        if(WP_DEBUG !== true) {
+            $cache->save($form);
+        }
+        return $form;
       
     }
     
