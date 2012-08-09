@@ -38,7 +38,7 @@ function pls_h( $tag ) {
                 // For performance. If filter_var is available (PHP >= 5.2),
                 // use that & iconv to deal with any special characters.
                 $safe_value = iconv("UTF-8", "UTF-8//IGNORE", $value);
-                filter_var($safe_value, FILTER_SANITIZE_SPECIAL_CHARS);
+                $safe_value = filter_var($safe_value, FILTER_SANITIZE_SPECIAL_CHARS);
                 $safe_value = apply_filters( 'attribute_escape', $safe_value, $value );
                 $tag .= ' ' . $key . '="' . $safe_value . '"';
             }
