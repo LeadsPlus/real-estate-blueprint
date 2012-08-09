@@ -7,7 +7,7 @@ class PLS_Map_Polygon extends PLS_Map {
 		self::make_markers($listings, $marker_args, $map_args);
 		extract($map_args, EXTR_SKIP);
 		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
-	    $polygon_html = '';
+		$polygon_html = '';
 		if(WP_DEBUG !== true) {
 			$cache = new PLS_Cache('Map Polygon');
 			// Doesn't seem to always be an array
