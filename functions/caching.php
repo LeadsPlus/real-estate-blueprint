@@ -19,7 +19,7 @@ class PLS_Cache {
 	function get () {
 		
 		// Just ignore caching for admins
-		if(is_admin()) {
+		if(is_admin() || is_admin_bar_showing()) {
 			return false;
 		}
 
@@ -35,7 +35,7 @@ class PLS_Cache {
 
 	public function save ($result, $duration = 172800) {
 		// Just ignore caching for admins
-		if ($this->transient_id && !is_admin()) {
+		if ($this->transient_id && !is_admin() && !is_admin_bar_showing()) {
 			set_transient($this->transient_id, $result , $duration);
 		}
 	}
