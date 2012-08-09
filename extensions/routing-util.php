@@ -212,7 +212,7 @@ class PLS_Route {
 		// being set as a request and then looping
 		// the routing table.
 		//
-		return self::router('header.php', true, null, null, self::CACHE_NONE);
+		return self::router('header.php', true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	function handle_sidebar() {
