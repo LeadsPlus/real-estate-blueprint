@@ -34,7 +34,6 @@ function pls_get_option ($option, $default = '') {
     }
 
     if ($option !== '') {
-        return of_get_option($option, $default);
         if(isset($pls_options[$option])) {
             return $pls_options[$option];
         }
