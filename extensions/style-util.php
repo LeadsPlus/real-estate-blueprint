@@ -31,7 +31,7 @@ class PLS_Style {
             $cache_args = array();
             if ($options = $cache->get($cache_args)) {
                 PLS_Debug::add_msg('[[Theme options cache hit!]] Returning cached options');
-                array_merge(self::$styles, $options);
+                self::$styles = array_merge(self::$styles, $options);
                 return;
             }
         }
