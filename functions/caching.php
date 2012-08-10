@@ -50,7 +50,7 @@ class PLS_Cache {
 	public static function invalidate() {
 		$cache = new self();
 		$cache->offset += 1;
-		if($cache->offset > 9) {
+		if($cache->offset > 99) {
 			$cache->offset = 0;
 		}
 
