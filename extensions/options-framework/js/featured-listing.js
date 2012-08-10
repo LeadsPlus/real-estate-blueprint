@@ -27,7 +27,12 @@ jQuery(document).ready(function($) {
                 aoData.push( { "name": "action", "value" : "list_options"} );
             }
 		});
-		featured_datatable = $('#datatable_featured_listings').dataTable();
+		featured_datatable = $('#datatable_featured_listings').dataTable({
+			"aoColumns" : [
+                { sWidth: '300px' },    //address
+                { sWidth: '50px' },    //remove
+            ]
+		});
 	}
 
 	$('#pls_add_option_listing').live('click', function(event) {
@@ -36,5 +41,10 @@ jQuery(document).ready(function($) {
 		var cells = $(this).parent().parent().children('td');
 		var address = $(cells[0]).html();
 		featured_datatable.fnAddData( [address, '<a id="pls_remove_option_listing" href="#" ref="' + listing_id + '">Remove</a>']);
+	});
+
+	$('#pls_remove_option_listing').live('click', function(event) {
+		event.preventDefault();
+		featured_datatable.fnDeleteRow($(this).closest("tr").get(0));
 	});
 });
