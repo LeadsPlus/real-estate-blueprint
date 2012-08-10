@@ -48,13 +48,11 @@ class PLS_Cache {
 	}
 
 	public static function invalidate() {
-		$cache = new self();
-		$cache->offset += 1;
-		if($cache->offset > 99) {
-			$cache->offset = 0;
+		$offset = get_option('pls_cache_offset', 0) + 1;
+		if($offset > 99) {
+			$offset = 0;
 		}
-
-		update_option('pls_cache_offset', $cache->offset);
+		update_option('pls_cache_offset', $offset);
 	}
 
 //end class
