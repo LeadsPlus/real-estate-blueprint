@@ -59,6 +59,7 @@ function optionsframework_load_sanitization() {
 
 function optionsframework_init() {
 	// Include the required files
+	require_once dirname( __FILE__ ) . '/featured-listing.php';
 	require_once dirname( __FILE__ ) . '/options-interface.php';
 	require_once dirname( __FILE__ ) . '/options-medialibrary-uploader.php';
 	if ( $optionsfile = locate_template( array('options.php') ) ) {
