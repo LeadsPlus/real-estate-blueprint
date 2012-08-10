@@ -1,5 +1,8 @@
 jQuery(document).ready(function($) {
 
+	var search_datatable;
+	var featured_datatable;
+
 	$('.featured-listings').live('click', function(event) {
 		event.preventDefault();
 		$('#featured-listing-wrapper').dialog({width: 850});
@@ -10,13 +13,11 @@ jQuery(document).ready(function($) {
 
 	function init_featured_picker() {
 		//load two datatables
-		$('#datatable_search_results').dataTable({
-			"bFilter": false,
+		search_datatable = $('#datatable_search_results').dataTable({
             "bProcessing": true,
             "bServerSide": true,
             "sServerMethod": "POST",
             'sPaginationType': 'full_numbers',
-            'sDom': '<"dataTables_top"pi>lftpir',
             "sAjaxSource": ajaxurl, 
             "aoColumns" : [
                 { sWidth: '300px' },    //address
@@ -26,9 +27,14 @@ jQuery(document).ready(function($) {
                 aoData.push( { "name": "action", "value" : "list_options"} );
             }
 		});
-		$('#datatable_featured_listings').dataTable();
+		featured_datatable = $('#datatable_featured_listings').dataTable();
 	}
 
-
-	
+	$('#pls_add_option_listing').live('click', function(event) {
+		event.preventDefault();
+		var listing_id = $(this).attr('ref');
+		var cells = $(this).parent().parent().children('td');
+		var address = $(cells[0]).html();
+		featured_datatable.fnAddData( [address, '<a id="pls_remove_option_listing" href="#" ref="' + listing_id + '">Remove</a>']);
+	});
 });

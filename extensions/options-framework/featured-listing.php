@@ -56,7 +56,7 @@ class PLS_Featured_Listing_Option {
 		$listings = array();
 		foreach ($api_response['listings'] as $key => $listing) {
 			$listings[$key][] = $listing['location']['address'];
-			$listings[$key][] = '<a class="red" id="pls_delete_listing" href="#" ref="'.$listing['id'].'">Add</a></div>';
+			$listings[$key][] = '<a id="pls_add_option_listing" href="#" ref="'.$listing['id'].'">Add</a>';
 		}
 
 		// Required for datatables.js to function properly.
