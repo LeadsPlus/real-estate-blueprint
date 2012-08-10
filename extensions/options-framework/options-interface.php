@@ -530,6 +530,7 @@ function optionsframework_fields() {
 }
 
 function pls_generate_featured_listings_ui ($value, $val, $option_name, $iterator = false, $for_slideshow = false) {
+	return PLS_Featured_Listing_Option::init( array( 'value' => $value, 'val' => $val, 'option_name' => $option_name, 'iterator' => $iterator, 'for_slideshow' => $for_slideshow) );
 	//return PLS_Featured_Listing_Option::load( array( 'value' => $value, 'val' => $val, 'option_name' => $option_name, 'iterator' => $iterator, 'for_slideshow' => $for_slideshow) );
 }
 
