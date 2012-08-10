@@ -10,13 +10,13 @@
 		<div class="datatable-wrapper">
 
 			<!-- Search Results -->
-			<div class="search-results">
-
+			<div id="search-results" class="results">
+				<?php PLS_Featured_Listing_Option::get_datatable(); ?>
 			</div>
 
 			<!-- Featured Listings -->
-			<div class="featured-lisitngs">
-			
+			<div id="featured-lisitngs" class="results">
+				<?php PLS_Featured_Listing_Option::get_datatable(); ?>
 			</div>
 
 		</div>

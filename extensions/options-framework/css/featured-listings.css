@@ -1,0 +1,14 @@
+#featured-listing-wrapper .results {
+	width: 400px;
+	float: left;
+}
+#featured-listing-wrapper .featured-listing-wrapper {
+	float: left;
+}
+#featured-listing-wrapper .datatable-wrapper {
+	float: left;
+	margin-top: 10px;
+}
+#featured-listing-wrapper .results#search-results {
+	margin-right: 10px;
+}

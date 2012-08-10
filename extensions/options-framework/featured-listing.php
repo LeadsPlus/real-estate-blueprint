@@ -20,6 +20,13 @@ class PLS_Featured_Listing_Option {
 		echo ob_get_clean();	
 	}
 
+	function get_datatable ( $params = array() ) {
+		ob_start();
+			extract( $params );
+			include( trailingslashit( PLS_OPTRM_DIR ) . 'views/featured-listings-datatable.php' );
+		echo ob_get_clean();	
+	}
+
 }
 
 /*
