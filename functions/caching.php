@@ -1,6 +1,7 @@
 <?php 
 
 add_action('init', 'PLS_Options_Save_Flush');
+add_action('switch_theme', array('PLS_Cache', 'invalidate'));
 
 class PLS_Cache {
 
