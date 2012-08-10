@@ -27,7 +27,7 @@ class PLS_Javascript_Widget extends WP_Widget {
         $search_form_filter_string .= 'context=' . apply_filters('pls_widget_javascript_context', 'javascript_widget');
    
         echo $before_widget;
-        if (!empty($title)) {
+        if (!$title) {
             echo "<h3>" . $title . "</h3>";
         }
         echo $javascript_url;
@@ -61,7 +61,7 @@ class PLS_Javascript_Widget extends WP_Widget {
 
         /** Define the default argument array. */
         $arg_defaults = array(
-            'title' => '',
+            'title' => false,
             'before_title' => '<h3>',
             'after_title' => '</h3>',
             'before_widget' => '<section id="pls-javascript-3" class="widget pls-javascript widget-pls-javascript">',
