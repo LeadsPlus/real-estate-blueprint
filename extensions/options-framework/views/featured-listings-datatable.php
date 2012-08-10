@@ -1,4 +1,4 @@
-<table id="placester_listings_list" class="widefat post fixed placester_properties" cellspacing="0">
+<table id="<?php echo $dom_id ?>" class="widefat post fixed placester_properties" cellspacing="0">
     <thead>
       <tr>
         <th><span>Address</span></th>
