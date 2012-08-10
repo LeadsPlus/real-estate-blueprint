@@ -37,6 +37,12 @@ function pls_register_widgets() {
 	/** Load the Placester Listings widget. */
 	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/listings.php' );
 
+	/** Load the Placester Listings widget. */
+	require_once( trailingslashit( PLS_FUNCTIONS_DIR ) . 'widgets/javascript.php' );
+
+	/* Register each of the widgets. */
+	register_widget( 'PLS_Javascript_Widget' );
+
 	/* Register each of the widgets. */
 	register_widget( 'PLS_Widget_Agent' );
 
