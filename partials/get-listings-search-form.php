@@ -284,18 +284,25 @@ class PLS_Partials_Listing_Search_Form {
           $user_price_end = pls_get_option('pls-option-price-max');
           $user_price_inc = pls_get_option('pls-option-price-inc');
 
+
+          $form_options['max_price'] = array();
+          $form_options['min_price'] = array();
           if (is_numeric($user_price_start) && is_numeric($user_price_end) && is_numeric($user_price_inc)) {
-              $range = range($user_price_start, $user_price_end, $user_price_inc);    
-              $form_options['min_price'] = array();
-              foreach ($range as $price_value) {
+              $min_range = range($user_price_start, $user_price_end, $user_price_inc);    
+              foreach ($min_range as $price_value) {
                   $form_options['min_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
+              }
+
+              $max_range = range($user_price_end, $user_price_start, $user_price_inc);    
+              foreach ($max_range as $price_value) {
+                  $form_options['max_price'][$price_value] = PLS_Format::number($price_value, array('abbreviate' => false));
               }
           }   
 
           /** Set the maximum price options array. */
-          $form_options['max_price'] = array_flip($form_options['min_price']);
-          arsort($form_options['max_price']);
-          $form_options['max_price'] = array_flip($form_options['max_price']);
+          // $form_options['max_price'] = array_flip($form_options['min_price']);
+          // arsort($form_options['max_price']);
+          // $form_options['max_price'] = array_flip($form_options['max_price']);
 
 
       // Price for Rentals 
