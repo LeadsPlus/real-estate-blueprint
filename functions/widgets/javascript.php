@@ -39,7 +39,7 @@ class PLS_Javascript_Widget extends WP_Widget {
     function update($new_instance, $old_instance){
         $instance = $old_instance;
         $instance['title'] = strip_tags(stripslashes($new_instance['title']));
-        $instance['javascript_url'] = strip_tags($new_instance['javascript_url'], "<a><p><script><div><span><section><scr'+'ipt>");
+        $instance['javascript_url'] = preg_replace('/<\?.*?(\?>|$)/', '',strip_tags($new_instance['javascript_url'], "<a><p><script><div><span><section><scr'+'ipt>"));
 
         return $instance;
     }
