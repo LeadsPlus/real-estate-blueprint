@@ -1,6 +1,10 @@
 <?php 
-
+PLS_Featured_Listing_Option::register();
 class PLS_Featured_Listing_Option {
+
+	function register () {
+		add_action('wp_ajax_list_options', array(__CLASS__, 'get_listings' ));
+	}
 
 	function init ( $params = array() ) {
 		return '<button class="featured-listings">Pick featured listings</button>';
@@ -25,6 +29,45 @@ class PLS_Featured_Listing_Option {
 			extract( $params );
 			include( trailingslashit( PLS_OPTRM_DIR ) . 'views/featured-listings-datatable.php' );
 		echo ob_get_clean();	
+	}
+
+	function get_listings () {
+		$response = array();
+		//exact addresses should be shown. 
+		$_POST['address_mode'] = 'exact';
+
+		// Sorting
+		$columns = array('location.address');
+		$_POST['sort_by'] = $columns[$_POST['iSortCol_0']];
+		$_POST['sort_type'] = $_POST['sSortDir_0'];
+		
+		// text searching on address
+		$_POST['location']['address'] = @$_POST['sSearch'];
+		$_POST['location']['address_match'] = 'like';
+
+		// Pagination
+		$_POST['limit'] = $_POST['iDisplayLength'];
+		$_POST['offset'] = $_POST['iDisplayStart'];		
+		
+		// Get listings from model
+		$api_response = PL_Listing::get($_POST);
+		
+		// build response for datatables.js
+		$listings = array();
+		foreach ($api_response['listings'] as $key => $listing) {
+			$listings[$key][] = $listing['location']['address'];
+			$listings[$key][] = '<a class="red" id="pls_delete_listing" href="#" ref="'.$listing['id'].'">Add</a></div>';
+		}
+
+		// Required for datatables.js to function properly.
+		$response['sEcho'] = $_POST['sEcho'];
+		$response['aaData'] = $listings;
+		$response['iTotalRecords'] = $api_response['total'];
+		$response['iTotalDisplayRecords'] = $api_response['total'];
+		echo json_encode($response);
+
+		//wordpress echos out a 0 randomly. die prevents it.
+		die();
 	}
 
 }
