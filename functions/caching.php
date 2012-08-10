@@ -23,7 +23,7 @@ class PLS_Cache {
 			return false;
 		}
 
-		$arg_hash = md5(http_build_query(func_get_args()));
+		$arg_hash = rawToShortMD5(MD5_85_ALPHABET, md5(http_build_query(func_get_args()), true));
 		$this->transient_id = 'pl_' . $this->type . $this->offset . '_' . $arg_hash;
         $transient = get_transient($this->transient_id);
         if ($transient) {
@@ -141,4 +141,35 @@ class PLS_Widget_Cache {
 
 		}
 	}
+}
+
+
+/* Functions for converting between notations and short MD5 generation.
+ * No license (public domain) but backlink is always welcome :)
+ * By Proger_XP. http://proger.i-forge.net/Short_MD5
+ * Usage: rawToShortMD5(MD5_85_ALPHABET, md5($str, true))
+ * (passing true as the 2nd param to md5 returns raw binary, not a hex-encoded 32-char string)
+ */
+define('MD5_24_ALPHABET', '0123456789abcdefghijklmnopqrstuvwxyzABCDE');
+define('MD5_85_ALPHABET', '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()"|;:?\/\'[]<>');
+
+function RawToShortMD5($alphabet, $raw) {
+  $result = '';
+  $length = strlen(DecToBase($alphabet, 2147483647));
+
+  foreach (str_split($raw, 4) as $dword) {
+    $dword = ord($dword[0]) + ord($dword[1]) * 256 + ord($dword[2]) * 65536 + ord($dword[3]) * 16777216;
+    $result .= str_pad(DecToBase($alphabet, $dword), $length, $alphabet[0], STR_PAD_LEFT);
+  }
+
+  return $result;
+}
+
+function DecToBase(&$alphabet, $dword) {
+  $rem = fmod($dword, strlen($alphabet));
+  if ($dword < strlen($alphabet)) {
+    return $alphabet[$rem];
+  } else {
+    return DecToBase($alphabet, ($dword - $rem) / strlen($alphabet)).$alphabet[$rem];
+  }
 }
