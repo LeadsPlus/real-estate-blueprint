@@ -23,7 +23,8 @@ class PLS_Cache {
 			return false;
 		}
 	
-		$arg_hash = rawToShortMD5(MD5_85_ALPHABET, md5(http_build_query(func_get_args()), true));
+		$func_args = func_get_args();
+		$arg_hash = rawToShortMD5(MD5_85_ALPHABET, md5(http_build_query( $func_args ), true));
 		$this->transient_id = 'pl_' . $this->type . $this->offset . '_' . $arg_hash;
         $transient = get_transient($this->transient_id);
         if ($transient) {
