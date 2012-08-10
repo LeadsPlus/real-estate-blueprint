@@ -523,7 +523,7 @@ function optionsframework_fields() {
 			$output .= '<div class="clear"></div></div></div>'."\n";
 		}
 	}
-	$output .= PLS_Featured_Listing_Option::load( array( 'value' => $value, 'val' => $val, 'option_name' => $option_name, 'iterator' => $iterator, 'for_slideshow' => $for_slideshow) );
+	$output .= PLS_Featured_Listing_Option::load( array( 'value' => $value, 'val' => $val, 'option_name' => $option_name, 'iterator' => isset($iterator) ? $iterator : false, 'for_slideshow' => $for_slideshow) );
     $output .= '</div>';
 
     return array($output,$menu);

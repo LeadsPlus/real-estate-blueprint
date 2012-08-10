@@ -1,4 +1,12 @@
-				<div class="featured_listings_options">
+<div style="display:none">
+	<div id="featured-listing-wrapper">
+		<h3>Hey</h3>
+	</div>
+</div>
+
+
+
+<!-- 				<div class="featured_listings_options">
 					<div class="featured-listing-form-city">
 						<label>City</label>
 						<select name="location[locality]">
@@ -142,4 +150,4 @@
 					</div>
 					<div class="clear"></div>
 				</div>
-			</div>
+			</div> -->
