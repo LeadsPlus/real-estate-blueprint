@@ -93,6 +93,7 @@ jQuery(document).ready(function($) {
     		var calling_id = '#' + $('#save-featured-listings').attr('class');
             listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
             var option_name = $(listings_container).attr('id');
+            var option_id = $(listings_container).attr('ref');
 
             var rows = $(this).find('td');
     		var address = $(rows[0]).html();
@@ -102,7 +103,7 @@ jQuery(document).ready(function($) {
                 // featured_listings.push({'address' : address, 'listing_id': id});  
                 featured_listings += '<li>';
                 featured_listings += '<div id="pls-featured-text">' + address + '</div>';
-                featured_listings += '<input type="hidden" name="' + option_name + '[slideshow-featured-listings][' + id + ']=" value="' + address + '">';
+                featured_listings += '<input type="hidden" name="' + option_name + '[' + option_id + '][' + id + ']=" value="' + address + '">';
                 featured_listings += '</li>';
             }
 

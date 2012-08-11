@@ -3,7 +3,7 @@
 		<button class="featured-listings button" id="<?php echo $params['value']['id'] ?>">Pick featured listings</button>
 	</div>
 	
-	<div class="featured-listings" id="<?php echo $params['option_name'] ?>">
+	<div class="featured-listings" id="<?php echo $params['option_name'] ?>" ref="<?php echo $params['value']['id'] ?>">
 		<?php if ( is_array($params['val']) ): ?>
 			<ul>
 				<?php foreach ($params['val'] as $id => $address): ?>
