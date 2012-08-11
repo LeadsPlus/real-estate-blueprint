@@ -7,31 +7,9 @@ class PLS_Featured_Listing_Option {
 	}
 
 	function init ( $params = array() ) {
-		//pls_dump($params);
 		ob_start();
-		?>
-			<div class="featured-listings-wrapper">
-				<button class="featured-listings button" id="<?php echo $params['value']['id'] ?>">Pick featured listings</button>
-				
-				<div class="featured-listings" id="<?php echo $params['option_name'] ?>">
-					<?php if ( is_array($params['val']) ): ?>
-						<ul>
-							<?php foreach ($params['val'] as $id => $address): ?>
-							<li>
-								<div id="pls-featured-text" ref="<?php echo $id ?>"><?php echo $address ?></div>
-								<input type="hidden" name="<?php echo $params['option_name'] . '[' . $params['value']['id'] . '][' . $id . ']' ?>=" value="<?php echo $address ?>">
-							</li>
-							<?php endforeach ?>
-						</ul>	
-					<?php else: ?>
-						<p>You haven't set any featured listings yet. Currently, a random selection of listings are being displayed until you pick some. If you previously picked listings, and now they are missing, it's because you (or your MLS), has marked them inactive, sold, rented, or they've been deleted.</p>
-					<?php endif ?>
-					
-				</div>
-				
-			</div>
-			
-		<?php
+			extract( $params );
+			include( trailingslashit( PLS_OPTRM_DIR ) . 'views/featured-listings-inline.php' );
 		return ob_get_clean();
 	}
 
