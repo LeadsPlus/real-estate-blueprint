@@ -3,10 +3,13 @@ jQuery(document).ready(function($) {
 	var search_datatable;
 	var featured_datatable;
     init_featured_picker();
+
+    var dialogWidth = 850;
+    $('#featured-listing-wrapper').dialog({autoOpen: false,width: dialogWidth,position: [($(window).width() / 2) - (dialogWidth / 2), 50]});
 	
     $('.featured-listings').live('click', function(event) {
 		event.preventDefault();
-		$('#featured-listing-wrapper').dialog({width: 850});
+        $('#featured-listing-wrapper').dialog('open');
 		
         var calling_button_id = $(this).attr('id');
 
