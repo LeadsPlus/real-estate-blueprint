@@ -1,6 +1,7 @@
 #featured-listing-wrapper .results {
 	width: 400px;
 	float: left;
+	margin-top: 10px;
 }
 #featured-listing-wrapper .featured-listing-wrapper {
 	float: left;
@@ -11,4 +12,15 @@
 }
 #featured-listing-wrapper .results#search-results {
 	margin-right: 10px;
+}
+
+.dataTables_filter {
+	float: right;
+}
+.dataTables_length {
+	width: 160px;
+	float: left;
+}
+#datatable_featured_listings {
+	margin-top:10px;
 }
