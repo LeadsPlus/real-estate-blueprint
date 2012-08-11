@@ -21,7 +21,7 @@ class PLS_Featured_Listing_Option {
 						<ul>
 							<?php foreach ($params['val'] as $iterator => $listing): ?>
 							<li style="float:left; list-style-type: none;">
-								<div id="pls-featured-text">4 Dartmouth Cir Pembroke MA</div>
+								<div id="pls-featured-text" ref="4fce37e909416345e80022fe">4 Dartmouth Cir Pembroke MA</div>
 								<input type="hidden" name="columbus[slideshow-featured-listings][4fce37e909416345e80022fe]=" value="4 Dartmouth Cir Pembroke MA"></li>
 							<?php endforeach ?>
 							

@@ -12,6 +12,17 @@ jQuery(document).ready(function($) {
 
         //id of the save button in the dialog box
         $('#save-featured-listings').attr('class', calling_button_id);
+
+        var listings_container = $(this).closest('.featured-listings-wrapper').find('div.featured-listings ul li');
+        featured_datatable.fnClearTable();
+        $(listings_container).each(function(event) {
+            console.log(this);
+            var address = $(this).children('div#pls-featured-text').html();
+            var listing_id = $(this).children('div#pls-featured-text').attr('ref');
+            featured_datatable.fnAddData( [address, '<a id="pls_remove_option_listing" href="#" ref="' + listing_id + '">Remove</a>']);
+        });
+        console.log(listings_container);
+
 	});
 
 
