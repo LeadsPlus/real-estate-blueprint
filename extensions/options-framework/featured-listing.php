@@ -11,10 +11,7 @@ class PLS_Featured_Listing_Option {
 		ob_start();
 		?>
 			<div class="featured-listings-wrapper">
-				<div class="head">
-					<h3>Featured Listings</h3>
-					<button class="featured-listings" id="<?php echo $params['value']['id'] ?>">Pick featured listings</button>
-				</div>
+				<button class="featured-listings button" id="<?php echo $params['value']['id'] ?>">Pick featured listings</button>
 				
 				<div class="featured-listings" id="<?php echo $params['option_name'] ?>">
 					<?php if ( is_array($params['val']) ): ?>
