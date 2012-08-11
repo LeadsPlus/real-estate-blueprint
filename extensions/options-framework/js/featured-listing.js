@@ -2,11 +2,16 @@ jQuery(document).ready(function($) {
 
 	var search_datatable;
 	var featured_datatable;
-
-	$('.featured-listings').live('click', function(event) {
+    init_featured_picker();
+	
+    $('.featured-listings').live('click', function(event) {
 		event.preventDefault();
 		$('#featured-listing-wrapper').dialog({width: 850});
-		init_featured_picker();
+		
+        var calling_button_id = $(this).attr('id');
+
+        //id of the save button in the dialog box
+        $('#save-featured-listings').attr('class', calling_button_id);
 	});
 
 
@@ -27,7 +32,7 @@ jQuery(document).ready(function($) {
                 aoData.push( { "name": "action", "value" : "list_options"} );
                 // aoData.push( { "name": "sSearch", "value" : $('input#address_search').val() })
                 aoData = options_filters(aoData);
-                console.log(aoData);
+                // console.log(aoData);
             }
 		});
 		featured_datatable = $('#datatable_featured_listings').dataTable({
@@ -70,16 +75,25 @@ jQuery(document).ready(function($) {
     }
 
     function save_options () {
-    	var featured_listings = [];
+    	var featured_listings = '';
     	$('#datatable_featured_listings tr').each(function(event) {
-    		var rows = $(this).find('td');
+    		var calling_id = '#' + $('#save-featured-listings').attr('class');
+            var listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
+            var option_name = $(listings_container).attr('id');
+
+            var rows = $(this).find('td');
     		var address = $(rows[0]).html();
     		var id = $(rows[1]).find('a').attr('ref');
-    		featured_listings.push({'address' : address, 'listing_id': id});
-    		console.log(this);
+            if (address) {
+                // featured_listings.push({'address' : address, 'listing_id': id});  
+                featured_listings += '<li>';
+                featured_listings += '<div id="pls-featured-text">' + address + '</div>';
+                featured_listings += '<input type="hidden" name="' + option_name + '[slideshow-featured-listings][' + id + ']=" value="' + address + '">';
+                featured_listings += '</li>';
+            }
+            $(listings_container).html(featured_listings);
+            $('#featured-listing-wrapper').dialog('close');
     	});
-
     	console.log(featured_listings);
     }
-
 });

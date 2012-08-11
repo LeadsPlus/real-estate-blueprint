@@ -1,6 +1,6 @@
 <div style="display:none">
 	<div id="featured-listing-wrapper">
-
+		<button id="save-featured-listings">Save</button>
 		<!-- filters wrapper -->
 		<div class="filter-wrapper">
 			<h3>Search Filters</h3>
@@ -26,6 +26,6 @@
 			</div>
 
 		</div>
-		<button id="save-featured-listings">Save</button>
+		
 	</div>
 </div>
