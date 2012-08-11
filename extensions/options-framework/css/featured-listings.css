@@ -18,9 +18,17 @@
 	float: right;
 }
 .dataTables_length {
-	width: 160px;
-	float: left;
+	display: none;
 }
+.dataTables_wrapper {
+	position: relative;
+}
+.dataTables_processing {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
 #datatable_featured_listings {
 	margin-top:10px;
 }

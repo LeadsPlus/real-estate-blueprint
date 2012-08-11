@@ -35,8 +35,8 @@ jQuery(document).ready(function($) {
 		search_datatable = $('#datatable_search_results').dataTable({
             "bProcessing": true,
             "bServerSide": true,
+            "bFilter" : false,
             "sServerMethod": "POST",
-            'sPaginationType': 'full_numbers',
             "sAjaxSource": ajaxurl, 
             "aoColumns" : [
                 { sWidth: '260px' },    //address
@@ -50,6 +50,7 @@ jQuery(document).ready(function($) {
             }
 		});
 		featured_datatable = $('#datatable_featured_listings').dataTable({
+            "bFilter" : false,
 			"aoColumns" : [
                 { sWidth: '300px' },    //address
                 { sWidth: '50px' },    //remove
