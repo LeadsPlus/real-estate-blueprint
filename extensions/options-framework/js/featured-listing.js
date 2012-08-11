@@ -2,6 +2,7 @@ jQuery(document).ready(function($) {
 
 	var search_datatable;
 	var featured_datatable;
+    var max_choices = false;
     init_featured_picker();
 
     var dialogWidth = 850;
@@ -12,6 +13,10 @@ jQuery(document).ready(function($) {
         $('#featured-listing-wrapper').dialog('open');
 		
         var calling_button_id = $(this).attr('id');
+
+        //so the slideshow picker only chooses 1 listing
+        listings_container = $('button#'+calling_button_id).closest('.featured-listings-wrapper').find('div.featured-listings');
+        max_choices = $(listings_container).attr('data-max');
 
         //id of the save button in the dialog box
         $('#save-featured-listings').attr('class', calling_button_id);
@@ -63,7 +68,12 @@ jQuery(document).ready(function($) {
 		var listing_id = $(this).attr('ref');
 		var cells = $(this).parent().parent().children('td');
 		var address = $(cells[0]).html();
-		featured_datatable.fnAddData( [address, '<a id="pls_remove_option_listing" href="#" ref="' + listing_id + '">Remove</a>']);
+        if (max_choices && featured_datatable.fnGetData().length >= max_choices) {
+            alert("You can only add one listing to this slide. Remove the listing you have to add another");
+        } else {
+            featured_datatable.fnAddData( [address, '<a id="pls_remove_option_listing" href="#" ref="' + listing_id + '">Remove</a>']);    
+        }
+		
 	});
 
 	$('#pls_remove_option_listing').live('click', function(event) {
@@ -94,10 +104,18 @@ jQuery(document).ready(function($) {
         var featured_listings = '';
         featured_listings += '<ul>';
     	$('#datatable_featured_listings tr').each(function(event) {
-    		var calling_id = '#' + $('#save-featured-listings').attr('class');
+    		var calling_id = 'button#' + $('#save-featured-listings').attr('class');
             listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
+            console.log(listings_container);
             var option_name = $(listings_container).attr('id');
-            var option_id = $(listings_container).attr('ref');
+            var iterator = $(listings_container).attr('rel');
+            console.log(iterator);
+            if (iterator) {
+                var option_id = $(listings_container).attr('ref') + '][' + iterator;
+            } else {
+                var option_id = $(listings_container).attr('ref');    
+            }
+            
 
             var rows = $(this).find('td');
     		var address = $(rows[0]).html();
@@ -113,6 +131,10 @@ jQuery(document).ready(function($) {
 
     	});
         featured_listings += '</ul>';
+        
+        console.log(listings_container);
+        console.log(featured_listings);
+
         $(listings_container).html(featured_listings);
         $('#featured-listing-wrapper').dialog('close');
     }

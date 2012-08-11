@@ -7,6 +7,7 @@ class PLS_Featured_Listing_Option {
 	}
 
 	function init ( $params = array() ) {
+		// pls_dump($params);
 		ob_start();
 			extract( $params );
 			include( trailingslashit( PLS_OPTRM_DIR ) . 'views/featured-listings-inline.php' );
