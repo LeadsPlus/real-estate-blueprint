@@ -86,15 +86,18 @@ jQuery(document).ready(function($) {
     }
 
     function save_options () {
-    	var featured_listings = '';
+    	var listings_container;
+        var featured_listings = '';
+        featured_listings += '<ul>';
     	$('#datatable_featured_listings tr').each(function(event) {
     		var calling_id = '#' + $('#save-featured-listings').attr('class');
-            var listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
+            listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
             var option_name = $(listings_container).attr('id');
 
             var rows = $(this).find('td');
     		var address = $(rows[0]).html();
     		var id = $(rows[1]).find('a').attr('ref');
+
             if (address) {
                 // featured_listings.push({'address' : address, 'listing_id': id});  
                 featured_listings += '<li>';
@@ -102,9 +105,10 @@ jQuery(document).ready(function($) {
                 featured_listings += '<input type="hidden" name="' + option_name + '[slideshow-featured-listings][' + id + ']=" value="' + address + '">';
                 featured_listings += '</li>';
             }
-            $(listings_container).html(featured_listings);
-            $('#featured-listing-wrapper').dialog('close');
+
     	});
-    	console.log(featured_listings);
+        featured_listings += '</ul>';
+        $(listings_container).html(featured_listings);
+        $('#featured-listing-wrapper').dialog('close');
     }
 });
