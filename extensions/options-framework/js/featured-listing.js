@@ -25,6 +25,9 @@ jQuery(document).ready(function($) {
             ], 
             "fnServerParams": function ( aoData ) {
                 aoData.push( { "name": "action", "value" : "list_options"} );
+                // aoData.push( { "name": "sSearch", "value" : $('input#address_search').val() })
+                aoData = options_filters(aoData);
+                console.log(aoData);
             }
 		});
 		featured_datatable = $('#datatable_featured_listings').dataTable({
@@ -47,4 +50,18 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 		featured_datatable.fnDeleteRow($(this).closest("tr").get(0));
 	});
+
+	$('#options-filters').live('change', function(event) {
+        event.preventDefault();
+        search_datatable.fnDraw();
+    });
+
+
+    function options_filters (aoData) {
+        $.each($('#options-filters').serializeArray(), function(i, field) {
+            aoData.push({"name" : field.name, "value" : field.value});
+        });
+        return aoData;
+    }
+
 });

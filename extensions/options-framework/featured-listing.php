@@ -55,7 +55,7 @@ class PLS_Featured_Listing_Option {
 		// build response for datatables.js
 		$listings = array();
 		foreach ($api_response['listings'] as $key => $listing) {
-			$listings[$key][] = $listing['location']['address'];
+			$listings[$key][] = $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region']; 
 			$listings[$key][] = '<a id="pls_add_option_listing" href="#" ref="'.$listing['id'].'">Add</a>';
 		}
 
