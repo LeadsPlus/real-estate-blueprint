@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
 		featured_datatable.fnDeleteRow($(this).closest("tr").get(0));
 	});
 
-	$('#options-filters').live('change', function(event) {
+	$('#options-filters').live('change submit', function(event) {
         event.preventDefault();
         search_datatable.fnDraw();
     });

@@ -45,7 +45,7 @@ class PLS_Featured_Listing_Option {
 		$_POST['sort_type'] = $_POST['sSortDir_0'];
 		
 		// text searching on address
-		$_POST['location']['address'] = @$_POST['sSearch'];
+		// $_POST['location']['address'] = @$_POST['sSearch'];
 		$_POST['location']['address_match'] = 'like';
 
 		// Pagination
