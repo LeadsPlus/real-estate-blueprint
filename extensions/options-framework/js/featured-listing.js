@@ -20,8 +20,8 @@ jQuery(document).ready(function($) {
             'sPaginationType': 'full_numbers',
             "sAjaxSource": ajaxurl, 
             "aoColumns" : [
-                { sWidth: '300px' },    //address
-                { sWidth: '50px' },    //add
+                { sWidth: '260px' },    //address
+                { sWidth: '100px' },    //add
             ], 
             "fnServerParams": function ( aoData ) {
                 aoData.push( { "name": "action", "value" : "list_options"} );
