@@ -56,12 +56,30 @@ jQuery(document).ready(function($) {
         search_datatable.fnDraw();
     });
 
+    $('#save-featured-listings').live('click', function(event) {
+    	event.preventDefault();
+    	save_options();
+    });
+
 
     function options_filters (aoData) {
         $.each($('#options-filters').serializeArray(), function(i, field) {
             aoData.push({"name" : field.name, "value" : field.value});
         });
         return aoData;
+    }
+
+    function save_options () {
+    	var featured_listings = [];
+    	$('#datatable_featured_listings tr').each(function(event) {
+    		var rows = $(this).find('td');
+    		var address = $(rows[0]).html();
+    		var id = $(rows[1]).find('a').attr('ref');
+    		featured_listings.push({'address' : address, 'listing_id': id});
+    		console.log(this);
+    	});
+
+    	console.log(featured_listings);
     }
 
 });

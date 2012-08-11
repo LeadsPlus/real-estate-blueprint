@@ -26,6 +26,6 @@
 			</div>
 
 		</div>
-
+		<button id="save-featured-listings">Save</button>
 	</div>
 </div>
