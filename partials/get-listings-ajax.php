@@ -184,7 +184,7 @@ class PLS_Partials_Get_Listings_Ajax {
         $listings_cache = new PLS_Cache('Listing Thumbnail');
 
         foreach ($api_response['listings'] as $key => $listing) {
-          $cache_id = array('context' => $context, 'listing_id' => $listing_data['id']);
+          $cache_id = array('context' => $context, 'listing_id' => $listing['id']);
           if(!($item_html = $listings_cache->get($cache_id))) {
             if (empty($listing['images'])) {
                 $listing['images'][0] = array('url' => $placeholder_img);
