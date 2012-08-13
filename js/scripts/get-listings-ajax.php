@@ -59,7 +59,7 @@
         }
 
         function custom_total_results (ajax_response) {
-            $('.<?php echo $search_class ?> #pls_num_results').html(ajax_response.iTotalDisplayRecords);
+            $('#pls_num_results').html(ajax_response.iTotalDisplayRecords);
         }
 
         function update_favorites_through_cache () {
