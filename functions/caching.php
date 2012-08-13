@@ -18,13 +18,14 @@ class PLS_Cache {
 	}
 
 	function get () {
-		
+
 		// Just ignore caching for admins
 		if(is_admin() || is_admin_bar_showing()) {
 			return false;
 		}
 
-		$arg_hash = rawToShortMD5(MD5_85_ALPHABET, md5(http_build_query(func_get_args()), true));
+		$function_args = func_get_args();
+		$arg_hash = rawToShortMD5(MD5_85_ALPHABET, md5(http_build_query($function_args), true));
 		$this->transient_id = 'pl_' . $this->type . $this->offset . '_' . $arg_hash;
         $transient = get_transient($this->transient_id);
         if ($transient) {
