@@ -20,6 +20,7 @@ jQuery(document).ready(function($) {
 
         //id of the save button in the dialog box
         $('#save-featured-listings').attr('class', calling_button_id);
+        $('#save-featured-listings').attr('rel', $(this).attr('rel'));
 
         var listings_container = $(this).closest('.featured-listings-wrapper').find('div.featured-listings ul li');
         featured_datatable.fnClearTable();
@@ -88,7 +89,8 @@ jQuery(document).ready(function($) {
 
     $('#save-featured-listings').live('click', function(event) {
     	event.preventDefault();
-    	save_options();
+        var iterator = $(this).attr('rel') || false;
+    	save_options( iterator );
     });
 
 
@@ -99,16 +101,22 @@ jQuery(document).ready(function($) {
         return aoData;
     }
 
-    function save_options () {
+    function save_options ( iterator ) {
     	var listings_container;
         var featured_listings = '';
         featured_listings += '<ul>';
+        console.log(iterator);
+        if ( iterator ) {
+            var calling_id = 'button#' + $('#save-featured-listings').attr('class') + '[rel="' + iterator + '"]';    
+        } else {
+            var calling_id = 'button#' + $('#save-featured-listings').attr('class');    
+        }
+        listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings').get(0);
     	$('#datatable_featured_listings tr').each(function(event) {
-    		var calling_id = 'button#' + $('#save-featured-listings').attr('class');
-            listings_container = $(calling_id).closest('.featured-listings-wrapper').find('div.featured-listings');
-            console.log(listings_container);
+    		
             var option_name = $(listings_container).attr('id');
-            var iterator = $(listings_container).attr('rel');
+            var iterator = $(listings_container).attr('rel') || false;
+            console.log('here');
             console.log(iterator);
             if (iterator) {
                 var option_id = $(listings_container).attr('ref') + '][' + iterator;
@@ -116,13 +124,11 @@ jQuery(document).ready(function($) {
                 var option_id = $(listings_container).attr('ref');    
             }
             
-
             var rows = $(this).find('td');
     		var address = $(rows[0]).html();
     		var id = $(rows[1]).find('a').attr('ref');
 
             if (address) {
-                // featured_listings.push({'address' : address, 'listing_id': id});  
                 featured_listings += '<li>';
                 featured_listings += '<div id="pls-featured-text">' + address + '</div>';
                 featured_listings += '<input type="hidden" name="' + option_name + '[' + option_id + '][' + id + ']=" value="' + address + '">';
@@ -132,9 +138,6 @@ jQuery(document).ready(function($) {
     	});
         featured_listings += '</ul>';
         
-        console.log(listings_container);
-        console.log(featured_listings);
-
         $(listings_container).html(featured_listings);
         $('#featured-listing-wrapper').dialog('close');
     }
