@@ -44,6 +44,12 @@ class PLS_Featured_Listing_Option {
 		$columns = array('location.address');
 		$_POST['sort_by'] = $columns[$_POST['iSortCol_0']];
 		$_POST['sort_type'] = $_POST['sSortDir_0'];
+		if ( isset( $_POST['agency_only'] ) && $_POST['agency_only'] == 'on' ) {
+			$_POST['agency_only'] = 1;
+		}
+		if ( isset( $_POST['non_import'] ) && $_POST['non_import'] == 'on' ) {
+			$_POST['non_import'] = 1;
+		}
 		
 		// text searching on address
 		// $_POST['location']['address'] = @$_POST['sSearch'];

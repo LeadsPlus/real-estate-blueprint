@@ -52,6 +52,16 @@
 			<input type="text" name="metadata[max_price]">
 		</div>
 
+		<div class="featured-listing-form-max-price">
+			<label>Non-MLS Listings</label>
+			<input type="checkbox" name="non_import">
+		</div>
+
+		<div class="featured-listing-form-max-price">
+			<label>My Offices's Listings</label>
+			<input type="checkbox" name="agency_only">
+		</div>
+
 	</div>
 	<input class="button" type="submit" value="Search">
 </form>
