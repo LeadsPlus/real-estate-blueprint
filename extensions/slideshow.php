@@ -16,6 +16,10 @@ PLS_Slideshow::init();
 
 class PLS_Slideshow {
 
+    public static $listings_to_delete = array();
+    public static $listings_to_save = array();
+    public static $option_id = '';
+
     /**
      * Initializes the slideshow.
      */
@@ -109,12 +113,16 @@ class PLS_Slideshow {
                 //if the dev allows user input, get a list of the stytles
                 if ($allow_user_slides && $user_slides_header_id) {
                     $slides = pls_get_option($user_slides_header_id);
+                    self::$option_id  = $slides();
                     foreach ($slides as $index => $slide) {
                         switch ($slide['type']) {
                             case 'listing':
                                 unset($slide['html'], $slide['image'], $slide['type'], $slide['link']);
                                 $property_id = key($slide);
                                 $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => array($property_id)));
+                                if (!empty($api_response['listings']) && $api_response['listings'][0]['id'] === false ) {
+                                    self::$listings_to_delete[] = $property_id;
+                                }
                                 if ($api_response['total'] == '1') {
                                     $listing = $api_response['listings'][0];
                                     $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
@@ -152,6 +160,7 @@ class PLS_Slideshow {
                     }
                 } else {
                     if ($featured_option_id) {
+                        self::$option_id = $featured_option_id;
                         $api_response = PLS_Listing_Helper::get_featured($featured_option_id);
                     } 
 
@@ -161,6 +170,13 @@ class PLS_Slideshow {
 
                     $listings = $api_response['listings'];
                     foreach ($listings as $index => $listing) {
+
+                        if ($listing['id'] === false ) {
+                            self::$listings_to_delete[] = $listing['id'];
+                        } else {
+                            self::$listings_to_save[] = $listing['id'];
+                        }
+
                         $listing_url = PLS_Plugin_API::get_property_url( $listing['id'] );
                         
                         /** Overwrite the placester url with the local url. */
@@ -280,6 +296,7 @@ class PLS_Slideshow {
 		$js = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_js', $context ), '_', 'pre', false ), $js, $html, $data, $context, $context_var );
         $full_slideshow = apply_filters( pls_get_merged_strings( array( 'pls_slideshow', $context ), '_', 'pre', false ), $css . $html . $js, $html, $js, $data, $context, $context_var, $args );
         $cache->save($full_slideshow);
+        self::delete_listings();
         return $full_slideshow;
     }
 
@@ -320,4 +337,20 @@ class PLS_Slideshow {
 
         return false;
     }
+
+    function delete_listings () {
+        // pls_dump(self::$listings_to_delete, self::$listings_to_save, self::$option_id);
+        $config = get_option( 'optionsframework' );
+        $options = get_option( $config['id'] );
+        if ($options[self::$option_id]) {
+            foreach ($options[self::$option_id] as $id => $address) {
+                if ( !in_array($id, self::$listings_to_save) ) {
+                    unset($options[self::$option_id][$id]);
+                }
+            }
+            update_option( $config['id'], $options );
+        }
+    }
+
+//end of class
 }
