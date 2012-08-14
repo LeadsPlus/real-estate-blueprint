@@ -45,7 +45,8 @@ jQuery(document).ready(function($) {
             "sServerMethod": "POST",
             "sAjaxSource": ajaxurl, 
             "aoColumns" : [
-                { sWidth: '260px' },    //address
+                { sWidth: '200px' },    //address
+                { sWidth: '60px' },    //address
                 { sWidth: '100px' },    //add
             ], 
             "fnServerParams": function ( aoData ) {
@@ -53,13 +54,13 @@ jQuery(document).ready(function($) {
                 // aoData.push( { "name": "sSearch", "value" : $('input#address_search').val() })
                 aoData = options_filters(aoData);
                 // console.log(aoData);
-            }
+            } 
 		});
 		featured_datatable = $('#datatable_featured_listings').dataTable({
             "bFilter" : false,
 			"aoColumns" : [
                 { sWidth: '300px' },    //address
-                { sWidth: '50px' },    //remove
+                { sWidth: '60px' },    //remove
             ]
 		});
 	}
@@ -141,4 +142,15 @@ jQuery(document).ready(function($) {
         $(listings_container).html(featured_listings);
         $('#featured-listing-wrapper').dialog('close');
     }
+
+    $('#listing_image').live('mouseover', function () {
+        $('#image-preview').remove();
+        var content = '<div id="image-preview"><img src="' + $(this).attr('href') + '" /></div>';
+        $('body').append(content);
+    });
+
+    $('#listing_image').live('mouseout', function () {
+        $('#image-preview').remove();
+    });
+
 });

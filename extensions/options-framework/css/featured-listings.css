@@ -83,3 +83,11 @@
 	font-size: 16px;
 	list-style-type: disc;
 }
+            
+
+#image-preview {
+	position: fixed;
+	z-index: 9999;
+	top: 50px;
+	right: 25px;
+}

@@ -15,14 +15,14 @@
 			<div id="search-results" class="results">
 				<h3>Search Results</h3>
 				<p>Available listings. Use the "Make Featured" link to featured them.</p>
-				<?php PLS_Featured_Listing_Option::get_datatable( array('dom_id' => 'datatable_search_results') ); ?>
+				<?php PLS_Featured_Listing_Option::get_datatable( array('dom_id' => 'datatable_search_results', 'image_preview' => true, 'add_remove' => 'Add') ); ?>
 			</div>
 
 			<!-- Featured Listings -->
 			<div id="featured-lisitngs" class="results">
 				<h3>Featured Listings</h3>
 				<p>These listings will appear as featured. Use the "Remove" link to remove them</p>
-				<?php PLS_Featured_Listing_Option::get_datatable( array( 'dom_id' => 'datatable_featured_listings' ) ); ?>
+				<?php PLS_Featured_Listing_Option::get_datatable( array( 'dom_id' => 'datatable_featured_listings', 'add_remove' => 'Remove') ); ?>
 			</div>
 
 		</div>

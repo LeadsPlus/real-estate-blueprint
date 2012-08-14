@@ -177,6 +177,7 @@ function optionsframework_load_scripts() {
 	wp_enqueue_script('color-picker', OPTIONS_FRAMEWORK_DIRECTORY.'js/colorpicker.js', array('jquery'));
 	wp_enqueue_script('options-custom', OPTIONS_FRAMEWORK_DIRECTORY.'js/options-custom.js', array('jquery'));
 	wp_enqueue_script('featured-listing', OPTIONS_FRAMEWORK_DIRECTORY.'js/featured-listing.js', array('jquery'));
+	wp_enqueue_script('qtip', OPTIONS_FRAMEWORK_DIRECTORY.'js/jquery.simpletip-1.3.1.min.js', array('jquery'));
 
 	wp_register_script( 'datatable', trailingslashit( PLS_JS_URL ) . 'libs/datatables/jquery.dataTables.js' , array( 'jquery'), NULL, true );
     wp_enqueue_script( 'datatable' );

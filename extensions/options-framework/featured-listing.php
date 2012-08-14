@@ -66,6 +66,7 @@ class PLS_Featured_Listing_Option {
 		$listings = array();
 		foreach ($api_response['listings'] as $key => $listing) {
 			$listings[$key][] = $listing['location']['address'] . ', ' . $listing['location']['locality'] . ' ' . $listing['location']['region']; 
+			$listings[$key][] = !empty($listing['images']) ? '<a id="listing_image" href="' . $listing['images'][0]['url'] . '"  style="display: inline-block">Preview</a>' :  'No Image'; 
 			$listings[$key][] = '<a id="pls_add_option_listing" href="#" ref="'.$listing['id'].'">Make Featured</a>';
 		}
 
