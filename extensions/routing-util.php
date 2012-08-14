@@ -204,7 +204,7 @@ class PLS_Route {
 	//
 
 	function handle_dynamic() {
-		return self::router(self::$request, true);
+		return self::router(self::$request, true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	function handle_header() {
@@ -226,7 +226,7 @@ class PLS_Route {
             $sidebars[] = 'sidebar-' . $item;
         }
         $sidebars[] = 'sidebar.php';
-		return self::router($sidebars, true);
+		return self::router($sidebars, true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	function handle_default_sidebar() {
@@ -238,7 +238,7 @@ class PLS_Route {
             $sidebars[] = 'default-sidebar-' . $item;
         }
         $sidebars[] = 'default-sidebar.php';
-		return self::router($sidebars, true);
+		return self::router($sidebars, true, null, null, self::CACHE_PER_PAGE);
 	}
 
 	function handle_footer() {
