@@ -110,6 +110,8 @@ class PLS_Slideshow {
                 if ($allow_user_slides && $user_slides_header_id) {
                     $slides = pls_get_option($user_slides_header_id);
                     foreach ($slides as $index => $slide) {
+                      if (!empty($slide['image']) || !empty($slide['html'])) {
+                        pls_dump($slide);
                         switch ($slide['type']) {
                             case 'listing':
                                 unset($slide['html'], $slide['image'], $slide['type'], $slide['link']);
@@ -148,7 +150,8 @@ class PLS_Slideshow {
                                     <?php 
                                 $data['captions'][] = trim( ob_get_clean() );
                                 break;
-                        }
+                        } // end switch
+                      } // end conditional
                     }
                 } else {
                     if ($featured_option_id) {
