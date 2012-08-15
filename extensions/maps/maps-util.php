@@ -360,7 +360,7 @@ class PLS_Map {
 				
 				
 			</script>
->>>>>>> mlb-featselector
+
 		<?php
 		echo ob_get_clean();
 	}
