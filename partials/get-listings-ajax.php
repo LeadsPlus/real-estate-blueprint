@@ -62,7 +62,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'search_query' => $_POST,
             'table_id' => 'placester_listings_list',
             'show_sort' => true,
-            'map_js_var' => 'pls_google_map'
+            'map_js_var' => 'pls_google_map',
             'search_class' => 'pls_search_form_listings'
         );
 
