@@ -1,6 +1,6 @@
 <div style="display:none">
 	<div id="featured-listing-wrapper">
-		<button id="save-featured-listings" style="">Save</button>
+		<button id="save-featured-listings">Save</button>
 		<!-- filters wrapper -->
 		<div class="filter-wrapper">
 			<h3>Search Filters</h3>
@@ -21,7 +21,7 @@
 			<!-- Featured Listings -->
 			<div id="featured-lisitngs" class="results">
 				<h3>Featured Listings</h3>
-				<p>These listings will appear as featured. Use the "Remove" link to remove them</p>
+				<p>Featured listings. Use the "Remove" link to unfeature them.</p>
 				<?php PLS_Featured_Listing_Option::get_datatable( array( 'dom_id' => 'datatable_featured_listings', 'add_remove' => 'Remove') ); ?>
 			</div>
 
