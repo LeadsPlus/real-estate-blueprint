@@ -63,6 +63,7 @@ class PLS_Partials_Get_Listings_Ajax {
             'table_id' => 'placester_listings_list',
             'show_sort' => true,
             'map_js_var' => 'pls_google_map'
+            'search_class' => 'pls_search_form_listings'
         );
 
         /** Extract the arguments after they merged with the defaults. */
@@ -277,7 +278,7 @@ class PLS_Partials_Get_Listings_Ajax {
         //   $w3_objectcache = w3_instance('W3_ObjectCache');
         //   echo "\r\n\r\n".$w3_objectcache->_get_debug_info();
         // }
-        
+
         //wordpress echos out a 0 randomly. die prevents it.
         die();
 	}

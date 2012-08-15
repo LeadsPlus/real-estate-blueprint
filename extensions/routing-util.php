@@ -103,6 +103,7 @@ class PLS_Route {
 
 			load_template( $located, $require_once);
 
+			// Capture/cache rendered html unless we're in debug mode
 			if((WP_DEBUG !== true) && self::CACHE_PER_PAGE === $cache_type) {
 				$result = ob_get_clean();
 				$cache->save($result);
@@ -152,7 +153,7 @@ class PLS_Route {
 		if((WP_DEBUG !== true)) {
 			$cache->save($located);	
 		}
-		
+
 		return $located;
 	}
 

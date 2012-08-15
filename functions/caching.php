@@ -1,7 +1,9 @@
 <?php 
 
 add_action('init', 'PLS_Options_Save_Flush');
+
 add_action('switch_theme', array('PLS_Cache', 'invalidate'));
+
 
 class PLS_Cache {
 
@@ -18,7 +20,6 @@ class PLS_Cache {
 	}
 
 	function get () {
-
 		// Just ignore caching for admins
 		if(is_admin() || is_admin_bar_showing()) {
 			return false;
@@ -51,6 +52,7 @@ class PLS_Cache {
 	public static function invalidate() {
 		$cache = new self();
 		$cache->offset += 1;
+
 		if($cache->offset > 99) {
 			$cache->offset = 0;
 		}
@@ -144,7 +146,6 @@ class PLS_Widget_Cache {
 		}
 	}
 }
-
 
 /* Functions for converting between notations and short MD5 generation.
  * No license (public domain) but backlink is always welcome :)

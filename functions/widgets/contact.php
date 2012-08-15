@@ -129,7 +129,7 @@ class Placester_Contact_Widget extends WP_Widget {
                     <?php endif; ?>
 
                     <?php echo empty($instance['textarea_container']) ? '' : '<div class="' . $instance['textarea_container'] .'">'; ?>
-                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" tabindex="<?php echo $sidebar_pos; ?>4"></textarea>
+                    <label for="question"><?php echo $question_label; ?></label><textarea rows="5" name="question" placeholder="<?php echo $question_label; ?>" tabindex="<?php echo $sidebar_pos; ?>4"></textarea>
                     <?php echo empty($instance['textarea_container']) ? '' : '</div>'; ?>
 
                     <input type="hidden" name="id" value="<?php if(isset($data['id'])) { echo $data['id']; } ?>">

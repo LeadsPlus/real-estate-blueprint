@@ -25,6 +25,16 @@ class PLS_Style {
 
     static function get_options()
     {
+        // Cache options
+        if((WP_DEBUG !== true)) {
+            $cache = new PLS_Cache('Theme PLS Options');
+            $cache_args = array();
+            if ($options = $cache->get($cache_args)) {
+                PLS_Debug::add_msg('[[Theme options cache hit!]] Returning cached options');
+                self::$styles = array_merge(self::$styles, $options);
+                return;
+            }
+        }
 
         // Cache options
         if((WP_DEBUG !== true)) {
@@ -55,7 +65,7 @@ class PLS_Style {
         if((WP_DEBUG !== true)) {
             $cache->save(self::$styles);
         }
-        
+
     }
 
     public static function add ($options = false)

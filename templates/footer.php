@@ -43,13 +43,6 @@
 
 <?php pls_do_atomic( 'close_container' ); ?>
 
-<?php if (pls_get_option('pls-google-analytics')): ?>
-  <!-- Google Analytics -->
-  <script type="text/javascript">
-    <?php echo pls_get_option('pls-google-analytics'); ?>
-  </script>
-<?php endif; ?>
-
 <?php wp_footer(); ?>
 
 <?php pls_do_atomic( 'close_body' ); ?>
