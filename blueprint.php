@@ -199,6 +199,10 @@ class Placester_Blueprint {
         define( 'PLS_TPL_DIR', trailingslashit( PLS_DIR ) . 'templates' );
         define( 'PLS_TPL_URL', trailingslashit( PLS_URL ) . 'templates' );
 
+        // Option framework
+        define( 'PLS_OPTRM_DIR', trailingslashit( PLS_EXT_DIR ) . 'options-framework' );
+        define( 'PLS_OPTRM_URL', trailingslashit( PLS_EXT_URL ) . 'options-framework' );
+
         /** Template directory path and url */
         define( 'PLS_PAR_DIR', trailingslashit( PLS_DIR ) . 'partials' );
         define( 'PLS_PAR_URL', trailingslashit( PLS_URL ) . 'partials' );

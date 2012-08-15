@@ -42,9 +42,9 @@ function pls_get_option ($option, $default = '') {
             $pls_options[$option] = $value;
             return $value;
         }
-    } else {
-        return false;
-    }
+     } else {
+         return false;
+     }
 }
 
 /**
