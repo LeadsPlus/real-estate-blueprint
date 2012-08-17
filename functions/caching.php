@@ -3,6 +3,7 @@
 add_action('init', 'PLS_Options_Save_Flush');
 
 add_action('switch_theme', array('PLS_Cache', 'invalidate'));
+add_action('wp_ajax_user_empty_cache', array('PLS_Cache', 'invalidate'));
 
 
 class PLS_Cache {
