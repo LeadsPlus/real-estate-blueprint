@@ -112,8 +112,8 @@ class PLS_Slideshow {
 
                 //if the dev allows user input, get a list of the stytles
                 if ($allow_user_slides && $user_slides_header_id) {
-                    $slides = pls_get_option($user_slides_header_id);
-                    self::$option_id  = $slides();
+                    $slides = pls_get_option($user_slides_header_id, array() );
+                    self::$option_id  = $slides;
                     foreach ($slides as $index => $slide) {
                       if (!empty($slide['image']) || !empty($slide['html'])) {
                         // pls_dump($slide);
@@ -228,8 +228,7 @@ class PLS_Slideshow {
                 $slide = pls_h_a( $data['links'][$index], $slide, array('data-caption' => "#caption-{$index}") );
 
             $html['slides'] .= $slide;
-
-}
+        }
         /** Combine the html. */
         $html = pls_h_div(
             $html['slides'],
@@ -345,7 +344,7 @@ class PLS_Slideshow {
         // pls_dump(self::$listings_to_delete, self::$listings_to_save, self::$option_id);
         $config = get_option( 'optionsframework' );
         $options = get_option( $config['id'] );
-        if ($options[self::$option_id]) {
+        if (isset($options[self::$option_id]) && is_array($options[self::$option_id]) ) {
             foreach ($options[self::$option_id] as $id => $address) {
                 if ( !in_array($id, self::$listings_to_save) ) {
                     unset($options[self::$option_id][$id]);
