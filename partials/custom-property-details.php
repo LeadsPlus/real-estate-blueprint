@@ -8,7 +8,7 @@ class PLS_Partials_Property_Details {
 	    if($post->post_type == 'property') {
 	    	
           $html = '';
-          $listing_data = unserialize($post->post_content);
+          $listing_data = @unserialize($post->post_content);
 
           if (!$listing_data) {
 	          	// Update listing data from the API
