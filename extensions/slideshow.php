@@ -298,7 +298,7 @@ class PLS_Slideshow {
 		$js = apply_filters( pls_get_merged_strings( array( 'pls_slideshow_js', $context ), '_', 'pre', false ), $js, $html, $data, $context, $context_var );
         $full_slideshow = apply_filters( pls_get_merged_strings( array( 'pls_slideshow', $context ), '_', 'pre', false ), $css . $html . $js, $html, $js, $data, $context, $context_var, $args );
         $cache->save($full_slideshow);
-        self::delete_listings();
+        // self::delete_listings();
         return $full_slideshow;
     }
 
