@@ -299,7 +299,7 @@ class Placester_Blueprint {
 
 		/** Move the WordPress generator to a better priority. */
 		remove_action( 'wp_head', 'wp_generator' );
-		add_action( 'wp_head', 'wp_generator', 1 );
+    add_action( 'wp_head', 'wp_generator', 1 );
 
         /** Remove plugin scripts. */
         define( 'PL_NO_SCRIPTS', 100 );
