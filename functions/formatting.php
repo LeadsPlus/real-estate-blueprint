@@ -282,11 +282,14 @@ class PLS_Format {
 				}
 			}
 		}
-		foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
-      if (empty($uncur_value)) { continue; }
-			if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
-			$amenities['uncur'][$uncur_amenity] = $uncur_value;
-		}		
+		if (is_array($listing_data['uncur_data'])) {
+			foreach ($listing_data['uncur_data'] as $uncur_amenity => $uncur_value) {
+			    if (empty($uncur_value)) { continue; }
+				if (in_array($uncur_amenity, $amenities_to_remove)) { continue; }
+				$amenities['uncur'][$uncur_amenity] = $uncur_value;
+			}		
+		}
+			
 		return $amenities;
 	}
 
@@ -404,7 +407,7 @@ class PLS_Format {
 				"blc_deck_pt" => "Balcony/Deck/Patio",
 				"dryer" => "Dryer",
 				"washer" => "Washer",
-				"cons_stts" => "Construction Status",
+        "status" => "Status",
 				"appliances" => "Appliances",
 				"oid" => "Office ID",
       	"aid" => "Agent ID",

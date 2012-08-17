@@ -39,17 +39,18 @@ class PLS_Taxonomy {
 
 		//if there's a polygon, use that to get listings. Otherwise, use the name of the neighborhood
 		$polygon = PLS_Plugin_API::get_taxonomies_by_slug($subject['term']);
-		if (!is_array($polygons) && !empty($polygon[0])) {
+		if (is_array($polygon) && !empty($polygon[0])) {
 			$polygon[0]['neighborhood_polygons'] = $polygon[0]['name'];
 			$listings_raw = PLS_Plugin_API::get_polygon_listings( $polygon[0] );
-			$term['listings'] = pls_get_listings( "limit=5&context=home&neighborhood_polygons=" . $term['name'] );
+			$term['listings'] = pls_get_listings( "limit=5&context=home&neighborhood_polygons=" . $polygon[0]['name'] );
 		} else {
 			$listings_raw = PLS_Plugin_API::get_property_list("location[" . $term['api_field'] . "]=" . $term['name']);  	
 			$term['listings'] = pls_get_listings( "limit=5&context=home&request_params=location[" . $term['api_field'] . "]=" . $term['name'] );
 		}
+
 		$term['areas'] = array('locality' => array(), 'postal' => array(), 'neighborhood' => array(), 'address' => array());
 		$locality_tree = array('city' => array('postal', 'neighborhood', 'address'), 'zip' => array('neighborhood', 'address'), 'neighborhood' => array('address'), 'street' => array());
-		
+
 		$term['listings_raw'] = $listings_raw['listings'];
 
 		//assemble all the photos

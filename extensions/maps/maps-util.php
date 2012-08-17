@@ -142,8 +142,225 @@ class PLS_Map {
 		wp_enqueue_script('neighborhood', trailingslashit(PLS_JS_URL) . 'scripts/neighborhood.js');
 		wp_enqueue_script('lifestyle', trailingslashit(PLS_JS_URL) . 'scripts/lifestyle.js');
 		?>
+
 			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/map.js"></script>
 			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/status.js"></script>
+
+			<script type="text/javascript">
+
+				function get_map_bounds_for_search(map_js_var) {
+					var response = {}
+					response.vertices = [];
+					response.vertices[0] = {};
+					response.vertices[1] = {};
+					response.vertices[2] = {};
+					response.vertices[3] = {};
+
+					var bounds = map_js_var.map.getBounds();
+
+					response['vertices'][0]['lat'] = bounds.getNorthEast().lat();
+					response['vertices'][0]['lng'] = bounds.getNorthEast().lng();
+
+					response['vertices'][1]['lat'] = bounds.getNorthEast().lat();
+					response['vertices'][1]['lng'] = bounds.getSouthWest().lng();
+
+					response['vertices'][2]['lat'] = bounds.getSouthWest().lat();
+					response['vertices'][2]['lng'] = bounds.getSouthWest().lng();
+
+					response['vertices'][3]['lat'] = bounds.getSouthWest().lat();
+					response['vertices'][3]['lng'] = bounds.getNorthEast().lng();
+					return response;
+				}
+
+				function generate_verticies_inputs () {
+
+				}
+
+
+				function show_max_results_overlay () {
+					jQuery('#full_overlay').show();
+					console.log('I would show the max results overlay.')
+				}
+
+				function get_search_filters (form_class) {
+					var result = {};
+					jQuery.each(jQuery('.'+ form_class +', .sort_wrapper').serializeArray(), function(i, field) {
+						result[field.name] = field.value;
+		            });
+		            return result;
+				}
+
+				function get_listings () {
+					console.log('im getting listings');
+				}
+
+				function pls_create_polygon_listeners (polygon, map_js_var, click_type) {
+					google.maps.event.addListener(polygon,"mouseover",function(){
+						polygon.setOptions({fillOpacity: "0.9"});
+					}); 
+
+					google.maps.event.addListener(polygon,"mouseout",function(){
+						polygon.setOptions({fillOpacity: "0.4"});
+					}); 
+
+					google.maps.event.addListener(polygon,"click",function() {
+						pls_show_loading_overlay();
+						if (click_type && click_type == 'redirect') {
+							window.location.href = this.tax.permalink
+							pls_hide_loading_overlay();
+						} else {
+							var that = this;
+							request = {};
+							request.action = 'polygon_listings';
+							request.vertices = this.tax.vertices;
+							map_js_var.selected_polygon = this;
+							jQuery.post(info.ajaxurl, request, function(data, textStatus, xhr) {
+								if (data) {
+									pls_clear_markers(map_js_var);
+									for (var i = data.length - 1; i >= 0; i--) {
+										pls_create_listing_marker(data[i], map_js_var, true);
+									};
+									pls_create_polygon(that.tax.vertices,{strokeColor: '#55b429',strokeOpacity: 1.0,strokeWeight: 3, fillOpacity: 0.0}, map_js_var);
+									pls_hide_loading_overlay();
+								};
+							},'json');	
+						}
+					}); 
+				}
+
+				function pls_clear_markers (map_js_var) {
+					if (map_js_var && map_js_var.markers) {
+						for (var current_marker in map_js_var.markers) {
+	                    	map_js_var.markers[current_marker].setMap(null);
+	                    }	
+	                    map_js_var.markers = [];
+					};
+				}
+
+				function pls_clear_polygons (map_js_var) {
+					if (map_js_var && map_js_var.markers) {
+						for (var current_marker in map_js_var.polygons) {
+	                    	map_js_var.polygons[current_marker].setMap(null);
+	                    }	
+	                    map_js_var.polygons = [];
+					};
+				}
+
+				function pls_create_listing_marker (listing, map_js_var, center) {
+					var marker_details = {};
+					marker_details.latlng = new google.maps.LatLng(listing['location']['coords'][0], listing['location']['coords'][1]);
+
+					if (listing['images'] && listing['images'][0] && listing['images'][0]['url']) {
+				    	var image_url = listing['images'][0]['url'];
+				    };
+				    marker_details.content = '<div id="content">'+
+                        '<div id="siteNotice">'+'</div>'+
+                          '<h2 id="firstHeading" class="firstHeading"><a href="'+ listing['cur_data']['url'] + '">' + listing['location']['full_address'] +'</a></h2>'+
+                          '<div id="bodyContent">'+
+                            '<img width="80px" height="80px" style="float: left" src="'+image_url+'" />' +
+                            '<ul style="float: right; width: 130px">' +
+                              '<li> Beds: '+ listing['cur_data']['beds'] +'</li>' +
+                              '<li> Baths: '+ listing['cur_data']['baths'] +'</li>' +
+                              '<li> Price: '+ listing['cur_data']['price'] +'</li>' +
+                            '</ul>' +
+                          '</div>' +
+                          '<div class="viewListing" style="margin: 15px 70px; float: left; font-size: 16px; font-weight: bold;"><a href="'+listing['cur_data']['url']+'">View Details</a></div>' +
+                          '<div class="clear"></div>' +
+                        '</div>'+
+                      '</div>';
+                      pls_create_marker(marker_details, map_js_var, center);
+				}
+
+				function pls_create_marker (marker_details, map_js_var, center) {
+					if (!marker_details.icon) {
+						var marker_options = {position: marker_details.latlng};
+					} else {
+						var marker_options = {position: marker_details.latlng, icon: marker_details.icon };
+					};
+					var marker = new google.maps.Marker(marker_options);
+					var infowindow = new google.maps.InfoWindow({content: marker_details.content});
+					map_js_var.infowindows.push(infowindow);
+					google.maps.event.addListener(marker, 'click', function() {
+						for (i in map_js_var.infowindows) {
+							map_js_var.infowindows[i].setMap(null);
+						}
+						infowindow.open(map_js_var.map,marker);
+					});
+					marker.setMap(map_js_var.map);
+					map_js_var.markers.push(marker);
+					if (center) {
+						pls_center_map(map_js_var);	
+					}
+					
+				}
+
+				function pls_create_polygon (points, polygon_options, map_js_var) {
+					var coords = [];
+	        		for (var i = points.length - 1; i >= 0; i--) {
+    					coords.push(new google.maps.LatLng( points[i][0], points[i][1]));
+	        		};	
+	        		if (polygon_options) {
+	        			var polyOptions = polygon_options;
+	        			polyOptions.paths = coords;
+	        		} else {
+	        			var polyOptions = {strokeColor: '#000000',strokeOpacity: 1.0,strokeWeight: 3, paths: coords};
+	        		}
+					var neighborhood = new google.maps.Polygon(polyOptions);
+					neighborhood.setMap(map_js_var.map);
+					console.log(neighborhood);
+					map_js_var.polygons.push(neighborhood);
+				}
+
+				function pls_center_map (map_js_var) {
+					var bounds = new google.maps.LatLngBounds();
+					if (map_js_var.markers.length > 0) {
+						for (var i = map_js_var.markers.length - 1; i >= 0; i--) {
+							map_js_var.markers[i].setMap(map_js_var.map);
+							bounds.extend(map_js_var.markers[i].getPosition());
+						};
+
+				        if(typeof map_js_var.map != "undefined") {
+				        	map_js_var.map.fitBounds(bounds);
+				            google.maps.event.addListenerOnce(map_js_var.map, 'bounds_changed', function(event) {
+					            if (this.getZoom() > 15) {
+					            	this.setZoom(15);
+					            }
+				            });
+				        }
+					};
+				}	
+
+				function pls_geocode (address, map_js_var, success_callback, failed_callback, response) {
+					var geocoder = new google.maps.Geocoder();
+					var bounds = map_js_var.map.getBounds();
+				    geocoder.geocode( { 'address': address, bounds: bounds}, function(results, status) {
+				      if (status == google.maps.GeocoderStatus.OK) {
+				      	success_callback(results[0].geometry.location, response);
+				      } else {
+				      	failed_callback(status, response);
+				      }
+				    });
+				}
+
+				function pls_show_loading_overlay() {
+					jQuery('.map_wrapper #loading_overlay').show();
+				}
+
+				function pls_hide_loading_overlay() {
+					jQuery('.map_wrapper #loading_overlay').hide();	
+				}
+
+				function pls_show_empty_overlay() {
+					jQuery('.map_wrapper #empty_overlay').show();
+				}
+
+				function pls_hide_empty_overlay() {
+					jQuery('.map_wrapper #empty_overlay').hide();	
+				}
+				
+				
+			</script>
+
 		<?php
 		echo ob_get_clean();
 	}
