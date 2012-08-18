@@ -344,7 +344,7 @@ class PLS_Slideshow {
         // pls_dump(self::$listings_to_delete, self::$listings_to_save, self::$option_id);
         $config = get_option( 'optionsframework' );
         $options = get_option( $config['id'] );
-        if (isset($options[self::$option_id]) && is_array($options[self::$option_id]) ) {
+        if (!empty(self::$option_id) && isset($options[self::$option_id]) && is_array($options[self::$option_id]) ) {
             foreach ($options[self::$option_id] as $id => $address) {
                 if ( !in_array($id, self::$listings_to_save) ) {
                     unset($options[self::$option_id][$id]);
