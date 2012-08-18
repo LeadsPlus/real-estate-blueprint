@@ -9,7 +9,7 @@ class PLS_Map_Polygon extends PLS_Map {
 		wp_enqueue_script('google-maps', 'http://maps.googleapis.com/maps/api/js?sensor=false');
 		$polygon_html = '';
 		if(WP_DEBUG !== true) {
-			$cache = new PLS_Cache('Map Polygon');
+			$cache = new PL_Cache('Map Polygon');
 			// Doesn't seem to always be an array
 			if(!is_array($listings)) {
 				$listings_arr = array($listings);

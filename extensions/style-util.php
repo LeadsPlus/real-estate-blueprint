@@ -27,7 +27,7 @@ class PLS_Style {
     {
         // Cache options
         if((WP_DEBUG !== true)) {
-            $cache = new PLS_Cache('Theme PLS Options');
+            $cache = new PL_Cache('Theme PLS Options');
             $cache_args = array();
             if ($options = $cache->get($cache_args)) {
                 PLS_Debug::add_msg('[[Theme options cache hit!]] Returning cached options');

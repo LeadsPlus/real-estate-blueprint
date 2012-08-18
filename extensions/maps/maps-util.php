@@ -44,7 +44,7 @@ class PLS_Map {
 
 	private static function get_area_selectors ($map_args = array()) {
 
-			$cache = new PLS_Cache('form');
+			$cache = new PL_Cache('form');
 			if ($result = $cache->get($map_args)) {
 				return $result;
 			}

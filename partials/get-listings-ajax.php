@@ -149,7 +149,7 @@ class PLS_Partials_Get_Listings_Ajax {
           unset($defaults['search_query']['sEcho']);
         }
 
-        $cache = new PLS_Cache('list');
+        $cache = new PL_Cache('list');
         if ($transient = $cache->get($defaults)) {
             $transient['sEcho'] = $_POST['sEcho'];
             echo json_encode($transient);
@@ -181,7 +181,7 @@ class PLS_Partials_Get_Listings_Ajax {
         
         // build response for datatables.js
         $listings = array();
-        $listings_cache = new PLS_Cache('Listing Thumbnail');
+        $listings_cache = new PL_Cache('Listing Thumbnail');
 
         foreach ($api_response['listings'] as $key => $listing) {
           $cache_id = array('context' => $context, 'listing_id' => $listing['id']);
