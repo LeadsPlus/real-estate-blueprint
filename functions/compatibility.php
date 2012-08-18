@@ -149,7 +149,7 @@ class PLS_Plugin_API {
         }
 
         if(WP_DEBUG !== true) {
-            $cache = new PLS_Cache('Property URL');
+            $cache = new PL_Cache('Property URL');
             if($url = $cache->get($id)) {
                 return $url;
             }
@@ -161,7 +161,7 @@ class PLS_Plugin_API {
         /** If no exceptions were detected, return the result. */
         if ( $return ) {
             if(WP_DEBUG !== true) {
-                $cache->save($return, PLS_Cache::TTL_LOW);
+                $cache->save($return, PL_Cache::TTL_LOW);
             }
             return $return;
         }
@@ -493,7 +493,7 @@ class PLS_Plugin_API {
     static function get_listings_list( $args ) {
 
         if(WP_DEBUG !== true) {
-            $cache = new PLS_Cache('Get Listings List');
+            $cache = new PL_Cache('Get Listings List');
             if($return = $cache->get($args)) {
                 return $return;
             }
@@ -504,7 +504,7 @@ class PLS_Plugin_API {
         /** If no exceptions were detected, return the result. */
         if ( $return )  {
             if(WP_DEBUG !== true) {
-                $cache->save($return, PLS_Cache::TTL_LOW);
+                $cache->save($return, PL_Cache::TTL_LOW);
             }
             return $return;
         }
@@ -513,7 +513,7 @@ class PLS_Plugin_API {
 
     static function get_listings_details_list( $args ) {
         if(WP_DEBUG !== true) {
-            $cache = new PLS_Cache('Listings Details List');
+            $cache = new PL_Cache('Listings Details List');
             if($return = $cache->get($args)) {
                 return $return;
             }
@@ -521,7 +521,7 @@ class PLS_Plugin_API {
         $return = self::_try_for_exceptions(array("PL_Listing_Helper", "many_details"), $args, true );
         if ( $return )  {
             if(WP_DEBUG !== true) {
-                $cache->save($return, PLS_Cache::TTL_LOW);
+                $cache->save($return, PL_Cache::TTL_LOW);
             }
             return $return;
         }

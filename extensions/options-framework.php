@@ -66,7 +66,7 @@ class PLS_Options_Cache implements ArrayAccess {
     }
 
     private function __construct() {
-        $this->cache = new PLS_Cache("PLS Options");
+        $this->cache = new PL_Cache("PLS Options");
         if($options = $this->cache->get(array('options' => true))) {
             $this->pls_options = $options;
             $this->dirty = false;
@@ -81,7 +81,7 @@ class PLS_Options_Cache implements ArrayAccess {
 
     public function shutdown() {
         if($this->dirty) {
-            $this->cache->save($this->pls_options, PLS_Cache::TTL_LOW);
+            $this->cache->save($this->pls_options, PL_Cache::TTL_LOW);
         }
     }
 
