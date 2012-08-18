@@ -99,7 +99,7 @@ class PLS_Partials_Listing_Search_Form {
           $cache_id['$_POST'] = $_POST;
         }
 
-        $cache = new PLS_Cache('Search Form');
+        $cache = new PL_Cache('Search Form');
         if ($result = $cache->get($cache_id)) {
           return $result;
         }
