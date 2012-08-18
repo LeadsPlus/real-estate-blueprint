@@ -31,7 +31,7 @@ if ( !defined( 'PLS_LOAD_SCRIPTS' ) || ( defined( 'PLS_LOAD_SCRIPTS' ) && ( PLS_
         }
 
         /** Register Modernizr. Will be enqueued using 'wp_print_scripts'. */
-        wp_register_script( 'modernizr', trailingslashit( PLS_JS_URL ) . 'libs/modernizr/modernizr.min.js' , array(), '2.0.6' );
+        wp_register_script( 'modernizr', trailingslashit( PLS_JS_URL ) . 'libs/modernizr/modernizr.min.js' , array(), '2.6.1' );
 
         // declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
         wp_localize_script( 'jquery', 'info', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
