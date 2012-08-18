@@ -7,25 +7,19 @@ class PLS_Partials_Property_Details {
 		global $post;
 
 	    if($post->post_type == 'property') {
-	    	
-        // $id = get_post_meta($post->ID, 'id');
-        // if ($id) {
-        //  $api_response = PLS_Plugin_API::get_listings_details_list(array('property_ids' => $id));  
-        //  if (!empty($api_response['listings'])) {
-        //    $listing_data = $api_response['listings'][0];
-        //  }
-        // }
 
-	        $content = get_option('placester_listing_layout');
-
-
-	        if(isset($content) && $content != '') {
-	               return $content;
-	        }
-
-            $html = '';
+	         $html = '';
             
           $listing_data = unserialize($post->post_content);
+          $listing_data = false;
+          if (!$listing_data) {
+	          	// Update listing data from the API
+				$args = array('listing_ids' => array($post->post_name), 'address_mode' => 'exact');
+				$response = PL_Listing::get($args);
+				if ( !empty($response['listings']) ) {
+					$listing_data = $response['listings'][0];
+				}
+          }
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
 
 	        ob_start();
