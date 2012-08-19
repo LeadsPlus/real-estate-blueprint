@@ -138,16 +138,12 @@ class PLS_Map {
 
 	function utilities () {
 
-		ob_start();
+		// ob_start();
+		wp_enqueue_script('map-object', trailingslashit(PLS_JS_URL) . 'scripts/map.js');
+		wp_enqueue_script('status-object', trailingslashit(PLS_JS_URL) . 'scripts/status.js');
 		wp_enqueue_script('neighborhood', trailingslashit(PLS_JS_URL) . 'scripts/neighborhood.js');
 		wp_enqueue_script('lifestyle', trailingslashit(PLS_JS_URL) . 'scripts/lifestyle.js');
-		?>
-
-			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/map.js"></script>
-			<script type="text/javascript" src="<?php echo trailingslashit(PLS_JS_URL) ?>scripts/status.js"></script>
-
-		<?php
-		echo ob_get_clean();
+		// echo ob_get_clean();
 	}
 
 	static function process_defaults ($args) {
