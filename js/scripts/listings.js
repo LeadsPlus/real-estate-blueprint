@@ -6,12 +6,14 @@ function Listings ( params ) {
 	this.sSource = params.sSource || info.ajaxurl;
 	this.aoData = params.aoData || [];
 	this.active_filters = [];
+	this.single_listing = params.single_listing || false;
 }
 
 Listings.prototype.pending = false;
 
 Listings.prototype.init = function () {
 	var that = this;
+
 	if (this.filter) {
 		this.filter.listeners(function () {
 			that.update();
@@ -37,6 +39,10 @@ Listings.prototype.init = function () {
 		}
 		
 	}
+
+	if ( this.single_listing ) {
+		this.get();
+	}
 }
 
 Listings.prototype.get = function ( success ) {
@@ -44,6 +50,13 @@ Listings.prototype.get = function ( success ) {
 	if ( Listings.prototype.pending ) {
 		return;
 	};
+
+	//if there's a single listing, always return that
+	if ( this.map.type == 'single_listing' ) {
+		this.map.update( {'aaData' : [['', this.single_listing]], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} );
+		return false;
+	}
+
 	//or, if we're dealing with a polygon map and there's not a selected polygon
 	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) ) {
 		if ( this.list )

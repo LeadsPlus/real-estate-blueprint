@@ -10,6 +10,10 @@
 function Map () {}
 
 Map.prototype.init = function ( params ) {
+	if (!params)
+		alert('Your map object must have some options defined, specifically a map type');
+
+
 	//where ever you go, know who you are.
 	var that = this;
 
@@ -23,7 +27,7 @@ Map.prototype.init = function ( params ) {
 	this.dom_id = params.dom_id || 'map_canvas';
 
 	//other objects
-	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head.');
+	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head. Some notes: \n if you are creating a map on a property details page then pass your single listing to the listing object.');
 	this.polygons = params.polygons || [];
 	this.status_window = params.status_window || false;
 
@@ -83,7 +87,7 @@ Map.prototype.init = function ( params ) {
 		//sets the initial div for the map status display
 		if (that.status_window)
 			that.status_window.add_control_container();
-			console.log(that.status_window);
+			// console.log(that.status_window);
 
 		if ( that.type == 'neighborhood' ) {
 			//all neighborhoods shown
