@@ -17,7 +17,7 @@ class PLS_Route {
 	// file system.
 	function init()
 	{
-		
+	  if (current_theme_supports('pls-routing-util-templates') )  {
 		// hooks into template_routing for auto wrapping header
 		// and footer.
 		 add_filter( 'template_include', array( __CLASS__, 'routing_logic' ) );
@@ -40,6 +40,7 @@ class PLS_Route {
 		add_action( 'category_template', array( __CLASS__, 'handle_category'  ));	
 		add_action( 'comments_popup_template', array( __CLASS__, 'handle_popup_comments'  ));	
 		add_action( 'comments_template', array( __CLASS__, 'handle_comments'  ));
+	  }	
 	}
 
 	function routing_logic ($template)
