@@ -92,7 +92,7 @@ if ( ! function_exists( 'optionsframework_mlu_js' ) ) {
 
 if ( ! function_exists( 'optionsframework_medialibrary_uploader' ) ) {
 
-	function optionsframework_medialibrary_uploader( $_id, $_value, $_mode = 'full', $_desc = '', $_postid = 0, $_name = '') {
+	function optionsframework_medialibrary_uploader( $_id, $_value, $_mode = 'full', $_desc = '', $_postid = 0, $_name = '', $iterator = false) {
 	
 		$optionsframework_settings = get_option('optionsframework');
 		
@@ -106,7 +106,12 @@ if ( ! function_exists( 'optionsframework_medialibrary_uploader' ) ) {
 		$value = '';
 		$name = '';
 		
-		$id = strip_tags( strtolower( $_id ) );
+		if ($iterator == false) {
+			$id = strip_tags( strtolower( $_id ) );
+		} else {
+			$id = strip_tags( strtolower( $_id ) ) . '_' . $iterator;
+		}
+		
 		// Change for each field, using a "silent" post. If no post is present, one will be created.
 		$int = optionsframework_mlu_get_silentpost( $id );
 		
@@ -115,7 +120,9 @@ if ( ! function_exists( 'optionsframework_medialibrary_uploader' ) ) {
 			$value = $_value;
 		}
 		
-		if ($_name != '') {
+		if ($iterator !== false) {
+			$name = $option_name.'['.$_id.']['.$iterator.']['.$_name.']';
+		} elseif ($_name != '') {
 			$name = $option_name.'['.$id.']['.$_name.']';
 		}
 		else {
