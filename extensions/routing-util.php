@@ -373,6 +373,8 @@ class PLS_Route {
 			return $template;
 		} elseif ( $template = get_query_template("$type[0]_$type[1]") ) {
 			return $template;
+    } else {
+      $template = 'attachment';
     }
     
 		self::$request =  array_merge(self::$request, (array) $template);

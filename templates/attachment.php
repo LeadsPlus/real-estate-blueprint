@@ -1,5 +1,5 @@
 <div class="entry-content">
-asdfasdf
+
   <div class="entry-attachment">
     <?php if ( wp_attachment_is_image( $post->id ) ) : $att_image = wp_get_attachment_image_src( $post->id, "medium"); ?>
       <p class="attachment">
