@@ -365,7 +365,7 @@ class PLS_Route {
 	function handle_attachment() {
 		
 		global $posts;
-		
+
 		$type = explode('/', $posts[0]->post_mime_type);
 		if ( $template = get_query_template($type[0]) )
 			return $template;
@@ -373,9 +373,8 @@ class PLS_Route {
 			return $template;
 		elseif ( $template = get_query_template("$type[0]_$type[1]") )
 			return $template;
-		else
 
-		self::$request =  array_merge(self::$request, $templates);
+		self::$request =  array_merge(self::$request, (array) $template);
 	}
 
 	// hooked to handle single templates
