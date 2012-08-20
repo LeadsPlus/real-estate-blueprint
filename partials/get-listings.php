@@ -99,7 +99,7 @@ class PLS_Partial_Get_Listings {
         $listings_html = array();
         
         if(WP_DEBUG !== true) {
-          $listing_cache = new PLS_Cache('Listing');
+          $listing_cache = new PL_Cache('Listing');
         }
 
         foreach ( $listings_raw['listings'] as $listing_data ) {
@@ -197,7 +197,7 @@ class PLS_Partial_Get_Listings {
                 $listing_html = apply_filters( pls_get_merged_strings( array( 'pls_listing', $context ), '_', 'pre', false ), $listing_html, $listing_data, $request_params, $context_var );
 
                 if(WP_DEBUG !== true) {
-                  $listing_cache->save($listing_html, PLS_Cache::TTL_LOW);
+                  $listing_cache->save($listing_html, PL_Cache::TTL_LOW);
                 }
 
             }

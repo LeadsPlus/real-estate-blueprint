@@ -169,7 +169,7 @@ class PLS_Map {
 
 		$polygon_html = '';
 		if(WP_DEBUG !== true) {
-			$cache = new PLS_Cache('Map Polygon');
+			$cache = new PL_Cache('Map Polygon');
 			// Doesn't seem to always be an array
 			if(!is_array($listings)) {
 				$listings_arr = array($listings);

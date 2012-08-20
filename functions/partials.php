@@ -55,7 +55,7 @@ class PLS_Partials {
     // wrapper for listings search for content
     static function get_listings_search_form( $args ) {
         if(WP_DEBUG !== true) {
-            $cache = new PLS_Cache('Listings Search Form');
+            $cache = new PL_Cache('Listings Search Form');
             if($form = $cache->get($args)) {
                 return $form;
             }
