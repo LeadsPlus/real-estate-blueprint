@@ -367,13 +367,14 @@ class PLS_Route {
 		global $posts;
 
 		$type = explode('/', $posts[0]->post_mime_type);
-		if ( $template = get_query_template($type[0]) )
+		if ( $template = get_query_template($type[0]) ) {
 			return $template;
-		elseif ( $template = get_query_template($type[1]) )
+		} elseif ( $template = get_query_template($type[1]) ) {
 			return $template;
-		elseif ( $template = get_query_template("$type[0]_$type[1]") )
+		} elseif ( $template = get_query_template("$type[0]_$type[1]") ) {
 			return $template;
-
+    }
+    
 		self::$request =  array_merge(self::$request, (array) $template);
 	}
 
