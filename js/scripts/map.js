@@ -53,6 +53,9 @@ Map.prototype.init = function ( params ) {
 
 	//polygon settings
 	if ( this.type == 'neighborhood' ) {
+		//filter by bounds forces the datatable to render after the map is idle
+		//thats not needed here.
+		this.filter_by_bounds = false;
 		this.neighborhood = params.neighborhood || alert('If this is to be a neighborhood map, you\'ll need to give it a neighborhood object');	
 	} else if ( this.type == 'lifestyle' ) {
 		this.lifestyle = params.lifestyle || alert('If this is to be a lifestyle map, you\'ll need to give it a lifestyle object');	
