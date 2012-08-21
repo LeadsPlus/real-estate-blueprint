@@ -74,6 +74,7 @@ Neighborhood.prototype.process_neighborhood_polygon = function ( neighborhood ) 
 	polygon_options.paths = [];
 	polygon_options.label = neighborhood.name || false;
 	polygon_options.tax = neighborhood.tax || false;
+	polygon_options.permalink = neighborhood.permalink || false;
 
 	polygon_options.strokeColor = this.strokeColor || neighborhood.settings.border.color;
 	polygon_options.strokeOpacity = this.strokeOpacity || neighborhood.settings.border.opacity;
