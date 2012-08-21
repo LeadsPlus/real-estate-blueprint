@@ -28,11 +28,13 @@
                                 for (var listing in ajax_response['aaData']) {
                                     var listing_json = ajax_response['aaData'][listing][1];
                                     pls_create_listing_marker(listing_json, pls_google_map);
+
                                 }
                               }
                             }
                           };
                         //required to load the datatable
+                        pls_center_map(pls_google_map);
                        fnCallback(ajax_response);
                        update_favorites_through_cache();
                     }
