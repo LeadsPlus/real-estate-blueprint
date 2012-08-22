@@ -33,7 +33,7 @@
                               }
                             }
                           };
-                        //required to load the datatable
+                       //required to load the datatable
                        if (typeof pls_google_map !== 'undefined') { pls_center_map(pls_google_map); }
                        fnCallback(ajax_response);
                        update_favorites_through_cache();
