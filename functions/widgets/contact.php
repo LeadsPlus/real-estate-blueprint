@@ -66,7 +66,8 @@ class Placester_Contact_Widget extends WP_Widget {
       global $post;
         
         if (!empty($post) && isset($post->post_type) && $post->post_type == 'property') {
-          $data = unserialize($post->post_content);
+          $data = PL_Listing_Helper::get_listing_in_loop();
+          // $data = unserialize($post->post_content);
         } else {
           $data = array();
         }

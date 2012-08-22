@@ -3,23 +3,15 @@
 class PLS_Partials_Property_Details {
 	
 	function init ($content) {
-
+		
 		global $post;
 
 	    if($post->post_type == 'property') {
 
 	         $html = '';
             
-          $listing_data = unserialize($post->post_content);
-          $listing_data = false;
-          if (!$listing_data) {
-	          	// Update listing data from the API
-				$args = array('listing_ids' => array($post->post_name), 'address_mode' => 'exact');
-				$response = PL_Listing::get($args);
-				if ( !empty($response['listings']) ) {
-					$listing_data = $response['listings'][0];
-				}
-          }
+	         $listing_data = PL_Listing_Helper::get_listing_in_loop();
+          
 	        $listing_data['location']['full_address'] = $listing_data['location']['address'] . ' ' . $listing_data['location']['locality'] . ' ' . $listing_data['location']['region'];
 
 	        ob_start();
