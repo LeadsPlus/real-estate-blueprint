@@ -209,7 +209,7 @@ class PLS_Map {
 		return PLS_Map_Listings::listings($listings, $map_args, $marker_args);
 	}
 	function neighborhood($listings = array(), $map_args = array(), $marker_args = array(), $polygon) {
-		return PLS_Map_Neighborhood::neighborhood($listings, $map_args, $marker_args);	
+		return PLS_Map_Polygon::polygon($listings, $map_args, $marker_args);	
 	}
 	function polygon($listings = array(), $map_args = array(), $marker_args = array()) {
 		return PLS_Map_Polygon::polygon($listings, $map_args, $marker_args);	
