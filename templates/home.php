@@ -13,30 +13,22 @@
     		
     		var listing_list = new List ();
     		var map = new Map (); 
-    		var filter = new Filters ();
-            var status = new Status_Window ();
+    		// var filter = new Filters ();
     		var listings = new Listings ({
     			map: map,
-    			filter: filter,
+    			// filter: filter,
     			list: listing_list
     		});
+            // status.init({map: map, listings:listings});
             var neighborhood = new Neighborhood ({map: map,
              // slug: 'blackstone'
             });
-            // var lifestyle = new Lifestyle ({map: map});
-            // var lifestyle_polygon = new Lifestyle_Polygon ({map: map});
-
-    		filter.init({
-    			dom_id : "#another",
-    			class : ".another",
-    			list : listing_list,
-    			map : map,
-    			listings : listings
-    		});
+            var status = new Status_Window ({map: map, listings:listings});
+            
             
     		listing_list.init({
     			dom_id: '#placester_listings_list',
-    			filter : filter,
+    			// filter : filter,
     			class: '.another',
     			listings: listings,
                 map: map
@@ -54,7 +46,6 @@
                 status_window: status
             });
 
-            status.init({map: map, listings:listings});
     		listings.init();
     		
     	});
