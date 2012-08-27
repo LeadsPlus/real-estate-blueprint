@@ -70,7 +70,7 @@ Status_Window.prototype.initalize_listings = function () {
 	}
 
 	this.full = this.params.full || function () {
-		that.body = that.active_body + ' Also, things are full here!';
+		that.body = that.active_body + ' Also, things are full here! Try zooming in.';
 		that.update();
 	}
 
@@ -234,34 +234,4 @@ Status_Window.prototype.unselect_polygon = function () {
 	this.listings.get();	
 	this.map.center_on_polygons();			
 	this.on_load();
-}
-
-Status_Window.prototype.on_load = function () {
-	var that = this;
-	//set the initial state of the polygon menu
-	var initial_state = function () {
-		var content = '<div id="polygon_display_wrapper">';
-		switch ( that.map.type ) {
-			case 'listings':
-				content += '<h5>Listings Search</h5>';
-				content += '<p id="start_warning">Drag the map to refine your search</p>';
-				break;
-			case 'neighborhood':
-				content += '<h5>Neighborhood Search</h5>';
-				content += '<p id="start_warning">Click on a highlighted area to start searching</p>';
-				break;
-		}
-		content += '</div>';
-		jQuery('#' + that.dom_id).append(content);
-	}
-	
-	if ( jQuery || !google ) {
-		jQuery( function () {
-			google.maps.event.addDomListenerOnce(that.map.map, 'idle', function() {
-				initial_state();
-			});
-		});
-	} else {
-		initial_state();
-	}
 }
