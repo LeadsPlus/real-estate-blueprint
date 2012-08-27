@@ -49,7 +49,7 @@ Map.prototype.init = function ( params ) {
 	this.marker.icon = params.marker || false;
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
 
-	this.map_options = params.map_options || { zoom: this.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.RIGHT_TOP } };
+	this.map_options = params.map_options || { zoom: this.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, disableDefaultUI: true, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.RIGHT_TOP } };
 
 	//polygon settings
 	if ( this.type == 'neighborhood' ) {
