@@ -26,11 +26,17 @@ Map.prototype.init = function ( params ) {
 	this.list = params.list || false;
 	this.dom_id = params.dom_id || 'map_canvas';
 
+	//map states
+	this.is_loaded = false;
+	this.is_idle = false;
+	
+
 	//other objects
 	this.listings = params.listings || alert('You must attach a lisitngs object. Every arm needs a head. Some notes: \n if you are creating a map on a property details page then pass your single listing to the listing object.');
 	this.polygons = params.polygons || [];
 	this.status_window = params.status_window || false;
 
+	//polygon settings
 	this.polygons_verticies = [];
 	this.polygons_exclude_center = false;
 	this.selected_polygon = params.selected_polygon || false;
@@ -62,7 +68,6 @@ Map.prototype.init = function ( params ) {
 	} else if ( this.type == 'lifestyle_polygon' ) {
 		this.lifestyle_polygon = params.lifestyle_polygon || alert('If this is to be a lifestyle_polygon map, you\'ll need to give it a lifestyle_polygon object');	
 	} 
-	
 
 	// map/list interaction
 	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
@@ -87,10 +92,10 @@ Map.prototype.init = function ( params ) {
 		that.map_options.center = new google.maps.LatLng(that.lat, that.lng);
 		that.map = new google.maps.Map(document.getElementById(that.dom_id), that.map_options);
 		
-		//sets the initial div for the map status display
-		if (that.status_window)
-			that.status_window.add_control_container();
-			// console.log(that.status_window);
+		google.maps.event.addDomListenerOnce(that.map, 'idle', function () {
+			that.is_idle = true;
+			that.once_idle();
+		});
 
 		if ( that.type == 'neighborhood' ) {
 			//all neighborhoods shown
@@ -103,12 +108,23 @@ Map.prototype.init = function ( params ) {
 			that.lifestyle_polygon.init();
 		}
 
-		if (that.status_window) {
-			that.status_window.on_load();
+	}
+
+	this.once_idle = function () {
+
+		if (this.status_window) {
+			this.status_window.init();
+			this.status_window.add_control_container();
+			this.status_window.on_load();	
 		}
 	}
+
+	google.maps.event.addDomListener(window, 'load', function () {
+		that.is_loaded = true;
+	});
+
 	//build map
-	if (google && google.maps) {
+	if (this.is_loaded) {
 		this.init();
 	} else {
 		google.maps.event.addDomListener(window, 'load', that.init);	
@@ -147,6 +163,9 @@ Map.prototype.create_polygon = function ( polygon_options ) {
 Map.prototype.update = function ( ajax_response ) {
 
 	if (ajax_response && ajax_response.aaData.length > 0) {
+		if ( this.status_window)
+			this.status_window.some_results();
+
 		if (this.markers.length > 0 )
 			this.clear();
 
@@ -175,11 +194,11 @@ Map.prototype.update = function ( ajax_response ) {
 		}
 
 		//displaying map status bars
-		if ( this.status_display && this.listings.active_filters && this.map )
+		if ( this.status_window && this.listings.active_filters && this.map )
 			this.status_window.update();
 
 	} else {
-		// this.show_empty();
+		this.show_empty();
 	}
 	this.hide_loading();
 }
@@ -379,10 +398,13 @@ Map.prototype.listeners = function ( ) {
 	var that = this;
 	var timeout = false;
 
-	if (this.type == 'listings') {
-		google.maps.event.addDomListener(window, 'load', function() {
+	google.maps.event.addDomListener(window, 'load', function() {
+		if (that.type == 'listings') {
 			//trigger a reload on any movement
 			google.maps.event.addListener(that.map, 'dragend', function() {
+				if ( !timeout ) {
+					that.listings.get();
+				} 
 				//only reload the map once since bounds_changed is a little trigger happy
 				clearTimeout(timeout);
 				timeout = setTimeout(function () {
@@ -401,9 +423,13 @@ Map.prototype.listeners = function ( ) {
 					});
 				}, 750);	
 			});
-		});	
-	}
-	
+		}
+
+		google.maps.event.addListener(that.map, 'drag', function () {
+			that.drag();
+		});
+
+	});	
 }
 
 Map.prototype.geocode = function (address, callback ) {
@@ -416,19 +442,34 @@ Map.prototype.geocode = function (address, callback ) {
 
 Map.prototype.show_empty = function () {
 	jQuery('.map_wrapper #empty_overlay').show();
+
+	setTimeout(function () {
+		jQuery('.map_wrapper #empty_overlay').fadeOut();		
+	}, 750);
+
+	if ( this.status_window )
+		this.status_window.empty();
 }
 Map.prototype.hide_empty = function () {
 	jQuery('.map_wrapper #empty_overlay').hide();
 }
 Map.prototype.show_loading = function () {
 	jQuery('.map_wrapper #loading_overlay').show();
+	if ( this.status_window )
+		this.status_window.loading();
 }
 Map.prototype.hide_loading = function () {
 	jQuery('.map_wrapper #loading_overlay').hide();
 }
 Map.prototype.show_full = function () {
 	jQuery('#full_overlay').fadeIn();
+	if ( this.status_window )
+		this.status_window.full();	
 }
 Map.prototype.hide_full = function () {
 	jQuery('#full_overlay').hide();
+}
+Map.prototype.drag = function () {
+	if ( this.status_window )
+		this.status_window.dragging();		
 }
