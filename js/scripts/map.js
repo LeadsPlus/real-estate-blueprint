@@ -191,8 +191,6 @@ Map.prototype.update = function ( ajax_response ) {
 			if ( this.full_callback ) {
 				this.full_callback();
 			}
-		} else {
-			this.hide_full();
 		}
 
 		//displaying map status bars
@@ -463,12 +461,8 @@ Map.prototype.hide_loading = function () {
 	jQuery('.map_wrapper #loading_overlay').hide();
 }
 Map.prototype.show_full = function () {
-	jQuery('#full_overlay').fadeIn();
 	if ( this.status_window )
 		this.status_window.full();	
-}
-Map.prototype.hide_full = function () {
-	jQuery('#full_overlay').hide();
 }
 Map.prototype.drag = function () {
 	if ( this.status_window )

@@ -20,7 +20,6 @@ class PLS_Map {
 		<div class="map_wrapper" style="position: relative">
 				<div id="loading_overlay" class="loading_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $loading_overlay ?></div>
 				<div id="empty_overlay" class="empty_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"><?php echo $empty_overlay ?></div>
-				<div id="full_overlay" class="full_overlay" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px;"><?php echo $full_overlay ?></div>
 				<div id="lifestyle_select_poi" class="lifestyle_select_poi" style="z-index: 50; display: none; position: absolute; width:<?php echo $width; ?>px;"><?php echo $lifestyle_select_poi ?></div>
 				<div class="<?php echo $class ?>" id="<?php echo $canvas_id ?>" style="width:<?php echo $width; ?>px; height:<?php echo $height; ?>px"></div>
 				<section class="lifestyle_form_wrapper" id="lifestyle_form_wrapper">
@@ -173,7 +172,6 @@ class PLS_Map {
         	'polygon_click_action' => false,
         	'lifestyle_distance' => 'miles',
         	'search_class' => 'pls_listings_search_results',
-        	'full_overlay' => '<div style="width: 100%; background-color:rgba(0,0,0,0.5); color: white">Only showing 50 results. Zoom in to refine your search</div>',
         	'lifestyle_select_poi' => '<div style="width: 100%; background-color:rgba(0,0,0,0.5); color: white">Select a Point of Interest to start searching</div>'
         );
         $args = wp_parse_args( $args, $defaults );
