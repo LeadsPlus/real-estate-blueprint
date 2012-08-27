@@ -105,14 +105,12 @@ Listings.prototype.get = function ( success ) {
 
 	//tell wordpress which hook to hit.
 	that.active_filters.push( { "name": "action", "value" : this.hook} );
-	console.log(that.active_filters);
 	jQuery.ajax({
 	    "dataType" : 'json',
 	    "type" : "POST",
 	    "url" : this.sSource,
 	    "data" : that.active_filters,
 	    "success" : function ( ajax_response ) {
-	    	console.log(ajax_response);
 			that.pending = false;		
 			that.ajax_response = ajax_response;
 			if (that.map && that.map.map)
