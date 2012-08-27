@@ -75,7 +75,7 @@ Status_Window.prototype.initalize_listings = function () {
 	}
 
 	this.full = this.params.full || function () {
-		that.title = "<h4>Full</h4>"
+		that.title = "<h4>Zoom In</h4>"
 		that.body = 'Full here! Try zooming in.';
 		that.update();
 	}
