@@ -50,7 +50,6 @@ Neighborhood.prototype.init = function () {
 	    "url" : info.ajaxurl,
 	    "data" : filters,
 	    "success" : function ( neighborhoods ) {
-	    	console.log(neighborhoods);
 	    	if ( neighborhoods.length > 0) {
 	    		for (var i = neighborhoods.length - 1; i >= 0; i--) {
 	    			var polygon_options = that.process_neighborhood_polygon( neighborhoods[i] );
@@ -69,7 +68,6 @@ Neighborhood.prototype.init = function () {
 
 //converts raw neighborhood polygon data into a useable GMaps polygon object
 Neighborhood.prototype.process_neighborhood_polygon = function ( neighborhood ) {
-	// console.log( neighborhood );
 	var polygon_options = {};
 	polygon_options.paths = [];
 	polygon_options.label = neighborhood.name || false;
