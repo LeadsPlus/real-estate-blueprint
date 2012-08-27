@@ -5,7 +5,7 @@ function Status_Window ( params ) {
 	//objects 
 	this.listings = params.listings || alert('You must attach a listings object to you status object');
 	this.map = this.listings.map || alert('You need to attach a map to the listings object if you want the status object actually work');
-	this.filter_position = params.fitler_position || google.maps.ControlPosition.LEFT_TOP;
+	this.filter_position = params.fitler_position || google.maps.ControlPosition.RIGHT_TOP;
 	this.class = params.class || 'map_filter_area';
 	this.dom_id = params.dom_id || 'map_filter_area';
 
@@ -14,12 +14,16 @@ function Status_Window ( params ) {
 	this.some_results = params.some_results || false;
 	this.empty = params.empty || false;
 	this.loading = params.loading || false;
+	this.update_map_on_drag = false;
+	this.prompt_map_on_drag = false;
 
 	//status indicators
 	this.title = false;
 	this.body = false;
+	this.footer = false;
 	this.active_title = false;
 	this.active_body = false;
+	this.active_footer = false;
 }
 
 Status_Window.prototype.init = function () {
@@ -42,6 +46,7 @@ Status_Window.prototype.initalize_listings = function () {
 	this.on_load = this.params.on_load || function () {
 		that.title = '<h4>First Load</h4>';
 		that.body = 'Some text that needs to be long';
+		that.footer = that.drag_reload_modal();
 		that.update();
 	}
 
@@ -70,7 +75,8 @@ Status_Window.prototype.initalize_listings = function () {
 	}
 
 	this.full = this.params.full || function () {
-		that.body = that.active_body + ' Also, things are full here! Try zooming in.';
+		that.title = "<h4>Full</h4>"
+		that.body = 'Full here! Try zooming in.';
 		that.update();
 	}
 
@@ -152,6 +158,11 @@ Status_Window.prototype.update = function () {
 		jQuery('#body_wrapper').html(this.body);
 		this.active_body = this.body;
 	}
+
+	if ( !this.active_footer || this.active_footer != this.footer ) {
+		jQuery('#footer_wrapper').html(this.footer);
+		this.active_footer = this.footer;
+	}
 	
 
 	// switch ( this.map.type ) {
@@ -186,26 +197,10 @@ Status_Window.prototype.update = function () {
 	// jQuery('#' + this.dom_id).append(content);
 }
 
-Status_Window.prototype.get_formatted_filters = function ( ) {
-	var filters = this.listings.active_filters;
-	var formatted_filters = [];
-	for (var i = filters.length - 1; i >= 0; i--) {
-
-		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "")
-			continue;
-			
-		if (this.filter_translation[filters[i].name])
-			filters[i].name = this.filter_translation[filters[i].name];
-
-		formatted_filters.push({ name: filters[i].name, value: filters[i].value })
-	}
-	return formatted_filters;
-}
-
-Status_Window.prototype.add_control_container = function () {
+Status_Window.prototype.add_control_container = function ( append ) {
 	var that = this;
 	var controlDiv = document.createElement('div');
-	controlDiv.id = this.dom_id;
+	controlDiv.id = this.dom_id + append;
 	controlDiv.className = this.class;
 	controlDiv.style.marginTop = '9px';
 	controlDiv.style.marginLeft = '7px'; 
@@ -223,6 +218,10 @@ Status_Window.prototype.add_control_container = function () {
 	body_wrapper.id = 'body_wrapper';
 	wrapper.appendChild(body_wrapper);
 
+	var footer_wrapper = document.createElement('div');
+	footer_wrapper.id = 'footer_wrapper';
+	wrapper.appendChild(footer_wrapper);
+
 	controlDiv.appendChild(wrapper);
 
 	that.map.map.controls[ that.filter_position ].push(controlDiv);
@@ -234,4 +233,61 @@ Status_Window.prototype.unselect_polygon = function () {
 	this.listings.get();	
 	this.map.center_on_polygons();			
 	this.on_load();
+}
+
+Status_Window.prototype.drag_reload_modal = function () {
+	var that = this;
+	var append = '_donkey';
+	jQuery('#update_map_on_drag').live('click', function (event) {
+		// event.preventDefault();
+			
+
+		if ( jQuery(this).attr('checked') ) {
+			that.update_map_on_drag = true;
+		} else {
+			that.update_map_on_drag = false;
+		}
+		
+	});
+
+	google.maps.event.addListenerOnce(that.map.map, 'drag', function() {
+		if ( !that.prompt_map_on_drag ) {
+			that.prompt_map_on_drag = true;
+			that.add_control_container(append);
+			jQuery('#' + that.dom_id + append + ' #title_wrapper').html('<h4>Hey Map Searcher</h4>');
+			jQuery('#' + that.dom_id + append + ' #body_wrapper').html('<p>Do you want to reload the map after drags?</p><p><a id="reload_map_yes">Yes</a><a id="reload_map_no">No</a></p>');
+		} 
+
+		jQuery('#' + that.dom_id + append + ' #body_wrapper #reload_map_no').live('click', function () {
+			that.update_map_on_drag = false;
+			jQuery('#update_map_on_drag').attr('checked', 0);
+			jQuery('#' + that.dom_id + append).remove();
+		});
+
+		jQuery('#' + that.dom_id + append + ' #body_wrapper #reload_map_yes').live('click', function () {
+			jQuery('#update_map_on_drag').attr('checked', 1);
+			that.listings.get();
+			that.update_map_on_drag = true;
+			jQuery('#' + that.dom_id + append).remove();
+		});	
+	});
+	
+
+	return '<input id="update_map_on_drag" type="checkbox"/><label>Redo search when map is dragged</label>';
+}
+
+Status_Window.prototype.get_formatted_filters = function ( ) {
+	var filters = this.listings.active_filters;
+	var formatted_filters = [];
+	for (var i = filters.length - 1; i >= 0; i--) {
+
+		if ( ( jQuery.inArray(filters[i].name, ['metadata[beds]']) === -1 ) || filters[i].value == "")
+			continue;
+			
+		if (this.filter_translation[filters[i].name])
+			filters[i].name = this.filter_translation[filters[i].name];
+
+		formatted_filters.push({ name: filters[i].name, value: filters[i].value })
+	}
+	return formatted_filters;
 }

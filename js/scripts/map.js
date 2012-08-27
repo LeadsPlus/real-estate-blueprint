@@ -56,7 +56,7 @@ Map.prototype.init = function ( params ) {
 	this.marker.icon = params.marker || false;
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
 
-	this.map_options = params.map_options || { zoom: this.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, disableDefaultUI: true, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.RIGHT_TOP } };
+	this.map_options = params.map_options || { zoom: this.zoom, mapTypeId: google.maps.MapTypeId.ROADMAP, mapTypeControl: false, streetViewControl: false, zoomControl: true, zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL, position: google.maps.ControlPosition.TOP_LEFT } };
 
 	//polygon settings
 	if ( this.type == 'neighborhood' ) {
@@ -390,6 +390,7 @@ Map.prototype.get_bounds =  function () {
 
 		this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
 		this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });	
+		console.log(this.bounds);
 	}
 	return this.bounds;
 }
@@ -402,7 +403,14 @@ Map.prototype.listeners = function ( ) {
 		if (that.type == 'listings') {
 			//trigger a reload on any movement
 			google.maps.event.addListener(that.map, 'dragend', function() {
-				console.log(timeout);
+				
+				console.log(that.status_window.update_map_on_drag);
+				if ( that.status_window && !that.status_window.update_map_on_drag ) {
+					that.status_window.on_load();
+					return;
+				}
+					
+
 				if ( timeout === false ) {
 					that.listings.get();
 				} 
