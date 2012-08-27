@@ -29,6 +29,7 @@ Map.prototype.init = function ( params ) {
 	//map states
 	this.is_loaded = false;
 	this.is_idle = false;
+	this.was_marker_click = false;
 	
 
 	//other objects
@@ -71,7 +72,8 @@ Map.prototype.init = function ( params ) {
 
 	// map/list interaction
 	Map.prototype.marker_click = params.marker_click || function ( listing_id ) {
-	
+		that.was_marker_click = true;
+		console.log(that);
 	}
 	Map.prototype.marker_mouseover = params.marker_mouseover || function ( listing_id ) {
 		if (listing_id) {
@@ -402,25 +404,22 @@ Map.prototype.listeners = function ( ) {
 		if (that.type == 'listings') {
 			//trigger a reload on any movement
 			google.maps.event.addListener(that.map, 'dragend', function() {
-				if ( !timeout ) {
+				console.log(timeout);
+				if ( timeout === false ) {
 					that.listings.get();
 				} 
 				//only reload the map once since bounds_changed is a little trigger happy
 				clearTimeout(timeout);
 				timeout = setTimeout(function () {
-					google.maps.event.addListenerOnce(that.map, 'idle', function() {
-						that.listings.get();
-					});
-				}, 750);	
+					that.listings.get();	
+				}, 750);
 			});
 
 			google.maps.event.addListener(that.map, 'zoom_changed', function() {
 				//only reload the map once since bounds_changed is a little trigger happy
 				clearTimeout(timeout);
 				timeout = setTimeout(function () {
-					google.maps.event.addListenerOnce(that.map, 'idle', function() {
-						that.listings.get();
-					});
+					that.listings.get();
 				}, 750);	
 			});
 		}
@@ -441,6 +440,8 @@ Map.prototype.geocode = function (address, callback ) {
 }
 
 Map.prototype.show_empty = function () {
+	this.hide_full();
+
 	jQuery('.map_wrapper #empty_overlay').show();
 
 	setTimeout(function () {
