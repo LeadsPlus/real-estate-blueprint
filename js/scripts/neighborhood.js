@@ -9,6 +9,8 @@ function Neighborhood ( params ) {
 	this.strokeWeight  = params.strokeWeight || null;
 	this.fillColor  = params.fillColor || null;
 	this.fillOpacity  = params.fillOpacity || null;
+
+	this.neighborhood_override = false;
 	
 
 	this.slug = params.slug || false;
@@ -38,6 +40,7 @@ Neighborhood.prototype.init = function () {
 		//if slug, only get that one
 		filters.action = 'get_polygons_by_slug';
 		filters.slug = this.slug;
+		filters.type = this.type;
 	} else {
 		//if no polygon, get all
 		filters.action = 'get_polygons_by_type';
@@ -61,7 +64,15 @@ Neighborhood.prototype.init = function () {
 	    			
 	    		};
 	    		that.map.center_on_polygons();
-	    	} 
+	    	} else {
+	    		//manually set filters, force the map to update;
+	    		that.neighborhood_override = true;
+	    		that.map.listings.filter_override = [];
+	    		that.map.listings.filter_override.push({ "name": "location["+that.type+"]", "value" : that.slug });
+	    		that.map.listings.filter_override.push({ "name": "location["+that.type+"_match]", "value" : 'like' });
+	    		that.map.listings.get();
+	    		console.log('im getting an empty response');
+	    	}
 	    }
 	});
 }

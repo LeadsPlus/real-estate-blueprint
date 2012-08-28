@@ -7,6 +7,8 @@ function Listings ( params ) {
 	this.aoData = params.aoData || [];
 	this.active_filters = [];
 	this.single_listing = params.single_listing || false;
+	this.default_filters = params.default_filters || [];
+	this.filter_override = params.filter_override || false;
 }
 
 Listings.prototype.pending = false;
@@ -58,7 +60,7 @@ Listings.prototype.get = function ( success ) {
 	}
 
 	//or, if we're dealing with a polygon map and there's not a selected polygon
-	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon ) ) {
+	if ( ( this.map.type == 'neighborhood' && !this.map.selected_polygon && !this.map.neighborhood.neighborhood_override ) ) {
 		if ( this.list )
 			this.list.update( {'aaData' : [], 'iDisplayLength': 0, 'iDisplayStart': 0, 'sEcho': this.list.sEcho} )
 
@@ -70,7 +72,10 @@ Listings.prototype.get = function ( success ) {
 	this.pending = true;
 
 	var that = this;
-	that.active_filters = [];
+
+	if (that.default_filters.length > 0) {
+		that.active_filters = that.default_filters;
+	}
 
 	//get pagination and sorting information
 	if (this.list && this.list.datatable) {
@@ -88,9 +93,9 @@ Listings.prototype.get = function ( success ) {
 		that.active_filters.push( { "name": "sEcho", "value" : 1} );	
 	}
 
-  if (this.list && this.list.context) {
-    that.active_filters.push( { "name": "context", "value" : this.list.context} );
-  }
+	if (this.list && this.list.context) {
+		that.active_filters.push( { "name": "context", "value" : this.list.context} );
+	}
   
 	//get get current state of search filtes. 
 	if (this.filter) {
@@ -103,8 +108,13 @@ Listings.prototype.get = function ( success ) {
 		that.active_filters = that.active_filters.concat(this.map.get_bounds());
 	}
 
-	//tell wordpress which hook to hit.
+	if (that.filter_override) {
+		for (var i = that.filter_override.length - 1; i >= 0; i--) {
+			that.active_filters.push(that.filter_override[i]);
+		};
+	};
 	that.active_filters.push( { "name": "action", "value" : this.hook} );
+	
 	jQuery.ajax({
 	    "dataType" : 'json',
 	    "type" : "POST",
