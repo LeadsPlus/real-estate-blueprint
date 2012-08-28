@@ -29,19 +29,19 @@ function Status_Window ( params ) {
 Status_Window.prototype.init = function () {
 		
 	if ( this.map.type == 'listings' ) {
-		this.initalize_listings();
+		this.listings_init();
 	} else if ( this.map.type == 'neighborhood' ) {
-		this.initalize_neighborhood();
+		this.neighborhood_init();
 	} else if ( this.map.type == 'lifestyle') {
-		this.initalize_lifestyle();
+		this.lifestyle_init();
 	} else if ( this.map.type == 'lifestyle_polygon' ) {
-		this.initalize_lifestyle_polygon();
+		this.initalize_lifestyle_polygon_init();
 	}
 
 }
 
 //default initialization states
-Status_Window.prototype.initalize_listings = function () {
+Status_Window.prototype.listings_init = function () {
 	var that = this;
 	this.on_load = this.params.on_load || function () {
 		that.title = '<h4>First Load</h4>';
@@ -88,23 +88,51 @@ Status_Window.prototype.initalize_listings = function () {
 
 }
 
-Status_Window.prototype.neighborhood = function () {
+Status_Window.prototype.neighborhood_init = function () {
 
-	Status_Window.prototype.on_load = params.on_load || function () {
-
+	var that = this;
+	this.on_load = this.params.on_load || function () {
+		that.title = '<h4>First Load</h4>';
+		that.body = 'Some text that needs to be long';
+		that.footer = 'Just another footer';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.some_results || function () {
-
+	this.some_results = this.params.some_results || function () {
+		that.title = '<h4>You have Results!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.empty || function () {
-
+	this.empty = this.params.empty || function () {
+		that.title = '<h4>Empty!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.loading || function () {
+	this.loading = this.params.loading || function () {
+		that.title = '<h4>Loading</h4>';
+		that.body = 'New listings are on the way!';
+		that.update();
+	}
 
-	}	
+	this.dragging = this.params.dragging || function () {
+		that.title = '<h4>You are dragging</h4>';
+		that.body = 'Let go to see new listings';
+		that.update();
+	}
+
+	this.full = this.params.full || function () {
+		that.title = "<h4>Zoom In</h4>"
+		that.body = 'Full here! Try zooming in.';
+		that.update();
+	}
+
+	this.listeners = this.params.listeners || function () {
+		jQuery('#polygon_unselect').live('click', function () {
+			that.unselect_polygon();
+		});
+	}();
 }
 
 Status_Window.prototype.lifestyle = function () {
@@ -203,7 +231,7 @@ Status_Window.prototype.add_control_container = function ( append ) {
 	controlDiv.id = this.dom_id + append;
 	controlDiv.className = this.class;
 	controlDiv.style.marginTop = '9px';
-	controlDiv.style.marginLeft = '7px'; 
+	controlDiv.style.marginRight = '7px'; 
 	controlDiv.style.padding = '5px';
 	
 	// Set CSS for the control border.
@@ -239,8 +267,7 @@ Status_Window.prototype.drag_reload_modal = function () {
 	var that = this;
 	var append = '_donkey';
 	jQuery('#update_map_on_drag').live('click', function (event) {
-		// event.preventDefault();
-			
+		// event.preventDefault()
 
 		if ( jQuery(this).attr('checked') ) {
 			that.update_map_on_drag = true;

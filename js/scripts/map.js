@@ -373,6 +373,9 @@ Map.prototype.get_bounds =  function () {
 			this.bounds.push({'name' : 'polygon[' + i + '][lat]', 'value': point['lat'] });
 			this.bounds.push({'name' : 'polygon[' + i + '][lng]', 'value': point['lng'] });
 		}
+	} else if (this.type == 'neighborhood' && this.neighborhood.neighborhood_override === true ) {
+		//if the neighborhood object is attempting to recover, let it.
+		return;
 	} else {
 		var map_bounds = this.map.getBounds();
 		if ( typeof map_bounds == 'undefined' ) {
@@ -390,7 +393,6 @@ Map.prototype.get_bounds =  function () {
 
 		this.bounds.push({'name' : 'polygon[3][lat]', 'value': map_bounds.getSouthWest().lat() });
 		this.bounds.push({'name' : 'polygon[3][lng]', 'value': map_bounds.getNorthEast().lng() });	
-		console.log(this.bounds);
 	}
 	return this.bounds;
 }
@@ -446,7 +448,6 @@ Map.prototype.geocode = function (address, callback ) {
 }
 
 Map.prototype.show_empty = function () {
-	this.hide_full();
 
 	jQuery('.map_wrapper #empty_overlay').show();
 
@@ -454,7 +455,7 @@ Map.prototype.show_empty = function () {
 		jQuery('.map_wrapper #empty_overlay').fadeOut();		
 	}, 750);
 
-	if ( this.status_window )
+	if ( this.status_window && this.status_window.empty)
 		this.status_window.empty();
 }
 Map.prototype.hide_empty = function () {
@@ -462,7 +463,7 @@ Map.prototype.hide_empty = function () {
 }
 Map.prototype.show_loading = function () {
 	jQuery('.map_wrapper #loading_overlay').show();
-	if ( this.status_window )
+	if ( this.status_window && this.status_window.loading )
 		this.status_window.loading();
 }
 Map.prototype.hide_loading = function () {
