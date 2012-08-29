@@ -71,7 +71,6 @@ Neighborhood.prototype.init = function () {
 	    		that.map.listings.filter_override.push({ "name": "location["+that.type+"]", "value" : that.slug });
 	    		that.map.listings.filter_override.push({ "name": "location["+that.type+"_match]", "value" : 'like' });
 	    		that.map.listings.get();
-	    		console.log('im getting an empty response');
 	    	}
 	    }
 	});
