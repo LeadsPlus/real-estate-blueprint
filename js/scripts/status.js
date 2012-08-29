@@ -10,6 +10,7 @@ function Status_Window ( params ) {
 	this.dom_id = params.dom_id || 'map_filter_area';
 
 	//functions representing states
+	this.state = 'open';
 	this.on_load = params.on_load || false;
 	this.some_results = params.some_results || false;
 	this.empty = params.empty || false;
@@ -27,6 +28,8 @@ function Status_Window ( params ) {
 }
 
 Status_Window.prototype.init = function () {
+
+	this.default_listeners();
 		
 	if ( this.map.type == 'listings' ) {
 		this.listings_init();
@@ -226,17 +229,20 @@ Status_Window.prototype.update = function () {
 }
 
 Status_Window.prototype.add_control_container = function ( append ) {
+	console.log(append)
+	if (!append)
+		append = '';
+
 	var that = this;
 	var controlDiv = document.createElement('div');
 	controlDiv.id = this.dom_id + append;
-	controlDiv.className = this.class;
-	controlDiv.style.marginTop = '9px';
-	controlDiv.style.marginRight = '7px'; 
-	controlDiv.style.padding = '5px';
 	
 	// Set CSS for the control border.
 	var wrapper = document.createElement('div');
 	wrapper.id = 'map_filter_area_wrapper';
+	wrapper.style.position = 'relative';
+	wrapper.style.float = 'right';
+	wrapper.className = this.class;
 
 	var title_wrapper = document.createElement('div');
 	title_wrapper.id = 'title_wrapper';
@@ -251,6 +257,15 @@ Status_Window.prototype.add_control_container = function ( append ) {
 	wrapper.appendChild(footer_wrapper);
 
 	controlDiv.appendChild(wrapper);
+
+	var tab = document.createElement('div');
+	tab.id = 'tab';
+	tab.style.float = 'right';
+	tab.style.clear = 'left';
+	tab.style.height = 50;
+	tab.style.width = 50;
+	tab.style.background = 'white';
+	controlDiv.appendChild(tab);
 
 	that.map.map.controls[ that.filter_position ].push(controlDiv);
 }
@@ -301,6 +316,31 @@ Status_Window.prototype.drag_reload_modal = function () {
 	
 
 	return '<input id="update_map_on_drag" type="checkbox"/><label>Redo search when map is dragged</label>';
+}
+
+Status_Window.prototype.show = function () {
+	console.log('I would show');
+	jQuery('#' + this.dom_id + '_wrapper').animate({width : 'toggle'}, 1000);
+	this.state = 'open';
+}
+Status_Window.prototype.hide = function () {
+	console.log('I would hide');
+	jQuery('#' + this.dom_id + '_wrapper').animate({width : 'toggle'}, 1000);
+	this.state = 'closed';
+}
+Status_Window.prototype.slide_out_gutter = function () {}
+Status_Window.prototype.slide_in_gutter = function () {}
+Status_Window.prototype.show_status = function () {}
+Status_Window.prototype.hide_status = function () {}
+Status_Window.prototype.default_listeners = function () {
+	var that = this;
+	jQuery('#map_filter_area #tab').live('click', function () {
+		if ( that.state === 'open' ) {
+			that.hide();
+		} else {
+			that.show();
+		}
+	});
 }
 
 Status_Window.prototype.get_formatted_filters = function ( ) {
