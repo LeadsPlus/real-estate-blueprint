@@ -137,41 +137,99 @@ Status_Window.prototype.neighborhood_init = function () {
 
 Status_Window.prototype.lifestyle = function () {
 	
-	Status_Window.prototype.on_load = params.on_load || function () {
-
+	
+	var that = this;
+	this.on_load = this.params.on_load || function () {
+		that.title = '<h4>First Load</h4>';
+		that.body = 'Some text that needs to be long';
+		that.footer = 'Just another footer';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.some_results || function () {
-
+	this.some_results = this.params.some_results || function () {
+		that.title = '<h4>You have Results!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.empty || function () {
-
+	this.empty = this.params.empty || function () {
+		that.title = '<h4>Empty!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.loading || function () {
-
+	this.loading = this.params.loading || function () {
+		that.title = '<h4>Loading</h4>';
+		that.body = 'New listings are on the way!';
+		that.update();
 	}
+
+	this.dragging = this.params.dragging || function () {
+		that.title = '<h4>You are dragging</h4>';
+		that.body = 'Let go to see new listings';
+		that.update();
+	}
+
+	this.full = this.params.full || function () {
+		that.title = "<h4>Zoom In</h4>"
+		that.body = 'Full here! Try zooming in.';
+		that.update();
+	}
+
+	this.listeners = this.params.listeners || function () {
+		jQuery('#polygon_unselect').live('click', function () {
+			that.unselect_polygon();
+		});
+	}();
 
 }
 
 Status_Window.prototype.lifestyle_polygon = function () {
 	
-	Status_Window.prototype.on_load = params.on_load || function () {
 
+	var that = this;
+	this.on_load = this.params.on_load || function () {
+		that.title = '<h4>First Load</h4>';
+		that.body = 'Some text that needs to be long';
+		that.footer = 'Just another footer';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.some_results || function () {
-
+	this.some_results = this.params.some_results || function () {
+		that.title = '<h4>You have Results!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.empty || function () {
-
+	this.empty = this.params.empty || function () {
+		that.title = '<h4>Empty!</h4>';
+		that.body = 'Some text that needs to be long';
+		that.update();
 	}
 
-	Status_Window.prototype.on_load = params.loading || function () {
-
+	this.loading = this.params.loading || function () {
+		that.title = '<h4>Loading</h4>';
+		that.body = 'New listings are on the way!';
+		that.update();
 	}
+
+	this.dragging = this.params.dragging || function () {
+		that.title = '<h4>You are dragging</h4>';
+		that.body = 'Let go to see new listings';
+		that.update();
+	}
+
+	this.full = this.params.full || function () {
+		that.title = "<h4>Zoom In</h4>"
+		that.body = 'Full here! Try zooming in.';
+		that.update();
+	}
+
+	this.listeners = this.params.listeners || function () {
+		jQuery('#polygon_unselect').live('click', function () {
+			that.unselect_polygon();
+		});
+	}();
 }
 
 
