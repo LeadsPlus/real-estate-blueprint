@@ -1,9 +1,11 @@
 function Status_Window ( params ) {
 	var that = this;
 	this.params = params;
-
+	if ( typeof params === 'undefined' )
+		alert('You need to pass in parameters');
+	
 	//objects 
-	this.listings = params.listings || alert('You must attach a listings object to you status object');
+	this.listings = params.listings || alert('You must attach a listings object to your status object');
 	this.map = this.listings.map || alert('You need to attach a map to the listings object if you want the status object actually work');
 	this.filter_position = params.fitler_position || google.maps.ControlPosition.RIGHT_TOP;
 	this.class = params.class || 'map_filter_area';
