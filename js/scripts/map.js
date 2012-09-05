@@ -52,7 +52,7 @@ Map.prototype.init = function ( params ) {
 	this.full_callback = params.full_callback || false;
 	
 	//marker settings
-	this.marker = {}
+	this.marker = {};
 	this.marker.icon = params.marker || false;
 	this.marker.icon_hover = params.marker_hover || 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|FF0000|000000'
 
