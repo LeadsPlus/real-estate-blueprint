@@ -31,7 +31,8 @@
     			// filter : filter,
     			class: '.another',
     			listings: listings,
-                map: map
+                map: map,
+                limit_default: 25
     		});
             map.init({
                 // type: 'lifestyle',
@@ -53,7 +54,7 @@
 <div id="slideshow" class="clearfix theme-default left bottomborder grid_8 alpha">
     <?php //echo PLS_Map::lifestyle(array(), array('width' => 590, 'height' => 300, 'life_style_search' => true,'show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'show_submit' => true, 'lat' => '41.815594', 'lng' => '-71.413879' ) ); ?>
     <?php //echo PLS_Map::lifestyle_polygon(array(), array('width' => 590, 'height' => 300, 'life_style_search' => true,'show_lifestyle_controls' => true, 'show_lifestyle_checkboxes' => true, 'show_submit' => true, 'lat' => '41.815594', 'lng' => '-71.413879' ) ); ?>
-    <?php echo PLS_Map::listings( null, array('width' => 590, 'height' => 300) ); ?>
+    <?php echo PLS_Map::listings( null, array('width' => 950, 'height' => 400) ); ?>
     <?php //echo PLS_Map::polygon(null, array('width' => 590, 'height' => 250, 'zoom' => 16,'map_js_var' => 'test2', 'canvas_id' => 'another2', 'polygon_search' => 'neighborhood', 'search_class' => 'another')); ?>
 
     <?php echo PLS_Partials::get_listings_search_form( array(
