@@ -16,7 +16,7 @@
     $content = get_option('placester_listing_layout');
     if(isset($content) && $content != '') {return $content;}
     $html = '';
-    $listing = @unserialize($post->post_content);
+    $listing = PL_Listing_Helper::get_listing_in_loop();
     
     global $query_string;
     $neighborhood = strpos($query_string, 'neighborhood=');

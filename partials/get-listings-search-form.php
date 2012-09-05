@@ -254,16 +254,14 @@ class PLS_Partials_Listing_Search_Form {
             $form_options['neighborhood_polygons'] = array('pls_empty_value' => 'Any') + $neighborhood_polygons_options;
         }
 
-        
 
-        
     // Price for Sales
         /** Define the minimum price options array. */
         $form_options['min_price'] = array(
               'pls_empty_value' => __( 'Any', pls_get_textdomain() ),
               '0' => '$0',
               '$400' => '$400',
-              '500' => '$5,000',
+              '500' => '$500',
               '2000' => '$2,000',
               '3000' => '$3,000',
               '4000' => '$4,000',
@@ -605,6 +603,7 @@ class PLS_Partials_Listing_Search_Form {
 
         /** Add the county select element. */
         if ($neighborhood_polygons == 1) {
+
             $form_html['neighborhood_polygons'] = pls_h(
                 'select',
                 array( 'name' => 'neighborhood_polygons' ) + $form_opt_attr['neighborhood_polygons'],
