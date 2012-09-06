@@ -4,7 +4,7 @@
 (function($){
 
     $.fn.errorTooltip = function(tooltip_name, config_or_action) {
-        
+        console.log(this);
         var config = {
             text: 'An error has occurred',
             type: 'error',
@@ -31,9 +31,14 @@
                 target.css({
                     top: this.offset().top - 15,
                     left: this.offset().left,
-                    opacity: 0.6
+                    opacity: 0.6,
+                    'z-index': 1500
                 }).animate({top: this.offset().top - (target.height() + 20), opacity: 1}, 500);
             }
+
+            jQuery(selector).bind('mouseover', function() {
+                jQuery(this).errorTooltip(tooltip_name, 'remove');
+            });
         }
 
         return this;
@@ -50,21 +55,15 @@ jQuery(document).ready(function($) {
         return (email !== "" && email.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i));
     };
 
-    // Validate the name field
-    jQuery("input[name=name]", widget).bind('blur.pl', function() {
-        if(jQuery(this).val() !== "") {
-            jQuery(this).errorTooltip('name_error', 'remove');
-        }
+    jQuery('input[name=name]', widget).bind('click', function() {
+        jQuery(this).errorTooltip('name_error', 'remove');
     });
 
-    // Validate the email field
-    jQuery("input[name=email]", widget).bind('blur.pl', function() {
-        if(valid_email(jQuery(this).val())) {
-            jQuery(this).errorTooltip('email_error', 'remove');
-        }
-    });
+    jQuery('input[name=email]', widget).bind('click', function() {
+        jQuery(this).errorTooltip('email_error', 'remove');
+    });  
 
-	jQuery('.side-ctnr.placester_contact form').submit(function(e) {
+    jQuery('.side-ctnr.placester_contact form').submit(function(e) {
 
         var error_found = false;
 
@@ -73,7 +72,7 @@ jQuery(document).ready(function($) {
 
         // widget.find('.placester_loading').show();
 
-		var str = jQuery(this).serialize();
+        var str = jQuery(this).serialize();
         
         var clear_form = function(form) {
             form.find('input[type="text"], input[type="email"], textarea').val('');
@@ -131,5 +130,5 @@ jQuery(document).ready(function($) {
                 }
             });
         }
-	});
+    });
 });
